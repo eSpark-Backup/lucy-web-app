@@ -6,6 +6,7 @@ import {
   WaitList,
   Services,
   Footer,
+  Reviews,
 } from "../../components";
 
 const LandingPage = () => {
@@ -17,6 +18,7 @@ const LandingPage = () => {
       <SolutionSection />
       <WaitList />
       <Services />
+      <Reviews />
       <Footer />
     </>
   );

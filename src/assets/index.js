@@ -12,6 +12,15 @@ import twitter from "./icons/twitter.svg";
 import linkedin from "./icons/linkedin.svg";
 import phone from "./icons/phone.svg";
 import email from "./icons/email.svg";
+import review1 from "./icons/review1.svg";
+import review2 from "./icons/review2.svg";
+import review3 from "./icons/review3.svg";
+import review4 from "./icons/review4.svg";
+import review5 from "./icons/review5.svg";
+import review6 from "./icons/review6.svg";
+import review7 from "./icons/review7.svg";
+import review8 from "./icons/review8.svg";
+import review9 from "./icons/review9.svg";
 
 import dashed from "./images/dashed.png";
 import ai from "./images/ai.png";
@@ -29,6 +38,7 @@ import service1 from "./images/service1.png";
 import service2 from "./images/service2.png";
 import service3 from "./images/service3.png";
 import service4 from "./images/service4.png";
+import about from "./images/about.png";
 
 export {
   logo,
@@ -61,4 +71,14 @@ export {
   linkedin,
   phone,
   email,
+  about,
+  review1,
+  review2,
+  review3,
+  review4,
+  review5,
+  review6,
+  review7,
+  review8,
+  review9,
 };
