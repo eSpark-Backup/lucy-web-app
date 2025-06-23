@@ -1,25 +1,8 @@
-import { Typography } from "@mui/material";
+import { LandingPage } from "./pages";
 import "./App.css";
-import {
-  HeroSection,
-  LogoSlider,
-  Navbar,
-  Services,
-  SolutionSection,
-  WaitList,
-} from "./components";
 
 function App() {
-  return (
-    <>
-      <Navbar />
-      <HeroSection />
-      <LogoSlider />
-      <SolutionSection />
-      <WaitList />
-      <Services />
-    </>
-  );
+  return <LandingPage />;
 }
 
 export default App;

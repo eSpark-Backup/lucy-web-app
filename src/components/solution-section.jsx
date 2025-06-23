@@ -94,6 +94,7 @@ const SolutionSection = () => {
           >
             {features?.map((item, index) => (
               <FeatureCard
+                key={index}
                 heading={item?.heading}
                 description={item?.description}
                 img={item?.img}

@@ -7,7 +7,7 @@ import {
   service2,
   service3,
   service4,
-} from "./assets";
+} from "../assets";
 
 export const features = [
   {

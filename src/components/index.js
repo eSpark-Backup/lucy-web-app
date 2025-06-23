@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./nav-bar";
 import HeroSection from "./hero-section";
 import LogoSlider from "./logo-slider";
 import SolutionSection from "./solution-section";
