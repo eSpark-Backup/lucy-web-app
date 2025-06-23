@@ -7,7 +7,7 @@ const SolutionSection = () => {
   return (
     <Box
       sx={{
-        px: { xs: "30px", md: "50px", lg: "90px" },
+        // px: { xs: "30px", md: "50px", lg: "90px" },
         position: "relative",
       }}
     >
@@ -59,6 +59,7 @@ const SolutionSection = () => {
                 fontSize: { xs: "30px", md: "48.41px" },
                 fontWeight: 600,
                 mb: 1,
+                fontFamily: '"Aoboshi One", serif',
               }}
             >
               Edu Plus Difference
@@ -73,6 +74,7 @@ const SolutionSection = () => {
                 sx={{
                   textTransform: "none",
                   width: "100%",
+                  fontFamily: `"Aoboshi One", serif`,
                 }}
                 disableRipple
               >

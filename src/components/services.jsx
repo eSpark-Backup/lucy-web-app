@@ -32,13 +32,21 @@ const Services = () => {
           }}
         >
           <Typography
-            sx={{ lineHeight: "10px", color: "#FFFFFF", fontSize: "20.47px" }}
+            sx={{
+              lineHeight: "10px",
+              color: "#FFFFFF",
+              fontSize: "20.47px",
+              fontFamily: '"Aoboshi One", serif',
+            }}
           >
             Services
           </Typography>
         </Box>
         <Typography
-          sx={{ fontSize: { xs: "20.41px", md: "28.41px", lg: "48.41px" } }}
+          sx={{
+            fontSize: { xs: "20.41px", md: "28.41px", lg: "48.41px" },
+            fontFamily: '"Aoboshi One", serif',
+          }}
         >
           Our Core Services
         </Typography>
@@ -47,67 +55,56 @@ const Services = () => {
       <Box
         sx={{
           position: "relative",
-          width: "100%",
           "&::before, &::after": {
             content: '""',
             position: "absolute",
             top: 0,
             bottom: 0,
-            width: "10%",
+            width: "50px",
             zIndex: 2,
+            pointerEvents: "none",
           },
           "&::before": {
             left: 0,
+            background: "linear-gradient(to right, #D9D9D980, transparent)",
           },
           "&::after": {
             right: 0,
+            background: "linear-gradient(to left, #D9D9D980, transparent)",
           },
         }}
       >
         <Swiper
           modules={[Autoplay, Pagination]}
-          slidesPerView={6}
-          centeredSlides={false}
-          spaceBetween={10}
           loop={true}
-          initialSlide={0} // Ensures starting from first slide
-          slidesOffsetBefore={0} // Removes initial left offset
-          slidesOffsetAfter={0} // Removes right offset
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
+          centeredSlides={true}
+          spaceBetween={20}
+          slidesPerView="auto"
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
           }}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            640: { slidesPerView: 2 },
-            768: { slidesPerView: 3 },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-            1900: {
-              slidesPerView: 4,
-              spaceBetween: 10,
-            },
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
           }}
           style={{
             marginTop: "30px",
-            padding: "0 5%",
             paddingBottom: "40px",
           }}
         >
           {slides.map((item, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              style={{
+                width: "350px",
+              }}
+            >
               <Box
                 sx={{
                   backgroundImage: `url(${item?.image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
                   height: "450px",
                   width: "100%",
                   position: "relative",
@@ -133,14 +130,15 @@ const Services = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    width: "100%", // Ensure full width
-                    boxSizing: "border-box", // Include padding in width calculation
+                    width: "100%",
+                    boxSizing: "border-box",
                   }}
                 >
                   <Typography
                     sx={{
                       fontSize: { xs: "16px", md: "18px", lg: "20px" },
                       color: "#FFFFFF",
+                      fontFamily: '"Open Sans", sans-serif',
                     }}
                   >
                     {item?.heading}

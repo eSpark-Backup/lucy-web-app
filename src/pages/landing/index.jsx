@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import {
   Navbar,
   HeroSection,
@@ -7,6 +8,7 @@ import {
   Services,
   Footer,
   Reviews,
+  About,
 } from "../../components";
 
 const LandingPage = () => {
@@ -14,10 +16,13 @@ const LandingPage = () => {
     <>
       <Navbar />
       <HeroSection />
-      <LogoSlider />
-      <SolutionSection />
+      <Box sx={{ px: { xs: "30px", md: "50px", lg: "90px" } }}>
+        <LogoSlider />
+        <SolutionSection />
+      </Box>
       <WaitList />
       <Services />
+      <About />
       <Reviews />
       <Footer />
     </>

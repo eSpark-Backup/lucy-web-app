@@ -10,6 +10,7 @@ const Reviews = () => {
         sx={{
           fontSize: { xs: "24px", md: "40px", lg: "71px" },
           textAlign: "center",
+          fontFamily: '"Aoboshi One", serif',
         }}
       >
         Kind word of Our Users

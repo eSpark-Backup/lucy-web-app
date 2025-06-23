@@ -72,13 +72,18 @@ const WaitList = () => {
               fontSize: "71px",
               lineHeight: "80px",
             },
+            fontFamily: '"Aoboshi One", serif',
           }}
         >
           Join our wait List to get Earlier <br /> Access in our AI platform
         </Typography>
 
         <Box sx={{ width: "270px" }}>
-          <Button variant="secondary" disableRipple>
+          <Button
+            variant="secondary"
+            disableRipple
+            sx={{ fontFamily: '"Roboto", sans-serif' }}
+          >
             Wait List
           </Button>
         </Box>
@@ -86,6 +91,7 @@ const WaitList = () => {
           sx={{
             fontSize: { xs: "18.88px", md: "22.88px", lg: "26.88px" },
             color: "#ffffff",
+            fontFamily: '"Plus Jakarta Sans", sans-serif',
           }}
         >
           Stay ahead with the latest updates, insights, and events from Macat{" "}
