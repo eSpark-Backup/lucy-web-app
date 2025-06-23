@@ -34,6 +34,9 @@ const WaitList = () => {
             width: "90%",
             position: "relative",
             top: { xs: "0px", lg: "-220px" },
+            "@media (min-width: 1280px) and (max-width: 1880px)": {
+              top: "-170px",
+            },
           }}
           alt="Letter box"
         ></Box>
@@ -61,14 +64,19 @@ const WaitList = () => {
       >
         <Typography
           sx={{
-            fontSize: { xs: "24px", md: "40px", lg: "71px" },
-            lineHeight: { xs: "30px", md: "50px", lg: "80px" },
+            fontSize: { xs: "24px", md: "40px", lg: "50px" }, // fallback breakpoints
+            lineHeight: { xs: "30px", md: "50px", lg: "60px" },
             color: "#ffffff",
             wordBreak: "break-word",
+            "@media (min-width: 1850px)": {
+              fontSize: "71px",
+              lineHeight: "80px",
+            },
           }}
         >
           Join our wait List to get Earlier <br /> Access in our AI platform
         </Typography>
+
         <Box sx={{ width: "270px" }}>
           <Button variant="secondary" disableRipple>
             Wait List

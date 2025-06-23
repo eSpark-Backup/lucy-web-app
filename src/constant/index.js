@@ -3,6 +3,15 @@ import {
   grad,
   magic,
   pages,
+  review1,
+  review2,
+  review3,
+  review4,
+  review5,
+  review6,
+  review7,
+  review8,
+  review9,
   service1,
   service2,
   service3,
@@ -108,5 +117,97 @@ export const slides = [
     description:
       "Boostez votre efficacité commerciale en externalisant la prospection et en maintenant des relations solides avec vos clients.",
     image: service4,
+  },
+];
+
+export const reviewCardsContent = [
+  {
+    profile: review1,
+    name: "Marc Köhlbrugge",
+    userName: "@marckohlbrugge",
+    content: `<p>Tweeting more with <span style={{color:"#199AF5"}}>@typefully</span> these days.</p> 
+     <p>🙈 Distraction-free</p>
+   <p>✍️ Write-only Twitter</p>
+   <p>🧵 Effortless threads</p>
+   <p>📈 Actionable metrics</p> <p style="margin-top: 12px;">I recommend giving it a shot.</p>`,
+  },
+  {
+    profile: review2,
+    name: "Santiago",
+    userName: "@svpino",
+    content: ` <p>
+    For 24 months, I tried almost a dozen Twitter scheduling tools.
+  </p>
+
+  <p>
+    Then I found <span style="color: #199AF5;">@typefully</span>, and I've been using it for seven months straight.
+  </p>
+
+  <p>
+    When it comes down to the experience of scheduling and long-form content writing, Typefully is in a league of its own.
+  </p>`,
+  },
+  {
+    profile: review3,
+    name: "Easlo",
+    userName: "@heyeaslo",
+    content: `<p>I recommend <span style="color: #199AF5;">@typefully</span>, I use it to write all my
+tweets and threads, include posting schedule
+and analytics.</p>`,
+  },
+  {
+    profile: review6,
+    name: "Naitik Mehta",
+    userName: "@heyNaitik",
+    content: `<p>I've reached 600K+ impressions since I started writing online 6 months ago w/ <span style="color: #199AF5;">@typefully</span> 🤯</p> 
+    <p>Shoutout to the team for building a beautiful writing tool with thought, care, and good design.</p>
+    <p>👉 Clean UX/design</p>
+    <p>👉 Mobile-friendly</p>
+    <p>👉 Keyboard shortcuts</p>
+    <p>👉 Rarely see any bugs</p>
+    `,
+  },
+
+  {
+    profile: review4,
+    name: "Jurre Houtkamp",
+    userName: "@jurrehoutkamp",
+    content: `<p>Typefully is fantastic and way too cheap for what you get.</p> 
+     <p>We’ve tried many alternatives at <span style="color: #199AF5;">@framer</span> but nothing beats it. If you’re still tweeting from Twitter you’re wasting time.</p>`,
+  },
+
+  {
+    profile: review5,
+    name: "Luca Rossi",
+    userName: "@lucaronin",
+    content: `<p>After trying literally all the major Twitter scheduling tools, I settled with <span style="color: #199AF5;">@typefully</span></p> 
+     <p>Killer feature to me is the native image editor — unique and super useful 🙏</p>`,
+  },
+  {
+    profile: review9,
+    name: "daws.eth",
+    userName: "@DawsonBotsford",
+    content: `<p>Impressed with <span style="color: #199AF5;">@typefully.</span> It's the editor you wish Twitter had.</p> 
+    <p>Saving multiple drafts, re-ordering tweets in a thread, and moving attached images around is EASY.</p>
+    `,
+  },
+
+  {
+    profile: review8,
+    name: "Visual Theory",
+    userName: "@visualtheory_",
+    content: `<p>Really impressed by the way <span style="color: #199AF5;">@typefully</span> has simplified my Twitter writing + scheduling/publishing experience.</p> 
+    <p>Beautiful user experience.</p>
+    <p>0 friction.</p>
+    <p>Simplicity is the ultimate sophistication.</p>
+    `,
+  },
+  {
+    profile: review7,
+    name: "DHH",
+    userName: "@dhh",
+    content: `<p>This is my new go-to writing environment for Twitter threads.</p> 
+    <p>They've built something wonderfully simple and distraction free with Typefully 😍</p>
+    `,
   },
 ];
