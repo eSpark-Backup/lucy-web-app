@@ -7,6 +7,7 @@ import Services from "./services";
 import Footer from "./footer";
 import About from "./about";
 import Reviews from "./reviews";
+import WaitlistModal from "./waitlist-modal";
 
 export {
   Navbar,
@@ -18,4 +19,5 @@ export {
   About,
   Reviews,
   Footer,
+  WaitlistModal,
 };

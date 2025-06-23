@@ -21,6 +21,8 @@ import review6 from "./icons/review6.svg";
 import review7 from "./icons/review7.svg";
 import review8 from "./icons/review8.svg";
 import review9 from "./icons/review9.svg";
+import formIcon from "./icons/form-icon.svg";
+import tick from "./icons/check-mark.svg";
 
 import dashed from "./images/dashed.png";
 import ai from "./images/ai.png";
@@ -39,6 +41,7 @@ import service2 from "./images/service2.png";
 import service3 from "./images/service3.png";
 import service4 from "./images/service4.png";
 import about from "./images/about.png";
+import modalBg from "./images/modal-bg-image.png";
 
 export {
   logo,
@@ -81,4 +84,7 @@ export {
   review7,
   review8,
   review9,
+  modalBg,
+  formIcon,
+  tick,
 };
