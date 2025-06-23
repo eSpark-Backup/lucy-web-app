@@ -4,6 +4,14 @@ import certified from "./icons/certify.svg";
 import magic from "./icons/magic.svg";
 import pages from "./icons/pages.svg";
 import arrow from "./icons/Arrow.svg";
+import footerLogo from "./icons/footer-logo.svg";
+import facebook from "./icons/facebook.svg";
+import instagram from "./icons/instagram.svg";
+import google from "./icons/google.svg";
+import twitter from "./icons/twitter.svg";
+import linkedin from "./icons/linkedin.svg";
+import phone from "./icons/phone.svg";
+import email from "./icons/email.svg";
 
 import dashed from "./images/dashed.png";
 import ai from "./images/ai.png";
@@ -45,4 +53,12 @@ export {
   service2,
   service3,
   service4,
+  footerLogo,
+  facebook,
+  instagram,
+  google,
+  twitter,
+  linkedin,
+  phone,
+  email,
 };
