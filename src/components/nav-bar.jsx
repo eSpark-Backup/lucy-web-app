@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { logo } from "../assets";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
@@ -195,7 +197,12 @@ const Navbar = () => {
                     >
                       Blog
                     </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
+                    <MenuItem
+                    onClick={() => {
+                      navigate("/?open=true&step=1");
+                      handleMenuClose();
+                    }}
+                  >
                       <Button
                         variant="primary"
                         disableRipple
@@ -212,7 +219,8 @@ const Navbar = () => {
                 </>
               ) : (
                 <Button
-                  variant="primary"
+                  onClick={() => navigate("/?open=true&step=1")}
+                variant="primary"
                   disableRipple
                   sx={{
                     fontSize: "16px",

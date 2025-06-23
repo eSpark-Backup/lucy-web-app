@@ -1,7 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
 import { letterBox } from "../assets";
+import { useNavigate } from "react-router-dom";
 
 const WaitList = () => {
+    const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -80,7 +82,7 @@ const WaitList = () => {
 
         <Box sx={{ width: "270px" }}>
           <Button
-            variant="secondary"
+            onClick={() => navigate("/?open=true&step=1")} variant="secondary"
             disableRipple
             sx={{ fontFamily: '"Roboto", sans-serif' }}
           >
