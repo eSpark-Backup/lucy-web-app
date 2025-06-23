@@ -27,6 +27,31 @@ export const theme = createTheme({
   },
 
   components: {
+    MuiModal: {
+      defaultProps: {
+        closeAfterTransition: true,
+        disableAutoFocus: true,
+        slotProps: {
+          backdrop: { timeout: 300 },
+        },
+      },
+      styleOverrides: {
+        root: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          WebkitOverflowScrolling: "touch",
+        },
+      },
+    },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#6D686891",
+          backdropFilter: "blur(10px)",
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

@@ -9,6 +9,7 @@ import {
   Footer,
   Reviews,
   About,
+  WaitlistModal,
 } from "../../components";
 
 const LandingPage = () => {
@@ -27,6 +28,7 @@ const LandingPage = () => {
         <Reviews />
       </Container>
       <Footer />
+      <WaitlistModal />
     </>
   );
 };

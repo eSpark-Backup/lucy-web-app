@@ -3,11 +3,14 @@ import { createRoot } from "react-dom/client";
 import { ThemeProvider } from "@emotion/react";
 import App from "./App.jsx";
 import { theme } from "./theme.js";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>
+  <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
   // </StrictMode>,
 );
