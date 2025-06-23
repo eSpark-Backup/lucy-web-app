@@ -64,6 +64,7 @@ const Navbar = () => {
                   fontWeight: "400",
                   color: activeItem === "home" ? "#3A3535" : "#94969E",
                   cursor: "pointer",
+                  fontFamily: '"Aoboshi One", serif',
                 }}
                 onClick={() => setActiveItem("home")}
               >
@@ -75,6 +76,7 @@ const Navbar = () => {
                   fontWeight: "400",
                   color: activeItem === "about" ? "#3A3535" : "#94969E",
                   cursor: "pointer",
+                  fontFamily: '"Aoboshi One", serif',
                 }}
                 onClick={() => setActiveItem("about")}
               >
@@ -86,6 +88,7 @@ const Navbar = () => {
                   fontWeight: "400",
                   color: activeItem === "podcast" ? "#3A3535" : "#94969E",
                   cursor: "pointer",
+                  fontFamily: '"Aoboshi One", serif',
                 }}
                 onClick={() => setActiveItem("podcast")}
               >
@@ -97,6 +100,7 @@ const Navbar = () => {
                   fontWeight: "400",
                   color: activeItem === "offer" ? "#3A3535" : "#94969E",
                   cursor: "pointer",
+                  fontFamily: '"Aoboshi One", serif',
                 }}
                 onClick={() => setActiveItem("offer")}
               >
@@ -108,6 +112,7 @@ const Navbar = () => {
                   fontWeight: "400",
                   color: activeItem === "publication" ? "#3A3535" : "#94969E",
                   cursor: "pointer",
+                  fontFamily: '"Aoboshi One", serif',
                 }}
                 onClick={() => setActiveItem("publication")}
               >
@@ -119,6 +124,7 @@ const Navbar = () => {
                   fontWeight: "400",
                   color: activeItem === "blog" ? "#3A3535" : "#94969E",
                   cursor: "pointer",
+                  fontFamily: '"Aoboshi One", serif',
                 }}
                 onClick={() => setActiveItem("blog")}
               >
@@ -151,21 +157,67 @@ const Navbar = () => {
                     horizontal: "right",
                   }}
                 >
-                  <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-                  <MenuItem onClick={handleMenuClose}>About</MenuItem>
-                  <MenuItem onClick={handleMenuClose}>Podcast</MenuItem>
-                  <MenuItem onClick={handleMenuClose}>Our Offer</MenuItem>
-                  <MenuItem onClick={handleMenuClose}>Publication</MenuItem>
-                  <MenuItem onClick={handleMenuClose}>Blog</MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    sx={{ fontFamily: '"Aoboshi One", serif' }}
+                  >
+                    Home
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    sx={{ fontFamily: '"Aoboshi One", serif' }}
+                  >
+                    About
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    sx={{ fontFamily: '"Aoboshi One", serif' }}
+                  >
+                    Podcast
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    sx={{ fontFamily: '"Aoboshi One", serif' }}
+                  >
+                    Our Offer
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    sx={{ fontFamily: '"Aoboshi One", serif' }}
+                  >
+                    Publication
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleMenuClose}
+                    sx={{ fontFamily: '"Aoboshi One", serif' }}
+                  >
+                    Blog
+                  </MenuItem>
                   <MenuItem onClick={handleMenuClose}>
-                    <Button variant="primary" disableRipple>
+                    <Button
+                      variant="primary"
+                      disableRipple
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        fontFamily: '"Aoboshi One", serif',
+                      }}
+                    >
                       Join Wait List
                     </Button>
                   </MenuItem>
                 </Menu>
               </>
             ) : (
-              <Button variant="primary" disableRipple>
+              <Button
+                variant="primary"
+                disableRipple
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "400",
+                  fontFamily: '"Aoboshi One", serif',
+                }}
+              >
                 Join Wait List
               </Button>
             )}

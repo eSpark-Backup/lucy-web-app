@@ -32,12 +32,23 @@ const About = () => {
           }}
         >
           <Typography
-            sx={{ lineHeight: "10px", color: "#FFFFFF", fontSize: "20.47px" }}
+            sx={{
+              lineHeight: "10px",
+              color: "#FFFFFF",
+              fontSize: "20.47px",
+              fontFamily: '"Aoboshi One", serif',
+            }}
           >
             About Us
           </Typography>
         </Box>
-        <Typography sx={{ fontSize: "50.99px", mt: "15px" }}>
+        <Typography
+          sx={{
+            fontSize: "50.99px",
+            mt: "15px",
+            fontFamily: '"Aoboshi One", serif',
+          }}
+        >
           Growth through Knowledge
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "15px", fontWeight: "400" }}>

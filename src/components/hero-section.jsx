@@ -46,8 +46,7 @@ const HeroSection = () => {
           sx={{
             fontWeight: 400,
             fontSize: { xs: "24px", md: "40px", lg: "71px" },
-            // lineHeight: 1.4,
-            // color: "#1A1A1A",
+            fontFamily: `"Aoboshi One", serif`,
           }}
         >
           Connect & Engage Effortlessly With <br />
