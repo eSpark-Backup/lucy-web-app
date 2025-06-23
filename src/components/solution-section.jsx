@@ -39,7 +39,7 @@ const SolutionSection = () => {
             boxShadow: "0px 4px 4px 0px rgba(0,0,0,0.25)",
             p: { xs: "30px", md: "30px 60px 60px 60px" },
             width: "100%",
-            maxWidth: "1500px",
+            maxWidth: "1400px",
             display: "flex",
             flexDirection: { xs: "column", lg: "row" },
             justifyContent: "space-between",

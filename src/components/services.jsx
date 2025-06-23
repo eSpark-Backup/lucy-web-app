@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -15,13 +15,14 @@ const Services = () => {
         pt: "30px",
       }}
     >
-      <Box
+      <Container
         sx={{
-          px: { xs: "30px", md: "50px", lg: "90px" },
+          // px: { xs: "30px", md: "50px", lg: "90px" },
           display: "flex",
           flexDirection: "column",
           rowGap: "15px",
         }}
+        maxWidth="xl"
       >
         <Box
           sx={{
@@ -50,7 +51,7 @@ const Services = () => {
         >
           Our Core Services
         </Typography>
-      </Box>
+      </Container>
 
       <Box
         sx={{
