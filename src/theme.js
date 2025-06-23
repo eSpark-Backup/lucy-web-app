@@ -7,7 +7,7 @@ export const theme = createTheme({
       sm: 601,
       md: 769,
       lg: 1281,
-      xl: 1921,
+      xl: 1596,
     },
   },
   palette: {
@@ -101,6 +101,13 @@ export const theme = createTheme({
           fieldset: {
             border: 0,
           },
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthLg: {
+          maxWidth: "1596px",
         },
       },
     },
