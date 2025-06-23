@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/font/Gilroy-Medium.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Gilroy", sans-serif;
+}
+
+.swiper-pagination-bullet {
+  width: 14px !important;
+  height: 14px !important;
+  background: #a3a2a2 !important;
+  /* opacity: 1; */
+}
+
+.swiper-pagination-bullet-active {
+  background: #282D4D !important;
+  width: 14px !important;
+  height: 14px !important;
+}
