@@ -5,7 +5,7 @@ const WaitList = () => {
   return (
     <Box
       sx={{
-        pl: "20px",
+        pl: "35px",
         background: "linear-gradient(90deg, #4976E7 0%, #294281 100%)",
         // height: "550px",
         mt: "150px",

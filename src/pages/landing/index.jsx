@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import {
   Navbar,
   HeroSection,
@@ -16,14 +16,16 @@ const LandingPage = () => {
     <>
       <Navbar />
       <HeroSection />
-      <Box sx={{ px: { xs: "30px", md: "50px", lg: "90px" } }}>
+      <Container maxWidth="xl">
         <LogoSlider />
         <SolutionSection />
-      </Box>
+      </Container>
       <WaitList />
       <Services />
-      <About />
-      <Reviews />
+      <Container maxWidth="xl">
+        <About />
+        <Reviews />
+      </Container>
       <Footer />
     </>
   );

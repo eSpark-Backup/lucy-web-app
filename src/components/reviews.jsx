@@ -15,7 +15,7 @@ const Reviews = () => {
       >
         Kind word of Our Users
       </Typography>
-      <Box sx={{ px: { xs: "30px", md: "50px", lg: "90px" } }}>
+      <Box>
         <Masonry
           columns={{ xs: 1, sm: 2, md: 2, lg: 3 }}
           className="my-masonry-grid"

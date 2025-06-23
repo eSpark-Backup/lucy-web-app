@@ -50,18 +50,11 @@ const LogoSlider = () => {
       <Swiper
         modules={[Autoplay]}
         loop={true}
-        centeredSlides={true}
-        slidesPerView={7}
+        slidesPerView={"auto"}
         spaceBetween={30}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
-        }}
-        breakpoints={{
-          0: { slidesPerView: 2 },
-          640: { slidesPerView: 4 },
-          768: { slidesPerView: 5 },
-          1024: { slidesPerView: 7 },
         }}
         style={{
           marginTop: "30px",
@@ -74,7 +67,7 @@ const LogoSlider = () => {
           <SwiperSlide
             key={index}
             style={{
-              width: "150px",
+              width: "120px", // fixed width to allow peeking
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
