@@ -19,7 +19,6 @@ const Reviews = () => {
         <Masonry
           columns={{ xs: 1, sm: 2, md: 2, lg: 3 }}
           className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
           spacing={2}
         >
           {reviewCardsContent.map((item, index) => (

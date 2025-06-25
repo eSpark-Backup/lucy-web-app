@@ -111,7 +111,6 @@ const Step2 = () => {
               color: "#1A4FFF7D",
             },
           }}
-          MenuP
           MenuProps={{
             slotProps: {
               root: { hideBackdrop: true },
@@ -232,6 +231,8 @@ const WaitlistModal = () => {
         sx={{
           background: "linear-gradient(to bottom, #F8F6FE, #fff)",
           width: { xs: "90%", xl: "1440px" },
+          maxHeight: "90vh",
+          overflowY: "auto",
           padding: { xs: "12px 20px", md: "32px 40px" },
           borderRadius: "59px",
         }}
