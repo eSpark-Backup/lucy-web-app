@@ -332,7 +332,12 @@ const WaitlistModal = () => {
             textAlign="center"
           >
             Be the First to get update <br></br> by Joining Our{" "}
-            <Typography fontStyle="italic" fontWeight={400} component="span">
+            <Typography
+              fontSize={{ xs: "20px", md: "44px" }}
+              fontStyle="italic"
+              fontWeight={400}
+              component="span"
+            >
               Waitlist!
             </Typography>
           </Typography>
