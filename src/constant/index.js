@@ -20,103 +20,91 @@ import {
 
 export const features = [
   {
-    heading: "20k+ Students Trained",
+    heading: "Fill Every Seat",
     description:
-      "Over 20,000 students have used the Edu Plus Accounting course library to study for - and pass! - the QuickBooks Online ProAdvisor exam and become experts in the bookkeeping field.",
+      "More students mean more funding, ensuring more resources and improved education.",
     img: grad,
   },
   {
-    heading: "100% Cert Pass Rate",
+    heading: "Lead Over Other Schools",
     description:
-      "We are so confident in our method that we guarantee success! If you complete the entire course and don’t pass your certification exam, we’ll give you a complete refund.",
+      "Parents choose schools that showcase their successes. Make sure yours stands out.",
     img: certified,
   },
   {
-    heading: "15+ Years in Business",
+    heading: "Boost Your Reputation",
     description:
-      "With almost two decades of experience, our team knows QuickBooks inside and out.With almost two decades of experience, our team knows QuickBooks inside and out.",
+      "Easily highlight Ofsted ratings, academic success, and extracurricular victories.",
     img: magic,
   },
   {
-    heading: "500k+ Hours",
+    heading: "Engage Your Community",
     description:
-      "Our courses will help you before, during, and after your certification journey. Become a better bookkeeper with our ever-growing library of educational content!",
+      "Strengthen ties with parents, local media, and potential future students alike.",
     img: pages,
   },
 ];
 
 export const slides = [
   {
-    heading: "Coaching Teams &",
+    heading: "Edupulse creates your press releases",
     description:
-      "De l'acquisition de prospects à la télévente, profitez de services complets pour conquérir de nouveaux marchés et fidéliser votre clientèle.",
+      "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service1,
   },
   {
-    heading: "Courses",
+    heading: "Edupulse creates your Facebook posts",
     description:
-      "Accompagnement des dirigeants dans la fidélisation, la prospection, le développement commercial, et la relation commerciale à distance.",
+      "Edupulse designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service2,
   },
   {
-    heading: "Leadership",
+    heading: "Edupulse creates your Instagram posts",
     description:
-      "Créez des actions de fidélisation percutantes, des enquêtes de satisfaction aux relances d'invitations événements, pour renforcer vos relations clients.",
+      "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Teaching",
+    heading: "Edupulse creates your newsletter content",
     description:
-      "Boostez votre efficacité commerciale en externalisant la prospection et en maintenant des relations solides avec vos clients.",
+      "Edupulse curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Coaching Teams &",
+    heading: "Edupulse writes your Trust & governor report summaries",
     description:
-      "De l'acquisition de prospects à la télévente, profitez de services complets pour conquérir de nouveaux marchés et fidéliser votre clientèle.",
+      "Edupulse crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+    image: service3,
+  },
+  {
+    heading: "Edupulse creates your press releases",
+    description:
+      "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+    image: service2,
+  },
+  {
+    heading: "Edupulse creates your Facebook posts",
+    description:
+      "Edupulse designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service1,
   },
   {
-    heading: "Courses",
+    heading: "Edupulse creates your Instagram posts",
     description:
-      "Accompagnement des dirigeants dans la fidélisation, la prospection, le développement commercial, et la relation commerciale à distance.",
-    image: service2,
-  },
-  {
-    heading: "Leadership",
-    description:
-      "Créez des actions de fidélisation percutantes, des enquêtes de satisfaction aux relances d'invitations événements, pour renforcer vos relations clients.",
-    image: service3,
-  },
-  {
-    heading: "Teaching",
-    description:
-      "Boostez votre efficacité commerciale en externalisant la prospection et en maintenant des relations solides avec vos clients.",
+      "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service4,
   },
   {
-    heading: "Coaching Teams &",
+    heading: "Edupulse creates your newsletter content",
     description:
-      "De l'acquisition de prospects à la télévente, profitez de services complets pour conquérir de nouveaux marchés et fidéliser votre clientèle.",
+      "Edupulse curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service1,
   },
   {
-    heading: "Courses",
+    heading: "Edupulse writes your Trust & governor report summaries",
     description:
-      "Accompagnement des dirigeants dans la fidélisation, la prospection, le développement commercial, et la relation commerciale à distance.",
-    image: service2,
-  },
-  {
-    heading: "Leadership",
-    description:
-      "Créez des actions de fidélisation percutantes, des enquêtes de satisfaction aux relances d'invitations événements, pour renforcer vos relations clients.",
+      "Edupulse crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service3,
-  },
-  {
-    heading: "Teaching",
-    description:
-      "Boostez votre efficacité commerciale en externalisant la prospection et en maintenant des relations solides avec vos clients.",
-    image: service4,
   },
 ];
 

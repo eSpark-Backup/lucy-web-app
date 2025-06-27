@@ -3,17 +3,17 @@ import { letterBox } from "../assets";
 import { useNavigate } from "react-router-dom";
 
 const WaitList = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
-        pl: "35px",
+        pl: { xs: "15px", md: "20px", lg: "35px" },
         background: "linear-gradient(90deg, #4976E7 0%, #294281 100%)",
         // height: "550px",
         mt: "150px",
         display: "flex",
         alignItems: "center",
-        pr: { xs: "5px", md: "20px", lg: "140px" },
+        pr: { xs: "15px", md: "20px", lg: "140px" },
         position: "relative",
         flexDirection: { xs: "column", lg: "row" },
         pb: { xs: "15px", lg: "0px" },
@@ -50,9 +50,12 @@ const WaitList = () => {
             height: "19px",
             width: { xs: "100%", sm: "347px" },
             position: "relative",
-            top: { xs: "0px", lg: "-220px" },
+            top: { xs: "0px", lg: "-210px" },
             borderRadius: "50%",
             right: { xs: "10px", sm: "40px" },
+            "@media (min-width: 1280px) and (max-width: 1850px)": {
+              top: "-165px",
+            },
           }}
         ></Box>
       </Box>
@@ -77,12 +80,14 @@ const WaitList = () => {
             fontFamily: '"Aoboshi One", serif',
           }}
         >
-          Join our wait List to get Earlier <br /> Access in our AI platform
+          {/* Join our wait List to get Earlier <br /> Access in our AI platform */}
+          Exclusive Waitlist Offer
         </Typography>
 
         <Box sx={{ width: "270px" }}>
           <Button
-            onClick={() => navigate("/?open=true&step=1")} variant="secondary"
+            onClick={() => navigate("/?open=true&step=1")}
+            variant="secondary"
             disableRipple
             sx={{ fontFamily: '"Roboto", sans-serif' }}
           >
@@ -96,8 +101,16 @@ const WaitList = () => {
             fontFamily: '"Plus Jakarta Sans", sans-serif',
           }}
         >
-          Stay ahead with the latest updates, insights, and events from Macat{" "}
-          <br /> Megatrons.
+          {/* Stay ahead with the latest updates, insights, and events from Macat{" "}
+          <br /> Megatrons. */}
+          Be part of our community! Join the waitlist today and get 10% off your
+          subscription at app launch.
+          <br />
+          Just £10 per school per month if the whole Trust signs up, or £50 per
+          month for a standalone school subscription.
+          <br />
+          {/* Your competition is already marketing—are you? Join the waitlist now
+          and take control of your school’s success. */}
         </Typography>
       </Box>
     </Box>

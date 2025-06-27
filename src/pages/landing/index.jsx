@@ -11,21 +11,34 @@ import {
   About,
   WaitlistModal,
 } from "../../components";
+import { Element } from "react-scroll";
 
 const LandingPage = () => {
   return (
     <>
       <Navbar />
-      <HeroSection />
+      <Element name="home">
+        <HeroSection />
+      </Element>
       <Container maxWidth="xl">
         <LogoSlider />
-        <SolutionSection />
+        <Element name="edu">
+          <SolutionSection />
+        </Element>
       </Container>
-      <WaitList />
-      <Services />
+      <Element name="wait">
+        <WaitList />
+      </Element>
+      <Element name="services">
+        <Services />
+      </Element>
       <Container maxWidth="xl">
-        <About />
-        <Reviews />
+        <Element name="about">
+          <About />
+        </Element>
+        <Element name="testimonials">
+          <Reviews />
+        </Element>
       </Container>
       <Footer />
       <WaitlistModal />
