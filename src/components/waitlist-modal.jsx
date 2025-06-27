@@ -103,7 +103,7 @@ const Step2 = () => {
 
   const SendHandler = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/start-survey", data);
+      const res = await axios.post(import.meta.env.VITE_BASE_URL, data);
       setIsLoading(false);
       navigate("/?open=true&step=3");
     } catch (error) {
