@@ -49,9 +49,9 @@ const HeroSection = () => {
             fontFamily: `"Aoboshi One", serif`,
           }}
         >
-          Connect & Engage Effortlessly With <br />
+          Edupulse App Attract More Students. <br />
           <Box component="span" variant="gradientText">
-            Others on Our AI School Marketing.
+            Just £10/month Boost Your School’s Visibility
           </Box>
         </Typography>
 
@@ -63,8 +63,8 @@ const HeroSection = () => {
             fontWeight: "400",
           }}
         >
-          Welcome to EduPulse – a brand new think tank that drives engagement
-          through <br /> conversation and deep thinking about education.
+          Schools That Market Themselves Win. Don’t Get Left Behind! <br /> Let
+          the Edupulse App create your marketing content.
         </Typography>
       </Box>
 

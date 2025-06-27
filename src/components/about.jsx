@@ -49,23 +49,25 @@ const About = () => {
             fontFamily: '"Aoboshi One", serif',
           }}
         >
-          Growth through Knowledge
+          Built by Experts Who Understand Schools
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "15px", fontWeight: "400" }}>
-          EduPulse was established in 2023 by Adam and Chris following two years
-          of discussions about the need to enable more people to have a voice
-          within the education sector and to better connect the brilliant minds
-          working in Initial Teacher Education, universities and schools.
+          Every empty seat in your school means lost money and funding. Edupulse
+          is your very own school marketing department. It is a game-changing,
+          inexpensive AI-based marketing app. This subscription-based app could
+          cost your school as little as £10 per month. It means busy,
+          cash-strapped schools will be visible in their community. Parents have
+          more choices than ever, and if you’re not actively promoting your
+          school, you’re missing out. But we know how busy school staff are and
+          how finances are stretched, that’s why we’ve built Edupulse an
+          AI-driven marketing tool to help your school.
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "20px", fontWeight: "400" }}>
-          With evidence engagement at the heart of all they do, EduPulse writes
-          for publications, creates space for conversation through its podcast,
-          reviews recent publications, provides talks and workshops for trusts,
-          universities and schools and provides informal support for anyone who
-          wants it in the education world. about the need to enable more people
-          to have a voice within the education sector and to better connect the
-          brilliant minds working in Initial Teacher Education, universities and
-          schools.
+          EduPulse was created by a school governor, former BBC journalist, and
+          director of Exposure PR, Lucy Hood, who understands exactly what
+          schools need to stand out. This isn’t just another AI tool, it’s a
+          tailor-made solution designed with insider knowledge to help schools
+          like yours thrive.
         </Typography>
       </Box>
       <Box

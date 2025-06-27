@@ -15,6 +15,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { logo } from "../assets";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-scroll";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -34,11 +35,8 @@ const Navbar = () => {
   return (
     <Box
       sx={{
-        // display: "flex",
-        // justifyContent: "center",
-        // alignItems: "center",
         borderBottom: "0.3px solid #726E6E",
-        backgroundColor: "#FBFCFD",
+        backgroundColor: "#FFF",
       }}
     >
       <Container maxWidth="xl">
@@ -70,9 +68,67 @@ const Navbar = () => {
                     cursor: "pointer",
                     fontFamily: '"Aoboshi One", serif',
                   }}
-                  onClick={() => setActiveItem("home")}
                 >
-                  Home
+                  <Link
+                    to="home"
+                    smooth={true}
+                    onClick={() => setActiveItem("home")}
+                  >
+                    Home
+                  </Link>
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    color: activeItem === "edu" ? "#3A3535" : "#94969E",
+                    cursor: "pointer",
+                    fontFamily: '"Aoboshi One", serif',
+                  }}
+                >
+                  <Link
+                    to="edu"
+                    smooth={true}
+                    duration={800}
+                    onClick={() => setActiveItem("edu")}
+                  >
+                    Edu Plus
+                  </Link>
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    color: activeItem === "wait" ? "#3A3535" : "#94969E",
+                    cursor: "pointer",
+                    fontFamily: '"Aoboshi One", serif',
+                  }}
+                >
+                  <Link
+                    to="wait"
+                    smooth={true}
+                    offset={-70}
+                    onClick={() => setActiveItem("wait")}
+                  >
+                    Waitlist
+                  </Link>
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    color: activeItem === "services" ? "#3A3535" : "#94969E",
+                    cursor: "pointer",
+                    fontFamily: '"Aoboshi One", serif',
+                  }}
+                >
+                  <Link
+                    to="services"
+                    smooth={true}
+                    onClick={() => setActiveItem("services")}
+                  >
+                    Services
+                  </Link>
                 </Typography>
                 <Typography
                   sx={{
@@ -82,57 +138,32 @@ const Navbar = () => {
                     cursor: "pointer",
                     fontFamily: '"Aoboshi One", serif',
                   }}
-                  onClick={() => setActiveItem("about")}
                 >
-                  About
+                  <Link
+                    to="about"
+                    smooth={true}
+                    onClick={() => setActiveItem("about")}
+                  >
+                    About
+                  </Link>
                 </Typography>
                 <Typography
                   sx={{
                     fontSize: "16px",
                     fontWeight: "400",
-                    color: activeItem === "podcast" ? "#3A3535" : "#94969E",
+                    color:
+                      activeItem === "testimonials" ? "#3A3535" : "#94969E",
                     cursor: "pointer",
                     fontFamily: '"Aoboshi One", serif',
                   }}
-                  onClick={() => setActiveItem("podcast")}
                 >
-                  Podcast
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "offer" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                  onClick={() => setActiveItem("offer")}
-                >
-                  Our Offer
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "publication" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                  onClick={() => setActiveItem("publication")}
-                >
-                  Publication
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "blog" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                  onClick={() => setActiveItem("blog")}
-                >
-                  Blog
+                  <Link
+                    to="testimonials"
+                    smooth={true}
+                    onClick={() => setActiveItem("testimonials")}
+                  >
+                    Testimonials
+                  </Link>
                 </Typography>
               </Box>
             )}
@@ -165,44 +196,100 @@ const Navbar = () => {
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
-                      Home
+                      <Link
+                        to="home"
+                        smooth={true}
+                        onClick={() => {
+                          setActiveItem("home");
+                          handleMenuClose();
+                        }}
+                      >
+                        Home
+                      </Link>
                     </MenuItem>
                     <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
-                      About
+                      <Link
+                        to="edu"
+                        smooth={true}
+                        duration={800}
+                        onClick={() => {
+                          setActiveItem("edu");
+                          handleMenuClose();
+                        }}
+                      >
+                        Edu Plus
+                      </Link>
                     </MenuItem>
                     <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
-                      Podcast
+                      <Link
+                        to="wait"
+                        smooth={true}
+                        offset={-70}
+                        onClick={() => {
+                          setActiveItem("wait");
+                          handleMenuClose();
+                        }}
+                      >
+                        Waitlist
+                      </Link>
                     </MenuItem>
                     <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
-                      Our Offer
+                      <Link
+                        to="services"
+                        smooth={true}
+                        onClick={() => {
+                          setActiveItem("services");
+                          handleMenuClose();
+                        }}
+                      >
+                        Services
+                      </Link>
                     </MenuItem>
                     <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
-                      Publication
+                      <Link
+                        to="about"
+                        smooth={true}
+                        onClick={() => {
+                          setActiveItem("about");
+                          handleMenuClose();
+                        }}
+                      >
+                        About
+                      </Link>
                     </MenuItem>
                     <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
-                      Blog
+                      <Link
+                        to="testimonials"
+                        smooth={true}
+                        onClick={() => {
+                          setActiveItem("testimonials");
+                          handleMenuClose();
+                        }}
+                      >
+                        Testimonials
+                      </Link>
                     </MenuItem>
                     <MenuItem
-                    onClick={() => {
-                      navigate("/?open=true&step=1");
-                      handleMenuClose();
-                    }}
-                  >
+                      onClick={() => {
+                        navigate("/?open=true&step=1");
+                        handleMenuClose();
+                      }}
+                    >
                       <Button
                         variant="primary"
                         disableRipple
@@ -220,7 +307,7 @@ const Navbar = () => {
               ) : (
                 <Button
                   onClick={() => navigate("/?open=true&step=1")}
-                variant="primary"
+                  variant="primary"
                   disableRipple
                   sx={{
                     fontSize: "16px",
