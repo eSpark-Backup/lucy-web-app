@@ -16,6 +16,8 @@ import {
   service2,
   service3,
   service4,
+  service5,
+  service6,
 } from "../assets";
 
 export const features = [
@@ -74,13 +76,13 @@ export const slides = [
     heading: "Edupulse writes your Trust & governor report summaries",
     description:
       "Edupulse crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
-    image: service3,
+    image: service5,
   },
   {
     heading: "Edupulse creates your press releases",
     description:
       "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
-    image: service2,
+    image: service6,
   },
   {
     heading: "Edupulse creates your Facebook posts",
@@ -92,19 +94,19 @@ export const slides = [
     heading: "Edupulse creates your Instagram posts",
     description:
       "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
-    image: service4,
+    image: service3,
   },
   {
     heading: "Edupulse creates your newsletter content",
     description:
       "Edupulse curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
-    image: service1,
+    image: service4,
   },
   {
     heading: "Edupulse writes your Trust & governor report summaries",
     description:
       "Edupulse crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
-    image: service3,
+    image: service5,
   },
 ];
 

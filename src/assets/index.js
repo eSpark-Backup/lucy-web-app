@@ -36,12 +36,16 @@ import guardian from "./images/guardian.png";
 import morning from "./images/morning.png";
 import woman from "./images/woman.png";
 import letterBox from "./images/letter_box.png";
-import service1 from "./images/service1.png";
+import service1 from "./images/service1.jpg";
 import service2 from "./images/service2.png";
 import service3 from "./images/service3.png";
 import service4 from "./images/service4.png";
+import service5 from "./images/service5.png";
+import service6 from "./images/service6.png";
 import about from "./images/about.png";
 import modalBg from "./images/modal-bg-image.png";
+
+import bannerVideo from "./video/banner_video.mp4";
 
 export {
   logo,
@@ -87,4 +91,7 @@ export {
   modalBg,
   formIcon,
   tick,
+  bannerVideo,
+  service5,
+  service6,
 };

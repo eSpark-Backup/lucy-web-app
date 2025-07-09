@@ -36,9 +36,9 @@ const LandingPage = () => {
         <Element name="about">
           <About />
         </Element>
-        <Element name="testimonials">
+        {/* <Element name="testimonials">
           <Reviews />
-        </Element>
+        </Element> */}
       </Container>
       <Footer />
       <WaitlistModal />

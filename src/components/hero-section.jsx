@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ai, dashed } from "../assets";
+import { ai, bannerVideo, dashed } from "../assets";
 
 const HeroSection = () => {
   return (
@@ -15,7 +15,7 @@ const HeroSection = () => {
       }}
     >
       {/* Background dashed path */}
-      <Box
+      {/* <Box
         component="img"
         src={dashed}
         alt="Dashed Path"
@@ -29,7 +29,7 @@ const HeroSection = () => {
           zIndex: 0,
           pointerEvents: "none",
         }}
-      />
+      /> */}
 
       {/* Text Content */}
       <Box
@@ -70,15 +70,17 @@ const HeroSection = () => {
 
       {/* Foreground AI Image */}
       <Box
-        component="img"
-        src={ai}
-        alt="AI Card"
+        component="video"
+        src={bannerVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
         sx={{
           display: "block",
           mt: { xs: 6, md: 8 },
           mx: "auto",
           width: "75%",
-          // maxWidth: "720px",
           height: "auto",
           zIndex: 1,
           position: "relative",
