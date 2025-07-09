@@ -9,7 +9,6 @@ const HeroSection = () => {
         position: "relative",
         overflow: "hidden",
         px: { xs: 2, md: 6, lg: 12 },
-        py: { xs: 6, md: 10 },
         background:
           "linear-gradient(180deg, rgba(255, 255, 255, 0) 6.25%, #FFFFFF 100%)",
       }}
@@ -44,23 +43,24 @@ const HeroSection = () => {
         <Typography
           variant="gradientText"
           sx={{
-            fontWeight: 400,
+            fontWeight: 600,
             fontSize: { xs: "24px", md: "40px", lg: "71px" },
-            fontFamily: `"Aoboshi One", serif`,
+            fontFamily: `"Poppins", sans-serif`,
           }}
         >
-          Edupulse App Attract More Students. <br />
-          <Box component="span" variant="gradientText">
-            Just £10/month Boost Your School’s Visibility
-          </Box>
+          Attract More Students. <br />
+          Just £10/month <br />
+          Boost Your School’s Visibility <br />
+          Edupulse App
         </Typography>
 
         <Typography
           sx={{
             color: "#8E8F92",
             mx: "auto",
-            fontSize: { xs: "14px", md: "22px" },
+            fontSize: { xs: "14px", md: "28px" },
             fontWeight: "400",
+            mt: "20px",
           }}
         >
           Schools That Market Themselves Win. Don’t Get Left Behind! <br /> Let

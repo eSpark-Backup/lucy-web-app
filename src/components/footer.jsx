@@ -4,7 +4,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  Link,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,6 +17,7 @@ import {
   phone,
   email,
 } from "../assets";
+import { Link } from "react-scroll";
 
 export default function Footer() {
   return (
@@ -84,14 +84,20 @@ export default function Footer() {
           <Grid size={{ xs: 6, md: 4, lg: 2 }}>
             <Section
               heading="Company"
-              links={["About us", "Services", "Community", "Testimonial"]}
+              links={[
+                { label: "About us", route: "about" },
+                { label: "Services", route: "services" },
+              ]}
             />
           </Grid>
 
           <Grid size={{ xs: 6, md: 4, lg: 2 }}>
             <Section
               heading="Platform"
-              links={["Mission", "Vision", "Wait list", "Solutions"]}
+              links={[
+                { label: "Wait list", route: "wait" },
+                { label: "Solutions", route: "edu" },
+              ]}
             />
           </Grid>
 
@@ -103,10 +109,10 @@ export default function Footer() {
             </Typography>
 
             <Stack spacing={1.5}>
-              <ContactRow
+              {/* <ContactRow
                 icon={<img src={phone} alt="linkedin" />}
                 text="+123 456 7890"
-              />
+              /> */}
               <ContactRow
                 icon={<img src={email} alt="linkedin" />}
                 text="hello@edupulse.co.uk"
@@ -161,15 +167,14 @@ function Section({ heading, links }) {
       <Typography sx={{ color: "#FFF", fontSize: "21px", fontWeight: 600 }}>
         {heading}
       </Typography>
-      {links.map((label) => (
+      {links.map((item) => (
         <Link
-          key={label}
-          href="#"
-          underline="none"
-          variant="body2"
-          sx={{ color: "#EBEBEB", fontSize: "21px", fontWeight: 400 }}
+          to={item?.route}
+          smooth={true}
+          style={{ cursor: "pointer" }}
+          // sx={{ color: "#EBEBEB", fontSize: "21px", fontWeight: 400 }}
         >
-          {label}
+          {item?.label}
         </Link>
       ))}
     </Stack>

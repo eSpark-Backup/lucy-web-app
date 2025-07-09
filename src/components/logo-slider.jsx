@@ -41,7 +41,7 @@ const LogoSlider = () => {
     guardian,
   ];
   return (
-    <Box sx={{ mb: "30px" }}>
+    <Box sx={{ mb: "30px", mt: "20px" }}>
       <Typography
         sx={{ color: "#2B2C2C", fontSize: "25px", textAlign: "center" }}
       >
