@@ -41,11 +41,11 @@ const HeroSection = () => {
         }}
       >
         <Typography
-          variant="gradientText"
           sx={{
             fontWeight: 600,
             fontSize: { xs: "24px", md: "40px", lg: "71px" },
             fontFamily: `"Poppins", sans-serif`,
+            color: "#020202",
           }}
         >
           Attract More Students. <br />
