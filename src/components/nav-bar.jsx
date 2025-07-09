@@ -147,7 +147,7 @@ const Navbar = () => {
                     About
                   </Link>
                 </Typography>
-                <Typography
+                {/* <Typography
                   sx={{
                     fontSize: "16px",
                     fontWeight: "400",
@@ -164,7 +164,7 @@ const Navbar = () => {
                   >
                     Testimonials
                   </Link>
-                </Typography>
+                </Typography> */}
               </Box>
             )}
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -269,7 +269,7 @@ const Navbar = () => {
                         About
                       </Link>
                     </MenuItem>
-                    <MenuItem
+                    {/* <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
@@ -283,7 +283,7 @@ const Navbar = () => {
                       >
                         Testimonials
                       </Link>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem
                       onClick={() => {
                         navigate("/?open=true&step=1");

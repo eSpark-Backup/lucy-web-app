@@ -53,7 +53,7 @@ export default function Footer() {
                 years of discussions about the need to enable more people to
                 have a voice within the education sector.
               </Typography>
-              <Stack direction="row" spacing={1}>
+              {/* <Stack direction="row" spacing={1}>
                 {[
                   { icon: <img src={facebook} alt="facebook" />, href: "#" },
                   { icon: <img src={instagram} alt="instagram" />, href: "#" },
@@ -77,7 +77,7 @@ export default function Footer() {
                     {icon}
                   </IconButton>
                 ))}
-              </Stack>
+              </Stack> */}
             </Stack>
           </Grid>
 
@@ -109,7 +109,7 @@ export default function Footer() {
               />
               <ContactRow
                 icon={<img src={email} alt="linkedin" />}
-                text="support@mm.com"
+                text="hello@edupulse.co.uk"
               />
             </Stack>
           </Grid>
@@ -120,17 +120,22 @@ export default function Footer() {
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={{ xs: 1, md: 0 }}
-          justifyContent="space-between"
+          justifyContent="center"
           alignItems="center"
           pb={3}
         >
           <Typography
-            sx={{ color: "#EBEBEB", fontSize: "18px", fontWeight: 400 }}
+            sx={{
+              color: "#EBEBEB",
+              fontSize: "18px",
+              fontWeight: 400,
+              textAlign: "center",
+            }}
           >
             © 2025 EduPlus. All rights reserved.
           </Typography>
 
-          <Stack direction="row" flexWrap="wrap" spacing={3}>
+          {/* <Stack direction="row" flexWrap="wrap" spacing={3}>
             {["Privacy Policy", "Terms of Use", "Legal", "Site Map"].map(
               (label) => (
                 <Link
@@ -143,7 +148,7 @@ export default function Footer() {
                 </Link>
               )
             )}
-          </Stack>
+          </Stack> */}
         </Stack>
       </Container>
     </Box>
