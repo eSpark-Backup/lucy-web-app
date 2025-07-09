@@ -89,7 +89,6 @@ const Navbar = () => {
                   <Link
                     to="edu"
                     smooth={true}
-                    duration={800}
                     onClick={() => setActiveItem("edu")}
                   >
                     Edu Plus
@@ -214,7 +213,6 @@ const Navbar = () => {
                       <Link
                         to="edu"
                         smooth={true}
-                        duration={800}
                         onClick={() => {
                           setActiveItem("edu");
                           handleMenuClose();

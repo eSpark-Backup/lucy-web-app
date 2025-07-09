@@ -84,7 +84,7 @@ const WaitList = () => {
           Exclusive Waitlist Offer
         </Typography>
 
-        <Box sx={{ width: "270px" }}>
+        <Box sx={{ width: { xs: "100%", sm: "270px" } }}>
           <Button
             onClick={() => navigate("/?open=true&step=1")}
             variant="secondary"
