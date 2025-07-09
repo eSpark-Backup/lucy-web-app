@@ -49,9 +49,11 @@ export default function Footer() {
                   color: "#FFF",
                 }}
               >
-                EduPulse was established in 2023 by Adam and Chris following two
-                years of discussions about the need to enable more people to
-                have a voice within the education sector.
+                EduPulse is a cost-effective marketing app that enables schools
+                to boost their visibility, attract more students and funding,
+                and strengthen their reputation in the local community. It is
+                the brainchild of former BBC journalist and marketing expert
+                Lucy Hood.
               </Typography>
               {/* <Stack direction="row" spacing={1}>
                 {[
