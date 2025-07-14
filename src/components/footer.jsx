@@ -32,7 +32,7 @@ export default function Footer() {
     >
       <Container maxWidth="xl">
         <Grid container spacing={3}>
-          <Grid size={{ xs: 12, lg: 6 }}>
+          <Grid size={{ xs: 12, lg: 5 }}>
             <Stack spacing={2}>
               <Box
                 component="img"
@@ -103,7 +103,7 @@ export default function Footer() {
             />
           </Grid>
 
-          <Grid size={{ xs: 12, md: 4, lg: 2 }}>
+          <Grid size={{ xs: 12, md: 4, lg: 3 }}>
             <Typography
               sx={{ color: "#FFF", fontSize: "21px", fontWeight: 600, mb: 2 }}
             >

@@ -12,7 +12,7 @@ const SolutionSection = () => {
       }}
     >
       {/* Background Image */}
-      <Box
+      {/* <Box
         component="img"
         src={woman}
         alt="Image"
@@ -21,25 +21,27 @@ const SolutionSection = () => {
           height: "auto",
           objectFit: "cover",
         }}
-      />
+      /> */}
 
       {/* Content Container (floating card) */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex-end",
-          mt: { xs: -12, md: "-305px", xl: "-380px" },
-          mr: { xs: "0px", lg: "20px" },
+          justifyContent: "center",
+          alignItems: "center",
+          mt: "60px",
+          // mt: { xs: -12, md: "-305px", xl: "-380px" },
+          // mr: { xs: "0px", lg: "20px" },
         }}
       >
         <Box
           sx={{
-            backgroundColor: "rgba(255, 255, 255, 0.7)",
+            backgroundColor: "#CCD7FF47",
             borderRadius: "35px",
             boxShadow: "0px 4px 4px 0px rgba(0,0,0,0.25)",
             p: { xs: "30px", md: "30px 60px 60px 60px" },
             width: "100%",
-            maxWidth: "1400px",
+            maxWidth: "1300px",
             display: "flex",
             flexDirection: { xs: "column", lg: "row" },
             justifyContent: "space-between",
