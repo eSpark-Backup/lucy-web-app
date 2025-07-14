@@ -52,7 +52,7 @@ const SolutionSection = () => {
         >
           <Box
             sx={{
-              flexBasis: { lg: "440px" },
+              flexBasis: { lg: "455px" },
               flexShrink: 0,
             }}
           >
@@ -64,7 +64,7 @@ const SolutionSection = () => {
                 fontFamily: '"Aoboshi One", serif',
               }}
             >
-              Edu Plus Difference
+              Edupulse Difference
             </Typography>
             <Typography sx={{ mb: 2 }}>
               Expert Guidance. Custom Solutions. <br /> Efficient Setup. Ongoing
