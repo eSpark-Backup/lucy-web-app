@@ -49,7 +49,7 @@ export default function Footer() {
                   color: "#FFF",
                 }}
               >
-                EduPulse is a cost-effective marketing app that enables schools
+                Edupulse is a cost-effective marketing app that enables schools
                 to boost their visibility, attract more students and funding,
                 and strengthen their reputation in the local community. It is
                 the brainchild of former BBC journalist and marketing expert
@@ -140,7 +140,7 @@ export default function Footer() {
               textAlign: "center",
             }}
           >
-            © 2025 EduPlus. All rights reserved.
+            © 2025 Edupulse. All rights reserved.
           </Typography>
 
           {/* <Stack direction="row" flexWrap="wrap" spacing={3}>

@@ -63,7 +63,7 @@ const About = () => {
           AI-driven marketing tool to help your school.
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "20px", fontWeight: "400" }}>
-          EduPulse was created by a school governor, former BBC journalist, and
+          Edupulse was created by a school governor, former BBC journalist, and
           director of Exposure PR, Lucy Hood, who understands exactly what
           schools need to stand out. This isn’t just another AI tool, it’s a
           tailor-made solution designed with insider knowledge to help schools
