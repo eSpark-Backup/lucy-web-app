@@ -10,7 +10,7 @@ const WaitList = () => {
         pl: { xs: "15px", md: "20px", lg: "35px" },
         background: "linear-gradient(90deg, #4976E7 0%, #294281 100%)",
         // height: "550px",
-        mt: "150px",
+        mt: { xs: "100px", lg: "180px" },
         display: "flex",
         alignItems: "center",
         pr: { xs: "15px", md: "20px", lg: "140px" },
