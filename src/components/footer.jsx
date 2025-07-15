@@ -54,6 +54,10 @@ export default function Footer() {
                 and strengthen their reputation in the local community. It is
                 the brainchild of former BBC journalist and marketing expert
                 Lucy Hood.
+                <br />
+                By using this app, you acknowledge and agree that you do so at
+                your own risk. The developer is not liable for any consequences
+                arising from your use of the app.
               </Typography>
               {/* <Stack direction="row" spacing={1}>
                 {[

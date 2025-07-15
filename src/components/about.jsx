@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { about } from "../assets";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -64,10 +65,18 @@ const About = () => {
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "20px", fontWeight: "400" }}>
           Edupulse was created by a school governor, former BBC journalist, and
-          director of Exposure PR, Lucy Hood, who understands exactly what
-          schools need to stand out. This isn’t just another AI tool, it’s a
-          tailor-made solution designed with insider knowledge to help schools
-          like yours thrive.
+          director of{" "}
+          <a
+            href="https://www.exposure-pr.co.uk"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#000000" }}
+          >
+            Exposure PR
+          </a>
+          , Lucy Hood, who understands exactly what schools need to stand out.
+          This isn’t just another AI tool, it’s a tailor-made solution designed
+          with insider knowledge to help schools like yours thrive.
         </Typography>
       </Box>
       <Box
