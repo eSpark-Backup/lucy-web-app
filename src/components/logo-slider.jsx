@@ -45,7 +45,7 @@ const LogoSlider = () => {
       <Typography
         sx={{ color: "#2B2C2C", fontSize: "25px", textAlign: "center" }}
       >
-        Over 200+ Company work with Edupulse
+        Get your school featured in top publications.
       </Typography>
       <Swiper
         modules={[Autoplay]}
