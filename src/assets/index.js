@@ -45,7 +45,7 @@ import service6 from "./images/service6.png";
 import about from "./images/about.png";
 import modalBg from "./images/modal-bg-image.png";
 
-import bannerVideo from "./video/banner_video.mp4";
+import bannerVideo from "./video/bannerVideo.mp4";
 
 export {
   logo,
