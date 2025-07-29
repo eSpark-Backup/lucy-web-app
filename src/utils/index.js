@@ -5,7 +5,3 @@ export function useQuery() {
 }
 
 export const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-export const isAuthenticated = () => {
-  return !localStorage.getItem("token");
-};

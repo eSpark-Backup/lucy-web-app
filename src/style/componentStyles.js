@@ -1,3 +1,0 @@
-export const componentStyles = {
-  //  ... all components styles write here ...
-};
