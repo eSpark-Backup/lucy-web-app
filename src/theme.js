@@ -1,13 +1,14 @@
 import { createTheme } from "@mui/material";
+import { componentStyles } from "./style/componentStyles";
 
 export const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 601,
-      md: 769,
-      lg: 1281,
-      xl: 1596,
+      sm: 768,
+      md: 1024,
+      lg: 1440,
+      xl: 1920,
     },
   },
   palette: {
@@ -16,9 +17,12 @@ export const theme = createTheme({
       light: "#FFFFFF",
       dark: "#000000",
     },
+    secondary: {
+      main: "#F2F8FD",
+    },
   },
   typography: {
-    fontFamily: "'Gilroy', sans-serif",
+    fontFamily: ["Gilroy", "Nunito Sans", "Poppins", "sans-serif"].join(", "),
     gradientText: {
       background: "linear-gradient(180deg, #4D76FF 0%, #1A4FFF 100%)",
       WebkitBackgroundClip: "text",
@@ -97,7 +101,6 @@ export const theme = createTheme({
         },
       ],
     },
-
     MuiOutlinedInput: {
       styleOverrides: {
         input: {
@@ -135,6 +138,9 @@ export const theme = createTheme({
           maxWidth: "1596px",
         },
       },
+    },
+    customComponents: {
+      ...componentStyles,
     },
   },
 });

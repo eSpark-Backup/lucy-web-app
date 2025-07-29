@@ -1,17 +1,14 @@
-import { Box, Container } from "@mui/material";
-import {
-  Navbar,
-  HeroSection,
-  LogoSlider,
-  SolutionSection,
-  WaitList,
-  Services,
-  Footer,
-  Reviews,
-  About,
-  WaitlistModal,
-} from "../../components";
+import { Container } from "@mui/material";
 import { Element } from "react-scroll";
+import Navbar from "../nav-bar";
+import HeroSection from "../hero-section";
+import LogoSlider from "../logo-slider";
+import SolutionSection from "../solution-section";
+import WaitList from "../wait-list";
+import Services from "../services";
+import About from "../about";
+import Footer from "../footer";
+import WaitlistModal from "../waitlist-modal";
 
 const LandingPage = () => {
   return (
@@ -36,9 +33,6 @@ const LandingPage = () => {
         <Element name="about">
           <About />
         </Element>
-        {/* <Element name="testimonials">
-          <Reviews />
-        </Element> */}
       </Container>
       <Footer />
       <WaitlistModal />
