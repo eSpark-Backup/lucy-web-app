@@ -13,7 +13,7 @@ const AuthLayout = () => {
         alignItems: "center",
         minHeight: "100vh",
         overflow: "hidden",
-        backgroundSize: "100%",
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundImage: `url(${bgImage})`,
       }}

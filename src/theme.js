@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 import { componentStyles } from "./style/componentStyles";
 
-export const theme = createTheme({
+let theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -28,8 +28,15 @@ export const theme = createTheme({
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
     },
+    h1: { fontSize: "46px", fontWeight: 700 },
+    h2: { fontSize: "32px", fontWeight: 700 },
+    h3: { fontSize: "24px", fontWeight: 600 },
+    h4: { fontSize: "22px", fontWeight: 600 },
+    h5: { fontSize: "18px", fontWeight: 600 },
+    h6: { fontSize: "14px", fontWeight: 500 },
+    body1: { fontSize: "16px", fontWeight: 500 },
+    body2: { fontSize: "12px", fontWeight: 400 },
   },
-
   components: {
     MuiModal: {
       defaultProps: {
@@ -144,3 +151,7 @@ export const theme = createTheme({
     },
   },
 });
+
+theme = responsiveFontSizes(theme);
+
+export { theme };
