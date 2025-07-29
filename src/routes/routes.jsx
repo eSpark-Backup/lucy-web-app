@@ -2,7 +2,7 @@ import PrivateRoute from "./PrivateRoute";
 import AuthLayout from "../components/Layouts/AuthLayout";
 import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
-import Forgot from "../components/auth/Forgot";
+import Forgot from "../components/auth/Forget";
 import DashboardLayout from "../components/Layouts/DashboardLayout";
 import LandingPage from "../components/Layouts/LandingPage";
 import Dashboard from "../components/dashboard/Dashboard";
@@ -30,7 +30,7 @@ const routes = [
     children: [
       { path: "/auth/login", element: <Login /> },
       { path: "/auth/signup", element: <Signup /> },
-      { path: "/auth/forgot", element: <Forgot /> },
+      { path: "/auth/forget", element: <Forgot /> },
     ],
   },
   {

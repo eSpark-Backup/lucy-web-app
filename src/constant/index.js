@@ -316,4 +316,32 @@ export const ROUTES = {
   about: "about",
 };
 
-
+export const LOGIN = {
+  title: "Login to Account",
+  description: "Please enter your email and password to continue",
+  fields: [
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "******",
+      key: "password",
+    },
+  ],
+  checkboxText: "Remember Password",
+  forgot: {
+    text: "Forget Password?",
+    link: "/auth/forget",
+  },
+  buttonText: "Sign in",
+  haveAnAccountText: "Don’t have an account?",
+  signUpText: {
+    text: "Create Account",
+    link: "/auth/signup",
+  },
+};

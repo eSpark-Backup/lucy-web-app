@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 
-const Forgot = () => {
+const Forget = () => {
   return (
     <Box
       sx={{
@@ -25,4 +25,4 @@ const Forgot = () => {
   );
 };
 
-export default Forgot;
+export default Forget;

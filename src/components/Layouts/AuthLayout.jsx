@@ -16,6 +16,7 @@ const AuthLayout = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundImage: `url(${bgImage})`,
+        backgroundColor: "#4880FF",
       }}
     >
       <Box

@@ -108,37 +108,93 @@ let theme = createTheme({
         },
       ],
     },
-    MuiOutlinedInput: {
+    MuiTextField: {
+      defaultProps: {
+        variant: "outlined",
+      },
+    },
+    MuiInputBase: {
       styleOverrides: {
-        input: {
-          "&::placeholder": {
-            color: "#1A4FFF",
-            fontWeight: "400",
-            opacity: 1,
-            fontSize: "14px",
-          },
-        },
         root: {
-          opacity: 1,
-          border: "1px solid #E2DBFA",
-          width: "100%",
-          outline: "none",
-          padding: "0px 20px",
-          fontSize: "14px",
-          color: "#1A4FFF",
-          fontWeight: 400,
-          borderRadius: "10.66px",
-          backgroundColor: "#F4F1FD",
-          height: "50px",
-          ":focus": {
-            border: "none",
-          },
-          fieldset: {
-            border: 0,
+          border: "1px solid #ccc",
+          borderRadius: 8,
+          padding: 0,
+        },
+        input: {
+          padding: 0,
+          height: "100%",
+          fontSize: "18px",
+          "&:-webkit-autofill": {
+            WebkitBoxShadow: `0 0 0 1000px ${"#F1F4F9"} inset !important`,
+            transition: "background-color 5000s ease-in-out 0s",
+            fontSize: "18px",
           },
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+        },
+        input: {
+          padding: 0,
+        },
+        notchedOutline: {
+          border: "none",
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.875rem",
+          transform: "none",
+          position: "static",
+          marginBottom: "4px",
+        },
+      },
+    },
+    // MuiOutlinedInput: {
+    //   styleOverrides: {
+    //     input: {
+    //       "&::placeholder": {
+    //         color: "#1A4FFF",
+    //         fontWeight: "400",
+    //         opacity: 1,
+    //         fontSize: "14px",
+    //       },
+    //     },
+    //     root: {
+    //       opacity: 1,
+    //       border: "1px solid #E2DBFA",
+    //       width: "100%",
+    //       outline: "none",
+    //       padding: "0px 20px",
+    //       fontSize: "14px",
+    //       color: "#1A4FFF",
+    //       fontWeight: 400,
+    //       borderRadius: "10.66px",
+    //       backgroundColor: "#F4F1FD",
+    //       height: "50px",
+    //       ":focus": {
+    //         border: "none",
+    //       },
+    //       fieldset: {
+    //         border: 0,
+    //       },
+    //     },
+    //   },
+    // },
     MuiContainer: {
       styleOverrides: {
         maxWidthLg: {
