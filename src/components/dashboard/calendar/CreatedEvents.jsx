@@ -1,117 +1,143 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  Box,
-  Stack,
-  Typography,
+  Paper,
   Button,
+  Typography,
   Divider,
+  Stack,
+  Box,
   Avatar,
   AvatarGroup,
   Modal,
   TextField,
-  Paper,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Link, useNavigate } from "react-router-dom";
 
-// Dummy data example
-const events = [
-  {
-    title: "Team Meeting",
-    time: "10:00 AM",
-    date: "2025-08-01",
-    duration: "1 hour",
-    attendees: ["/avatar1.png", "/avatar2.png", "/avatar3.png"],
-    more: "3 +",
-  },
-  {
-    title: "Client Call",
-    time: "2:00 PM",
-    date: "2025-08-02",
-    duration: "45 min",
-    attendees: ["/avatar4.png", "/avatar5.png"],
-    more: "1 +",
-  },
-  {
-    title: "Planning Session",
-    time: "9:00 AM",
-    date: "2025-08-03",
-    duration: "2 hours",
-    attendees: ["/avatar6.png", "/avatar7.png"],
-    more: "2 +",
-  },
-  {
-    title: "Design Review",
-    time: "3:00 PM",
-    date: "2025-08-04",
-    duration: "1 hour",
-    attendees: ["/avatar8.png", "/avatar9.png"],
-    more: "1 +",
-  },
-  {
-    title: "Backend Sync",
-    time: "11:00 AM",
-    date: "2025-08-05",
-    duration: "30 min",
-    attendees: ["/avatar10.png", "/avatar11.png"],
-    more: "1 +",
-  },
-];
+// Helpers
+const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");
+const formatTime = (dateStr) =>
+  new Date(dateStr).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+const calculateDuration = (start, end) => {
+  const diffMs = new Date(end) - new Date(start);
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  return `${diffHours}h ${diffMinutes}m`;
+};
 
-export default function CreatedEvents() {
+export default function CreatedEvents({ events }) {
   const [showAll, setShowAll] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const visibleEvents = showAll ? events : events.slice(0, 4);
+  const processedEvents = events.map((event) => ({
+    ...event,
+    startDate: formatDate(event.start),
+    startTime: formatTime(event.start),
+    endDate: formatDate(event.end),
+    endTime: formatTime(event.end),
+    duration: calculateDuration(event.start, event.end),
+    more: event.attendees?.length > 3 ? `+${event.attendees?.length - 3}` : "",
+  }));
+
+  const visibleEvents = showAll ? processedEvents : processedEvents.slice(0, 4);
 
   return (
     <Paper
-            sx={{
-              borderRadius: 4,
-              p: 2,
-              bgcolor: "white",
-              height: "100%",
-              width: "100%",
-              overflow: "hidden",
-              boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
-            }}
-          >
+      sx={{
+        borderRadius: 4,
+        p: isMobile ? 1.5 : 2,
+        boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       {/* Add New Event Button */}
       <Button
         variant="contained"
         fullWidth
         startIcon={<AddIcon />}
-        onClick={() => setOpenModal(true)}
+        onClick={() => navigate(`/create-event/`)}
         sx={{
           borderRadius: 2,
           textTransform: "none",
           mb: 2,
           bgcolor: "#4880FF57",
+          fontSize: isMobile ? "0.8rem" : "1rem",
+          py: isMobile ? 0.8 : 1.2,
         }}
       >
         Add New Event
       </Button>
 
       {/* Heading */}
-      <Typography variant="h6" fontWeight="bold" mb={2}>
+      <Typography
+        variant={isMobile ? "subtitle1" : "h6"}
+        fontWeight="bold"
+        mb={2}
+      >
         Created Events
       </Typography>
       <Divider />
 
       {/* Events List */}
-      <Stack spacing={3} mt={2} maxHeight={showAll ? 500 : "auto"} overflow="auto">
+      <Stack
+        spacing={3}
+        mt={2}
+        maxHeight={showAll ? 550 : "auto"}
+        overflow="auto"
+      >
         {visibleEvents.map((event, index) => (
           <Box key={index}>
-            <Stack direction="row" spacing={1} alignItems="start">
-              <Avatar src={event.attendees[0]} />
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              spacing={1}
+              alignItems={"start" }
+            >
+              <Avatar
+                src={event.attendees?.[0]}
+                sx={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40 }}
+              />
               <Box>
-                <Typography fontWeight={600}>{event.title}</Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {event.time}
+                <Link
+                  to={`/events/${event.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Typography
+                    fontWeight={600}
+                    fontSize={isMobile ? "0.9rem" : "1rem"}
+                  >
+                    {event.title}
+                  </Typography>
+                </Link>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                >
+                  Date:{" "}
+                  {event.startDate === event.endDate
+                    ? event.startDate
+                    : `${event.startDate} - ${event.endDate}`}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" display="block">
-                  Date: {event.date}
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                >
+                  Time: {event.startTime} - {event.endTime}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" display="block">
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                >
                   Duration: {event.duration}
                 </Typography>
                 <Stack direction="row" alignItems="center" spacing={0.5} mt={1}>
@@ -119,56 +145,42 @@ export default function CreatedEvents() {
                     max={3}
                     sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
                   >
-                    {event.attendees.map((src, idx) => (
+                    {event.attendees.slice(0, 3)?.map((src, idx) => (
                       <Avatar key={idx} src={src} />
                     ))}
                   </AvatarGroup>
-                  <Typography color="#4880FF">{event.more}</Typography>
+                  <Typography color="red">{event.more}</Typography>
                 </Stack>
               </Box>
             </Stack>
           </Box>
         ))}
       </Stack>
-
-      {/* See More Button */}
-      {!showAll && events.length > 4 && (
-        <Box textAlign="center" mt={3}>
-          <Button
-            variant="outlined"
-            onClick={() => setShowAll(true)}
-            sx={{ borderRadius: 2, textTransform: "none" }}
-          >
-            See More
-          </Button>
-        </Box>
-      )}
-
-      {/* Modal for Adding New Event */}
-      <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Box
-          p={4}
-          bgcolor="background.paper"
-          borderRadius={2}
-          boxShadow={4}
-          width={400}
-          mx="auto"
-          mt={10}
+      <Box textAlign="center" sx={{display:'flex', justifyContent:'center', alignItems:'center'}} mt={3}>
+        <Button
+          // variant="primary"
+          onClick={() => setShowAll(!showAll)}
+          sx={{
+            width: 126,
+            height: 38,
+            borderRadius: "12px",
+            border: "2px solid #E2EAF8",
+            color: "#202224",
+            fontFamily: "Nunito Sans",
+            fontWeight: 700,
+            fontSize: "14px",
+            lineHeight: "28px",
+            background: "#E2EAF8",
+            opacity: 0.7,
+          }}
         >
-          <Typography variant="h6" mb={2}>
-            Add New Event
+          <Typography fontWeight="bold">
+            {showAll
+              ? "Show Less"
+              : `Show More (${events.length - visibleEvents.length})`}
           </Typography>
-          <Stack spacing={2}>
-            <TextField label="Title" fullWidth />
-            <TextField label="Date" fullWidth type="date" InputLabelProps={{ shrink: true }} />
-            <TextField label="Time" fullWidth type="time" InputLabelProps={{ shrink: true }} />
-            <TextField label="Duration" fullWidth />
-            <Button variant="contained" onClick={() => setOpenModal(false)}>
-              Save Event
-            </Button>
-          </Stack>
-        </Box>
-      </Modal>
+        </Button>
+      </Box>
     </Paper>
   );
 }

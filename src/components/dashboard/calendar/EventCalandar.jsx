@@ -1,97 +1,38 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import dayjs from "dayjs";
-
-import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Box, Stack, Popper, LinearProgress } from "@mui/material";
+import { Box } from "@mui/material";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-const datePickerStyle = {
-  borderRadius: "5px",
-  border: "1px solid #D1DBD7 !important",
-  zIndex: "10",
-  ".Mui-selected": {
-    color: "#00141C !important",
-    backgroundColor: "#e3e9e7 !important",
-  },
-  ".Mui-selected:hover": {
-    color: "#00141C !important",
-    backgroundColor: "#e3e9e7 !important",
-  },
-  ".MuiPickersLayout-toolbar": {
-    display: "none",
-  },
-  ".MuiDialogActions-root>:not(style)~:not(style)": {
-    fontWeight: 700,
-  },
-  button: {
-    background: "transparent",
-    color: "#1976d2",
-    fontSize: "12px",
-    ":hover": {
-      background: "transparent",
-    },
-  },
+import PopperCard from "./PopperCard";
+
+const getEventClassNames = (event) => {
+  const { status } = event.extendedProps;
+  return status === "yes" ? ["event-yes"] : [];
 };
 
-const mockCalendarEvents = [
-  {
-    id: 1,
-    title: "Design Review",
-    start: new Date(),
-    end: new Date(new Date().setHours(23, 59, 59, 999)),
-    extendedProps: {
-      status: "yes",
-      userId: "user-1",
-    },
-  },
-  {
-    id: 2,
-    title: "Team Sync",
-    start: new Date(new Date().setDate(new Date().getDate() + 2)),
-    end: new Date(new Date().setDate(new Date().getDate() + 2)),
-    extendedProps: {
-      status: "yes",
-      userId: "user-2",
-    },
-  },
-];
+const dateChunks = (date) => {
+  const day = date.getDate();
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+  return { day, month, dayName };
+};
 
-const addHyphenToName = (name) => name?.toLowerCase()?.replace(/ /g, "-");
-
-const EventCalendar = () => {
+const EventCalendar = ({ events }) => {
   const calendarRef = useRef(null);
   const popperRef = useRef(null);
   const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [popupType, setPopupType] = useState(null);
+  const [popupAnchor, setPopupAnchor] = useState(null);
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [timeZone, setTimeZone] = useState("");
-
-  const getEventClassNames = (event) => {
-    const { status } = event.extendedProps;
-    return status === "yes"
-      ? ["event-yes"]
-      : status === "no"
-        ? ["event-no"]
-        : [];
-  };
-
-  const dateChunks = (date) => {
-    const day = date.getDate();
-    const month = date.toLocaleDateString("en-US", { month: "short" });
-    const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
-    return { day, month, dayName };
-  };
-
+console.log("popupAnchor", popupAnchor);
   const weekDayHeaderContent = (args) => {
     const { day, month, dayName } = dateChunks(args.date);
     return (
@@ -126,10 +67,9 @@ const EventCalendar = () => {
   };
 
   const handleMonthTitleClick = () => {
-    setIsDatePickerOpen(true);
     const titleElement = document.querySelector(".fc-toolbar-title");
     if (titleElement) {
-      setAnchorEl(titleElement);
+      setPopupAnchor(titleElement);
     }
   };
 
@@ -142,64 +82,63 @@ const EventCalendar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (popperRef.current && !popperRef.current.contains(event.target)) {
-        setIsDatePickerOpen(false);
+      if (
+        popperRef.current &&
+        !popperRef.current.contains(event.target) &&
+        !event.target.closest(".MuiPopper-root")
+      ) {
+        setPopupAnchor(null);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+  const COLORS_MAP = {
+    "user-1": "#6C63FF", // purple
+    "user-2": "#00BFA6", // teal
+    "user-3": "#FF5252", // red
+    "user-4": "#FFAB00", // amber
+  };
   return (
-    <Box sx={{ marginBottom: "50px" }}>
-      <Stack alignItems="flex-end" marginBottom={2}>
-        <Box
-          sx={{
-            width: "48px",
-            height: "48px",
-            borderRadius: "5px",
-            backgroundColor: "rgb(0, 20, 28, 0.1)",
-          }}
-        />
-      </Stack>
-
-      <Popper
-        open={isDatePickerOpen}
-        anchorEl={anchorEl}
-        modifiers={[{ name: "offset", options: { offset: [0, 10] } }]}
-        sx={{ zIndex: 10, marginLeft: "-32px !important" }}
-        ref={popperRef}
-      >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <StaticDatePicker
-            sx={datePickerStyle}
-            value={selectedDate}
-            onClose={() => setIsDatePickerOpen(false)}
-            onChange={(date) => setSelectedDate(date)}
-            onAccept={(date) => {
-              if (calendarRef.current) {
-                calendarRef.current.getApi().gotoDate(date.format("YYYY-MM-DD"));
-              }
-              setSelectedDate(date);
-              setIsDatePickerOpen(false);
-            }}
-          />
-        </LocalizationProvider>
-      </Popper>
-
+    <>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         initialDate={selectedDate.toDate()}
         ref={calendarRef}
+        height="100%" // Important: make calendar fill parent height
+        contentHeight="auto"
+        expandRows={true} // Helps with dynamic sizing
         headerToolbar={{
-          start: "dayGridMonth,timeGridWeek,timeGridDay",
-          center: "",
-          end: "title",
+          start: "today prev,next",
+          center: "title",
+          end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         eventDidMount={(info) => {
+          const { userId } = info.event.extendedProps;
+          const color = COLORS_MAP[userId] || "#6C63FF"; // fallback
+
+          info.el.style.backgroundColor = `${color}35`;
+          info.el.style.borderLeft = `4px solid ${color}`;
+          info.el.style.opacity = "0.5";
+          info.el.style.color = color;
+          info.el.style.fontWeight = "600";
+          info.el.style.padding = "6px 12px";
+          info.el.style.fontSize = "16px";
+          info.el.style.borderRadius = "0px";
           info.el.style.cursor = "pointer";
+          info.el.style.whiteSpace = "nowrap";
+          info.el.style.overflow = "hidden";
+          info.el.style.textOverflow = "ellipsis";
+          info.el.style.boxShadow = "none";
+
+          info.el.addEventListener("mouseenter", () => {
+            info.el.style.opacity = "0.5";
+          });
+
+          info.el.addEventListener("mouseleave", () => {
+            info.el.style.opacity = "0.7";
+          });
         }}
         datesSet={() => {
           const titleElement = document.querySelector(".fc-toolbar-title");
@@ -225,23 +164,37 @@ const EventCalendar = () => {
             dayHeaderContent: dayHeaderContent,
           },
         }}
-        events={mockCalendarEvents}
+        events={events}
         editable={false}
         selectable={true}
-        eventClick={(info) =>
-          navigate(`/event/${addHyphenToName(info.event.title)}`, {
-            state: { id: info.event.id },
-          })
-        }
+        select={(info) => {
+          setPopupType("date");
+          setPopupAnchor(info.jsEvent.target);
+        }}
+        eventClick={(info) => {
+          setPopupType("event");
+          setPopupAnchor(info.jsEvent.target);
+        }}
         eventClassNames={(arg) => getEventClassNames(arg.event)}
         viewDidMount={handleViewDidMount}
         slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
         eventTimeFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
         dayMaxEvents={3}
         firstDay={1}
-        height="auto"
       />
-    </Box>
+
+      <PopperCard
+        type={popupType}
+        anchorEl={popupAnchor}
+        onClose={() => setPopupAnchor(null)}
+        eventId={
+          popupType === "event" && popupAnchor
+            ? events.find((event) => event.title === popupAnchor.textContent)
+                ?.id
+            : null
+        }
+      />
+    </>
   );
 };
 
