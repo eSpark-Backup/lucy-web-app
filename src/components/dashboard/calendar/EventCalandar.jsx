@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { Box } from "@mui/material";
+import { Box, Modal,Button  } from "@mui/material";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -9,6 +9,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
 import PopperCard from "./PopperCard";
+import ModalCard from "./ModalCard";
 
 const getEventClassNames = (event) => {
   const { status } = event.extendedProps;
@@ -32,7 +33,12 @@ const EventCalendar = ({ events }) => {
   const [popupAnchor, setPopupAnchor] = useState(null);
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [timeZone, setTimeZone] = useState("");
-console.log("popupAnchor", popupAnchor);
+  const [openModal, setOpenModal] = useState(false);
+
+  console.log("popupAnchor", popupAnchor);
+
+  const calendarWrapperRef = useRef(null);
+
   const weekDayHeaderContent = (args) => {
     const { day, month, dayName } = dateChunks(args.date);
     return (
@@ -83,9 +89,10 @@ console.log("popupAnchor", popupAnchor);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
+        calendarWrapperRef.current &&
+        !calendarWrapperRef.current.contains(event.target) &&
         popperRef.current &&
-        !popperRef.current.contains(event.target) &&
-        !event.target.closest(".MuiPopper-root")
+        !popperRef.current.contains(event.target)
       ) {
         setPopupAnchor(null);
       }
@@ -99,8 +106,9 @@ console.log("popupAnchor", popupAnchor);
     "user-3": "#FF5252", // red
     "user-4": "#FFAB00", // amber
   };
+
   return (
-    <>
+    <Box ref={calendarWrapperRef}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -169,7 +177,8 @@ console.log("popupAnchor", popupAnchor);
         selectable={true}
         select={(info) => {
           setPopupType("date");
-          setPopupAnchor(info.jsEvent.target);
+          setPopupAnchor(null); // No popper anchor
+          setOpenModal(true); // Show modal
         }}
         eventClick={(info) => {
           setPopupType("event");
@@ -182,8 +191,8 @@ console.log("popupAnchor", popupAnchor);
         dayMaxEvents={3}
         firstDay={1}
       />
-
       <PopperCard
+        ref={popperRef}
         type={popupType}
         anchorEl={popupAnchor}
         onClose={() => setPopupAnchor(null)}
@@ -194,7 +203,13 @@ console.log("popupAnchor", popupAnchor);
             : null
         }
       />
-    </>
+      <ModalCard
+      openModal={openModal}
+      setOpenModal={setOpenModal}
+      />
+
+      
+    </Box>
   );
 };
 

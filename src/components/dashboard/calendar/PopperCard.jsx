@@ -1,10 +1,10 @@
-// PopperCard.js
+import { forwardRef } from "react";
 import { Box, Paper, Typography, Stack, Divider, Popper } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router-dom";
 
-export default function PopperCard({ type, anchorEl, onClose, eventId }) {
+const PopperCard = forwardRef(function PopperCard({ type, anchorEl, onClose, eventId }, ref) {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -14,7 +14,13 @@ export default function PopperCard({ type, anchorEl, onClose, eventId }) {
   };
 
   return (
-    <Popper open={open} anchorEl={anchorEl} placement="bottom-start" sx={{ zIndex: 1000 }}>
+    <Popper
+      ref={ref} 
+      open={open}
+      anchorEl={anchorEl}
+      placement="bottom-start"
+      sx={{ zIndex: 1000 }}
+    >
       <Paper
         sx={{
           width: 260,
@@ -85,4 +91,6 @@ export default function PopperCard({ type, anchorEl, onClose, eventId }) {
       </Paper>
     </Popper>
   );
-}
+});
+
+export default PopperCard;
