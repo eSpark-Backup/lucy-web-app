@@ -1,5 +1,28 @@
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Badge,
+  Stack,
+} from "@mui/material";
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Stack></Stack>
+    </Box>
+  );
 };
 
 export default Dashboard;

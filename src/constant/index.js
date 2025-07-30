@@ -19,6 +19,11 @@ import {
   service5,
   service6,
 } from "../assets";
+import dashboard from "../assets/images/sidebar/dashboard.svg";
+import calendar from "../assets/images/sidebar/calendar.svg";
+import about from "../assets/images/sidebar/about.svg";
+import profile from "../assets/images/sidebar/profile.svg";
+import logout from "../assets/images/sidebar/logout.svg";
 
 export const features = [
   {
@@ -346,7 +351,6 @@ export const LOGIN = {
   },
 };
 
-
 export const SIGNIN = {
   title: "Create an Account",
   description: "Create a account to continue",
@@ -386,4 +390,38 @@ export const SIGNIN = {
 export const FORGET = {
   title: "Looks like you’ve got lost….",
   buttonText: "Back to Dashboard",
+};
+
+export const SIDEBAR = {
+  sidebarLink: [
+    {
+      text: "Dashboard",
+      link: "/dashboard",
+      icon: dashboard,
+    },
+    {
+      text: "Calendar",
+      link: "/dashboard/calendar",
+      icon: calendar,
+    },
+    {
+      text: "About",
+      link: "/dashboard/about",
+      icon: about,
+      active_icon: about,
+    },
+  ],
+  sibarButtons: [
+    {
+      text: "Profile",
+      link: "#",
+      icon: profile,
+    },
+    {
+      text: "Logout",
+      icon: logout,
+      link: "#",
+      active_icon: logout,
+    },
+  ],
 };
