@@ -1,15 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  Badge,
-  Stack,
-} from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import congrats from "../../assets/images/congrats.png";
 import logo from "../../assets/images/logo.png";
 
@@ -31,7 +20,7 @@ const Dashboard = () => {
           sx={{
             mx: "auto",
             maxWidth: "398px",
-            width: { xs: "80%", md: "100%" },
+            width: { xs: "50%", md: "100%" },
           }}
         />
         <Typography

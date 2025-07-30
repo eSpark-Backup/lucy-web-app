@@ -425,3 +425,36 @@ export const SIDEBAR = {
     },
   ],
 };
+
+export const EVENTFORM = {
+  fields: [
+    {
+      label: "Event Name",
+      placeholder: "Enter your Event Name",
+      type: "text",
+      name: "event_name",
+      size: 5.5,
+    },
+    {
+      label: "Event Type",
+      placeholder: "Enter your Event Type",
+      type: "text",
+      name: "event_type",
+      size: 5.5,
+    },
+    {
+      label: "Duration (Minutes) ",
+      placeholder: "Select Time",
+      type: "text",
+      name: "duration",
+      size: 12,
+    },
+    {
+      label: "Description",
+      placeholder: "Provide some small Description",
+      type: "text",
+      name: "description",
+      size: 12,
+    },
+  ],
+};

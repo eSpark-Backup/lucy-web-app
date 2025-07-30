@@ -111,4 +111,67 @@ export const componentStyles = {
     fontFamily: "Nunito Sans",
     ml: 1,
   },
+
+  EventFormStyles: {
+    paperStyle: {
+      maxWidth: 862,
+      p: { xs: 2, sm: 4 },
+      borderRadius: "14px",
+      backgroundColor: "rgba(255, 255, 255, 0.48)",
+    },
+    inputLabelStyle: {
+      fontFamily: "Nunito Sans",
+      color: "#606060",
+      fontWeight: 600,
+    },
+    inputStyle: (name) => ({
+      "& .MuiInputBase-root":
+        name !== "description"
+          ? {
+              height: { xs: "42px", md: "52px" },
+              border: "1px solid #D5D5D5",
+              borderColor: "#D5D5D5",
+              backgroundColor: "#F5F6FA",
+              borderRadius: "4px",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+              opacity: "60%",
+            }
+          : {
+              borderRadius: "4px",
+              padding: "15px",
+              border: "1px solid #D5D5D5",
+              backgroundColor: "#F5F6FA",
+              opacity: "60%",
+            },
+      "& input": {
+        fontSize: "14px",
+        fontWeight: 400,
+        backgroundColor: "#F5F6FA",
+        color: "#000",
+        "&::placeholder": {
+          fontSize: "14px",
+          fontWeight: 400,
+          color: "#A6A6A6",
+          opacity: 1,
+        },
+      },
+    }),
+    buttonStyle: {
+      ml: "auto",
+      color: "#fff",
+      maxWidth: "274px",
+      height: { xs: "46px", md: "56px" },
+      borderRadius: "12px",
+      backgroundColor: "#4880FF",
+      opacity: "90%",
+      "&:hover": {
+        backgroundColor: "#4880FF",
+      },
+    },
+    buttonTypoStyle: {
+      fontWeight: 500,
+      fontFamily: "Nunito Sans",
+    },
+  },
 };
