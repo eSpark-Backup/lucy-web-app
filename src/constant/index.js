@@ -345,3 +345,45 @@ export const LOGIN = {
     link: "/auth/signup",
   },
 };
+
+
+export const SIGNIN = {
+  title: "Create an Account",
+  description: "Create a account to continue",
+  fields: [
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      label: "Username",
+      type: "text",
+      placeholder: "Username",
+      key: "user_name",
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "******",
+      key: "password",
+    },
+  ],
+  checkboxText: "Remember Password",
+  forgot: {
+    text: "Forget Password?",
+    link: "/auth/forget",
+  },
+  buttonText: "Sign Up",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Login",
+    link: "/auth/login",
+  },
+};
+
+export const FORGET = {
+  title: "Looks like you’ve got lost….",
+  buttonText: "Back to Dashboard",
+};

@@ -1,6 +1,18 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { componentStyles } from "../../style/componentStyles";
+import { FORGET } from "../../constant";
+import NotFoundImage from "../../assets/images/404.svg";
+import { useNavigate } from "react-router-dom";
 
 const Forget = () => {
+  const { title, buttonText } = FORGET || {};
+  const { authTitleStyle, authButtonStyle, authButtonTypoStyle } =
+    componentStyles || {};
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <Box
       sx={{
@@ -11,15 +23,27 @@ const Forget = () => {
         gap: 4,
       }}
     >
-      <Stack spacing={2} alignItems={"center"} justifyContent={"center"}>
-        <Typography
-          variant="h2"
-          fontWeight={700}
-          textAlign={"center"}
-          color="textPrimary"
-        >
-          Looks like you’ve got lost….
+      <Stack alignItems="center" justifyContent="center">
+        <Box
+          component={"img"}
+          src={NotFoundImage}
+          sx={{ width: { xs: "85%", sm: "90%", md: "100%" } }}
+        />
+      </Stack>
+      <Stack spacing={5} alignItems="center" justifyContent="center">
+        <Typography variant="h2" sx={authTitleStyle}>
+          {title}
         </Typography>
+        <Button
+          type="submit"
+          fullWidth
+          sx={authButtonStyle}
+          onClick={handleClick}
+        >
+          <Typography variant="h5" sx={authButtonTypoStyle}>
+            {buttonText}
+          </Typography>
+        </Button>
       </Stack>
     </Box>
   );

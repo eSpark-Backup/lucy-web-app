@@ -73,7 +73,6 @@ const Login = () => {
           {description}
         </Typography>
       </Stack>
-
       {fields?.map(({ label, type, placeholder, key }, index) => (
         <Stack width="100%" maxWidth={516} spacing={2} key={index}>
           <Stack direction={"row"} justifyContent={"space-between"}>
@@ -123,7 +122,6 @@ const Login = () => {
           />
         </Stack>
       ))}
-
       <Stack
         width="100%"
         direction="row"

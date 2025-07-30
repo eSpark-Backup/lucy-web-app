@@ -7,7 +7,8 @@ export const componentStyles = {
       border: "1px solid #D8D8D8",
       backgroundColor: "#F1F4F9",
       borderRadius: "8px",
-      padding: "15px",
+      paddingLeft: "15px",
+      paddingRight: "15px",
     },
     "& input": {
       fontSize: "18px",
@@ -23,6 +24,7 @@ export const componentStyles = {
     textAlign: "center",
     fontFamily: "Nunito Sans",
     color: "#202224",
+    fontWeight: 600,
   },
   authDescriptionStyle: {
     textAlign: "center",
@@ -107,6 +109,6 @@ export const componentStyles = {
   authSignupLinkTextStyle: {
     fontWeight: 700,
     fontFamily: "Nunito Sans",
-    ml: 0.5,
+    ml: 1,
   },
 };

@@ -1,8 +1,11 @@
 import { Box } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import bgImage from "../../assets/images/dashboard-bg.svg";
 
 const AuthLayout = () => {
+  const location = useLocation();
+  const isSignupPage = location?.pathname === "/auth/signup";
+
   return (
     <Box
       sx={{
@@ -30,7 +33,10 @@ const AuthLayout = () => {
           justifyContent: "center",
           alignItems: "center",
           px: { xs: 3, md: 5 },
-          minHeight: { xs: "680px", md: "735px" },
+          my: { xs: 3, md: 5 },
+          minHeight: isSignupPage
+            ? { xs: "750px", md: "825px" }
+            : { xs: "680px", md: "735px" },
           overflow: "auto",
         }}
       >
