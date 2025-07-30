@@ -2,6 +2,7 @@ import { styled, Box } from "@mui/material";
 import { useState } from "react";
 import SideNav from "../SideNav";
 import Navbar from "../Navbar";
+import { Outlet } from "react-router-dom";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -19,7 +20,7 @@ const PageWrapper = styled("div")(() => ({
   backgroundColor: "rgba(245, 246, 250, 1)",
 }));
 
-export default function RootLayout({ children }) {
+export default function RootLayout() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -50,9 +51,10 @@ export default function RootLayout({ children }) {
           sx={{
             minHeight: "calc(100vh - 70px)",
             overflow: "auto",
+            p: 2.2,
           }}
         >
-          {children}
+          <Outlet />
         </Box>
         {/* ------------------------------------------- */}
         {/* End Page */}

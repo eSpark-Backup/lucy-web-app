@@ -2,7 +2,7 @@ import { useMediaQuery, Box, Drawer } from "@mui/material";
 import Sidebar from "./Sidebar";
 
 const SideNav = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
   const sidebarWidth = 240;
   const scrollbarStyles = {

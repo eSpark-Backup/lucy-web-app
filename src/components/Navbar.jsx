@@ -37,11 +37,15 @@ const Navbar = ({ isSidebarOpen, openMobileSidebar }) => {
         px: 2,
       }}
     >
-      <Toolbar disableGutters sx={{ justifyContent: "flex-end" }}>
+      <Toolbar
+        disableGutters
+        sx={{ justifyContent: { xs: "space-between", md: "flex-end" } }}
+      >
         <IconButton
           onClick={() => openMobileSidebar(true)}
           edge="start"
           sx={{
+            display: { xs: "flex", md: "none" },
             color: "#000",
             fontSize: "24px",
             mr: 2,
