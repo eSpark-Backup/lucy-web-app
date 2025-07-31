@@ -1,15 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  Badge,
-  Stack,
-} from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import congrats from "../../assets/images/congrats.png";
 import logo from "../../assets/images/logo.png";
 
@@ -31,13 +20,13 @@ const Dashboard = () => {
           sx={{
             mx: "auto",
             maxWidth: "398px",
-            width: { xs: "80%", md: "100%" },
+            width: { xs: "50%", lg: "100%" },
           }}
         />
         <Typography
           sx={{
             fontWeight: 400,
-            fontSize: "clamp(20px, 5vw, 44px)",
+            fontSize: "clamp(22px, 6.5vw, 44px)",
             color: "#000000",
           }}
         >
@@ -49,7 +38,7 @@ const Dashboard = () => {
           sx={{
             mx: "auto",
             maxWidth: "621px",
-            width: { xs: "65%", md: "100%" },
+            width: { xs: "60%", lg: "100%" },
           }}
         />
       </Stack>

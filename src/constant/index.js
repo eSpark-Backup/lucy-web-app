@@ -426,6 +426,65 @@ export const SIDEBAR = {
   ],
 };
 
+export const EVENTFORM = {
+  fields: [
+    {
+      label: "Event Name",
+      placeholder: "Enter your Event Name",
+      type: "text",
+      name: "event_name",
+      size: { xs: 12, lg: 5.5 },
+    },
+    {
+      label: "Event Type",
+      placeholder: "Enter your Event Type",
+      type: "text",
+      name: "event_type",
+      size: { xs: 12, lg: 5.5 },
+    },
+    {
+      label: "Duration (Minutes) ",
+      placeholder: "Select Time",
+      type: "text",
+      name: "duration",
+      size: 12,
+    },
+    {
+      label: "Description",
+      placeholder: "Provide some small Description",
+      type: "text",
+      name: "description",
+      size: 12,
+    },
+  ],
+};
+
+export const CONTENTFORM = {
+  radioButtonsLable: 'Content Type',
+  radioButtons: ['Press Release', 'Instagram Post', 'Facebook Post', 'Newsletter Inclusion'],
+  aiButtonText: 'Enhance with AI',
+  uploadButtonText: 'Upload Image',
+  buttonText: 'Add',
+  methodText: 'Post Method',
+  methodRadioButton: 'Email',
+  fields: [
+    {
+      label: "Description",
+      placeholder: "Write a 3 paragraph  600 Words press release on (Event Name)",
+      type: "text",
+      name: "description",
+      size: 12,
+    },
+    {
+      label: "Recipients",
+      placeholder: "Add recipients mail here",
+      type: "text",
+      name: "recipients",
+      size: 12,
+    },
+  ],
+};
+
 export const plans = [
   {
     title: "Basic",
