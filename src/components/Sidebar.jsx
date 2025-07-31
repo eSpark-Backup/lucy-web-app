@@ -35,15 +35,19 @@ const Sidebar = () => {
             gap: 2,
           }}
         >
-          {sidebarLink?.map(({ text, link, icon }, index) => (
-            <Link to={`${link}`} key={index} style={{ textDecoration: "none" }}>
-              <Box
-                sx={{
-                  width: "100%",
-                  position: "relative",
-                  overflow: "hidden",
-                  "&::before":
-                    pathname === link || pathname.startsWith(`${link}/`)
+          {sidebarLink?.map(({ text, link, icon }, index) => {
+            const isActive =
+              pathname === link ||
+              pathname === `${link}/` ||
+              (link !== "/dashboard" && pathname.startsWith(link));
+            return (
+              <Link to={link} key={index} style={{ textDecoration: "none" }}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    position: "relative",
+                    overflow: "hidden",
+                    "&::before": isActive
                       ? {
                           content: '""',
                           position: "absolute",
@@ -56,52 +60,46 @@ const Sidebar = () => {
                           borderBottomRightRadius: "4px",
                         }
                       : undefined,
-                }}
-              >
-                <Box
-                  sx={{
-                    mx: "auto",
-                    width: "100%",
-                    maxWidth: "192px",
-                    height: "50px",
-                    backgroundColor:
-                      pathname === link || pathname.startsWith(`${link}/`)
-                        ? "#4880FF"
-                        : "transparent",
-                    borderRadius: "6px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    px: 2.5,
                   }}
                 >
                   <Box
-                    src={icon}
-                    component={"img"}
                     sx={{
-                      filter:
-                        pathname === link || pathname.startsWith(`${link}/`)
-                          ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                          : "none",
-                    }}
-                  />
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontWeight: 500,
-                      fontFamily: "Poppins",
-                      color:
-                        pathname === link || pathname.startsWith(`${link}/`)
-                          ? "#fff"
-                          : "#000000",
+                      mx: "auto",
+                      width: "100%",
+                      maxWidth: "192px",
+                      height: "50px",
+                      backgroundColor: isActive ? "#4880FF" : "transparent",
+                      borderRadius: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                      px: 2.5,
                     }}
                   >
-                    {text}
-                  </Typography>
+                    <Box
+                      component={"img"}
+                      src={icon}
+                      sx={{
+                        filter: isActive
+                          ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                          : "none",
+                      }}
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 500,
+                        fontFamily: "Poppins",
+                        color: isActive ? "#fff" : "#000000",
+                      }}
+                    >
+                      {text}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </Box>
       </Box>
       <Box
