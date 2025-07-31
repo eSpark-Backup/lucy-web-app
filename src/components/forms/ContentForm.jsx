@@ -202,13 +202,9 @@ const ContentForm = ({
                       <Box display="flex" justifyContent={"end"} gap={2}>
                         <Button
                           variant="contained"
-                          // sx={buttonStyle}
                           sx={{
-                            // ml: "auto",
                             color: "#fff",
                             maxWidth: "148px",
-                            // height: { xs: "46px" },
-                            // borderRadius: "12px",
                             backgroundColor: "#9C27B0",
                             opacity: "90%",
                             "&:hover": {
@@ -224,15 +220,11 @@ const ContentForm = ({
                             {"Search Images"}
                           </Typography>
                         </Button>
-
                         <Button
                           variant="contained"
                           sx={{
-                            // ml: "auto",
                             color: "#fff",
                             maxWidth: "148px",
-                            // height: { xs: "46px" },
-                            // borderRadius: "12px",
                             backgroundColor: "#4880FF",
                             opacity: "90%",
                             "&:hover": {
@@ -246,7 +238,6 @@ const ContentForm = ({
                           </Typography>
                         </Button>
                       </Box>
-
                       <Popper
                         open={showPopper}
                         anchorEl={anchorEl}
@@ -258,47 +249,52 @@ const ContentForm = ({
                         >
                           <Paper sx={{ p: 2, width: 400 }}>
                             <Stack spacing={2}>
-                              <Box display="flex" alignItems="center" width="100%" gap={1}>
-  <TextField
-    placeholder="Search images..."
-    value={query}
-    onChange={(e) => setQuery(e.target.value)}
-    onKeyDown={(e) => e.key === "Enter" && searchImages()}
-    sx={{
-      width: "70%",
-      "& .MuiInputBase-root": {
-        height: "40px",
-        borderRadius: "8px",
-        paddingX: 1, // outer padding inside input root
-      },
-      "& input": {
-        padding: "8px 12px", // inner padding for text and placeholder
-      },
-    }}
-  />
-  <Button
-    onClick={searchImages}
-    variant="contained"
-    disabled={loading}
-    sx={{
-      width: "30%",
-      height: "40px",
-      borderRadius: "8px",
-      backgroundColor: "#9C27B0",
-      color: "#fff",
-      opacity: 0.9,
-      fontWeight: 500,
-      textTransform: "none",
-      "&:hover": {
-        backgroundColor: "#8e24aa",
-      },
-    }}
-  >
-    {loading ? "Searching..." : "Search"}
-  </Button>
-</Box>
-
-
+                              <Box
+                                display="flex"
+                                alignItems="center"
+                                width="100%"
+                                gap={1}
+                              >
+                                <TextField
+                                  placeholder="Search images..."
+                                  value={query}
+                                  onChange={(e) => setQuery(e.target.value)}
+                                  onKeyDown={(e) =>
+                                    e.key === "Enter" && searchImages()
+                                  }
+                                  sx={{
+                                    width: "70%",
+                                    "& .MuiInputBase-root": {
+                                      height: "40px",
+                                      borderRadius: "8px",
+                                      paddingX: 1, // outer padding inside input root
+                                    },
+                                    "& input": {
+                                      padding: "8px 12px", // inner padding for text and placeholder
+                                    },
+                                  }}
+                                />
+                                <Button
+                                  onClick={searchImages}
+                                  variant="contained"
+                                  disabled={loading}
+                                  sx={{
+                                    width: "30%",
+                                    height: "40px",
+                                    borderRadius: "8px",
+                                    backgroundColor: "#9C27B0",
+                                    color: "#fff",
+                                    opacity: 0.9,
+                                    fontWeight: 500,
+                                    textTransform: "none",
+                                    "&:hover": {
+                                      backgroundColor: "#8e24aa",
+                                    },
+                                  }}
+                                >
+                                  {loading ? "Searching..." : "Search"}
+                                </Button>
+                              </Box>
                               <Stack
                                 direction="row"
                                 flexWrap="wrap"
