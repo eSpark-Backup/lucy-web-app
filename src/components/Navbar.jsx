@@ -8,18 +8,22 @@ import {
   Menu,
   MenuItem,
   Badge,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import notification from "../assets/images/sidebar/notification.svg";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
-const Navbar = ({ isSidebarOpen, openMobileSidebar }) => {
+const Navbar = ({ openMobileSidebar }) => {
   const [anchorUserMenu, setAnchorUserMenu] = useState(null);
   const [anchorNotifMenu, setAnchorNotifMenu] = useState(null);
 
   const openUserMenu = Boolean(anchorUserMenu);
   const openNotifMenu = Boolean(anchorNotifMenu);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme?.breakpoints?.down("md"));
 
   const handleUserMenuOpen = (e) => setAnchorUserMenu(e.currentTarget);
   const handleUserMenuClose = () => setAnchorUserMenu(null);
@@ -47,11 +51,10 @@ const Navbar = ({ isSidebarOpen, openMobileSidebar }) => {
           sx={{
             display: { xs: "flex", md: "none" },
             color: "#000",
-            fontSize: "24px",
             mr: 2,
           }}
         >
-          <MenuOpenIcon />
+          <MenuOpenIcon style={{ fontSize: "35px" }} />
         </IconButton>
 
         <Box display="flex" alignItems="center" gap={2}>
@@ -78,9 +81,9 @@ const Navbar = ({ isSidebarOpen, openMobileSidebar }) => {
             <Avatar
               src="https://i.ibb.co/6B7bK6b/moni.jpg"
               alt="Moni Roy"
-              sx={{ width: 40, height: 40 }}
+              sx={{ width: { sm: 37, md: 40 }, height: { sm: 37, md: 40 } }}
             />
-            <Box textAlign="left">
+            <Box textAlign="left" sx={{ display: { xs: "none", sm: "block" } }}>
               <Typography variant="subtitle1" fontWeight={600}>
                 Moni Roy
               </Typography>
@@ -92,8 +95,8 @@ const Navbar = ({ isSidebarOpen, openMobileSidebar }) => {
               disableRipple
               size="small"
               sx={{
-                width: "25px",
-                height: "25px",
+                width: { xs: "23px", md: "25px" },
+                height: { xs: "23px", md: "25px" },
                 border: "0.2px solid #5C5C5C",
                 opacity: "50%",
               }}
@@ -133,8 +136,14 @@ const Navbar = ({ isSidebarOpen, openMobileSidebar }) => {
           anchorEl={anchorNotifMenu}
           open={openNotifMenu}
           onClose={handleNotifMenuClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: isMobile ? "left" : "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: isMobile ? "left" : "right",
+          }}
           disableScrollLock
           slotProps={{
             paper: {

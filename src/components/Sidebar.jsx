@@ -11,86 +11,91 @@ const Sidebar = () => {
       sx={{
         width: "100%",
         height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          minHeight: "70px",
-          px: 4,
-        }}
-      >
-        <Box component={"img"} src={Logo} sx={{ width: "auto" }} />
-      </Box>
-      <Box
-        sx={{
-          width: "100%",
-          height: "70%",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
-        {sidebarLink?.map(({ text, link, icon }, index) => (
-          <Link to={`${link}`} key={index} style={{ textDecoration: "none" }}>
-            <Box
-              sx={{
-                width: "100%",
-                position: "relative",
-                overflow: "hidden",
-                "&::before": pathname === link && {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "5px",
-                  height: "100%",
-                  backgroundColor: "#4880FF",
-                  borderTopRightRadius: "4px",
-                  borderBottomRightRadius: "4px",
-                },
-              }}
-            >
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            minHeight: "70px",
+            px: 4,
+          }}
+        >
+          <Box component={"img"} src={Logo} sx={{ width: "auto" }} />
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            // height: "70%",
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          {sidebarLink?.map(({ text, link, icon }, index) => (
+            <Link to={`${link}`} key={index} style={{ textDecoration: "none" }}>
               <Box
                 sx={{
-                  mx: "auto",
                   width: "100%",
-                  maxWidth: "192px",
-                  height: "50px",
-                  backgroundColor:
-                    pathname === link ? "#4880FF" : "transparent",
-                  borderRadius: "6px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  px: 2.5,
+                  position: "relative",
+                  overflow: "hidden",
+                  "&::before": pathname === link && {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "5px",
+                    height: "100%",
+                    backgroundColor: "#4880FF",
+                    borderTopRightRadius: "4px",
+                    borderBottomRightRadius: "4px",
+                  },
                 }}
               >
                 <Box
-                  src={icon}
-                  component={"img"}
                   sx={{
-                    filter:
-                      pathname === link
-                        ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                        : "none",
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 500,
-                    fontFamily: "Poppins",
-                    color: pathname === link ? "#fff" : "#000000",
+                    mx: "auto",
+                    width: "100%",
+                    maxWidth: "192px",
+                    height: "50px",
+                    backgroundColor:
+                      pathname === link ? "#4880FF" : "transparent",
+                    borderRadius: "6px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    px: 2.5,
                   }}
                 >
-                  {text}
-                </Typography>
+                  <Box
+                    src={icon}
+                    component={"img"}
+                    sx={{
+                      filter:
+                        pathname === link
+                          ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                          : "none",
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 500,
+                      fontFamily: "Poppins",
+                      color: pathname === link ? "#fff" : "#000000",
+                    }}
+                  >
+                    {text}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </Box>
       </Box>
       <Box
         sx={{
