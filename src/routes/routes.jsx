@@ -10,6 +10,8 @@ import PublicRoute from "./PublicRoute";
 import Calendar from "../components/dashboard/Calendar";
 import About from "../components/dashboard/About";
 import NotFound from "../components/NotFound";
+import Profile from "../components/dashboard/Profile";
+import SubscriptionCard from "../components/dashboard/Subscription";
 import CreateEvent from "../components/dashboard/CreateEvent";
 import CreateContent from "../components/dashboard/CreateContent";
 import EventDetails from "../components/dashboard/EventDetails";
@@ -65,6 +67,8 @@ const routes = [
         element: <EventList />,
       },
       { path: "/dashboard/about", element: <About /> },
+      { path: "/dashboard/profile", element: <Profile /> },
+      { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
     ],
   },
   {

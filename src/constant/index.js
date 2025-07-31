@@ -410,17 +410,18 @@ export const SIDEBAR = {
       icon: about,
       active_icon: about,
     },
+    
   ],
   sibarButtons: [
     {
       text: "Profile",
-      link: "#",
+      link: "/dashboard/profile",
       icon: profile,
     },
     {
       text: "Logout",
       icon: logout,
-      link: "#",
+      link: "/dashboard/sub-plan",
       active_icon: logout,
     },
   ],
@@ -484,3 +485,20 @@ export const CONTENTFORM = {
     },
   ],
 };
+
+export const plans = [
+  {
+    title: "Basic",
+    description: "Multi Academy Trust Plan",
+    price: "$10",
+    details:
+      "Every school within the trust gets one login. This discounted rate is available only if all schools in the trust sign up.",
+  },
+  {
+    title: "Basic",
+    description: "Single School Plan",
+    price: "$50",
+    details:
+      "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
+  },
+];
