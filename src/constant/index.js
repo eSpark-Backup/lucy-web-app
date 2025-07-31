@@ -19,6 +19,11 @@ import {
   service5,
   service6,
 } from "../assets";
+import dashboard from "../assets/images/sidebar/dashboard.svg";
+import calendar from "../assets/images/sidebar/calendar.svg";
+import about from "../assets/images/sidebar/about.svg";
+import profile from "../assets/images/sidebar/profile.svg";
+import logout from "../assets/images/sidebar/logout.svg";
 
 export const features = [
   {
@@ -316,4 +321,166 @@ export const ROUTES = {
   about: "about",
 };
 
+export const LOGIN = {
+  title: "Login to Account",
+  description: "Please enter your email and password to continue",
+  fields: [
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "******",
+      key: "password",
+    },
+  ],
+  checkboxText: "Remember Password",
+  forgot: {
+    text: "Forget Password?",
+    link: "/auth/forget",
+  },
+  buttonText: "Sign in",
+  haveAnAccountText: "Don’t have an account?",
+  signUpText: {
+    text: "Create Account",
+    link: "/auth/signup",
+  },
+};
 
+export const SIGNIN = {
+  title: "Create an Account",
+  description: "Create a account to continue",
+  fields: [
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      label: "Username",
+      type: "text",
+      placeholder: "Username",
+      key: "user_name",
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "******",
+      key: "password",
+    },
+  ],
+  checkboxText: "Remember Password",
+  forgot: {
+    text: "Forget Password?",
+    link: "/auth/forget",
+  },
+  buttonText: "Sign Up",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Login",
+    link: "/auth/login",
+  },
+};
+
+export const FORGET = {
+  title: "Looks like you’ve got lost….",
+  buttonText: "Back to Dashboard",
+};
+
+export const SIDEBAR = {
+  sidebarLink: [
+    {
+      text: "Dashboard",
+      link: "/dashboard",
+      icon: dashboard,
+    },
+    {
+      text: "Calendar",
+      link: "/dashboard/calendar",
+      icon: calendar,
+    },
+    {
+      text: "About",
+      link: "/dashboard/about",
+      icon: about,
+      active_icon: about,
+    },
+  ],
+  sibarButtons: [
+    {
+      text: "Profile",
+      link: "#",
+      icon: profile,
+    },
+    {
+      text: "Logout",
+      icon: logout,
+      link: "#",
+      active_icon: logout,
+    },
+  ],
+};
+
+export const EVENTFORM = {
+  fields: [
+    {
+      label: "Event Name",
+      placeholder: "Enter your Event Name",
+      type: "text",
+      name: "event_name",
+      size: { xs: 12, lg: 5.5 },
+    },
+    {
+      label: "Event Type",
+      placeholder: "Enter your Event Type",
+      type: "text",
+      name: "event_type",
+      size: { xs: 12, lg: 5.5 },
+    },
+    {
+      label: "Duration (Minutes) ",
+      placeholder: "Select Time",
+      type: "text",
+      name: "duration",
+      size: 12,
+    },
+    {
+      label: "Description",
+      placeholder: "Provide some small Description",
+      type: "text",
+      name: "description",
+      size: 12,
+    },
+  ],
+};
+
+export const CONTENTFORM = {
+  radioButtonsLable: 'Content Type',
+  radioButtons: ['Press Release', 'Instagram Post', 'Facebook Post', 'Newsletter Inclusion'],
+  aiButtonText: 'Enhance with AI',
+  uploadButtonText: 'Upload Image',
+  buttonText: 'Add',
+  methodText: 'Post Method',
+  methodRadioButton: 'Email',
+  fields: [
+    {
+      label: "Description",
+      placeholder: "Write a 3 paragraph  600 Words press release on (Event Name)",
+      type: "text",
+      name: "description",
+      size: 12,
+    },
+    {
+      label: "Recipients",
+      placeholder: "Add recipients mail here",
+      type: "text",
+      name: "recipients",
+      size: 12,
+    },
+  ],
+};
