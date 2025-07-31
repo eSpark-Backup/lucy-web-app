@@ -461,7 +461,7 @@ export const EVENTFORM = {
 
 export const CONTENTFORM = {
   radioButtonsLable: 'Content Type',
-  radioButtons: ['Press Release', 'Instagram Post', 'Facebook Post', 'Newsletter Inclusion'],
+  radioButtons: ['Press Release', 'Instagram Post', 'Facebook Post', 'Newsletter Inclusion', 'Summary'],
   aiButtonText: 'Enhance with AI',
   uploadButtonText: 'Upload Image',
   buttonText: 'Add',
