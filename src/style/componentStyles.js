@@ -118,6 +118,7 @@ export const componentStyles = {
       p: { xs: 2, sm: 4 },
       borderRadius: "14px",
       backgroundColor: "rgba(255, 255, 255, 0.48)",
+      boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
     },
     inputLabelStyle: {
       fontFamily: "Nunito Sans",
@@ -128,25 +129,24 @@ export const componentStyles = {
       "& .MuiInputBase-root":
         name !== "description"
           ? {
-              height: { xs: "42px", md: "52px" },
-              border: "1px solid #D5D5D5",
-              borderColor: "#D5D5D5",
-              backgroundColor: "#F5F6FA",
-              borderRadius: "4px",
-              paddingLeft: "15px",
-              paddingRight: "15px",
-              opacity: "60%",
-            }
+            minHeight: { xs: "42px", md: "52px" },
+            border: "1px solid #D5D5D5",
+            borderColor: "#D5D5D5",
+            backgroundColor: "#F5F6FA",
+            borderRadius: "4px",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+          }
           : {
-              borderRadius: "4px",
-              padding: "15px",
-              border: "1px solid #D5D5D5",
-              backgroundColor: "#F5F6FA",
-              opacity: "60%",
-            },
+            borderRadius: "4px",
+            padding: "15px",
+            border: "1px solid #D5D5D5",
+            backgroundColor: "#F5F6FA",
+          },
       "& input": {
         fontSize: "14px",
         fontWeight: 400,
+        fontFamily: "Nunito Sans",
         backgroundColor: "#F5F6FA",
         color: "#000",
         "&::placeholder": {
@@ -154,6 +154,7 @@ export const componentStyles = {
           fontWeight: 400,
           color: "#A6A6A6",
           opacity: 1,
+          fontFamily: "Nunito Sans",
         },
       },
     }),
@@ -173,5 +174,85 @@ export const componentStyles = {
       fontWeight: 500,
       fontFamily: "Nunito Sans",
     },
+  },
+  ContentFormStyles: {
+    paperStyle: {
+      maxWidth: 862,
+      p: { xs: 2, sm: 4 },
+      borderRadius: "14px",
+      backgroundColor: "rgba(255, 255, 255, 0.48)",
+      boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
+    },
+    inputLabelStyle: {
+      fontFamily: "Nunito Sans",
+      color: "#606060",
+      fontWeight: 600,
+    },
+    inputStyle: (name) => ({
+      "& .MuiInputBase-root":
+        name !== "description"
+          ? {
+            minHeight: { xs: "42px", md: "52px" },
+            border: "1px solid #D5D5D5",
+            borderColor: "#D5D5D5",
+            backgroundColor: "#F5F6FA",
+            borderRadius: "4px",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+          }
+          : {
+            borderRadius: "4px",
+            padding: "15px",
+            border: "1px solid #D5D5D5",
+            backgroundColor: "#F5F6FA",
+          },
+      "& input": {
+        fontSize: "14px",
+        fontWeight: 400,
+        fontFamily: "Nunito Sans",
+        backgroundColor: "#F5F6FA",
+        color: "#000",
+        "&::placeholder": {
+          fontSize: "14px",
+          fontWeight: 400,
+          color: "#A6A6A6",
+          opacity: 1,
+          fontFamily: "Nunito Sans",
+        },
+      },
+    }),
+    buttonStyle: {
+      ml: "auto",
+      color: "#fff",
+      maxWidth: "148px",
+      height: { xs: "46px" },
+      borderRadius: "12px",
+      backgroundColor: "#4880FF",
+      opacity: "90%",
+      "&:hover": {
+        backgroundColor: "#4880FF",
+      },
+    },
+    aiButtonStyle: {
+      ml: "auto",
+      color: "#fff",
+      maxWidth: "148px",
+      height: { xs: "46px" },
+      borderRadius: "12px",
+      backgroundColor: "#9C27B0",
+      opacity: "90%",
+      "&:hover": {
+        backgroundColor: "#9C27B0",
+      },
+    },
+    buttonTypoStyle: {
+      fontWeight: 500,
+      fontFamily: "Nunito Sans",
+    },
+    radioButtonsLableStyle: {
+      fontWeight: 600,
+      fontFamily: "Nunito Sans",
+      color: '#606060',
+    }
   },
 };

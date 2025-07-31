@@ -59,7 +59,7 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "#6D686891",
-          backdropFilter: "blur(10px)",
+          backdropFilter: "blur(0.5px)",
         },
       },
     },

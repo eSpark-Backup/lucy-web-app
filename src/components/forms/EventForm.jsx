@@ -21,7 +21,7 @@ const initialEventData = {
 const EventForm = ({
   isEdit = false,
   data = initialEventData,
-  onSubmit = () => {},
+  onSubmit = () => { },
 }) => {
   const { fields } = EVENTFORM || {};
   const { EventFormStyles } = componentStyles || {};
@@ -61,7 +61,7 @@ const EventForm = ({
                   value={formik?.values?.[name]}
                   onChange={formik?.handleChange}
                   onBlur={formik?.handleBlur}
-                  multiline
+                  multiline={name === "description"}
                   rows={name === "description" ? 4 : 0}
                   id={
                     name === "description"
@@ -69,6 +69,18 @@ const EventForm = ({
                       : `${index}`
                   }
                   sx={inputStyle(name)}
+                  inputProps={{
+                    sx: {
+                      fontSize: "14px",
+                      fontFamily: "Nunito Sans",
+                      fontWeight: 400,
+                      "&::placeholder": {
+                        fontSize: "14px",
+                        fontFamily: "Nunito Sans",
+                        fontWeight: 400,
+                      },
+                    },
+                  }}
                   error={
                     formik?.touched?.[name] && Boolean(formik?.errors?.[name])
                   }

@@ -7,7 +7,6 @@ const Calendar = () => {
   return (
     <Box>
       <FormHeader title={"Create Event"} />
-      <EventForm />
       <ContentForm />
     </Box>
   );
