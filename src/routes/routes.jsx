@@ -45,7 +45,7 @@ const routes = [
       </PrivateRoute>
     ),
     children: [
-      { path: "/dashboard/main", element: <Dashboard /> },
+      { path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/calendar", element: <Calendar /> },
       { path: "/dashboard/calendar/create-event", element: <CreateEvent /> },
       {

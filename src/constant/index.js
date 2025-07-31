@@ -396,7 +396,7 @@ export const SIDEBAR = {
   sidebarLink: [
     {
       text: "Dashboard",
-      link: "/dashboard/main",
+      link: "/dashboard",
       icon: dashboard,
     },
     {
