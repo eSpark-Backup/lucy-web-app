@@ -27,7 +27,7 @@ const initialEventData = {
 const ContentForm = ({
   isEdit = false,
   data = initialEventData,
-  onSubmit = () => { },
+  onSubmit = () => {},
 }) => {
   const {
     fields,
@@ -58,7 +58,7 @@ const ContentForm = ({
       console.log(values, "values");
       resetForm();
       setImage(null);
-      if (inputRef?.current) ref.current.value = null;
+      if (inputRef?.current) inputRef.current.value = null;
       onSubmit(values);
     },
   });
@@ -66,7 +66,9 @@ const ContentForm = ({
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
-        <Typography variant="h6" sx={radioButtonsLableStyle}>{radioButtonsLable}</Typography>
+        <Typography variant="h6" sx={radioButtonsLableStyle}>
+          {radioButtonsLable}
+        </Typography>
         <RadioGroup
           row
           name="content_type"
@@ -75,7 +77,7 @@ const ContentForm = ({
           sx={{
             gap: 5,
             px: 1.2,
-            py: 2.5
+            py: 2.5,
           }}
         >
           {radioButtons?.map((item, index) => (
@@ -83,29 +85,32 @@ const ContentForm = ({
               value={item}
               key={index}
               sx={{
-                gap: '8px',
-                marginRight: '16px',
-                alignItems: 'center',
+                gap: "8px",
+                marginRight: "16px",
+                alignItems: "center",
               }}
-              control={<Radio sx={{
-                width: 24,
-                height: 24,
-                color: "#666666",
-                '&.Mui-checked': {
-                  color: "#5088FF",
-                },
-                '& .MuiSvgIcon-root': {
-                  width: 24,
-                  height: 24,
-                },
-              }} />}
+              control={
+                <Radio
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    color: "#666666",
+                    "&.Mui-checked": {
+                      color: "#5088FF",
+                    },
+                    "& .MuiSvgIcon-root": {
+                      width: 24,
+                      height: 24,
+                    },
+                  }}
+                />
+              }
               label={item}
             />
           ))}
-
         </RadioGroup>
         {formik.touched.content_type && formik?.errors?.content_type && (
-          <Typography color="error" fontSize={12} m={'-5px 14px 20px 14px'}>
+          <Typography color="error" fontSize={12} m={"-5px 14px 20px 14px"}>
             {formik.errors.content_type}
           </Typography>
         )}
@@ -159,26 +164,40 @@ const ContentForm = ({
                       </Button>
                     </Grid>
                     <Grid size={12} pt={1.5}>
-                      <ImageUploader ref={inputRef} image={image} setImage={setImage} formik={formik} />
+                      <ImageUploader
+                        ref={inputRef}
+                        image={image}
+                        setImage={setImage}
+                        formik={formik}
+                      />
                       {formik?.touched?.image && formik?.errors?.image && (
-                        <Typography color="error" fontSize={12} m={'3px 14px'}>
+                        <Typography color="error" fontSize={12} m={"3px 14px"}>
                           {formik?.errors?.image}
                         </Typography>
                       )}
                     </Grid>
                     <Grid size={12} pt={1.5}>
-                      <Button variant="contained" sx={buttonStyle} onClick={() => !image && inputRef?.current?.click()}>
+                      <Button
+                        variant="contained"
+                        sx={buttonStyle}
+                        onClick={() => !image && inputRef?.current?.click()}
+                      >
                         <Typography variant="h6" sx={buttonTypoStyle}>
                           {uploadButtonText}
                         </Typography>
                       </Button>
                     </Grid>
                     <Grid size={12} pt={1.5}>
-                      <Typography variant="h6" sx={{
-                        fontWeight: 600,
-                        fontFamily: "Nunito Sans",
-                        color: '#606060',
-                      }}>{methodText}</Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 600,
+                          fontFamily: "Nunito Sans",
+                          color: "#606060",
+                        }}
+                      >
+                        {methodText}
+                      </Typography>
                       <RadioGroup
                         name="post_method"
                         value={formik?.values?.post_method}
@@ -187,31 +206,41 @@ const ContentForm = ({
                         <FormControlLabel
                           value={methodRadioButton}
                           sx={{
-                            gap: '8px',
-                            marginRight: '16px',
-                            alignItems: 'center',
+                            gap: "8px",
+                            marginRight: "16px",
+                            alignItems: "center",
                             px: 1.2,
-                            py: 2.5
+                            py: 2.5,
                           }}
-                          control={<Radio sx={{
-                            width: 24,
-                            height: 24,
-                            color: "#666666",
-                            '&.Mui-checked': {
-                              color: "#5088FF",
-                            },
-                            '& .MuiSvgIcon-root': {
-                              width: 24,
-                              height: 24,
-                            },
-                          }} />}
+                          control={
+                            <Radio
+                              sx={{
+                                width: 24,
+                                height: 24,
+                                color: "#666666",
+                                "&.Mui-checked": {
+                                  color: "#5088FF",
+                                },
+                                "& .MuiSvgIcon-root": {
+                                  width: 24,
+                                  height: 24,
+                                },
+                              }}
+                            />
+                          }
                           label={methodRadioButton}
                         />
-                        {formik?.touched?.post_method && formik?.errors?.post_method && (
-                          <Typography color="error" fontSize={12} mb={2} mt={-0.5}>
-                            {formik?.errors?.post_method}
-                          </Typography>
-                        )}
+                        {formik?.touched?.post_method &&
+                          formik?.errors?.post_method && (
+                            <Typography
+                              color="error"
+                              fontSize={12}
+                              mb={2}
+                              mt={-0.5}
+                            >
+                              {formik?.errors?.post_method}
+                            </Typography>
+                          )}
                       </RadioGroup>
                     </Grid>
                   </>
