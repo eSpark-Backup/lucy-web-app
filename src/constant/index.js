@@ -425,3 +425,20 @@ export const SIDEBAR = {
     },
   ],
 };
+
+export const plans = [
+  {
+    title: "Basic",
+    description: "Multi Academy Trust Plan",
+    price: "$10",
+    details:
+      "Every school within the trust gets one login. This discounted rate is available only if all schools in the trust sign up.",
+  },
+  {
+    title: "Basic",
+    description: "Single School Plan",
+    price: "$50",
+    details:
+      "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
+  },
+];

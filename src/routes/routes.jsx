@@ -10,6 +10,8 @@ import PublicRoute from "./PublicRoute";
 import Calendar from "../components/dashboard/Calendar";
 import About from "../components/dashboard/About";
 import NotFound from "../components/NotFound";
+import Profile from "../components/dashboard/Profile";
+import SubscriptionCard from "../components/dashboard/Subscription";
 
 const routes = [
   {
@@ -44,6 +46,8 @@ const routes = [
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/calendar", element: <Calendar /> },
       { path: "/dashboard/about", element: <About /> },
+      { path: "/dashboard/profile", element: <Profile /> },
+      { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
     ],
   },
   {
