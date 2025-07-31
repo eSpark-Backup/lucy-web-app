@@ -129,20 +129,20 @@ export const componentStyles = {
       "& .MuiInputBase-root":
         name !== "description"
           ? {
-            minHeight: { xs: "42px", md: "52px" },
-            border: "1px solid #D5D5D5",
-            borderColor: "#D5D5D5",
-            backgroundColor: "#F5F6FA",
-            borderRadius: "4px",
-            paddingLeft: "15px",
-            paddingRight: "15px",
-          }
+              minHeight: { xs: "42px", md: "52px" },
+              border: "1px solid #D5D5D5",
+              borderColor: "#D5D5D5",
+              backgroundColor: "#F5F6FA",
+              borderRadius: "4px",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+            }
           : {
-            borderRadius: "4px",
-            padding: "15px",
-            border: "1px solid #D5D5D5",
-            backgroundColor: "#F5F6FA",
-          },
+              borderRadius: "4px",
+              padding: "15px",
+              border: "1px solid #D5D5D5",
+              backgroundColor: "#F5F6FA",
+            },
       "& input": {
         fontSize: "14px",
         fontWeight: 400,
@@ -192,20 +192,20 @@ export const componentStyles = {
       "& .MuiInputBase-root":
         name !== "description"
           ? {
-            minHeight: { xs: "42px", md: "52px" },
-            border: "1px solid #D5D5D5",
-            borderColor: "#D5D5D5",
-            backgroundColor: "#F5F6FA",
-            borderRadius: "4px",
-            paddingLeft: "15px",
-            paddingRight: "15px",
-          }
+              minHeight: { xs: "42px", md: "52px" },
+              border: "1px solid #D5D5D5",
+              borderColor: "#D5D5D5",
+              backgroundColor: "#F5F6FA",
+              borderRadius: "4px",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+            }
           : {
-            borderRadius: "4px",
-            padding: "15px",
-            border: "1px solid #D5D5D5",
-            backgroundColor: "#F5F6FA",
-          },
+              borderRadius: "4px",
+              padding: "15px",
+              border: "1px solid #D5D5D5",
+              backgroundColor: "#F5F6FA",
+            },
       "& input": {
         fontSize: "14px",
         fontWeight: 400,
@@ -252,8 +252,8 @@ export const componentStyles = {
     radioButtonsLableStyle: {
       fontWeight: 600,
       fontFamily: "Nunito Sans",
-      color: '#606060',
-    }
+      color: "#606060",
+    },
   },
   EventDetailsFormStyles: {
     paperStyle: {
@@ -272,20 +272,20 @@ export const componentStyles = {
       "& .MuiInputBase-root":
         name !== "description"
           ? {
-            minHeight: { xs: "42px", md: "52px" },
-            border: "1px solid #D5D5D5",
-            borderColor: "#D5D5D5",
-            backgroundColor: "#F5F6FA",
-            borderRadius: "4px",
-            paddingLeft: "15px",
-            paddingRight: "15px",
-          }
+              minHeight: { xs: "42px", md: "52px" },
+              border: "1px solid #D5D5D5",
+              borderColor: "#D5D5D5",
+              backgroundColor: "#F5F6FA",
+              borderRadius: "4px",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+            }
           : {
-            borderRadius: "4px",
-            padding: "15px",
-            border: "1px solid #D5D5D5",
-            backgroundColor: "#F5F6FA",
-          },
+              borderRadius: "4px",
+              padding: "15px",
+              border: "1px solid #D5D5D5",
+              backgroundColor: "#F5F6FA",
+            },
       "& input": {
         fontSize: "14px",
         fontWeight: 400,
@@ -326,7 +326,96 @@ export const componentStyles = {
     buttonTypoStyle: {
       fontWeight: 500,
       fontFamily: "Nunito Sans",
-      textWrap: "noWrap"
+      textWrap: "noWrap",
+    },
+  },
+  EventListStyles: {
+    addMoreEventsButtonStyle: {
+      color: "#fff",
+      maxWidth: "274px",
+      height: { xs: "46px", md: "56px" },
+      borderRadius: "12px",
+      backgroundColor: "#4880FF",
+      opacity: "90%",
+      "&:hover": {
+        backgroundColor: "#4880FF",
+      },
+    },
+    addMoreEventsButtonTypoStyle: {
+      fontWeight: 500,
+      fontFamily: "Nunito Sans",
+      textWrap: "noWrap",
+    },
+    cardStyle: {
+      backgroundColor: "#F9FAFB",
+      borderRadius: "16px",
+      padding: 2,
+      display: "flex",
+      flexDirection: "column",
+      gap: 1,
+      boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+      width: "fit-content",
+      minWidth: 423,
+      minHeight: 115,
+    },
+    titleAndButtonBoxStyle: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    titleStyle: {
+      fontWeight: 500,
+      color: "#111827",
+      fontFamily: "Poppins",
+    },
+    editIconStyle: {
+      width: "48px",
+      height: "32px",
+      border: "1px solid #E5E7EB",
+      borderTopLeftRadius: "8px",
+      borderBottomLeftRadius: "8px",
+      borderTopRightRadius: "0px",
+      borderBottomRightRadius: "0px",
+      padding: "4px",
+    },
+    viewIconStyle: {
+      width: "48px",
+      height: "32px",
+      border: "1px solid #E5E7EB",
+      borderLeft: "0px",
+      borderTopRightRadius: "8px",
+      borderBottomRightRadius: "8px",
+      borderTopLeftRadius: "0px",
+      borderBottomLeftRadius: "0px",
+      padding: "4px",
+    },
+    todayTimeBoxStyle: {
+      backgroundColor: "#DAE5FF",
+      color: "#1E40AF",
+      borderRadius: "8px",
+      padding: "4px 12px",
+      fontSize: "14px",
+      fontWeight: 500,
+    },
+    todayTimeTypoStyle: {
+      color: "#202224",
+      fontFamily: "Poppins",
+      fontWeight: 400,
+      opacity: "60%",
+    },
+    durationBoxStyle: {
+      backgroundColor: "#E0E7FF",
+      color: "#1E40AF",
+      borderRadius: "8px",
+      padding: "4px 12px",
+      fontSize: "14px",
+      fontWeight: 500,
+    },
+    durationTypoStyle: {
+      color: "#202224",
+      fontFamily: "Poppins",
+      fontWeight: 400,
+      opacity: "60%",
     },
   },
 };

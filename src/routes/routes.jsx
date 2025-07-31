@@ -13,6 +13,7 @@ import NotFound from "../components/NotFound";
 import CreateEvent from "../components/dashboard/CreateEvent";
 import CreateContent from "../components/dashboard/CreateContent";
 import EventDetails from "../components/dashboard/EventDetails";
+import EventList from "../components/dashboard/EventList";
 
 const routes = [
   {
@@ -54,6 +55,10 @@ const routes = [
       {
         path: "/dashboard/calendar/event-details",
         element: <EventDetails />,
+      },
+      {
+        path: "/dashboard/calendar/event-list",
+        element: <EventList />,
       },
       { path: "/dashboard/about", element: <About /> },
     ],
