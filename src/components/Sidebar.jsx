@@ -30,7 +30,6 @@ const Sidebar = () => {
         <Box
           sx={{
             width: "100%",
-            // height: "70%",
             display: "flex",
             flexDirection: "column",
             gap: 2,
@@ -43,17 +42,20 @@ const Sidebar = () => {
                   width: "100%",
                   position: "relative",
                   overflow: "hidden",
-                  "&::before": pathname === link && {
-                    content: '""',
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "5px",
-                    height: "100%",
-                    backgroundColor: "#4880FF",
-                    borderTopRightRadius: "4px",
-                    borderBottomRightRadius: "4px",
-                  },
+                  "&::before":
+                    pathname === link || pathname.startsWith(`${link}/`)
+                      ? {
+                          content: '""',
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "5px",
+                          height: "100%",
+                          backgroundColor: "#4880FF",
+                          borderTopRightRadius: "4px",
+                          borderBottomRightRadius: "4px",
+                        }
+                      : undefined,
                 }}
               >
                 <Box
@@ -63,7 +65,9 @@ const Sidebar = () => {
                     maxWidth: "192px",
                     height: "50px",
                     backgroundColor:
-                      pathname === link ? "#4880FF" : "transparent",
+                      pathname === link || pathname.startsWith(`${link}/`)
+                        ? "#4880FF"
+                        : "transparent",
                     borderRadius: "6px",
                     display: "flex",
                     alignItems: "center",
@@ -76,7 +80,7 @@ const Sidebar = () => {
                     component={"img"}
                     sx={{
                       filter:
-                        pathname === link
+                        pathname === link || pathname.startsWith(`${link}/`)
                           ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
                           : "none",
                     }}
@@ -86,7 +90,10 @@ const Sidebar = () => {
                     sx={{
                       fontWeight: 500,
                       fontFamily: "Poppins",
-                      color: pathname === link ? "#fff" : "#000000",
+                      color:
+                        pathname === link || pathname.startsWith(`${link}/`)
+                          ? "#fff"
+                          : "#000000",
                     }}
                   >
                     {text}

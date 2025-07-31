@@ -16,6 +16,7 @@ const ModalCard = ({ openModal, setOpenModal }) => {
   const handleNavigate = (path) => {
     navigate(path);
   };
+  
   return (
     <Modal
       open={openModal}
@@ -27,7 +28,7 @@ const ModalCard = ({ openModal, setOpenModal }) => {
         sx={{
           width: 260,
           borderRadius: 3,
-          p: 2, 
+          p: 2,
         }}
       >
         <Typography fontWeight="600" fontSize={14} mb={1}>
@@ -40,7 +41,7 @@ const ModalCard = ({ openModal, setOpenModal }) => {
             spacing={2}
             alignItems="center"
             sx={{ cursor: "pointer" }}
-            onClick={() => handleNavigate("/create-event")}
+            onClick={() => handleNavigate("/dashboard/calendar/create-event")}
           >
             <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
             <Box>

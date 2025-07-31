@@ -13,7 +13,7 @@ const EventList = () => {
       <FormHeader title={"Event Details"} />
       <Grid container maxWidth={920} rowGap={4} pt={0.5}>
         {[1, 2, 3]?.map((item, index) => (
-          <Grid size={6} key={index}>
+          <Grid size={{ xs: 12, sm: 6 }} key={index}>
             <EventCard
               title={"Design Conference"}
               todayTime={"Today 07:19 AM"}

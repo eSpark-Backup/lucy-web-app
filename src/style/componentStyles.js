@@ -354,8 +354,8 @@ export const componentStyles = {
       flexDirection: "column",
       gap: 1,
       boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-      width: "fit-content",
-      minWidth: 423,
+      width: "95%",
+      maxWidth: 423,
       minHeight: 115,
     },
     titleAndButtonBoxStyle: {

@@ -4,7 +4,10 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router-dom";
 
-const PopperCard = forwardRef(function PopperCard({ type, anchorEl, onClose, eventId }, ref) {
+const PopperCard = forwardRef(function PopperCard(
+  { type, anchorEl, onClose, eventId },
+  ref
+) {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -15,7 +18,7 @@ const PopperCard = forwardRef(function PopperCard({ type, anchorEl, onClose, eve
 
   return (
     <Popper
-      ref={ref} 
+      ref={ref}
       open={open}
       anchorEl={anchorEl}
       placement="bottom-start"
@@ -40,7 +43,7 @@ const PopperCard = forwardRef(function PopperCard({ type, anchorEl, onClose, eve
               spacing={2}
               alignItems="center"
               sx={{ cursor: "pointer" }}
-              onClick={() => handleNavigate("/create-event")}
+              onClick={() => handleNavigate("/dashboard/calendar/create-event")}
             >
               <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
               <Box>
@@ -59,7 +62,7 @@ const PopperCard = forwardRef(function PopperCard({ type, anchorEl, onClose, eve
                 spacing={2}
                 alignItems="center"
                 sx={{ cursor: "pointer" }}
-                onClick={() => handleNavigate(`/edit-event/${eventId}`)}
+                onClick={() => handleNavigate(`/dashboard/calendar/create-event/${eventId}`)}
               >
                 <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
                 <Box>
@@ -75,7 +78,9 @@ const PopperCard = forwardRef(function PopperCard({ type, anchorEl, onClose, eve
                 spacing={2}
                 alignItems="center"
                 sx={{ cursor: "pointer" }}
-                onClick={() => handleNavigate("/create-event")}
+                onClick={() =>
+                  handleNavigate("/dashboard/calendar/create-content")
+                }
               >
                 <SettingsIcon sx={{ color: "#4880FF" }} />
                 <Box>

@@ -50,7 +50,17 @@ const EventCard = ({ title, todayTime, duration, id }) => {
           </IconButton>
         </Box>
       </Box>
-      <Stack direction="row" spacing={1} mt={1}>
+      <Stack
+        direction={"row"}
+        gap={1}
+        sx={{
+          "@media(max-width: 400px)": {
+            flexDirection: "column",
+            gap: 1,
+          },
+        }}
+        mt={1}
+      >
         <Box sx={todayTimeBoxStyle}>
           <Typography variant="h6" sx={todayTimeTypoStyle}>
             {todayTime}
