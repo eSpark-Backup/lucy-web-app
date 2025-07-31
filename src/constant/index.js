@@ -396,7 +396,7 @@ export const SIDEBAR = {
   sidebarLink: [
     {
       text: "Dashboard",
-      link: "/dashboard/main",
+       link: "/dashboard/main",
       icon: dashboard,
     },
     {
@@ -410,17 +410,18 @@ export const SIDEBAR = {
       icon: about,
       active_icon: about,
     },
+    
   ],
   sibarButtons: [
     {
       text: "Profile",
-      link: "#",
+      link: "/dashboard/profile",
       icon: profile,
     },
     {
       text: "Logout",
       icon: logout,
-      link: "#",
+      link: "/dashboard/sub-plan",
       active_icon: logout,
     },
   ],

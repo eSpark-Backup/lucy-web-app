@@ -53,12 +53,12 @@ export default function RootLayout() {
           sx={{
             minHeight: "calc(100vh - 70px)",
             overflow: "auto",
-            p: 2.2,
+            p: 3,
             background: `url(${
               pathname === "/dashboard/main" ? null : bgLogo
             })`,
             backgroundRepeat: "no-repeat",
-            backgroundSize: "90%",
+            backgroundSize: "80%",
             backgroundPosition: "center",
           }}
         >

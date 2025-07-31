@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Avatar, Box, Button, TextField, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import FormHeader from "../forms/FormHeader";
+import { profileSchema } from "../../schemas/profile";
 
 const profileStyles = {
   container: {
@@ -9,7 +12,7 @@ const profileStyles = {
     mt: 1,
     p: 4,
     borderRadius: "14px",
-    bgcolor: "background.paper",
+    bgcolor: "#FFFFFF",
     border: "0.3px solid #B9B9B9",
     display: "flex",
     flexDirection: "column",
@@ -25,14 +28,14 @@ const profileStyles = {
   },
   row: {
     display: "flex",
-    gap: { xs: 2, sm: 3, lg: 5 },
-    mt: { xs: "10px", sm: "20px", lg: "55px" },
+    gap: { xs: 2, sm: 4, md: 5 },
+    mt: { xs: "10px", sm: "20px", md: "55px" },
     flexWrap: "wrap",
   },
   input: {
     "& .MuiOutlinedInput-root": {
       width: "100%",
-      height: "52px",
+      height: { xs: "42px", md: "52px" },
       borderRadius: "4px",
       backgroundColor: "#F5F6FA",
       border: "0.6px solid #D5D5D5",
@@ -44,20 +47,38 @@ const profileStyles = {
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
+  const formik = useFormik({
+    initialValues: {
+      firstName: "Kevin",
+      lastName: "Fleming",
+      email: "jaskolski.brent@yahoo.com",
+      phone: "546-933-2772",
+    },
+    validationSchema: profileSchema,
+    onSubmit: (values) => {
+      console.log("Form submitted:", values);
+      setIsEditing(false);
+    },
+    enableReinitialize: true,
+  });
+
   const handleEditClick = () => {
     if (isEditing) {
-      console.log("Saving changes...");
+      formik?.handleSubmit();
+    } else {
+      setIsEditing(true);
     }
-    setIsEditing((prev) => !prev);
   };
 
   return (
     <>
-      <Typography sx={{ fontSize: "32px", fontWeight: "bold" }}>
-        Profile
-      </Typography>
-      <Box sx={profileStyles.container}>
-        <Box sx={profileStyles.formArea}>
+      <FormHeader title={"Profile"} />
+      <Box
+        component="form"
+        onSubmit={formik?.handleSubmit}
+        sx={profileStyles?.container}
+      >
+        <Box sx={profileStyles?.formArea}>
           <Box sx={{ textAlign: "center", mb: "5px" }}>
             <Avatar
               src="/src/assets/icons/Profile.svg"
@@ -77,11 +98,12 @@ const Profile = () => {
             </Typography>
           </Box>
 
-          <Box sx={profileStyles.row}>
+          <Box sx={profileStyles?.row}>
+            {/* First Name */}
             <Box
               sx={{
                 flex: 1,
-                minWidth: { xs: "100%", sm: "280px", md: "360px" },
+                minWidth: "280px",
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -93,16 +115,25 @@ const Profile = () => {
                 First Name
               </Typography>
               <TextField
+                name="firstName"
                 sx={profileStyles.input}
                 fullWidth
-                defaultValue="Kevin"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 disabled={!isEditing}
+                error={
+                  formik?.touched?.firstName && Boolean(formik.errors.firstName)
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Box>
+
+            {/* Last Name */}
             <Box
               sx={{
                 flex: 1,
-                minWidth: { xs: "100%", sm: "280px", md: "360px" },
+                minWidth: "280px",
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -114,19 +145,27 @@ const Profile = () => {
                 Last Name
               </Typography>
               <TextField
+                name="lastName"
                 sx={profileStyles.input}
                 fullWidth
-                defaultValue="Fleming"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 disabled={!isEditing}
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </Box>
           </Box>
 
           <Box sx={profileStyles.row}>
+            {/* Email */}
             <Box
               sx={{
                 flex: 1,
-                minWidth: { xs: "100%", sm: "280px", md: "360px" },
+                minWidth: "280px",
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -138,16 +177,23 @@ const Profile = () => {
                 Your Email
               </Typography>
               <TextField
+                name="email"
                 sx={profileStyles.input}
                 fullWidth
-                defaultValue="jaskolski.brent@yahoo.com"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 disabled={!isEditing}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
             </Box>
+
+            {/* Phone */}
             <Box
               sx={{
                 flex: 1,
-                minWidth: { xs: "100%", sm: "280px", md: "360px" },
+                minWidth: "280px",
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -159,10 +205,15 @@ const Profile = () => {
                 Phone Number
               </Typography>
               <TextField
+                name="phone"
                 sx={profileStyles.input}
                 fullWidth
-                defaultValue="546-933-2772"
+                value={formik?.values?.phone}
+                onChange={formik?.handleChange}
+                onBlur={formik?.handleBlur}
                 disabled={!isEditing}
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
+                helperText={formik.touched.phone && formik.errors.phone}
               />
             </Box>
           </Box>
@@ -175,8 +226,7 @@ const Profile = () => {
             onClick={handleEditClick}
             sx={{
               width: { xs: "250px", sm: "300px", md: "274px" },
-              maxWidth: "100%",
-              height: "56px",
+              height: { xs: "46px", md: "56px" },
               bgcolor: "#4880FF",
               borderRadius: "12px",
               color: "#FFFFFF",
@@ -193,4 +243,5 @@ const Profile = () => {
     </>
   );
 };
+
 export default Profile;

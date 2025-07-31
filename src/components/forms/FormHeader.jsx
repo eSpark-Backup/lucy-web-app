@@ -7,7 +7,7 @@ const FormHeader = ({ title }) => {
       sx={{
         fontWeight: 700,
         color: "#202224",
-        fontFamily: "Nunito Sans",
+        fontFamily: "Poppins",
         fontStyle: "bold",
         mb: 2,
       }}

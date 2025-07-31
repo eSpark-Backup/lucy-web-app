@@ -12,7 +12,10 @@ import { plans } from "../../constant";
 const SubscriptionCard = () => {
   return (
     <>
-      <Typography sx={{ fontSize: "32px", fontWeight: "bold" }}>
+      <Typography
+        variant="h2"
+        sx={{ fontWeight: "bold", fontFamily: "Nunito Sans", mb: 3 }}
+      >
         Choose Your Subscription Plan
       </Typography>
       <Box
@@ -42,37 +45,47 @@ const SubscriptionCard = () => {
               sx={{ flex: 1, display: "flex", flexDirection: "column" }}
             >
               <Typography
-                variant="h6"
-                sx={{ fontWeight: "bold", mb: 1, fontSize: "22px" }}
-              >
-                {plan.title}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", mb: 2, fontSize: "16px" }}
-              >
-                {plan.description}
-              </Typography>
-              <Typography
+                variant="h4"
                 sx={{
-                  fontWeight: "bold",
+                  fontWeight: 700,
+                  mb: 1,
+                  color: "#202224",
+                  fontFamily: "Nunito Sans",
+                }}
+              >
+                {plan?.title}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  mb: 2,
+                  color: "#212121",
+                  fontFamily: "Nunito Sans",
+                }}
+              >
+                {plan?.description}
+              </Typography>
+              <Typography
+                variant="h1"
+                sx={{
+                  fontWeight: 800,
                   color: "#4880FF",
                   mb: 1,
-                  fontSize: "46px",
+                  fontFamily: "Nunito Sans",
                 }}
               >
                 {plan.price}
               </Typography>
               <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", fontSize: "16px" }}
+                variant="body1"
+                sx={{ color: "#212121", fontFamily: "Nunito Sans" }}
               >
                 Per School/Months
               </Typography>
               <Divider sx={{ my: 2 }} />
               <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", fontSize: "16px" }}
+                variant="body1"
+                sx={{ color: "#212121", fontFamily: "Nunito Sans" }}
               >
                 {plan.details}
               </Typography>
@@ -96,7 +109,16 @@ const SubscriptionCard = () => {
                   },
                 }}
               >
-                Subscribe Now
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#4880FF",
+                    fontFamily: "Nunito Sans",
+                    fontWeight: 700,
+                  }}
+                >
+                  Subscribe Now
+                </Typography>
               </Button>
             </Box>
           </Card>
