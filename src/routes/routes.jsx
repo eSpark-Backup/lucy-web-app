@@ -15,6 +15,7 @@ import SubscriptionCard from "../components/dashboard/Subscription";
 import CreateEvent from "../components/dashboard/CreateEvent";
 import CreateContent from "../components/dashboard/CreateContent";
 import EventDetails from "../components/dashboard/EventDetails";
+import EventList from "../components/dashboard/EventList";
 
 const routes = [
   {
@@ -46,9 +47,13 @@ const routes = [
       </PrivateRoute>
     ),
     children: [
-      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/dashboard/main", element: <Dashboard /> },
       { path: "/dashboard/calendar", element: <Calendar /> },
       { path: "/dashboard/calendar/create-event", element: <CreateEvent /> },
+      {
+        path: "/dashboard/calendar/create-event/:id",
+        element: <CreateEvent />,
+      },
       {
         path: "/dashboard/calendar/create-content",
         element: <CreateContent />,
@@ -56,6 +61,10 @@ const routes = [
       {
         path: "/dashboard/calendar/event-details",
         element: <EventDetails />,
+      },
+      {
+        path: "/dashboard/calendar/event-list",
+        element: <EventList />,
       },
       { path: "/dashboard/about", element: <About /> },
       { path: "/dashboard/profile", element: <Profile /> },

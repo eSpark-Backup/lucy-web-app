@@ -58,7 +58,7 @@ const Navbar = ({ openMobileSidebar }) => {
         </IconButton>
 
         <Box display="flex" alignItems="center" gap={2}>
-          <Badge
+          {/* <Badge
             color="error"
             badgeContent={3}
             overlap="circular"
@@ -74,7 +74,7 @@ const Navbar = ({ openMobileSidebar }) => {
             }}
           >
             <Box src={notification} component={"img"} />
-          </Badge>
+          </Badge> */}
 
           {/* 👤 User Profile */}
           <Box display="flex" alignItems="center" gap={1.5}>
@@ -126,13 +126,11 @@ const Navbar = ({ openMobileSidebar }) => {
             },
           }}
         >
-          <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleUserMenuClose}>Settings</MenuItem>
           <MenuItem onClick={handleUserMenuClose}>Logout</MenuItem>
         </Menu>
 
         {/* 📩 Notification Menu */}
-        <Menu
+        {/* <Menu
           anchorEl={anchorNotifMenu}
           open={openNotifMenu}
           onClose={handleNotifMenuClose}
@@ -165,7 +163,7 @@ const Navbar = ({ openMobileSidebar }) => {
           <MenuItem onClick={handleNotifMenuClose}>
             🛎️ Alert: Action required
           </MenuItem>
-        </Menu>
+        </Menu> */}
       </Toolbar>
     </AppBar>
   );
