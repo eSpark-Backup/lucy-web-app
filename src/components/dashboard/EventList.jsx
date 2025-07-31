@@ -2,11 +2,13 @@ import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import FormHeader from "../forms/FormHeader";
 import EventCard from "../EventCard";
 import { componentStyles } from "../../style/componentStyles";
+import { useNavigate } from "react-router-dom";
 
 const EventList = () => {
   const { EventListStyles } = componentStyles || {};
   const { addMoreEventsButtonStyle, addMoreEventsButtonTypoStyle } =
     EventListStyles || {};
+  const navigate = useNavigate();
 
   return (
     <Box>
@@ -24,7 +26,12 @@ const EventList = () => {
         ))}
       </Grid>
       <Grid size={12} pt={3.5}>
-        <Button type="submit" variant="contained" sx={addMoreEventsButtonStyle}>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={addMoreEventsButtonStyle}
+          onClick={() => navigate("/dashboard/calendar/create-event")}
+        >
           <Typography variant="h5" sx={addMoreEventsButtonTypoStyle}>
             {"Add More Events"}
           </Typography>

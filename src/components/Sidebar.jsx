@@ -1,10 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Logo from "../assets/images/lucy-logo.png";
 import { Link, useLocation } from "react-router-dom";
 import { SIDEBAR } from "../constant";
 const Sidebar = () => {
-  const { sidebarLink, sibarButtons } = SIDEBAR || {};
+  const { sidebarLink, profileLink, LogoutButton } = SIDEBAR || {};
   const { pathname } = useLocation();
+
+  const isActive =
+    pathname === profileLink?.link ||
+    pathname === `${profileLink?.link}/` ||
+    pathname.startsWith(profileLink?.link);
 
   return (
     <Box
@@ -112,65 +117,96 @@ const Sidebar = () => {
           py: 4,
         }}
       >
-        {sibarButtons?.map(({ text, link, icon }, index) => (
-          <Link to={`${link}`} key={index} style={{ textDecoration: "none" }}>
+        <Link to={profileLink?.link} style={{ textDecoration: "none" }}>
+          <Box
+            sx={{
+              width: "100%",
+              position: "relative",
+              overflow: "hidden",
+              "&::before": isActive
+                ? {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "5px",
+                    height: "100%",
+                    backgroundColor: "#4880FF",
+                    borderTopRightRadius: "4px",
+                    borderBottomRightRadius: "4px",
+                  }
+                : undefined,
+            }}
+          >
             <Box
               sx={{
+                mx: "auto",
                 width: "100%",
-                position: "relative",
-                overflow: "hidden",
-                "&:hover::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "5px",
-                  height: "100%",
-                  backgroundColor: "#4880FF",
-                  borderTopRightRadius: "4px",
-                  borderBottomRightRadius: "4px",
-                },
+                maxWidth: "192px",
+                height: "50px",
+                backgroundColor: isActive ? "#4880FF" : "transparent",
+                borderRadius: "6px",
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                px: 2.5,
               }}
             >
               <Box
+                component={"img"}
+                src={profileLink?.icon}
                 sx={{
-                  mx: "auto",
-                  width: "100%",
-                  maxWidth: "192px",
-                  height: "50px",
-                  borderRadius: "6px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  px: 2.5,
-                  "&:hover": {
-                    backgroundColor: "#4880FF",
-                    transition: "background 0.1s ease", // smooth hover effect
-                  },
-                  "&:hover img": {
-                    filter:
-                      "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)",
-                  },
-                  "&:hover h6": {
-                    color: "#fff",
-                  },
+                  filter: isActive
+                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                    : "none",
+                }}
+              />
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 500,
+                  fontFamily: "Poppins",
+                  color: isActive ? "#fff" : "#000000",
                 }}
               >
-                <Box src={icon} component={"img"} />
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 500,
-                    color: "#000000",
-                    fontFamily: "Poppins",
-                  }}
-                >
-                  {text}
-                </Typography>
-              </Box>
+                {profileLink?.text}
+              </Typography>
             </Box>
-          </Link>
-        ))}
+          </Box>
+        </Link>
+        <Box
+          sx={{
+            width: "100%",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              mx: "auto",
+              // width: "fit-content",
+              maxWidth: "192px",
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+              gap: 2,
+              px: 2.5,
+              mt: 1,
+            }}
+          >
+            <Box src={LogoutButton?.icon} component={"img"} />
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 500,
+                color: "#000000",
+                fontFamily: "Poppins",
+              }}
+            >
+              {LogoutButton?.text}
+            </Typography>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

@@ -55,7 +55,7 @@ export default function RootLayout() {
             overflow: "auto",
             p: 3,
             background: `url(${
-              pathname === "/dashboard/main" ? null : bgLogo
+              pathname === "/dashboard" ? null : bgLogo
             })`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "80%",

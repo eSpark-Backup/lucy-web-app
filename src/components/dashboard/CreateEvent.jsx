@@ -8,7 +8,7 @@ const CreateEvent = () => {
   return (
     <Box>
       <FormHeader title={id ? "Edit Event" : "Create Event"} />
-      <EventDetailsForm />
+      <EventDetailsForm id={id} />
     </Box>
   );
 };

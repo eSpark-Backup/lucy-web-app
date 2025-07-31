@@ -19,7 +19,11 @@ const initialEventData = {
   description: "",
 };
 
-const EventDetailsForm = ({ data = initialEventData, onSubmit = () => {} }) => {
+const EventDetailsForm = ({
+  data = initialEventData,
+  onSubmit = () => {},
+  id,
+}) => {
   const { fields } = EVENTFORM || {};
   const { EventDetailsFormStyles } = componentStyles || {};
   const navigate = useNavigate();
@@ -44,7 +48,7 @@ const EventDetailsForm = ({ data = initialEventData, onSubmit = () => {} }) => {
   });
 
   const handleClick = () => {
-    navigate("#");
+    navigate("/dashboard/calendar/create-event/1/content/1");
   };
 
   return (
@@ -97,22 +101,24 @@ const EventDetailsForm = ({ data = initialEventData, onSubmit = () => {} }) => {
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={1.5}
-              justifyContent={"space-between"}
+              justifyContent={id ? "space-between" : "flex-end"}
             >
               <Button type="submit" variant="contained" sx={buttonStyle}>
                 <Typography variant="h5" sx={buttonTypoStyle}>
                   {"Add"}
                 </Typography>
               </Button>
-              <Button
-                variant="contained"
-                sx={seeContentbuttonStyle}
-                onClick={handleClick}
-              >
-                <Typography variant="h5" sx={buttonTypoStyle}>
-                  {"See Content"}
-                </Typography>
-              </Button>
+              {id && (
+                <Button
+                  variant="contained"
+                  sx={seeContentbuttonStyle}
+                  onClick={handleClick}
+                >
+                  <Typography variant="h5" sx={buttonTypoStyle}>
+                    {"See Content"}
+                  </Typography>
+                </Button>
+              )}
             </Stack>
           </Grid>
         </Grid>

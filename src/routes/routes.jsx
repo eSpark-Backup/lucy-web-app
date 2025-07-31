@@ -16,6 +16,7 @@ import CreateEvent from "../components/dashboard/CreateEvent";
 import CreateContent from "../components/dashboard/CreateContent";
 import EventDetails from "../components/dashboard/EventDetails";
 import EventList from "../components/dashboard/EventList";
+import EventContents from "../components/dashboard/EventContents";
 
 const routes = [
   {
@@ -59,6 +60,10 @@ const routes = [
         element: <CreateContent />,
       },
       {
+        path: "/dashboard/calendar/create-content/:id",
+        element: <CreateContent />,
+      },
+      {
         path: "/dashboard/calendar/event-details",
         element: <EventDetails />,
       },
@@ -69,6 +74,16 @@ const routes = [
       { path: "/dashboard/about", element: <About /> },
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
+
+      // new added
+      {
+        path: "/dashboard/calendar/contents",
+        element: <EventContents />,
+      },
+      {
+        path: "/dashboard/calendar/create-event/:id/content/:id",
+        element: <EventContents />,
+      },
     ],
   },
   {

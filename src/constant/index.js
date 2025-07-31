@@ -408,23 +408,29 @@ export const SIDEBAR = {
       text: "About",
       link: "/dashboard/about",
       icon: about,
-      active_icon: about,
-    },
-    
-  ],
-  sibarButtons: [
-    {
-      text: "Profile",
-      link: "/dashboard/profile",
-      icon: profile,
-    },
-    {
-      text: "Logout",
-      icon: logout,
-      link: "/dashboard/sub-plan",
-      active_icon: logout,
     },
   ],
+  profileLink: {
+    text: "Profile",
+    link: "/dashboard/profile",
+    icon: profile,
+  },
+  LogoutButton: {
+    text: "Logout",
+    icon: logout,
+  },
+  // sibarButtons: [
+  //   {
+  //     text: "Profile",
+  //     link: "/dashboard/profile",
+  //     icon: profile,
+  //   },
+  //   {
+  //     text: "Logout",
+  //     icon: logout,
+  //     link: "/dashboard/sub-plan",
+  //   },
+  // ],
 };
 
 export const EVENTFORM = {
@@ -461,17 +467,24 @@ export const EVENTFORM = {
 };
 
 export const CONTENTFORM = {
-  radioButtonsLable: 'Content Type',
-  radioButtons: ['Press Release', 'Instagram Post', 'Facebook Post', 'Newsletter Inclusion', 'Summary'],
-  aiButtonText: 'Enhance with AI',
-  uploadButtonText: 'Upload Image',
-  buttonText: 'Add',
-  methodText: 'Post Method',
-  methodRadioButton: 'Email',
+  radioButtonsLable: "Content Type",
+  radioButtons: [
+    "Press Release",
+    "Instagram Post",
+    "Facebook Post",
+    "Newsletter Inclusion",
+    "Summary",
+  ],
+  aiButtonText: "Enhance with AI",
+  uploadButtonText: "Upload Image",
+  buttonText: "Add",
+  methodText: "Post Method",
+  methodRadioButton: "Email",
   fields: [
     {
       label: "Description",
-      placeholder: "Write a 3 paragraph  600 Words press release on (Event Name)",
+      placeholder:
+        "Write a 3 paragraph  600 Words press release on (Event Name)",
       type: "text",
       name: "description",
       size: 12,
