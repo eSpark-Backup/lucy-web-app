@@ -298,7 +298,7 @@ const Step2 = () => {
             name="q1"
             value={answers?.q1}
             onChange={handleChange("q1")}
-            placeholder="School Name"
+            placeholder="Enter your School Name"
             sx={{ width: { xs: "100%" }, div: { padding: 0 } }}
           />
         </Stack>
