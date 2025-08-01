@@ -113,7 +113,7 @@ export const theme = createTheme({
           border: "1px solid #E2DBFA",
           width: "100%",
           outline: "none",
-          padding: "0px 20px",
+          // padding: "0px 20px",
           fontSize: "14px",
           color: "#1A4FFF",
           fontWeight: 400,
