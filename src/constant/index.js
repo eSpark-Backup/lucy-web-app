@@ -362,16 +362,28 @@ export const SIGNIN = {
       key: "email",
     },
     {
-      label: "Username",
+      label: "First Name",
       type: "text",
-      placeholder: "Username",
-      key: "user_name",
+      placeholder: "First Name",
+      key: "first_name",
+    },
+    {
+      label: "Last Name",
+      type: "text",
+      placeholder: "Last Name",
+      key: "last_name",
     },
     {
       label: "Password",
       type: "password",
       placeholder: "******",
       key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "******",
+      key: "confirm_password",
     },
   ],
   checkboxText: "Remember Password",
@@ -388,8 +400,26 @@ export const SIGNIN = {
 };
 
 export const FORGET = {
-  title: "Looks like you’ve got lost….",
-  buttonText: "Back to Dashboard",
+  title: "Forget Password",
+  fields: [
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+  ],checkboxText: "Remember Password",
+  forgot: {
+    text: "Forget Password?",
+    link: "/auth/forget",
+  },
+  buttonText: "Sent reset link",
+  description: "Enter your email address and we will send you a link to reset your password.",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Create Account",
+    link: "/auth/signup",
+  },
 };
 
 export const SIDEBAR = {

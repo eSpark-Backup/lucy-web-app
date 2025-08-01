@@ -4,6 +4,7 @@ import SideNav from "../SideNav";
 import Navbar from "../Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import bgLogo from "../../assets/images/background-logo.svg";
+import { ToastContainer } from "react-toastify";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -68,6 +69,7 @@ export default function RootLayout() {
         {/* End Page */}
         {/* ------------------------------------------- */}
       </PageWrapper>
+      <ToastContainer position="top-right" autoClose={3000} />
     </MainWrapper>
   );
 }

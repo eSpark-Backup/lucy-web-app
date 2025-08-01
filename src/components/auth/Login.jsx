@@ -17,10 +17,11 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
 import { loginSchema } from "../../schemas/login";
+import { useSignIn } from "../../hooks/useAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { mutate: signIn, isLoading, error } = useSignIn();
   const {
     title,
     description,
@@ -57,12 +58,10 @@ const Login = () => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      console.log("Form values", values);
+      signIn(values);
     },
   });
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   return (
     <Box component="form" onSubmit={formik.handleSubmit} sx={authFormStyle}>
       <Stack spacing={2} alignItems="center" justifyContent="center">
@@ -157,7 +156,7 @@ const Login = () => {
       </Stack>
 
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
-        <Button type="submit" fullWidth sx={authButtonStyle}>
+        <Button type="submit" fullWidth sx={authButtonStyle} disabled={isLoading}>
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>
@@ -170,6 +169,12 @@ const Login = () => {
             </Typography>
           </Link>
         </Typography>
+        {/* Optional error display */}
+        {error && (
+          <Typography variant="body2" color="error">
+            {error.response?.data?.message || "Login failed"}
+          </Typography>
+        )}
       </Stack>
     </Box>
   );

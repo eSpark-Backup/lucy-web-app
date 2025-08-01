@@ -17,10 +17,11 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
 import { signupSchema } from "../../schemas/signup";
+import { useSignUp } from "../../hooks/useAuth";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { mutate: signUp, isLoading, error } = useSignUp();
   const {
     title,
     description,
@@ -58,7 +59,14 @@ const Signup = () => {
     },
     validationSchema: signupSchema,
     onSubmit: (values) => {
-      console.log("Form values", values);
+      const payload = {
+        firstName: values.user_name?.split(" ")[0] || "",
+        lastName: values.user_name?.split(" ").slice(1).join(" ") || "",
+        email: values.email,
+        password: values.password,
+        terms: values.remember,
+      };
+      signUp(payload);
     },
   });
 
@@ -74,14 +82,15 @@ const Signup = () => {
           {description}
         </Typography>
       </Stack>
+
       {fields?.map(({ label, type, placeholder, key }, index) => (
         <Stack width="100%" maxWidth={516} spacing={2} key={index}>
-          <Stack direction={"row"} justifyContent={"space-between"}>
+          <Stack direction="row" justifyContent="space-between">
             <Typography variant="h5" sx={authLableStyle}>
               {label}
             </Typography>
             {type === "password" && (
-              <Link to={`${forgot?.link}`} style={{ textDecoration: "none" }}>
+              <Link to={forgot?.link} style={{ textDecoration: "none" }}>
                 <Typography variant="h5" sx={authForgetTextStyle}>
                   {forgot?.text}
                 </Typography>
@@ -123,6 +132,7 @@ const Signup = () => {
           />
         </Stack>
       ))}
+
       <Stack
         width="100%"
         direction="row"
@@ -154,20 +164,28 @@ const Signup = () => {
           }
         />
       </Stack>
+
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
-        <Button type="submit" fullWidth sx={authButtonStyle}>
+        <Button type="submit" fullWidth sx={authButtonStyle} disabled={isLoading}>
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>
         </Button>
         <Typography variant="h5" sx={authHaveAnAccountTextStyle}>
           {haveAnAccountText}
-          <Link to={`${signUpText?.link}`} style={{ color: "#5A8CFF" }}>
-            <Typography component={"span"} sx={authSignupLinkTextStyle}>
+          <Link to={signUpText?.link} style={{ color: "#5A8CFF" }}>
+            <Typography component="span" sx={authSignupLinkTextStyle}>
               {signUpText?.text}
             </Typography>
           </Link>
         </Typography>
+
+        {/* Optional error display */}
+        {error && (
+          <Typography variant="body2" color="error">
+            {error.response?.data?.message || "Signup failed"}
+          </Typography>
+        )}
       </Stack>
     </Box>
   );
