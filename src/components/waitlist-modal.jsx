@@ -145,7 +145,9 @@ const Step2 = () => {
       q8Other,
       q9Other,
     } = answers;
-    if ([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12].includes("")) {
+    if (
+      [q1, q2, q2Other, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12].includes("")
+    ) {
       toast.error("Please answer the following questions");
       return;
     }
@@ -320,6 +322,9 @@ const Step2 = () => {
                 value: "Other (please specify)",
               },
             ]}
+            showOther
+            onOtherChange={handleChange("q2Other")}
+            otherValue={answers?.q2Other}
           />
         </Stack>
         <Stack spacing={1}>
@@ -331,7 +336,16 @@ const Step2 = () => {
             value={answers?.q3}
             onChange={handleChange("q3")}
             placeholder="Enter your Location"
-            sx={{ width: { xs: "100%" }, div: { padding: 0 } }}
+            sx={{
+              width: { xs: "100%" },
+              div: { padding: 0 },
+              input: {
+                "&:-webkit-autofill": {
+                  WebkitTextFillColor: "#1A4FFF",
+                  transition: "background-color 5000s ease-in-out 0s",
+                },
+              },
+            }}
           />
         </Stack>
         <Stack spacing={0.2}>
@@ -343,7 +357,16 @@ const Step2 = () => {
             value={answers?.q4}
             onChange={handleChange("q4")}
             placeholder="Enter your Role"
-            sx={{ width: { xs: "100%" }, div: { padding: 0 } }}
+            sx={{
+              width: { xs: "100%" },
+              div: { padding: 0 },
+              input: {
+                "&:-webkit-autofill": {
+                  WebkitTextFillColor: "#1A4FFF",
+                  transition: "background-color 5000s ease-in-out 0s",
+                },
+              },
+            }}
           />
         </Stack>
         <Stack spacing={1}>
@@ -355,7 +378,16 @@ const Step2 = () => {
             value={answers?.q5}
             onChange={handleChange("q5")}
             placeholder="Enter your Email"
-            sx={{ width: { xs: "100%" }, div: { padding: 0 } }}
+            sx={{
+              width: { xs: "100%" },
+              div: { padding: 0 },
+              input: {
+                "&:-webkit-autofill": {
+                  WebkitTextFillColor: "#1A4FFF",
+                  transition: "background-color 5000s ease-in-out 0s",
+                },
+              },
+            }}
           />
         </Stack>
 
@@ -364,84 +396,100 @@ const Step2 = () => {
             <Typography color="#2B106A" fontSize="14px" fontWeight={400}>
               {label}
             </Typography>
-            {options.map((option, index) => (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    name={name}
-                    value={option.value}
-                    checked={answers[name]?.includes(option.value)}
-                    onChange={(e) => {
-                      const { checked, value } = e.target;
-                      setAnswers((prev) => {
-                        const currentValues = prev[name] || [];
-                        return {
-                          ...prev,
-                          [name]: checked
-                            ? [...currentValues, value]
-                            : currentValues.filter((v) => v !== value),
-                        };
-                      });
-                    }}
-                    icon={
-                      <Box
-                        sx={{
-                          width: 24,
-                          height: 24,
-                          border: "1.5px solid #9B9B9B",
-                          borderRadius: "6px",
-                          backgroundColor: "#fff",
-                        }}
-                      />
-                    }
-                    checkedIcon={
-                      <Box
-                        sx={{
-                          width: 24,
-                          height: 24,
-                          border: "1.5px solid #9B9B9B",
-                          borderRadius: "6px",
-                          backgroundColor: "#fff",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
+            {options?.map((option, index) => (
+              <Box sx={{ px: 1 }}>
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      name={name}
+                      value={option?.value}
+                      checked={answers[name]?.includes(option?.value)}
+                      onChange={(e) => {
+                        const { checked, value } = e.target;
+                        setAnswers((prev) => {
+                          const currentValues = prev[name] || [];
+                          return {
+                            ...prev,
+                            [name]: checked
+                              ? [...currentValues, value]
+                              : currentValues?.filter((v) => v !== value),
+                          };
+                        });
+                      }}
+                      icon={
                         <Box
-                          component="span"
                           sx={{
-                            width: 15,
-                            height: 15,
-                            backgroundColor: "#5C5C5C",
-                            maskImage: `url("data:image/svg+xml,%3Csvg fill='none' viewBox='0 0 24 24' stroke='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7' /%3E%3C/svg%3E")`,
-                            WebkitMaskImage: `url("data:image/svg+xml,%3Csvg fill='none' viewBox='0 0 24 24' stroke='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7' /%3E%3C/svg%3E")`,
-                            maskRepeat: "no-repeat",
-                            maskPosition: "center",
+                            width: 24,
+                            height: 24,
+                            border: "1.5px solid #9B9B9B",
+                            borderRadius: "6px",
+                            backgroundColor: "#fff",
                           }}
                         />
-                      </Box>
-                    }
-                    disableRipple
-                    sx={{ padding: 0 }}
-                  />
-                }
-                label={
-                  <Typography
-                    color="#1A4FFF"
-                    fontSize="14px"
-                    fontWeight={400}
-                    sx={{ ml: 1.5, mt: 0.4 }}
-                  >
-                    {option.label}
-                  </Typography>
-                }
-              />
+                      }
+                      checkedIcon={
+                        <Box
+                          sx={{
+                            width: 24,
+                            height: 24,
+                            border: "1.5px solid #9B9B9B",
+                            borderRadius: "6px",
+                            backgroundColor: "#fff",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Box
+                            component="span"
+                            sx={{
+                              width: 15,
+                              height: 15,
+                              backgroundColor: "#5C5C5C",
+                              maskImage: `url("data:image/svg+xml,%3Csvg fill='none' viewBox='0 0 24 24' stroke='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7' /%3E%3C/svg%3E")`,
+                              WebkitMaskImage: `url("data:image/svg+xml,%3Csvg fill='none' viewBox='0 0 24 24' stroke='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7' /%3E%3C/svg%3E")`,
+                              maskRepeat: "no-repeat",
+                              maskPosition: "center",
+                            }}
+                          />
+                        </Box>
+                      }
+                      disableRipple
+                      sx={{ padding: 0 }}
+                    />
+                  }
+                  label={
+                    <Typography
+                      color="#1A4FFF"
+                      fontSize="14px"
+                      fontWeight={400}
+                      sx={{ ml: 1.5, mt: 0.4 }}
+                    >
+                      {option?.label}
+                    </Typography>
+                  }
+                />
+                {option?.value === "Other (please specify)" &&
+                  answers[name]?.includes(option?.value) && (
+                    <TextField
+                      value={answers[`${name}Other`] || ""}
+                      onChange={(e) =>
+                        setAnswers((prev) => ({
+                          ...prev,
+                          [`${name}Other`]: e?.target?.value,
+                        }))
+                      }
+                      placeholder="Please Specify"
+                      sx={{ width: "100%", mt: "10px" }}
+                    />
+                  )}
+              </Box>
             ))}
           </Stack>
         ))}
 
-        {radioQuestions.map(({ name, label, options }) => (
+        {radioQuestions?.map(({ name, label, options }) => (
           <Stack spacing={0} key={name}>
             <Typography color="#2B106A" fontSize="14px" fontWeight={400}>
               {label}
