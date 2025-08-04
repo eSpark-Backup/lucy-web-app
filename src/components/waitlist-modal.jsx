@@ -65,7 +65,16 @@ const Step1 = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your Email"
-          sx={{ width: { xs: "100%", md: "300px" }, div: { padding: 0 } }}
+          sx={{
+            width: { xs: "100%", md: "300px" },
+            div: { padding: 0 },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitTextFillColor: "#1A4FFF",
+                transition: "background-color 5000s ease-in-out 0s",
+              },
+            },
+          }}
         />
         <Button
           onClick={() => {
@@ -301,7 +310,16 @@ const Step2 = () => {
             value={answers?.q1}
             onChange={handleChange("q1")}
             placeholder="Enter your School Name"
-            sx={{ width: { xs: "100%" }, div: { padding: 0 } }}
+            sx={{
+              width: { xs: "100%" },
+              div: { padding: 0 },
+              input: {
+                "&:-webkit-autofill": {
+                  WebkitTextFillColor: "#1A4FFF",
+                  transition: "background-color 5000s ease-in-out 0s",
+                },
+              },
+            }}
           />
         </Stack>
         <Stack spacing={0.2}>
