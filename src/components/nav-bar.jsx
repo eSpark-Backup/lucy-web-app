@@ -39,7 +39,7 @@ const Navbar = () => {
         backgroundColor: "#FFF",
       }}
     >
-      <Container maxWidth="xl">
+      <Container sx={{ maxWidth: "1610px" }}>
         <AppBar
           position="static"
           sx={{

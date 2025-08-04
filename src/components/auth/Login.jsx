@@ -56,8 +56,9 @@ const Login = () => {
       remember: false,
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       console.log("Form values", values);
+      resetForm();
     },
   });
 
@@ -65,7 +66,7 @@ const Login = () => {
 
   return (
     <Box component="form" onSubmit={formik.handleSubmit} sx={authFormStyle}>
-      <Stack spacing={2} alignItems="center" justifyContent="center">
+      <Stack spacing={2} pb={2} alignItems="center" justifyContent="center">
         <Typography variant="h2" sx={authTitleStyle}>
           {title}
         </Typography>
@@ -129,7 +130,7 @@ const Login = () => {
         spacing={1}
         maxWidth={516}
         sx={{
-          mt: -1,
+          mt: 0.5,
         }}
       >
         <FormControlLabel

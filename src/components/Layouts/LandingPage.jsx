@@ -17,7 +17,11 @@ const LandingPage = () => {
       <Element name="home">
         <HeroSection />
       </Element>
-      <Container maxWidth="xl">
+      <Container
+        sx={{
+          maxWidth: "1610px",
+        }}
+      >
         <LogoSlider />
         <Element name="edu">
           <SolutionSection />
@@ -29,7 +33,11 @@ const LandingPage = () => {
       <Element name="services">
         <Services />
       </Element>
-      <Container maxWidth="xl">
+      <Container
+        sx={{
+          maxWidth: "1678px",
+        }}
+      >
         <Element name="about">
           <About />
         </Element>

@@ -38,7 +38,7 @@ export const componentStyles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: 4,
+    gap: 1.5,
   },
   authLableStyle: {
     opacity: "80%",

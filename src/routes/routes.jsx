@@ -17,6 +17,8 @@ import CreateContent from "../components/dashboard/CreateContent";
 import EventDetails from "../components/dashboard/EventDetails";
 import EventList from "../components/dashboard/EventList";
 import EventContents from "../components/dashboard/EventContents";
+import { Navigate } from "react-router-dom";
+import GotLost from "../components/auth/GotLost";
 
 const routes = [
   {
@@ -35,9 +37,11 @@ const routes = [
       </PublicRoute>
     ),
     children: [
-      { path: "/auth/login", element: <Login /> },
-      { path: "/auth/signup", element: <Signup /> },
-      { path: "/auth/forget", element: <Forgot /> },
+      { index: true, element: <Navigate to="/auth/login" replace /> },
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+      { path: "forget", element: <Forgot /> },
+      { path: "got-lost", element: <GotLost /> },
     ],
   },
   {

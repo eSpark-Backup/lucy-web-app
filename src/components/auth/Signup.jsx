@@ -20,12 +20,12 @@ import { signupSchema } from "../../schemas/signup";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     title,
     description,
     fields,
-    forgot,
     checkboxText,
     buttonText,
     haveAnAccountText,
@@ -38,7 +38,6 @@ const Signup = () => {
     authTitleStyle,
     authLableStyle,
     authDescriptionStyle,
-    authForgetTextStyle,
     authCheckBoxStyle,
     authCheckBoxIconStyle,
     authCheckBoxSpanStyle,
@@ -51,22 +50,26 @@ const Signup = () => {
 
   const formik = useFormik({
     initialValues: {
+      first_name: "",
+      last_name: "",
       email: "",
-      user_name: "",
       password: "",
+      confirm_password: "",
       remember: false,
     },
     validationSchema: signupSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       console.log("Form values", values);
+      resetForm();
     },
   });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((prev) => !prev);
   return (
     <Box component="form" onSubmit={formik?.handleSubmit} sx={authFormStyle}>
-      <Stack spacing={2} alignItems="center" justifyContent="center">
+      <Stack spacing={2} pb={2} alignItems="center" justifyContent="center">
         <Typography variant="h2" sx={authTitleStyle}>
           {title}
         </Typography>
@@ -74,62 +77,119 @@ const Signup = () => {
           {description}
         </Typography>
       </Stack>
-      {fields?.map(({ label, type, placeholder, key }, index) => (
-        <Stack width="100%" maxWidth={516} spacing={2} key={index}>
-          <Stack direction={"row"} justifyContent={"space-between"}>
-            <Typography variant="h5" sx={authLableStyle}>
-              {label}
-            </Typography>
-            {type === "password" && (
-              <Link to={`${forgot?.link}`} style={{ textDecoration: "none" }}>
-                <Typography variant="h5" sx={authForgetTextStyle}>
-                  {forgot?.text}
-                </Typography>
-              </Link>
-            )}
-          </Stack>
-          <TextField
-            fullWidth
-            name={key}
-            sx={authInputStyle}
-            placeholder={placeholder}
-            value={formik?.values?.[key]}
-            onChange={formik?.handleChange}
-            onBlur={formik?.handleBlur}
-            error={formik?.touched?.[key] && Boolean(formik?.errors?.[key])}
-            helperText={formik?.touched?.[key] && formik?.errors?.[key]}
-            type={
-              type === "password" ? (showPassword ? "text" : "password") : type
-            }
-            InputProps={
-              type === "password" && {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label={
-                        showPassword
-                          ? "hide the password"
-                          : "display the password"
-                      }
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+      {fields?.map((field, index) => {
+        if (field?.isRow && Array?.isArray(field.fields)) {
+          return (
+            <Stack width="100%" maxWidth={516} direction="row" gap={2}>
+              {field.fields.map((subField, subIndex) => (
+                <Stack width="100%" spacing={1} key={subIndex}>
+                  <Stack direction={"row"} justifyContent={"space-between"}>
+                    <Typography variant="h5" sx={authLableStyle}>
+                      {subField?.label}
+                    </Typography>
+                  </Stack>
+                  <TextField
+                    type={subField.type}
+                    fullWidth
+                    name={subField.key}
+                    sx={authInputStyle}
+                    placeholder={subField.placeholder}
+                    value={formik?.values?.[subField.key]}
+                    onChange={formik?.handleChange}
+                    onBlur={formik?.handleBlur}
+                    error={
+                      formik?.touched?.[subField.key] &&
+                      Boolean(formik?.errors?.[subField.key])
+                    }
+                    helperText={
+                      formik?.touched?.[subField?.key] &&
+                      formik?.errors?.[subField?.key]
+                    }
+                  />
+                </Stack>
+              ))}
+            </Stack>
+          );
+        }
+
+        // Normal single field
+        const { label, type, placeholder, key } = field;
+        return (
+          <Stack width="100%" maxWidth={516} spacing={1} key={index}>
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              <Typography variant="h5" sx={authLableStyle}>
+                {label}
+              </Typography>
+            </Stack>
+            <TextField
+              fullWidth
+              name={key}
+              sx={authInputStyle}
+              placeholder={placeholder}
+              value={formik?.values?.[key]}
+              onChange={formik?.handleChange}
+              onBlur={formik?.handleBlur}
+              error={formik?.touched?.[key] && Boolean(formik?.errors?.[key])}
+              helperText={formik?.touched?.[key] && formik?.errors?.[key]}
+              type={
+                type === "password"
+                  ? key === "confirm_password"
+                    ? showConfirmPassword
+                      ? "text"
+                      : "password"
+                    : showPassword
+                    ? "text"
+                    : "password"
+                  : type
               }
-            }
-          />
-        </Stack>
-      ))}
+              InputProps={
+                type === "password" && {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={
+                          key === "confirm_password"
+                            ? showConfirmPassword
+                              ? "Hide confirm password"
+                              : "Show confirm password"
+                            : showPassword
+                            ? "Hide password"
+                            : "Show password"
+                        }
+                        onClick={
+                          key === "confirm_password"
+                            ? handleClickShowConfirmPassword
+                            : handleClickShowPassword
+                        }
+                        edge="end"
+                      >
+                        {key === "confirm_password" ? (
+                          showConfirmPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )
+                        ) : showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }
+              }
+            />
+          </Stack>
+        );
+      })}
       <Stack
         width="100%"
         direction="row"
         alignItems="center"
         spacing={1}
         maxWidth={516}
-        sx={{ mt: -1 }}
+        sx={{ mt: 0.5 }}
       >
         <FormControlLabel
           control={

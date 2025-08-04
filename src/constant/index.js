@@ -356,22 +356,39 @@ export const SIGNIN = {
   description: "Create a account to continue",
   fields: [
     {
+      isRow: true,
+      fields: [
+        {
+          label: "First Name",
+          type: "text",
+          placeholder: "Enter your first name",
+          key: "first_name",
+        },
+        {
+          label: "Last Name",
+          type: "text",
+          placeholder: "Enter your last name",
+          key: "last_name",
+        },
+      ],
+    },
+    {
       label: "Email address:",
       type: "email",
       placeholder: "example@gmail.com",
       key: "email",
     },
     {
-      label: "Username",
-      type: "text",
-      placeholder: "Username",
-      key: "user_name",
-    },
-    {
       label: "Password",
       type: "password",
       placeholder: "******",
       key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "******",
+      key: "confirm_password",
     },
   ],
   checkboxText: "Remember Password",
@@ -388,6 +405,23 @@ export const SIGNIN = {
 };
 
 export const FORGET = {
+  title: "Forget Password",
+  description: "Please enter your email and receive a password",
+  fields: {
+    label: "Email address:",
+    type: "email",
+    placeholder: "example@gmail.com",
+    key: "email",
+  },
+  buttonText: "Continue",
+  haveAnAccountText: "Don’t have an account?",
+  signUpText: {
+    text: "Create Account",
+    link: "/auth/signup",
+  },
+};
+
+export const GOTLOST = {
   title: "Looks like you’ve got lost….",
   buttonText: "Back to Dashboard",
 };
@@ -419,18 +453,6 @@ export const SIDEBAR = {
     text: "Logout",
     icon: logout,
   },
-  // sibarButtons: [
-  //   {
-  //     text: "Profile",
-  //     link: "/dashboard/profile",
-  //     icon: profile,
-  //   },
-  //   {
-  //     text: "Logout",
-  //     icon: logout,
-  //     link: "/dashboard/sub-plan",
-  //   },
-  // ],
 };
 
 export const EVENTFORM = {
@@ -454,6 +476,19 @@ export const EVENTFORM = {
       placeholder: "Select Time",
       type: "text",
       name: "duration",
+      size: 12,
+    },
+     {
+      label: "Select Start Time",
+      placeholder: "Enter your Event Type",
+      type: "text",
+      name: "start_time",
+      size: 12,
+    },
+     {
+      label: "Upload Image/Avtar",
+      btnText: "Upload Image",
+      name: "image",
       size: 12,
     },
     {

@@ -30,7 +30,7 @@ export default function Footer() {
         pt: "83px",
       }}
     >
-      <Container maxWidth="xl">
+      <Container sx={{ maxWidth: "1596px" }}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, lg: 5 }}>
             <Stack spacing={2}>

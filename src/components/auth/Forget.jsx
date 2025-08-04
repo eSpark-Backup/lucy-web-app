@@ -1,49 +1,90 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { componentStyles } from "../../style/componentStyles";
+import { Box, Stack, Typography, TextField, Button } from "@mui/material";
+import { useFormik } from "formik";
 import { FORGET } from "../../constant";
-import NotFoundImage from "../../assets/images/404.svg";
-import { useNavigate } from "react-router-dom";
+import { componentStyles } from "../../style/componentStyles";
+import { Link } from "react-router-dom";
+import { forgetSchema } from "../../schemas/forget";
 
 const Forget = () => {
-  const { title, buttonText } = FORGET || {};
-  const { authTitleStyle, authButtonStyle, authButtonTypoStyle } =
-    componentStyles || {};
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/dashboard");
-  };
+  const {
+    title,
+    description,
+    fields,
+    buttonText,
+    haveAnAccountText,
+    signUpText,
+  } = FORGET || {};
+
+  const {
+    authFormStyle,
+    authInputStyle,
+    authTitleStyle,
+    authLableStyle,
+    authDescriptionStyle,
+    authButtonStyle,
+    authButtonTypoStyle,
+    authHaveAnAccountTextStyle,
+    authSignupLinkTextStyle,
+  } = componentStyles || {};
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: forgetSchema,
+    onSubmit: (values, { resetForm }) => {
+      console.log("Form values", values);
+      resetForm();
+    },
+  });
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 4,
-      }}
-    >
-      <Stack alignItems="center" justifyContent="center">
-        <Box
-          component={"img"}
-          src={NotFoundImage}
-          sx={{ width: { xs: "85%", sm: "90%", md: "100%" } }}
-        />
-      </Stack>
-      <Stack spacing={5} alignItems="center" justifyContent="center">
+    <Box component="form" onSubmit={formik.handleSubmit} sx={authFormStyle}>
+      <Stack spacing={2} pb={2} alignItems="center" justifyContent="center">
         <Typography variant="h2" sx={authTitleStyle}>
           {title}
         </Typography>
-        <Button
-          type="submit"
+        <Typography variant="h5" sx={authDescriptionStyle}>
+          {description}
+        </Typography>
+      </Stack>
+      <Stack width="100%" maxWidth={516} spacing={2}>
+        <Stack direction={"row"} justifyContent={"space-between"}>
+          <Typography variant="h5" sx={authLableStyle}>
+            {fields?.label}
+          </Typography>
+        </Stack>
+        <TextField
           fullWidth
-          sx={authButtonStyle}
-          onClick={handleClick}
-        >
+          name={fields?.key}
+          sx={authInputStyle}
+          placeholder={fields?.placeholder}
+          value={formik?.values?.[fields?.key]}
+          onChange={formik?.handleChange}
+          onBlur={formik?.handleBlur}
+          error={
+            formik?.touched?.[fields?.key] &&
+            Boolean(formik?.errors?.[fields?.key])
+          }
+          helperText={
+            formik?.touched?.[fields?.key] && formik?.errors?.[fields?.key]
+          }
+        />
+      </Stack>
+      <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
+        <Button type="submit" fullWidth sx={authButtonStyle}>
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>
         </Button>
+        <Typography variant="h5" sx={authHaveAnAccountTextStyle}>
+          {haveAnAccountText}
+          <Link to={`${signUpText?.link}`} style={{ color: "#5A8CFF" }}>
+            <Typography component={"span"} sx={authSignupLinkTextStyle}>
+              {signUpText?.text}
+            </Typography>
+          </Link>
+        </Typography>
       </Stack>
     </Box>
   );
