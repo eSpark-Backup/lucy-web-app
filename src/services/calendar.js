@@ -10,7 +10,7 @@ export const CalendarApi = api.injectEndpoints({
                 if (pageSize) queryParams.append('pageSize', pageSize);
                 if (page) queryParams.append('page', page);
 
-                const queryString = queryParams.toString() ? `?${queryParams.toString()}` : '';
+                const queryString = queryParams.tostring()? ? `?${queryParams.tostring()?}` : '';
                 return {
                     url: `${baseUrl}${id ? '' : queryString}`,
                     method: 'GET',
