@@ -175,7 +175,7 @@ const EventCalendar = ({ events }) => {
         events={events}
         editable={false}
         selectable={true}
-        select={(info) => {
+        select={() => {
           setPopupType("date");
           setPopupAnchor(null);
           setOpenModal(true); 

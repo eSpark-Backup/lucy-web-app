@@ -56,19 +56,19 @@ export const slides = [
   {
     heading: "Edupulse creates your press releases",
     description:
-      "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "Edupulse crafts compelling press releases to showcase your school's achievements, events, and milestones to the wider community.",
     image: service1,
   },
   {
     heading: "Edupulse creates your Facebook posts",
     description:
-      "Edupulse designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "Edupulse designs engaging Facebook posts that highlight your school's success, news, and events—keeping your community informed.",
     image: service2,
   },
   {
     heading: "Edupulse creates your Instagram posts",
     description:
-      "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "Edupulse delivers eye-catching Instagram posts to showcase your school's spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
@@ -86,19 +86,19 @@ export const slides = [
   {
     heading: "Edupulse creates your press releases",
     description:
-      "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "Edupulse crafts compelling press releases to showcase your school's achievements, events, and milestones to the wider community.",
     image: service6,
   },
   {
     heading: "Edupulse creates your Facebook posts",
     description:
-      "Edupulse designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "Edupulse designs engaging Facebook posts that highlight your school's success, news, and events—keeping your community informed.",
     image: service1,
   },
   {
     heading: "Edupulse creates your Instagram posts",
     description:
-      "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "Edupulse delivers eye-catching Instagram posts to showcase your school's spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
@@ -168,7 +168,7 @@ and analytics.</p>`,
     name: "Jurre Houtkamp",
     userName: "@jurrehoutkamp",
     content: `<p>Typefully is fantastic and way too cheap for what you get.</p> 
-     <p>We’ve tried many alternatives at <span style="color: #199AF5;">@framer</span> but nothing beats it. If you’re still tweeting from Twitter you’re wasting time.</p>`,
+     <p>We've tried many alternatives at <span style="color: #199AF5;">@framer</span> but nothing beats it. If you're still tweeting from Twitter you're wasting time.</p>`,
   },
 
   {
@@ -202,7 +202,7 @@ and analytics.</p>`,
     name: "DHH",
     userName: "@dhh",
     content: `<p>This is my new go-to writing environment for Twitter threads.</p> 
-    <p>They've built something wonderfully simple and distraction free with Typefully 😍</p>
+    <p>They've built something wonderfully simple and distraction free with Typefully😍</p>
     `,
   },
 ];
@@ -212,8 +212,8 @@ export const q1Options = [
   { label: "Admin/teachers handle it", value: "Admin/teachers handle it" },
   { label: "We outsource to an agency", value: "We outsource to an agency" },
   {
-    label: "We don’t do much marketing right now",
-    value: "We don’t do much marketing right now",
+    label: "We don't do much marketing right now",
+    value: "We don't do much marketing right now",
   },
 ];
 
@@ -344,7 +344,7 @@ export const LOGIN = {
     link: "/auth/forget",
   },
   buttonText: "Sign in",
-  haveAnAccountText: "Don’t have an account?",
+  haveAnAccountText: "Don't have an account?",
   signUpText: {
     text: "Create Account",
     link: "/auth/signup",

@@ -9,12 +9,6 @@ import {
 } from "@mui/material";
 import {
   footerLogo,
-  facebook,
-  instagram,
-  google,
-  twitter,
-  linkedin,
-  phone,
   email,
 } from "../assets";
 import { Link } from "react-scroll";

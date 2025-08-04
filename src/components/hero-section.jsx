@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ai, bannerVideo, dashed } from "../assets";
+import { bannerVideo } from "../assets";
 
 const HeroSection = () => {
   return (
@@ -48,7 +48,7 @@ const HeroSection = () => {
         >
           Attract More Students. <br />
           * Just * £10/month <br />
-          Boost Your School’s Visibility <br />
+          Boost Your School's Visibility <br />
           Edupulse App
         </Typography>
 
@@ -61,7 +61,7 @@ const HeroSection = () => {
             mt: "20px",
           }}
         >
-          Schools That Market Themselves Win. Don’t Get Left Behind! <br /> Let
+          Schools That Market Themselves Win. Don't Get Left Behind! <br /> Let
           the Edupulse App create your marketing content.
         </Typography>
       </Box>

@@ -109,7 +109,7 @@ const WaitList = () => {
           month for a standalone school subscription.
           <br />
           {/* Your competition is already marketing—are you? Join the waitlist now
-          and take control of your school’s success. */}
+          and take control of your school's success. */}
         </Typography>
       </Box>
     </Box>

@@ -56,9 +56,9 @@ const About = () => {
           inexpensive AI-based marketing app. This subscription-based app could
           cost your school as little as £10 per month. It means busy,
           cash-strapped schools will be visible in their community. Parents have
-          more choices than ever, and if you’re not actively promoting your
-          school, you’re missing out. But we know how busy school staff are and
-          how finances are stretched, that’s why we’ve built Edupulse an
+          more choices than ever, and if you're not actively promoting your
+          school, you're missing out. But we know how busy school staff are and
+          how finances are stretched, that's why we've built Edupulse an
           AI-driven marketing tool to help your school.
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "20px", fontWeight: "400" }}>
@@ -73,7 +73,7 @@ const About = () => {
             Exposure PR
           </a>
           , Lucy Hood, who understands exactly what schools need to stand out.
-          This isn’t just another AI tool, it’s a tailor-made solution designed
+          This isn't just another AI tool, it's a tailor-made solution designed
           with insider knowledge to help schools like yours thrive.
         </Typography>
       </Box>
