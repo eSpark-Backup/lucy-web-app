@@ -292,7 +292,7 @@ const Step2 = () => {
       >
         Basic Information
       </Typography>
-      <Stack spacing={1.5} py={1.5}>
+      <Stack spacing={1.5} pt={1.5}>
         <Stack spacing={1}>
           <Typography color="#2B106A" fontSize="14px" fontWeight={400}>
             School Name
@@ -358,7 +358,7 @@ const Step2 = () => {
             }}
           />
         </Stack>
-        <Stack spacing={0.2}>
+        <Stack spacing={1}>
           <Typography color="#2B106A" fontSize="14px" fontWeight={400}>
             Name & Role in School
           </Typography>
@@ -632,35 +632,43 @@ const WaitlistModal = () => {
             gap: "12px",
           }}
         >
-          <img
-            style={{ marginTop: "80px", width: "227px", height: "50px" }}
+          <Box
+            component={"img"}
+            sx={{
+              mx: "auto",
+              marginTop: "80px",
+              width: { xs: "200px", sm: "227px" },
+              height: "50px",
+            }}
             src={logo}
             alt="logo"
           />
-          <Typography
-            fontSize={{ xs: "20px", md: "44px" }}
-            fontWeight={700}
-            textAlign="center"
-          >
-            Be the First to get update <br></br> by Joining Our{" "}
+          <Box sx={{ px: 2.5 }}>
             <Typography
               fontSize={{ xs: "20px", md: "44px" }}
-              fontStyle="italic"
-              fontWeight={400}
-              component="span"
+              fontWeight={700}
+              textAlign="center"
             >
-              Waitlist!
+              Be the First to get update <br></br> by Joining Our{" "}
+              <Typography
+                fontSize={{ xs: "20px", md: "44px" }}
+                fontStyle="italic"
+                fontWeight={400}
+                component="span"
+              >
+                Waitlist!
+              </Typography>
             </Typography>
-          </Typography>
-          <Typography
-            color="#2B106A"
-            fontSize="14px"
-            fontWeight={400}
-            textAlign="center"
-          >
-            Be first to experience Replex. Join our waitlist for exclusive
-            benefits and revolutionary <br></br> automation solutions.
-          </Typography>
+            <Typography
+              color="#2B106A"
+              fontSize="14px"
+              fontWeight={400}
+              textAlign="center"
+            >
+              Be first to experience Replex. Join our waitlist for exclusive
+              benefits and revolutionary <br></br> automation solutions.
+            </Typography>
+          </Box>
           <Box
             sx={{
               position: "relative",
@@ -670,7 +678,7 @@ const WaitlistModal = () => {
               background:
                 "linear-gradient(to bottom, #F8F6FE 0%, rgba(255, 255, 255, 1) 100%)",
               borderRadius: "16px",
-              padding: "30px",
+              padding: { xs: '15px', sm: "30px" },
             }}
           >
             <Box sx={{ position: "absolute", left: "30px", top: "-32px" }}>
@@ -711,25 +719,6 @@ const WaitlistModal = () => {
               <Step1 />
             )}
           </Box>
-          <Stack
-            mt="20px"
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            gap={1}
-            sx={{ width: { xs: "100%", md: "500px" }, padding: "0px 30px" }}
-          >
-            {["Step 01", "Step 02", "Step 03"].map((item, ind) => (
-              <Typography
-                color={ind + 1 <= Number(step) ? "#000000" : "#00000091"}
-                fontSize={12}
-                fontWeight={400}
-                key={item}
-              >
-                {item}
-              </Typography>
-            ))}
-          </Stack>
         </Box>
       </Box>
     </Modal>
