@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Avatar, Box, Button, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import FormHeader from "../forms/FormHeader";
+import { useUpdateProfile } from "../../hooks/useUpdateProfile";
 import { profileSchema } from "../../schemas/profile";
 
 const profileStyles = {
@@ -46,28 +47,44 @@ const profileStyles = {
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const { mutate: updateProfile, isLoading } = useUpdateProfile();
 
   const formik = useFormik({
     initialValues: {
-      firstName: "Kevin",
-      lastName: "Fleming",
-      email: "jaskolski.brent@yahoo.com",
-      phone: "546-933-2772",
+      firstName: "Syed Ali",
+      lastName: "Naqi Hasni",
+      email: "syedhasni@gmail.com",
+      phone: "+923001234567",
+      profileImage: null,
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
-      console.log("Form submitted:", values);
+      const formData = new FormData();
+      formData.append("firstName", values.firstName );
+      formData.append("lastName", values.lastName );
+      formData.append("email", values.email );
+      formData.append("phone", values.phone );
+      if (selectedFile) formData.append("profileImage", selectedFile);
+
+      updateProfile(formData);
       setIsEditing(false);
+      console.log("Form submitted:", values);
     },
     enableReinitialize: true,
   });
 
   const handleEditClick = () => {
     if (isEditing) {
-      formik?.handleSubmit();
+      formik.handleSubmit();
     } else {
       setIsEditing(true);
     }
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
   };
 
   return (
@@ -75,28 +92,43 @@ const Profile = () => {
       <FormHeader title={"Profile"} />
       <Box
         component="form"
-        onSubmit={formik?.handleSubmit}
-        sx={profileStyles?.container}
+        onSubmit={formik.handleSubmit}
+        sx={{
+          ...profileStyles.container,
+        }}
       >
-        <Box sx={profileStyles?.formArea}>
+        <Box sx={profileStyles.formArea}>
           <Box sx={{ textAlign: "center", mb: "5px" }}>
             <Avatar
-              src="/src/assets/icons/Profile.svg"
+              src={
+                selectedFile
+                  ? URL.createObjectURL(selectedFile)
+                  : "/src/assets/icons/Profile.svg"
+              }
               alt="User Avatar"
               sx={{ width: 80, height: 80, margin: "auto" }}
             />
-            <Typography
-              variant="body2"
-              sx={{
-                mt: 1,
-                cursor: "pointer",
-                color: "#4379EE",
-                fontSize: "14px",
-              }}
-            >
-              Edit Photo
-            </Typography>
+            {isEditing && (
+              <label
+                style={{
+                  color: "#4379EE",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  marginTop: 8,
+                }}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleFileChange}
+                />
+                Edit Photo
+              </label>
+            )}
           </Box>
+
+          {/* ... Your input fields remain the same ... */}
 
           <Box sx={profileStyles?.row}>
             {/* First Name */}
@@ -224,6 +256,7 @@ const Profile = () => {
             variant="contained"
             size="large"
             onClick={handleEditClick}
+            disabled={isLoading}
             sx={{
               width: { xs: "250px", sm: "300px", md: "274px" },
               height: { xs: "46px", md: "56px" },
@@ -236,7 +269,7 @@ const Profile = () => {
               boxShadow: "none",
             }}
           >
-            {isEditing ? "Save" : "Edit"}
+            {isEditing ? (isLoading ? "Saving..." : "Save") : "Edit"}
           </Button>
         </Box>
       </Box>

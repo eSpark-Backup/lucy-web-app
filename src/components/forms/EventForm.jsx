@@ -7,9 +7,11 @@ import {
   Stack,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { eventValidationSchema } from "../../schemas/event";
 import { EVENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
+import apiClient from "../../api/apiClient"; // <-- Axios instance
 
 const initialEventData = {
   event_name: "",
@@ -21,7 +23,8 @@ const initialEventData = {
 const EventForm = ({
   isEdit = false,
   data = initialEventData,
-  onSubmit = () => { },
+  onSubmit = () => {},
+  id = null, // needed for edit
 }) => {
   const { fields } = EVENTFORM || {};
   const { EventFormStyles } = componentStyles || {};
@@ -33,22 +36,54 @@ const EventForm = ({
     buttonStyle,
   } = EventFormStyles || {};
 
+  const queryClient = useQueryClient();
+
+  // --- React Query Mutations ---
+ const addEvent = useMutation({
+  mutationFn: (payload) => apiClient.post("/events", payload),
+  onError: (error) => {
+    console.error("Add Event Error:", error.response?.data || error.message);
+  },
+  onSuccess: () => {
+    queryClient.invalidateQueries(["events"]);
+  },
+});
+
+
+  const updateEvent = useMutation({
+    mutationFn: (payload) => apiClient.put(`/events/${id}`, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
+
   const formik = useFormik({
     initialValues: data,
+    enableReinitialize: true,
     validationSchema: eventValidationSchema,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values, "values");
-      resetForm();
-      onSubmit(values);
-    },
+    onSubmit: async (values, { resetForm }) => {
+  try {
+    console.log("Form submitting:", values); // 🔍
+    if (isEdit && id) {
+      await updateEvent.mutateAsync(values);
+    } else {
+      await addEvent.mutateAsync(values);
+    }
+    resetForm();
+    onSubmit(values);
+  } catch (error) {
+    console.error("Event submit error:", error);
+  }
+},
+
   });
 
   return (
     <Paper elevation={0} sx={paperStyle}>
-      <form onSubmit={formik?.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
           {fields?.map(({ label, name, placeholder, type, size }, index) => (
-            <Grid size={size} key={index}>
+            <Grid key={index} item xs={size || 12}>
               <Stack width="100%" spacing={1.2}>
                 <Typography variant="h6" sx={inputLabelStyle}>
                   {label}
@@ -58,16 +93,11 @@ const EventForm = ({
                   name={name}
                   type={type}
                   placeholder={placeholder}
-                  value={formik?.values?.[name]}
-                  onChange={formik?.handleChange}
-                  onBlur={formik?.handleBlur}
+                  value={formik.values[name]}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   multiline={name === "description"}
                   rows={name === "description" ? 4 : 0}
-                  id={
-                    name === "description"
-                      ? "outlined-multiline-static"
-                      : `${index}`
-                  }
                   sx={inputStyle(name)}
                   inputProps={{
                     sx: {
@@ -81,16 +111,19 @@ const EventForm = ({
                       },
                     },
                   }}
-                  error={
-                    formik?.touched?.[name] && Boolean(formik?.errors?.[name])
-                  }
-                  helperText={formik?.touched?.[name] && formik?.errors?.[name]}
+                  error={formik.touched[name] && Boolean(formik.errors[name])}
+                  helperText={formik.touched[name] && formik.errors[name]}
                 />
               </Stack>
             </Grid>
           ))}
-          <Grid size={12} pt={2.5}>
-            <Button type="submit" variant="contained" sx={buttonStyle}>
+          <Grid item xs={12} pt={2.5}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={buttonStyle}
+              disabled={addEvent.isLoading || updateEvent.isLoading}
+            >
               <Typography variant="h5" sx={buttonTypoStyle}>
                 {isEdit ? "Save" : "Add"}
               </Typography>

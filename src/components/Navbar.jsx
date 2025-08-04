@@ -9,8 +9,11 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ openMobileSidebar }) => {
+  const user = useSelector((state) => state.auth.profile); 
+  console.log("User in Navbar:", user); // Debugging line to check user data
   return (
     <AppBar
       position="static"
@@ -40,8 +43,8 @@ const Navbar = ({ openMobileSidebar }) => {
           <Link to={"/dashboard/profile"} style={{ textDecoration: "none" }}>
             <Box display="flex" alignItems="center" gap={2}>
               <Avatar
-                src="https://i.ibb.co/6B7bK6b/moni.jpg"
-                alt="Moni Roy"
+                src={user?.profileImage || "/src/assets/icons/Profile.svg"}
+                alt={user?.fistName || "User Avatar"}
                 sx={{ width: { sm: 37, md: 40 }, height: { sm: 37, md: 40 } }}
               />
               <Box
@@ -56,7 +59,7 @@ const Navbar = ({ openMobileSidebar }) => {
                     color: "#404040",
                   }}
                 >
-                  Moni Roy
+                  {user?.fistName || "Syed Hasni"}
                 </Typography>
                 <Typography
                   variant="body2"
@@ -66,7 +69,7 @@ const Navbar = ({ openMobileSidebar }) => {
                     color: "#404040",
                   }}
                 >
-                  Admin
+                  {user?.email || "test@test.com"}
                 </Typography>
               </Box>
               <IconButton

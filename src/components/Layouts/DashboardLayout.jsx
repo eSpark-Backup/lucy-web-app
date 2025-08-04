@@ -31,7 +31,7 @@ export default function RootLayout() {
     <MainWrapper className="mainwrapper">
       {/* ------------------------------------------- */}
       {/* Sidebar */}
-      {/* ------------------------------------------- */}
+      {/* ------------------------------------------- */} 
       <SideNav
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}

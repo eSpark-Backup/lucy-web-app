@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://lucyweb-be.stg.esparkconsultants.com/dev/api/v1/'; // NOT `NEXT_PUBLIC_...` in React app
+const BASE_URL = 'https://lucyweb-be.stg.esparkconsultants.com/dev/api/v1/'; 
 
 export const signInApi = async (data) => {
   const response = await axios.post(`${BASE_URL}auth/sign-in`, {
