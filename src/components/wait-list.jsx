@@ -106,7 +106,7 @@ const WaitList = () => {
           Be part of our community! Join the waitlist today and get 10% off your
           subscription at app launch.
           <br />
-          Just £10 per school per month if the whole Trust signs up, or £50 per
+          Only £10* per school per month if the whole Trust signs up, or £50* per
           month for a standalone school subscription.
           <br />
           {/* Your competition is already marketing—are you? Join the waitlist now

@@ -40,7 +40,14 @@ const CustomSelect = ({
         displayEmpty
         renderValue={(selected) =>
           selected === "" ? (
-            <Typography sx={{ color: "#9e9e9e" }}>
+            <Typography
+              sx={{
+                color: "#9e9e9e",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               Select an option (option)
             </Typography>
           ) : (
