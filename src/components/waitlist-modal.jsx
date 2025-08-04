@@ -123,8 +123,9 @@ const Step2 = () => {
 
   const SendHandler = async (data) => {
     try {
+      // const res = await axios.post("https://eduplusemail.esparkconsultants.com/start-survey", data);
       const res = await axios.post(
-        "https://eduplusemail.esparkconsultants.com/start-survey",
+        "https://luccy-landing-be.stg.esparkconsultants.com/questions",
         data
       );
       setIsLoading(false);
