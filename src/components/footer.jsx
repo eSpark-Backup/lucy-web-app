@@ -178,7 +178,6 @@ function Section({ heading, links }) {
           to={item?.route}
           smooth={true}
           style={{ cursor: "pointer" }}
-          // sx={{ color: "#EBEBEB", fontSize: "21px", fontWeight: 400 }}
         >
           {item?.label}
         </Link>

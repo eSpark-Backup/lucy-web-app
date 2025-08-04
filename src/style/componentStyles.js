@@ -1,6 +1,4 @@
 export const componentStyles = {
-  //  ... all components styles write here ...
-
   authInputStyle: {
     "& .MuiInputBase-root": {
       height: { xs: "46px", md: "56px" },

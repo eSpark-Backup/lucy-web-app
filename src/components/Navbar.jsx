@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = ({ openMobileSidebar }) => {
   const user = useSelector((state) => state.auth.profile); 
-  console.log("User in Navbar:", user); // Debugging line to check user data
+  console.log("User in Navbar:", user); 
   return (
     <AppBar
       position="static"

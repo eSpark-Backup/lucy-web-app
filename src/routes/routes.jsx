@@ -74,8 +74,6 @@ const routes = [
       { path: "/dashboard/about", element: <About /> },
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
-
-      // new added
       {
         path: "/dashboard/calendar/contents",
         element: <EventContents />,

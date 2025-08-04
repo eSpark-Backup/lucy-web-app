@@ -17,7 +17,6 @@ const Services = () => {
     >
       <Container
         sx={{
-          // px: { xs: "30px", md: "50px", lg: "90px" },
           display: "flex",
           flexDirection: "column",
           rowGap: "15px",

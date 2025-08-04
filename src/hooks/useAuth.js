@@ -10,8 +10,8 @@ export const useSignIn = () => {
   return useMutation({
     mutationFn: signInApi,
     onSuccess: (data) => {
-      dispatch(loginSuccess(data.user)); // Or adjust based on your API response
-      localStorage.setItem("token", data.token); // Optional
+      dispatch(loginSuccess(data.user)); 
+      localStorage.setItem("token", data.token);
     },
   });
 };

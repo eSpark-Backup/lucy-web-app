@@ -36,8 +36,6 @@ const HeroSection = () => {
           position: "relative",
           textAlign: "center",
           zIndex: 1,
-          //   maxWidth: "900px",
-          //   mx: "auto",
         }}
       >
         <Typography

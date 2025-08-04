@@ -1,5 +1,4 @@
-// api/profile.js
-import apiClient from "../api/apiClient"; // your configured Axios instance
+import apiClient from "../api/apiClient"; 
 
 export const updateProfile = async (formData) => {
   const response = await apiClient.put("/profile", formData, {

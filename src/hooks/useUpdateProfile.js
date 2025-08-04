@@ -1,4 +1,3 @@
-// hooks/useUpdateProfile.js
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProfile } from "../api/profile";
 import { useDispatch } from "react-redux";
@@ -11,7 +10,6 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: updateProfile,
     onSuccess: (data) => {
-      // Update Redux store and refetch user data if needed
       dispatch(setProfile(data));
       queryClient.invalidateQueries(["profile"]);
     },

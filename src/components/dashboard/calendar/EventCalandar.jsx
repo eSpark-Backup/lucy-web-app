@@ -101,10 +101,10 @@ const EventCalendar = ({ events }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   const COLORS_MAP = {
-    "user-1": "#6C63FF", // purple
-    "user-2": "#00BFA6", // teal
-    "user-3": "#FF5252", // red
-    "user-4": "#FFAB00", // amber
+    "user-1": "#6C63FF",
+    "user-2": "#00BFA6", 
+    "user-3": "#FF5252", 
+    "user-4": "#FFAB00",
   };
 
   return (
@@ -114,9 +114,9 @@ const EventCalendar = ({ events }) => {
         initialView="dayGridMonth"
         initialDate={selectedDate.toDate()}
         ref={calendarRef}
-        height="100%" // Important: make calendar fill parent height
+        height="100%"
         contentHeight="auto"
-        expandRows={true} // Helps with dynamic sizing
+        expandRows={true} 
         headerToolbar={{
           start: "today prev,next",
           center: "title",
@@ -124,7 +124,7 @@ const EventCalendar = ({ events }) => {
         }}
         eventDidMount={(info) => {
           const { userId } = info.event.extendedProps;
-          const color = COLORS_MAP[userId] || "#6C63FF"; // fallback
+          const color = COLORS_MAP[userId] || "#6C63FF"; 
 
           info.el.style.backgroundColor = `${color}35`;
           info.el.style.borderLeft = `4px solid ${color}`;
@@ -177,8 +177,8 @@ const EventCalendar = ({ events }) => {
         selectable={true}
         select={(info) => {
           setPopupType("date");
-          setPopupAnchor(null); // No popper anchor
-          setOpenModal(true); // Show modal
+          setPopupAnchor(null);
+          setOpenModal(true); 
         }}
         eventClick={(info) => {
           setPopupType("event");

@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { eventValidationSchema } from "../../schemas/event";
 import { EVENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
-import apiClient from "../../api/apiClient"; // <-- Axios instance
+import apiClient from "../../api/apiClient";
 
 const initialEventData = {
   event_name: "",
@@ -24,7 +24,7 @@ const EventForm = ({
   isEdit = false,
   data = initialEventData,
   onSubmit = () => {},
-  id = null, // needed for edit
+  id = null,
 }) => {
   const { fields } = EVENTFORM || {};
   const { EventFormStyles } = componentStyles || {};
@@ -37,18 +37,15 @@ const EventForm = ({
   } = EventFormStyles || {};
 
   const queryClient = useQueryClient();
-
-  // --- React Query Mutations ---
- const addEvent = useMutation({
-  mutationFn: (payload) => apiClient.post("/events", payload),
-  onError: (error) => {
-    console.error("Add Event Error:", error.response?.data || error.message);
-  },
-  onSuccess: () => {
-    queryClient.invalidateQueries(["events"]);
-  },
-});
-
+  const addEvent = useMutation({
+    mutationFn: (payload) => apiClient.post("/events", payload),
+    onError: (error) => {
+      console.error("Add Event Error:", error.response?.data || error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
 
   const updateEvent = useMutation({
     mutationFn: (payload) => apiClient.put(`/events/${id}`, payload),
@@ -62,20 +59,19 @@ const EventForm = ({
     enableReinitialize: true,
     validationSchema: eventValidationSchema,
     onSubmit: async (values, { resetForm }) => {
-  try {
-    console.log("Form submitting:", values); // 🔍
-    if (isEdit && id) {
-      await updateEvent.mutateAsync(values);
-    } else {
-      await addEvent.mutateAsync(values);
-    }
-    resetForm();
-    onSubmit(values);
-  } catch (error) {
-    console.error("Event submit error:", error);
-  }
-},
-
+      try {
+        console.log("Form submitting:", values);
+        if (isEdit && id) {
+          await updateEvent.mutateAsync(values);
+        } else {
+          await addEvent.mutateAsync(values);
+        }
+        resetForm();
+        onSubmit(values);
+      } catch (error) {
+        console.error("Event submit error:", error);
+      }
+    },
   });
 
   return (

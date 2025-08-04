@@ -184,7 +184,6 @@ const Sidebar = () => {
           <Box
             sx={{
               mx: "auto",
-              // width: "fit-content",
               maxWidth: "192px",
               display: "flex",
               alignItems: "center",

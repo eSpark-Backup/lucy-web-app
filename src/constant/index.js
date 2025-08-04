@@ -449,18 +449,6 @@ export const SIDEBAR = {
     text: "Logout",
     icon: logout,
   },
-  // sibarButtons: [
-  //   {
-  //     text: "Profile",
-  //     link: "/dashboard/profile",
-  //     icon: profile,
-  //   },
-  //   {
-  //     text: "Logout",
-  //     icon: logout,
-  //     link: "/dashboard/sub-plan",
-  //   },
-  // ],
 };
 
 export const EVENTFORM = {

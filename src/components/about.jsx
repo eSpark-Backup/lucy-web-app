@@ -6,8 +6,6 @@ const About = () => {
   return (
     <Box
       sx={{
-        // pl: { xs: "30px", md: "50px", lg: "90px" },
-        // pr: { xs: "15px", md: "25px", lg: "45px" },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",

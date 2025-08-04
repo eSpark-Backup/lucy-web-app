@@ -54,8 +54,3 @@ const ReviewCard = ({ image, name, userName, tweet }) => {
 };
 
 export default ReviewCard;
-//   box-shadow: ;
-
-// box-shadow: ;
-
-// box-shadow: ;

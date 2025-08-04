@@ -57,8 +57,6 @@ const ContentForm = ({
 
   const inputRef = useRef(null);
   const [image, setImage] = useState(null);
-
-  // Pexels search
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -74,7 +72,7 @@ const ContentForm = ({
         {
           headers: {
             Authorization:
-              "E4AB8hPKj3zShBgIuY1U3ZsNz7JFIeYyqmdOeJoYAENQLBhyBaPjnjUD", // For production, use process.env
+              "E4AB8hPKj3zShBgIuY1U3ZsNz7JFIeYyqmdOeJoYAENQLBhyBaPjnjUD", 
           },
         }
       );
@@ -267,10 +265,10 @@ const ContentForm = ({
                                     "& .MuiInputBase-root": {
                                       height: "40px",
                                       borderRadius: "8px",
-                                      paddingX: 1, // outer padding inside input root
+                                      paddingX: 1,
                                     },
                                     "& input": {
-                                      padding: "8px 12px", // inner padding for text and placeholder
+                                      padding: "8px 12px", 
                                     },
                                   }}
                                 />

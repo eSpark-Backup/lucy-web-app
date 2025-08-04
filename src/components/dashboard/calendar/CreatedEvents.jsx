@@ -14,7 +14,6 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
 
-// Helpers
 const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");
 const formatTime = (dateStr) =>
   new Date(dateStr).toLocaleTimeString([], {
@@ -187,7 +186,6 @@ export default function CreatedEvents({ events }) {
         mt={3}
       >
         <Button
-          // variant="primary"
           onClick={() => setShowAll(!showAll)}
           sx={{
             width: 126,

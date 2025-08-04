@@ -1,4 +1,3 @@
-// store/slices/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -28,7 +27,8 @@ const authSlice = createSlice({
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",profileImage: null,
+        phone: "",
+        profileImage: null,
       };
     },
     setProfile: (state, action) => {

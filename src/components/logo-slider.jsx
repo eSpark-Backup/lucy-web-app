@@ -67,7 +67,7 @@ const LogoSlider = () => {
           <SwiperSlide
             key={index}
             style={{
-              width: "120px", // fixed width to allow peeking
+              width: "120px", 
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

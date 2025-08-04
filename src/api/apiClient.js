@@ -1,4 +1,3 @@
-// utils/apiClient.js
 import axios from "axios";
 
 const BASE_URL = 'https://lucyweb-be.stg.esparkconsultants.com/dev/api/v1/'; 
@@ -8,7 +7,7 @@ const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   }, 
-  withCredentials: true, // if your API uses cookies/session
+  withCredentials: true, 
 });
 
 export default apiClient;
