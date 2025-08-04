@@ -474,16 +474,16 @@ export const EVENTFORM = {
     {
       label: "Duration (Minutes) ",
       placeholder: "Select Time",
-      type: "text",
+      type: "number",
       name: "duration",
-      size: 12,
+      size: { xs: 12, lg: 5.5 },
     },
      {
       label: "Select Start Time",
       placeholder: "Enter your Event Type",
-      type: "text",
+      type: "time",
       name: "start_time",
-      size: 12,
+      size: { xs: 12, lg: 5.5 },
     },
      {
       label: "Upload Image/Avtar",

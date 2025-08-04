@@ -11,10 +11,14 @@ import { eventValidationSchema } from "../../schemas/event";
 import { EVENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import ImageUploader from "../ImageUploader";
 
 const initialEventData = {
   event_name: "",
   event_type: "",
+  start_time: "",
+  image: null,
   duration: "",
   description: "",
 };
@@ -24,6 +28,8 @@ const EventDetailsForm = ({
   onSubmit = () => {},
   id,
 }) => {
+  const inputRef = useRef(null);
+  const [image, setImage] = useState(null);
   const { fields } = EVENTFORM || {};
   const { EventDetailsFormStyles } = componentStyles || {};
   const navigate = useNavigate();
@@ -34,6 +40,7 @@ const EventDetailsForm = ({
     inputStyle,
     buttonTypoStyle,
     buttonStyle,
+    uploadButtonStyle,
     seeContentbuttonStyle,
   } = EventDetailsFormStyles || {};
 
@@ -43,6 +50,8 @@ const EventDetailsForm = ({
     onSubmit: (values, { resetForm }) => {
       console.log(values, "values");
       resetForm();
+      setImage(null);
+      if (inputRef?.current) inputRef.current.value = null;
       onSubmit(values);
     },
   });
@@ -61,39 +70,68 @@ const EventDetailsForm = ({
                 <Typography variant="h6" sx={inputLabelStyle}>
                   {label}
                 </Typography>
-                <TextField
-                  fullWidth
-                  name={name}
-                  type={type}
-                  placeholder={placeholder}
-                  value={formik?.values?.[name]}
-                  onChange={formik?.handleChange}
-                  onBlur={formik?.handleBlur}
-                  multiline={name === "description"}
-                  rows={name === "description" ? 6.7 : 0}
-                  id={
-                    name === "description"
-                      ? "outlined-multiline-static"
-                      : `${index}`
-                  }
-                  sx={inputStyle(name)}
-                  inputProps={{
-                    sx: {
-                      fontSize: "14px",
-                      fontFamily: "Nunito Sans",
-                      fontWeight: 400,
-                      "&::placeholder": {
+                {name !== "image" ? (
+                  <TextField
+                    fullWidth
+                    name={name}
+                    type={type}
+                    placeholder={placeholder}
+                    value={formik?.values?.[name]}
+                    onChange={formik?.handleChange}
+                    onBlur={formik?.handleBlur}
+                    multiline={name === "description"}
+                    rows={name === "description" ? 6.7 : 0}
+                    id={
+                      name === "description"
+                        ? "outlined-multiline-static"
+                        : `${index}`
+                    }
+                    sx={inputStyle(name)}
+                    inputProps={{
+                      sx: {
                         fontSize: "14px",
                         fontFamily: "Nunito Sans",
                         fontWeight: 400,
+                        "&::placeholder": {
+                          fontSize: "14px",
+                          fontFamily: "Nunito Sans",
+                          fontWeight: 400,
+                        },
                       },
-                    },
-                  }}
-                  error={
-                    formik?.touched?.[name] && Boolean(formik?.errors?.[name])
-                  }
-                  helperText={formik?.touched?.[name] && formik?.errors?.[name]}
-                />
+                    }}
+                    error={
+                      formik?.touched?.[name] && Boolean(formik?.errors?.[name])
+                    }
+                    helperText={
+                      formik?.touched?.[name] && formik?.errors?.[name]
+                    }
+                  />
+                ) : (
+                  <>
+                    <ImageUploader
+                      ref={inputRef}
+                      image={image}
+                      setImage={setImage}
+                      formik={formik}
+                    />
+                    {formik?.touched?.image && formik?.errors?.image && (
+                      <Typography color="error" fontSize={12} m={"3px 14px"}>
+                        {formik?.errors?.image}
+                      </Typography>
+                    )}
+                    <Stack pt={1}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={uploadButtonStyle}
+                      >
+                        <Typography variant="h6" sx={buttonTypoStyle}>
+                          {"Upload Image"}
+                        </Typography>
+                      </Button>
+                    </Stack>
+                  </>
+                )}
               </Stack>
             </Grid>
           ))}

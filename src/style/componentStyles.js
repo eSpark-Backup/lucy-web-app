@@ -170,6 +170,18 @@ export const componentStyles = {
         backgroundColor: "#4880FF",
       },
     },
+    uploadButtonStyle: {
+      ml: "auto",
+      color: "#fff",
+      maxWidth: { xs: "100%", sm: "148px" },
+      height: { xs: "42px", md: "46px" },
+      borderRadius: "9px",
+      backgroundColor: "#4880FF",
+      opacity: "90%",
+      "&:hover": {
+        backgroundColor: "#4880FF",
+      },
+    },
     buttonTypoStyle: {
       fontWeight: 500,
       fontFamily: "Nunito Sans",
@@ -303,9 +315,21 @@ export const componentStyles = {
     }),
     buttonStyle: {
       color: "#fff",
-      maxWidth: "191px",
+      maxWidth: { xs: "100%", sm: "191px" },
       height: { xs: "46px", md: "56px" },
       borderRadius: "12px",
+      backgroundColor: "#4880FF",
+      opacity: "90%",
+      "&:hover": {
+        backgroundColor: "#4880FF",
+      },
+    },
+    uploadButtonStyle: {
+      ml: "auto",
+      color: "#fff",
+      maxWidth: { xs: "100%", sm: "148px" },
+      height: { xs: "42px", md: "46px" },
+      borderRadius: "9px",
       backgroundColor: "#4880FF",
       opacity: "90%",
       "&:hover": {
