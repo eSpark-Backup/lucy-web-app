@@ -59,7 +59,16 @@ const CustomSelect = ({
           value={otherValue}
           onChange={onOtherChange}
           placeholder="Please Specify"
-          sx={{ width: "100%", div: { padding: 0, mt: "10px" } }}
+          sx={{
+            width: "100%",
+            div: { padding: 0, mt: "10px" },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitTextFillColor: "#1A4FFF",
+                transition: "background-color 5000s ease-in-out 0s",
+              },
+            },
+          }}
         />
       )}
     </FormControl>
