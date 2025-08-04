@@ -154,21 +154,6 @@ const Step2 = () => {
       q8Other,
       q9Other,
     } = answers;
-    if (
-      [q1, q2, q2Other, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12].includes("")
-    ) {
-      toast.error("Please answer the following questions");
-      return;
-    }
-    // if (
-    //   (q2 === "Other (please specify)" && answers?.q2Other.trim() === "") ||
-    //   (q7 === "Other (please specify)" && answers?.q7Other.trim() === "") ||
-    //   (q8 === "Other (please specify)" && answers?.q8Other.trim() === "") ||
-    //   (q9 === "Other (please specify)" && answers?.q9Other.trim() === "")
-    // ) {
-    //   toast.error("Please answer the following questions");
-    //   return;
-    // }
 
     const requiredAnswers = [q1, q2, q3, q4, q5, q10, q11, q12];
     const requiredArrays = [q6, q7, q8, q9];
@@ -177,7 +162,13 @@ const Step2 = () => {
       requiredAnswers.some((a) => a === "") ||
       requiredArrays.some((a) => a.length === 0);
 
-    if (isEmpty) {
+    const isOtherMissing =
+      (q2 === "Other (please specify)" && q2Other.trim() === "") ||
+      (q7.includes("Other (please specify)") && q7Other.trim() === "") ||
+      (q8.includes("Other (please specify)") && q8Other.trim() === "") ||
+      (q9.includes("Other (please specify)") && q9Other.trim() === "");
+
+    if (isEmpty || isOtherMissing) {
       toast.error("Please answer the following questions");
       return;
     }
