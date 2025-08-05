@@ -72,6 +72,10 @@ const routes = [
         element: <EventDetails />,
       },
       {
+        path: "/dashboard/calendar/event-details/:id",
+        element: <EventDetails />,
+      },
+      {
         path: "/dashboard/calendar/event-list",
         element: <EventList />,
       },
@@ -81,11 +85,11 @@ const routes = [
 
       // new added
       {
-        path: "/dashboard/calendar/contents",
+        path: "/dashboard/calendar/event-content",
         element: <EventContents />,
       },
       {
-        path: "/dashboard/calendar/create-event/:id/content/:id",
+        path: "/dashboard/calendar/event-content/:id",
         element: <EventContents />,
       },
     ],

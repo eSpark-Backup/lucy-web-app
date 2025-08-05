@@ -143,7 +143,7 @@ const EventDetailsForm = ({
             >
               <Button type="submit" variant="contained" sx={buttonStyle}>
                 <Typography variant="h5" sx={buttonTypoStyle}>
-                  {"Add"}
+                  {id ? 'Edit' : "Add"}
                 </Typography>
               </Button>
               {id && (

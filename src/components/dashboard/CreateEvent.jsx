@@ -8,7 +8,6 @@ const CreateEvent = () => {
   return (
     <Box>
       <FormHeader title={id ? "Edit Event" : "Create Event"} />
-      {/* <EventDetailsForm id={id} /> */}
       <EventForm />
     </Box>
   );
