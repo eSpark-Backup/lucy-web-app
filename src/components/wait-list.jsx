@@ -107,7 +107,7 @@ const WaitList = () => {
           subscription at app launch.
           <br />
           Just £10* per school per month if the whole Trust signs up, or just
-          £50* per month for a standalone school subscription.
+          £50 per month for a standalone school subscription.
           <br />
           {/* Your competition is already marketing—are you? Join the waitlist now
           and take control of your school’s success. */}
