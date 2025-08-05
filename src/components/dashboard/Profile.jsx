@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Avatar, Box, Button, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import FormHeader from "../forms/FormHeader";
@@ -46,6 +46,8 @@ const profileStyles = {
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [image, setImage] = useState(null); // Preview URL
+  const fileInputRef = useRef();
 
   const formik = useFormik({
     initialValues: {
@@ -64,9 +66,24 @@ const Profile = () => {
 
   const handleEditClick = () => {
     if (isEditing) {
-      formik?.handleSubmit();
+      formik.handleSubmit();
     } else {
       setIsEditing(true);
+    }
+  };
+
+  const handlePhotoClick = () => {
+    if (isEditing && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      // Optionally: formik.setFieldValue('profileImage', file);
     }
   };
 
@@ -75,30 +92,44 @@ const Profile = () => {
       <FormHeader title={"Profile"} />
       <Box
         component="form"
-        onSubmit={formik?.handleSubmit}
-        sx={profileStyles?.container}
+        onSubmit={formik.handleSubmit}
+        sx={profileStyles.container}
       >
-        <Box sx={profileStyles?.formArea}>
+        <Box sx={profileStyles.formArea}>
           <Box sx={{ textAlign: "center", mb: "5px" }}>
             <Avatar
-              src="/src/assets/icons/Profile.svg"
+              src={image || "/src/assets/icons/Profile.svg"}
               alt="User Avatar"
-              sx={{ width: 80, height: 80, margin: "auto" }}
+              sx={{
+                width: 80,
+                height: 80,
+                margin: "auto",
+                cursor: isEditing ? "pointer" : "default",
+              }}
+              onClick={handlePhotoClick}
             />
             <Typography
               variant="body2"
+              onClick={handlePhotoClick}
               sx={{
                 mt: 1,
-                cursor: "pointer",
+                cursor: isEditing ? "pointer" : "default",
                 color: "#4379EE",
                 fontSize: "14px",
               }}
             >
               Edit Photo
             </Typography>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
           </Box>
 
-          <Box sx={profileStyles?.row}>
+          <Box sx={profileStyles.row}>
             {/* First Name */}
             <Box
               sx={{
@@ -123,7 +154,7 @@ const Profile = () => {
                 onBlur={formik.handleBlur}
                 disabled={!isEditing}
                 error={
-                  formik?.touched?.firstName && Boolean(formik.errors.firstName)
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
                 }
                 helperText={formik.touched.firstName && formik.errors.firstName}
               />
@@ -208,9 +239,9 @@ const Profile = () => {
                 name="phone"
                 sx={profileStyles.input}
                 fullWidth
-                value={formik?.values?.phone}
-                onChange={formik?.handleChange}
-                onBlur={formik?.handleBlur}
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 disabled={!isEditing}
                 error={formik.touched.phone && Boolean(formik.errors.phone)}
                 helperText={formik.touched.phone && formik.errors.phone}

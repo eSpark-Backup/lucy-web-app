@@ -19,14 +19,14 @@ import { componentStyles } from "../../style/componentStyles";
 import { contentFormSchema } from "../../schemas/content";
 import ImageUploader from "../ImageUploader";
 import { useRef, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+import EmailsInput from "../EmailsInput";
 
 const initialEventData = {
   content_type: "",
   description: "",
   image: null,
   post_method: "",
-  recipients: "",
+  recipients: [],
 };
 
 const ContentForm = ({
@@ -57,6 +57,7 @@ const ContentForm = ({
 
   const inputRef = useRef(null);
   const [image, setImage] = useState(null);
+  const [emails, setEmails] = useState([]);
 
   // Pexels search
   const [query, setQuery] = useState("");
@@ -93,6 +94,7 @@ const ContentForm = ({
       console.log(values, "values");
       resetForm();
       setImage(null);
+      setEmails([]);
       if (inputRef?.current) inputRef.current.value = null;
       onSubmit(values);
     },
@@ -143,39 +145,51 @@ const ContentForm = ({
                 <Typography variant="h6" sx={inputLabelStyle}>
                   {label}
                 </Typography>
-                <TextField
-                  fullWidth
-                  name={name}
-                  type={type}
-                  placeholder={placeholder}
-                  value={formik?.values?.[name]}
-                  onChange={formik?.handleChange}
-                  onBlur={formik?.handleBlur}
-                  multiline={name === "description"}
-                  rows={name === "description" ? 4 : 0}
-                  id={
-                    name === "description"
-                      ? "outlined-multiline-static"
-                      : `${index}`
-                  }
-                  sx={inputStyle(name)}
-                  inputProps={{
-                    sx: {
-                      fontSize: "14px",
-                      fontFamily: "Nunito Sans",
-                      fontWeight: 400,
-                      "&::placeholder": {
+                {name !== "recipients" ? (
+                  <TextField
+                    fullWidth
+                    name={name}
+                    type={type}
+                    placeholder={placeholder}
+                    value={formik?.values?.[name]}
+                    onChange={formik?.handleChange}
+                    onBlur={formik?.handleBlur}
+                    multiline={name === "description"}
+                    rows={name === "description" ? 4 : 0}
+                    id={
+                      name === "description"
+                        ? "outlined-multiline-static"
+                        : `${index}`
+                    }
+                    sx={inputStyle(name)}
+                    inputProps={{
+                      sx: {
                         fontSize: "14px",
                         fontFamily: "Nunito Sans",
                         fontWeight: 400,
+                        "&::placeholder": {
+                          fontSize: "14px",
+                          fontFamily: "Nunito Sans",
+                          fontWeight: 400,
+                        },
                       },
-                    },
-                  }}
-                  error={
-                    formik?.touched?.[name] && Boolean(formik?.errors?.[name])
-                  }
-                  helperText={formik?.touched?.[name] && formik?.errors?.[name]}
-                />
+                    }}
+                    error={
+                      formik?.touched?.[name] && Boolean(formik?.errors?.[name])
+                    }
+                    helperText={
+                      formik?.touched?.[name] && formik?.errors?.[name]
+                    }
+                  />
+                ) : (
+                  <EmailsInput
+                    name={name}
+                    emails={emails}
+                    setEmails={setEmails}
+                    placeholder={placeholder}
+                    formik={formik}
+                  />
+                )}
                 {name === "description" && (
                   <>
                     <Grid size={12} pt={1.5}>

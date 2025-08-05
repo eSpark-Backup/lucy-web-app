@@ -22,7 +22,6 @@ const EventContentCard = ({ title, description, image }) => {
     <Card
       sx={{
         width: "100%",
-        // mx: "auto",
         maxWidth: { sm: "350px", lg: "359px" },
         backgroundColor: "rgba(255, 255, 255, 0.48)",
         boxShadow: "5px 5px 45px 0px rgba(0, 0, 0, 0.05)",
@@ -33,7 +32,7 @@ const EventContentCard = ({ title, description, image }) => {
         component="img"
         height="250"
         image={image || cardImage}
-        sx={{objectFit: 'fit'}}
+        sx={{ objectFit: "fit" }}
         alt="card-img"
       />
       <CardContent sx={{ width: "100%", display: "flex", gap: 2 }}>
@@ -90,25 +89,3 @@ const EventContentCard = ({ title, description, image }) => {
 };
 
 export default EventContentCard;
-
-// editIconStyle: {
-//       width: "48px",
-//       height: "32px",
-//       border: "1px solid #E5E7EB",
-//       borderTopLeftRadius: "8px",
-//       borderBottomLeftRadius: "8px",
-//       borderTopRightRadius: "0px",
-//       borderBottomRightRadius: "0px",
-//       padding: "4px",
-//     },
-//     viewIconStyle: {
-//       width: "48px",
-//       height: "32px",
-//       border: "1px solid #E5E7EB",
-//       borderLeft: "0px",
-//       borderTopRightRadius: "8px",
-//       borderBottomRightRadius: "8px",
-//       borderTopLeftRadius: "0px",
-//       borderBottomLeftRadius: "0px",
-//       padding: "4px",
-//     },
