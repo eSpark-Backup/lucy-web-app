@@ -67,11 +67,49 @@ const Step1 = () => {
           placeholder="Enter your Email"
           sx={{
             width: { xs: "100%", md: "300px" },
-            div: { padding: 0 },
-            input: {
+
+            // Style the outer root
+            "& .MuiOutlinedInput-root": {
+              border: "1px solid #E2DBFA",
+              borderRadius: "10.66px",
+              padding: "0px 20px",
+              backgroundColor: "#F4F1FD",
+              height: "50px",
+              outline: "none",
+              opacity: 1,
+
+              "&:hover fieldset": {
+                border: "none",
+              },
+              "&.Mui-focused fieldset": {
+                border: "none",
+              },
+              "& fieldset": {
+                border: 0,
+              },
+            },
+
+            // Style the input element
+            "& .MuiOutlinedInput-input": {
+              padding: 0,
+              height: "100%",
+              fontSize: "14px",
+              fontFamily: "Nunito Sans",
+              fontWeight: 400,
+              color: "#1A4FFF",
+
+              "&::placeholder": {
+                color: "#1A4FFF",
+                fontWeight: 400,
+                fontSize: "14px",
+                opacity: 1,
+              },
+
               "&:-webkit-autofill": {
+                WebkitBoxShadow: "0 0 0 1000px #F4F1FD inset !important",
                 WebkitTextFillColor: "#1A4FFF",
                 transition: "background-color 5000s ease-in-out 0s",
+                fontSize: "14px",
               },
             },
           }}
@@ -304,11 +342,48 @@ const Step2 = () => {
             placeholder="Enter your School Name"
             sx={{
               width: { xs: "100%" },
-              div: { padding: 0 },
-              input: {
+              // Style the outer root
+              "& .MuiOutlinedInput-root": {
+                border: "1px solid #E2DBFA",
+                borderRadius: "10.66px",
+                padding: "0px 20px",
+                backgroundColor: "#F4F1FD",
+                height: "50px",
+                outline: "none",
+                opacity: 1,
+
+                "&:hover fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+                "& fieldset": {
+                  border: 0,
+                },
+              },
+
+              // Style the input element
+              "& .MuiOutlinedInput-input": {
+                padding: 0,
+                height: "100%",
+                fontSize: "14px",
+                fontFamily: "Nunito Sans",
+                fontWeight: 400,
+                color: "#1A4FFF",
+
+                "&::placeholder": {
+                  color: "#1A4FFF",
+                  fontWeight: 400,
+                  fontSize: "14px",
+                  opacity: 1,
+                },
+
                 "&:-webkit-autofill": {
+                  WebkitBoxShadow: "0 0 0 1000px #F4F1FD inset !important",
                   WebkitTextFillColor: "#1A4FFF",
                   transition: "background-color 5000s ease-in-out 0s",
+                  fontSize: "14px",
                 },
               },
             }}
@@ -348,11 +423,48 @@ const Step2 = () => {
             placeholder="Enter your Location"
             sx={{
               width: { xs: "100%" },
-              div: { padding: 0 },
-              input: {
+              // Style the outer root
+              "& .MuiOutlinedInput-root": {
+                border: "1px solid #E2DBFA",
+                borderRadius: "10.66px",
+                padding: "0px 20px",
+                backgroundColor: "#F4F1FD",
+                height: "50px",
+                outline: "none",
+                opacity: 1,
+
+                "&:hover fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+                "& fieldset": {
+                  border: 0,
+                },
+              },
+
+              // Style the input element
+              "& .MuiOutlinedInput-input": {
+                padding: 0,
+                height: "100%",
+                fontSize: "14px",
+                fontFamily: "Nunito Sans",
+                fontWeight: 400,
+                color: "#1A4FFF",
+
+                "&::placeholder": {
+                  color: "#1A4FFF",
+                  fontWeight: 400,
+                  fontSize: "14px",
+                  opacity: 1,
+                },
+
                 "&:-webkit-autofill": {
+                  WebkitBoxShadow: "0 0 0 1000px #F4F1FD inset !important",
                   WebkitTextFillColor: "#1A4FFF",
                   transition: "background-color 5000s ease-in-out 0s",
+                  fontSize: "14px",
                 },
               },
             }}
@@ -369,11 +481,49 @@ const Step2 = () => {
             placeholder="Enter your Role"
             sx={{
               width: { xs: "100%" },
-              div: { padding: 0 },
-              input: {
+
+              // Style the outer root
+              "& .MuiOutlinedInput-root": {
+                border: "1px solid #E2DBFA",
+                borderRadius: "10.66px",
+                padding: "0px 20px",
+                backgroundColor: "#F4F1FD",
+                height: "50px",
+                outline: "none",
+                opacity: 1,
+
+                "&:hover fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+                "& fieldset": {
+                  border: 0,
+                },
+              },
+
+              // Style the input element
+              "& .MuiOutlinedInput-input": {
+                padding: 0,
+                height: "100%",
+                fontSize: "14px",
+                fontFamily: "Nunito Sans",
+                fontWeight: 400,
+                color: "#1A4FFF",
+
+                "&::placeholder": {
+                  color: "#1A4FFF",
+                  fontWeight: 400,
+                  fontSize: "14px",
+                  opacity: 1,
+                },
+
                 "&:-webkit-autofill": {
+                  WebkitBoxShadow: "0 0 0 1000px #F4F1FD inset !important",
                   WebkitTextFillColor: "#1A4FFF",
                   transition: "background-color 5000s ease-in-out 0s",
+                  fontSize: "14px",
                 },
               },
             }}
@@ -390,11 +540,49 @@ const Step2 = () => {
             placeholder="Enter your Email"
             sx={{
               width: { xs: "100%" },
-              div: { padding: 0 },
-              input: {
+
+              // Style the outer root
+              "& .MuiOutlinedInput-root": {
+                border: "1px solid #E2DBFA",
+                borderRadius: "10.66px",
+                padding: "0px 20px",
+                backgroundColor: "#F4F1FD",
+                height: "50px",
+                outline: "none",
+                opacity: 1,
+
+                "&:hover fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+                "& fieldset": {
+                  border: 0,
+                },
+              },
+
+              // Style the input element
+              "& .MuiOutlinedInput-input": {
+                padding: 0,
+                height: "100%",
+                fontSize: "14px",
+                fontFamily: "Nunito Sans",
+                fontWeight: 400,
+                color: "#1A4FFF",
+
+                "&::placeholder": {
+                  color: "#1A4FFF",
+                  fontWeight: 400,
+                  fontSize: "14px",
+                  opacity: 1,
+                },
+
                 "&:-webkit-autofill": {
+                  WebkitBoxShadow: "0 0 0 1000px #F4F1FD inset !important",
                   WebkitTextFillColor: "#1A4FFF",
                   transition: "background-color 5000s ease-in-out 0s",
+                  fontSize: "14px",
                 },
               },
             }}
@@ -491,7 +679,55 @@ const Step2 = () => {
                         }))
                       }
                       placeholder="Please Specify"
-                      sx={{ width: "100%", mt: "10px" }}
+                      sx={{
+                        width: "100%",
+                        mt: "10px",
+                        // Style the outer root
+                        "& .MuiOutlinedInput-root": {
+                          border: "1px solid #E2DBFA",
+                          borderRadius: "10.66px",
+                          padding: "0px 20px",
+                          backgroundColor: "#F4F1FD",
+                          height: "50px",
+                          outline: "none",
+                          opacity: 1,
+
+                          "&:hover fieldset": {
+                            border: "none",
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none",
+                          },
+                          "& fieldset": {
+                            border: 0,
+                          },
+                        },
+
+                        // Style the input element
+                        "& .MuiOutlinedInput-input": {
+                          padding: 0,
+                          height: "100%",
+                          fontSize: "14px",
+                          fontFamily: "Nunito Sans",
+                          fontWeight: 400,
+                          color: "#1A4FFF",
+
+                          "&::placeholder": {
+                            color: "#1A4FFF",
+                            fontWeight: 400,
+                            fontSize: "14px",
+                            opacity: 1,
+                          },
+
+                          "&:-webkit-autofill": {
+                            WebkitBoxShadow:
+                              "0 0 0 1000px #F4F1FD inset !important",
+                            WebkitTextFillColor: "#1A4FFF",
+                            transition: "background-color 5000s ease-in-out 0s",
+                            fontSize: "14px",
+                          },
+                        },
+                      }}
                     />
                   )}
               </Box>
@@ -678,7 +914,7 @@ const WaitlistModal = () => {
               background:
                 "linear-gradient(to bottom, #F8F6FE 0%, rgba(255, 255, 255, 1) 100%)",
               borderRadius: "16px",
-              padding: { xs: '15px', sm: "30px" },
+              padding: { xs: "15px", sm: "30px" },
             }}
           >
             <Box sx={{ position: "absolute", left: "30px", top: "-32px" }}>
