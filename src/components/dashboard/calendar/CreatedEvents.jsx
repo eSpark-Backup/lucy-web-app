@@ -28,7 +28,7 @@ const calculateDuration = (start, end) => {
   return `${diffHours} ${diffHours > 1 ? "hours" : "hour"} ${diffMinutes} min `;
 };
 
-export default function CreatedEvents({ events }) {
+export default function CreatedEvents({ events, isError, isLoading }) {
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -52,6 +52,7 @@ export default function CreatedEvents({ events }) {
         borderRadius: 4,
         p: isMobile ? 1.5 : 2,
         boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+        minHeight: isMobile ? "auto" : "700px",
       }}
     >
       {/* Add New Event Button */}
@@ -89,96 +90,112 @@ export default function CreatedEvents({ events }) {
         maxHeight={showAll ? 550 : "auto"}
         overflow="auto"
       >
-        {visibleEvents.map((event, index) => (
-          <Box key={index}>
-            <Stack
-              direction={isMobile ? "column" : "row"}
-              spacing={1}
-              alignItems={"start"}
-            >
-              <Link
-                to={`/events/${event.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+        {isLoading ? (
+          <Typography>Loading events...</Typography>
+        ) : isError ? (
+          <Typography color="error">Failed to load events</Typography>
+        ) : events.length === 0 ? (
+          <Typography>No events found.</Typography>
+        ) : (
+          visibleEvents.map((event, index) => (
+            <Box key={index}>
+              <Stack
+                direction={isMobile ? "column" : "row"}
+                spacing={1}
+                alignItems={"start"}
               >
-                <Avatar
-                  src={event.attendees?.[0]}
-                  sx={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40 }}
-                />
-              </Link>
-              <Box>
                 <Link
                   to={`/events/${event.id}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <Typography
-                    fontWeight={600}
-                    fontSize={isMobile ? "0.9rem" : "1rem"}
-                  >
-                    {event.title}
-                  </Typography>
+                  <Avatar
+                    src={event.attendees?.[0]}
+                    sx={{
+                      width: isMobile ? 32 : 40,
+                      height: isMobile ? 32 : 40,
+                    }}
+                  />
                 </Link>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
-                >
-                  Date:{" "}
-                  {event.startDate === event.endDate
-                    ? event.startDate
-                    : `${event.startDate} - ${event.endDate}`}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
-                >
-                  Time: {event.startTime} - {event.endTime}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
-                >
-                  Duration: {event.duration}
-                </Typography>
-                <Stack direction="row" alignItems="center" spacing={0.5} mt={1}>
-                  <AvatarGroup
-                    max={3}
-                    sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
+                <Box>
+                  <Link
+                    to={`/events/${event.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    {event.attendees.slice(0, 3)?.map((src, idx) => (
-                      <Link to={`/members${src.split(".")[0]}`}>
-                        <Avatar
-                          key={idx}
-                          src={src}
-                          sx={{
-                            "&:hover": {
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
-                      </Link>
-                    ))}
-                  </AvatarGroup>
-                  {event.more && (
-                    <Avatar
-                      sx={{
-                        width: 24,
-                        height: 24,
-                        bgcolor: "#DFE9FF5E",
-                        fontSize: "0.75rem",
-                        border: " 1px solid #4880FF",
-                        color: "#4880FF",
-                      }}
+                    <Typography
+                      fontWeight={600}
+                      fontSize={isMobile ? "0.9rem" : "1rem"}
                     >
-                      {event.more}
-                    </Avatar>
-                  )}
-                </Stack>
-              </Box>
-            </Stack>
-          </Box>
-        ))}
+                      {event.title}
+                    </Typography>
+                  </Link>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    Date:{" "}
+                    {event.startDate === event.endDate
+                      ? event.startDate
+                      : `${event.startDate} - ${event.endDate}`}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    Time: {event.startTime} - {event.endTime}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    Duration: {event.duration}
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={0.5}
+                    mt={1}
+                  >
+                    <AvatarGroup
+                      max={3}
+                      sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
+                    >
+                      {event.attendees.slice(0, 3)?.map((src, idx) => (
+                        <Link to={`/members${src.split(".")[0]}`}>
+                          <Avatar
+                            key={idx}
+                            src={src}
+                            sx={{
+                              "&:hover": {
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </Link>
+                      ))}
+                    </AvatarGroup>
+                    {event.more && (
+                      <Avatar
+                        sx={{
+                          width: 24,
+                          height: 24,
+                          bgcolor: "#DFE9FF5E",
+                          fontSize: "0.75rem",
+                          border: " 1px solid #4880FF",
+                          color: "#4880FF",
+                        }}
+                      >
+                        {event.more}
+                      </Avatar>
+                    )}
+                  </Stack>
+                </Box>
+              </Stack>
+            </Box>
+          ))
+        )}
       </Stack>
       <Box
         textAlign="center"

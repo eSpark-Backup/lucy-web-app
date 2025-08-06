@@ -5,12 +5,27 @@ import {
   Typography,
   Paper,
   Stack,
+  Box,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { eventValidationSchema } from "../../schemas/event";
 import { EVENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
-import { useNavigate } from "react-router-dom";
+import {
+  createEvent,
+  updateEvent as updateEventAPI,
+  getEventById,
+  deleteEvent,
+} from "../../api/events";
+import {
+  setSelectedEvent,
+  clearSelectedEvent,
+} from "../../redux/slices/eventSlice";
 
 const initialEventData = {
   event_name: "",
@@ -20,14 +35,17 @@ const initialEventData = {
 };
 
 const EventDetailsForm = ({
-  data = initialEventData,
+  id = null,
+  isEdit = id? true : false,
+  data = null,
   onSubmit = () => {},
-  id,
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const { fields } = EVENTFORM || {};
   const { EventDetailsFormStyles } = componentStyles || {};
-  const navigate = useNavigate();
-
   const {
     paperStyle,
     inputLabelStyle,
@@ -37,18 +55,78 @@ const EventDetailsForm = ({
     seeContentbuttonStyle,
   } = EventDetailsFormStyles || {};
 
-  const formik = useFormik({
-    initialValues: data,
-    validationSchema: eventValidationSchema,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values, "values");
-      resetForm();
-      onSubmit(values);
+  const { data: fetchedEventData } = useQuery({
+    queryKey: ["event", id],
+    queryFn: () => getEventById(id),
+    enabled: isEdit && !data && Boolean(id),
+  });
+
+  const finalData = data || fetchedEventData || initialEventData;
+
+  const addEvent = useMutation({
+    mutationFn: (payload) => createEvent(payload),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["events"]);
+      dispatch(setSelectedEvent(response));
+      toast.success("🎉 Event created successfully!");
+    },
+    onError: (error) => {
+      console.error("Error creating event:", error.response?.data || error.message);
+      toast.error("Failed to create event!");
     },
   });
 
-  const handleClick = () => {
-    navigate("/dashboard/calendar/create-event/1/content/1");
+  const updateEvent = useMutation({
+    mutationFn: (payload) => updateEventAPI(id, payload),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["events"]);
+      dispatch(setSelectedEvent(response));
+      toast.success("✅ Event updated successfully!");
+    },
+    onError: (error) => {
+      console.error("Error updating event:", error.response?.data || error.message);
+      toast.error("Failed to update event!");
+    },
+  });
+
+  const removeEvent = useMutation({
+    mutationFn: () => deleteEvent(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["events"]);
+      dispatch(clearSelectedEvent());
+      onSubmit(null);
+      toast.success("🗑️ Event deleted!");
+    },
+    onError: (error) => {
+      console.error("Error deleting event:", error.response?.data || error.message);
+      toast.error("Failed to delete event!");
+    },
+  });
+
+  const formik = useFormik({
+    initialValues: finalData,
+    enableReinitialize: true,
+    validationSchema: eventValidationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        let response;
+        if (isEdit && id) {
+          response = await updateEvent.mutateAsync(values);
+        } else {
+          response = await addEvent.mutateAsync(values);
+        }
+        resetForm();
+        dispatch(clearSelectedEvent());
+        onSubmit(response || values);
+      } catch (error) {
+        console.error("Submit Error:", error);
+        toast.error("Something went wrong while submitting!");
+      }
+    },
+  });
+
+  const handleSeeContentClick = () => {
+    navigate("/dashboard/calendar/create-event/1/content");
   };
 
   return (
@@ -105,20 +183,39 @@ const EventDetailsForm = ({
             >
               <Button type="submit" variant="contained" sx={buttonStyle}>
                 <Typography variant="h5" sx={buttonTypoStyle}>
-                  {"Add"}
+                  {isEdit ? "Save" : "Add"}
                 </Typography>
               </Button>
-              {id && (
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                {isEdit && ( 
+                  <Button variant="outlined" 
+                  sx={{
+                    width: "50px",
+                  }}
+                    color="error"
+                    onClick={() => {
+                      if (window.confirm("Are you sure you want to delete this event?")) {
+                        removeEvent.mutate();
+                      }
+                    }}
+                  >
+                    <DeleteOutlineIcon/>
+                  </Button>
+                )} 
+                {isEdit && ( 
                 <Button
                   variant="contained"
                   sx={seeContentbuttonStyle}
-                  onClick={handleClick}
+                  onClick={handleSeeContentClick}
                 >
                   <Typography variant="h5" sx={buttonTypoStyle}>
                     {"See Content"}
                   </Typography>
-                </Button>
-              )}
+                </Button>)}
+              </Box>
+              
+              
+              
             </Stack>
           </Grid>
         </Grid>
