@@ -48,8 +48,8 @@ const HeroSection = () => {
             color: "#020202",
           }}
         >
-          Attract More Students. <br />
-          * Just * £10/month <br />
+          Attract More Students <br />
+          Just £10* per month <br />
           Boost Your School’s Visibility <br />
           Edupulse App
         </Typography>

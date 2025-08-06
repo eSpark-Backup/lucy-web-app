@@ -112,6 +112,28 @@ let theme = createTheme({
       defaultProps: {
         variant: "outlined",
       },
+      variants: [
+        {
+          props: { variant: "join-waitlist" },
+          style: {
+            root: {
+              border: "1px solid #ccc",
+              borderRadius: 8,
+              padding: 0,
+            },
+            input: {
+              padding: 0,
+              height: "100%",
+              fontSize: "18px",
+              "&:-webkit-autofill": {
+                WebkitBoxShadow: `0 0 0 1000px #F1F4F9 inset !important`,
+                transition: "background-color 5000s ease-in-out 0s",
+                fontSize: "18px",
+              },
+            },
+          },
+        },
+      ],
     },
     MuiInputBase: {
       styleOverrides: {

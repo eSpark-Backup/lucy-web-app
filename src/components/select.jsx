@@ -40,7 +40,14 @@ const CustomSelect = ({
         displayEmpty
         renderValue={(selected) =>
           selected === "" ? (
-            <Typography sx={{ color: "#9e9e9e" }}>
+            <Typography
+              sx={{
+                color: "#9e9e9e",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               Select an option (option)
             </Typography>
           ) : (
@@ -59,7 +66,16 @@ const CustomSelect = ({
           value={otherValue}
           onChange={onOtherChange}
           placeholder="Please Specify"
-          sx={{ width: "100%", div: { padding: 0, mt: "10px" } }}
+          sx={{
+            width: "100%",
+            div: { padding: 0, mt: "10px" },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitTextFillColor: "#1A4FFF",
+                transition: "background-color 5000s ease-in-out 0s",
+              },
+            },
+          }}
         />
       )}
     </FormControl>
