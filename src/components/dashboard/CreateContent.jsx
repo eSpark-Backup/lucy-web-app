@@ -4,10 +4,10 @@ import ContentForm from "../forms/ContentForm";
 import { useParams } from "react-router-dom";
 
 const CreateContent = () => {
-  const { id } = useParams();
+  const { eventId, contentId } = useParams();
   return (
     <Box>
-      <FormHeader title={id ? "Edit Content" : "Add Content"} />
+      <FormHeader title={contentId ? "Edit Content" : "Add Content"} />
       <ContentForm />
     </Box>
   );

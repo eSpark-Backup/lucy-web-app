@@ -16,7 +16,7 @@ const ModalCard = ({ openModal, setOpenModal }) => {
   const handleNavigate = (path) => {
     navigate(path);
   };
-  
+
   return (
     <Modal
       open={openModal}
@@ -41,7 +41,9 @@ const ModalCard = ({ openModal, setOpenModal }) => {
             spacing={2}
             alignItems="center"
             sx={{ cursor: "pointer" }}
-            onClick={() => handleNavigate("/dashboard/calendar/create-event")}
+            onClick={() =>
+              handleNavigate("/dashboard/calendar/events/:eventId/contents/add")
+            }
           >
             <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
             <Box>

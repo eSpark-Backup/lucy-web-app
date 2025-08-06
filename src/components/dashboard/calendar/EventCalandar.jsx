@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { Box, Modal,Button  } from "@mui/material";
+import { Box, Modal, Button } from "@mui/material";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -203,12 +203,7 @@ const EventCalendar = ({ events }) => {
             : null
         }
       />
-      <ModalCard
-      openModal={openModal}
-      setOpenModal={setOpenModal}
-      />
-
-      
+      <ModalCard openModal={openModal} setOpenModal={setOpenModal} />
     </Box>
   );
 };

@@ -57,7 +57,7 @@ const EventDetailsForm = ({
   });
 
   const handleClick = () => {
-    navigate("/dashboard/calendar/create-event/1/content/1");
+    navigate("/dashboard/calendar/events/:eventId/contents");
   };
 
   return (
@@ -121,8 +121,8 @@ const EventDetailsForm = ({
                     )}
                     <Stack pt={1}>
                       <Button
-                        type="submit"
                         variant="contained"
+                        onClick={() => !image && inputRef?.current?.click()}
                         sx={uploadButtonStyle}
                       >
                         <Typography variant="h6" sx={buttonTypoStyle}>

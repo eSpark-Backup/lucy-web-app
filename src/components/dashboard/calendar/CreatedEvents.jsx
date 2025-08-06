@@ -60,7 +60,7 @@ export default function CreatedEvents({ events }) {
         variant="contained"
         fullWidth
         startIcon={<AddIcon />}
-        onClick={() => navigate(`/dashboard/calendar/create-event`)}
+        onClick={() => navigate(`/dashboard/calendar/events/add`)}
         sx={{
           borderRadius: 2,
           textTransform: "none",

@@ -192,7 +192,6 @@ const Profile = () => {
           </Box>
 
           <Box sx={profileStyles.row}>
-            {/* Email */}
             <Box
               sx={{
                 flex: 1,
@@ -220,7 +219,6 @@ const Profile = () => {
               />
             </Box>
 
-            {/* Phone */}
             <Box
               sx={{
                 flex: 1,

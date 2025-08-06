@@ -43,7 +43,7 @@ const PopperCard = forwardRef(function PopperCard(
               spacing={2}
               alignItems="center"
               sx={{ cursor: "pointer" }}
-              onClick={() => handleNavigate("/dashboard/calendar/create-event")}
+              onClick={() => handleNavigate("/dashboard/calendar/events/add")}
             >
               <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
               <Box>
@@ -62,7 +62,9 @@ const PopperCard = forwardRef(function PopperCard(
                 spacing={2}
                 alignItems="center"
                 sx={{ cursor: "pointer" }}
-                onClick={() => handleNavigate(`/dashboard/calendar/create-event/${eventId}`)}
+                onClick={() =>
+                  handleNavigate(`/dashboard/calendar/events/${eventId}`)
+                }
               >
                 <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
                 <Box>
@@ -79,7 +81,9 @@ const PopperCard = forwardRef(function PopperCard(
                 alignItems="center"
                 sx={{ cursor: "pointer" }}
                 onClick={() =>
-                  handleNavigate("/dashboard/calendar/create-content")
+                  handleNavigate(
+                    "/dashboard/calendar/events/:eventId/contents/add"
+                  )
                 }
               >
                 <SettingsIcon sx={{ color: "#4880FF" }} />

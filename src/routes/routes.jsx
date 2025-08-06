@@ -12,7 +12,6 @@ import About from "../components/dashboard/About";
 import NotFound from "../components/NotFound";
 import Profile from "../components/dashboard/Profile";
 import SubscriptionCard from "../components/dashboard/Subscription";
-import CreateEvent from "../components/dashboard/CreateEvent";
 import CreateContent from "../components/dashboard/CreateContent";
 import EventDetails from "../components/dashboard/EventDetails";
 import EventList from "../components/dashboard/EventList";
@@ -54,27 +53,8 @@ const routes = [
     children: [
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/calendar", element: <Calendar /> },
-      { path: "/dashboard/calendar/create-event", element: <CreateEvent /> },
-      {
-        path: "/dashboard/calendar/create-event/:id",
-        element: <CreateEvent />,
-      },
-      {
-        path: "/dashboard/calendar/create-content",
-        element: <CreateContent />,
-      },
-      {
-        path: "/dashboard/calendar/create-content/:id",
-        element: <CreateContent />,
-      },
-      {
-        path: "/dashboard/calendar/event-details",
-        element: <EventDetails />,
-      },
-      {
-        path: "/dashboard/calendar/event-details/:id",
-        element: <EventDetails />,
-      },
+      { path: "/dashboard/calendar/events/add", element: <EventDetails /> },
+      { path: "/dashboard/calendar/events/:id", element: <EventDetails /> },
       {
         path: "/dashboard/calendar/event-list",
         element: <EventList />,
@@ -85,12 +65,20 @@ const routes = [
 
       // new added
       {
-        path: "/dashboard/calendar/event-content",
+        path: "/dashboard/calendar/events/:eventId/contents",
         element: <EventContents />,
       },
       {
-        path: "/dashboard/calendar/event-content/:id",
+        path: "/dashboard/calendar/events/:eventId/contents/:contentId/preview",
         element: <EventContents />,
+      },
+      {
+        path: "/dashboard/calendar/events/:eventId/contents/:contentId",
+        element: <CreateContent />,
+      },
+      {
+        path: "/dashboard/calendar/events/:eventId/contents/add",
+        element: <CreateContent />,
       },
     ],
   },
