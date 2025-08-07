@@ -482,6 +482,31 @@ export const FORGET = {
   },
 };
 
+export const RESETPASSWORD = {
+  title: "Reset Password",
+  description: "Please enter current password and a new password to continue.",
+  fields: [
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "******",
+      key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "******",
+      key: "confirm_password",
+    },
+  ],
+  buttonText: "Continue",
+  haveAnAccountText: "Don’t have an account?",
+  signUpText: {
+    text: "Create Account",
+    link: "/auth/signup",
+  },
+};
+
 export const GOTLOST = {
   title: "Looks like you’ve got lost….",
   buttonText: "Back to Dashboard",
@@ -539,14 +564,14 @@ export const EVENTFORM = {
       name: "duration",
       size: { xs: 12, lg: 5.5 },
     },
-     {
+    {
       label: "Select Start Time",
       placeholder: "Enter your Event Type",
       type: "time",
       name: "start_time",
       size: { xs: 12, lg: 5.5 },
     },
-     {
+    {
       label: "Upload Image/Avtar",
       btnText: "Upload Image",
       name: "image",

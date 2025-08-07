@@ -80,7 +80,12 @@ const Signup = () => {
       {fields?.map((field, index) => {
         if (field?.isRow && Array?.isArray(field.fields)) {
           return (
-            <Stack width="100%" maxWidth={516} direction="row" gap={2}>
+            <Stack
+              width="100%"
+              maxWidth={516}
+              direction={{ xs: "column", sm: "row" }}
+              gap={2}
+            >
               {field.fields.map((subField, subIndex) => (
                 <Stack width="100%" spacing={1} key={subIndex}>
                   <Stack direction={"row"} justifyContent={"space-between"}>

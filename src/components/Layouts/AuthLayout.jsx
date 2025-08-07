@@ -3,8 +3,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import bgImage from "../../assets/images/dashboard-bg.svg";
 
 const AuthLayout = () => {
-  const location = useLocation();
-  const isSignupPage = location?.pathname === "/auth/signup";
+  // const location = useLocation();
+  // const isSignupPage = location?.pathname === "/auth/signup";
 
   return (
     <Box
@@ -32,11 +32,12 @@ const AuthLayout = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          px: { xs: 3, md: 5 },
+          px: { xs: 4, md: 5 },
+          py: { xs: 5, sm: 6, md: 8 },
           my: { xs: 3, md: 5 },
-          minHeight: isSignupPage
-            ? { xs: "750px", md: "825px" }
-            : { xs: "680px", md: "735px" },
+          // minHeight: isSignupPage
+          //   ? { xs: "750px", md: "825px" }
+          //   : { xs: "680px", md: "735px" },
           overflow: "auto",
         }}
       >
