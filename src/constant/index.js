@@ -507,6 +507,22 @@ export const RESETPASSWORD = {
   },
 };
 
+export const VERIFY_EMAIL = {
+  title: "Verify Email",
+  description: "Verification email is sent to your inbox please verify it",
+  buttonText: "Resend",
+  backToLogin: " back to login",
+  loginLink: "/auth/login",
+};
+
+export const EMAIL_VERIFICATION = {
+  title: "Email Verification",
+  description: "Please wait until your email is verified",
+  successMessage: "Your email is verified",
+  failureMessage: "Your email is not verified",
+  buttonText: "Continue",
+};
+
 export const GOTLOST = {
   title: "Looks like you’ve got lost….",
   buttonText: "Back to Dashboard",

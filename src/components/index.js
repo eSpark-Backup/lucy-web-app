@@ -8,6 +8,7 @@ import Footer from "./footer";
 import About from "./about";
 import Reviews from "./reviews";
 import WaitlistModal from "./waitlist-modal";
+import ConfirmModal from "./ConfirmModal";
 
 export {
   Navbar,
@@ -20,4 +21,5 @@ export {
   Reviews,
   Footer,
   WaitlistModal,
+  ConfirmModal,
 };

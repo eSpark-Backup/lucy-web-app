@@ -15,8 +15,10 @@ import { componentStyles } from "../../style/componentStyles";
 import { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signupSchema } from "../../schemas/signup";
+import { useSignupMutation } from "../../services/auth";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,6 +50,9 @@ const Signup = () => {
     authSignupLinkTextStyle,
   } = componentStyles || {};
 
+  const navigate = useNavigate();
+  const [signup, { isLoading }] = useSignupMutation();
+
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -59,8 +64,28 @@ const Signup = () => {
     },
     validationSchema: signupSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log("Form values", values);
-      resetForm();
+      const objToSend = {
+        first_name: values?.first_name,
+        last_name: values?.last_name,
+        email: values?.email,
+        password: values?.confirm_password,
+        phone: null,
+        role: "User",
+      };
+      signup(objToSend).then((res) => {
+        if (
+          res?.data &&
+          res?.data?.message === "Registration successful! Please check your email to verify your account."
+        ) {
+          navigate(`/auth/email-verification?email=${values?.email}`);
+          return;
+        }
+        if (res?.error) {
+          toast.error(res?.error?.data?.message);
+          return;
+        }
+        resetForm();
+      });
     },
   });
 
@@ -188,7 +213,7 @@ const Signup = () => {
           </Stack>
         );
       })}
-      <Stack
+      {/* <Stack
         width="100%"
         direction="row"
         alignItems="center"
@@ -218,9 +243,15 @@ const Signup = () => {
             </Typography>
           }
         />
-      </Stack>
+      </Stack> */}
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
-        <Button type="submit" fullWidth sx={authButtonStyle}>
+        <Button
+          loading={isLoading}
+          disabled={isLoading}
+          type="submit"
+          fullWidth
+          sx={authButtonStyle}
+        >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>

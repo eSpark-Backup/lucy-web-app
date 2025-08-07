@@ -12,11 +12,18 @@ import {
 import { useFormik } from "formik";
 import { LOGIN } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../schemas/login";
+import { useLoginMutation } from "../../services/auth";
+import {
+  clearSavedCredentials,
+  getDecryptedCredentials,
+  saveEncryptedCredentials,
+} from "../../utils";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,6 +56,20 @@ const Login = () => {
     authSignupLinkTextStyle,
   } = componentStyles || {};
 
+  useEffect(() => {
+    const saved = getDecryptedCredentials();
+    if (saved) {
+      formik.setValues({
+        email: saved.email,
+        password: saved.password,
+        remember: true,
+      });
+    }
+  }, []);
+
+  const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -57,8 +78,32 @@ const Login = () => {
     },
     validationSchema: loginSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log("Form values", values);
-      resetForm();
+      const objToSend = {
+        email: values?.email,
+        password: values?.password,
+      };
+      login(objToSend).then((res) => {
+        if (res?.data) {
+          if (values.remember) {
+            saveEncryptedCredentials(values.email, values.password);
+          } else {
+            clearSavedCredentials();
+          }
+          if (res?.data?.accessToken) {
+            localStorage.setItem("token", res?.data?.accessToken);
+            navigate("/dashboard");
+            resetForm();
+          } else {
+            navigate(`/auth/email-verification?email=${values?.email}`);
+            resetForm();
+          }
+          return;
+        }
+        if (res?.error) {
+          toast.error(res?.error?.data?.message);
+          return;
+        }
+      });
     },
   });
 
@@ -158,7 +203,13 @@ const Login = () => {
       </Stack>
 
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
-        <Button type="submit" fullWidth sx={authButtonStyle}>
+        <Button
+          loading={isLoading}
+          disabled={isLoading}
+          type="submit"
+          fullWidth
+          sx={authButtonStyle}
+        >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>

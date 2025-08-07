@@ -1,8 +1,15 @@
+import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import Logo from "../assets/images/lucy-logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SIDEBAR } from "../constant";
+import { logout } from "../store/slices/auth";
+import ConfirmModal from "./ConfirmModal";
+import { useDispatch } from "react-redux";
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [openLogoutModal, setOpenLogoutModal] = useState(false);
   const { sidebarLink, profileLink, LogoutButton } = SIDEBAR || {};
   const { pathname } = useLocation();
 
@@ -182,6 +189,7 @@ const Sidebar = () => {
           }}
         >
           <Box
+            onClick={() => setOpenLogoutModal(true)}
             sx={{
               mx: "auto",
               // width: "fit-content",
@@ -208,6 +216,18 @@ const Sidebar = () => {
           </Box>
         </Box>
       </Box>
+      <ConfirmModal
+        open={openLogoutModal}
+        handleClose={() => setOpenLogoutModal(false)}
+        description="Are you sure you want to logout?"
+        handleCancel={() => setOpenLogoutModal(false)}
+        handleAccept={() => {
+          dispatch(logout());
+          navigate("/auth/login");
+        }}
+        heading="Logout"
+        button2Text="Logout"
+      />
     </Box>
   );
 };

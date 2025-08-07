@@ -22,6 +22,7 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
 
   const handleClear = () => {
     setImage(null);
+    formik?.setFieldValue("image", null);
     if (ref?.current) ref.current.value = null;
   };
 
