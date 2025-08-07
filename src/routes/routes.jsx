@@ -17,7 +17,7 @@ import EventDetails from "../components/dashboard/EventDetails";
 import EventList from "../components/dashboard/EventList";
 import EventContents from "../components/dashboard/EventContents";
 import { Navigate } from "react-router-dom";
-import ChangePassword from "../components/auth/ResetPassword";
+import ResetPassword from "../components/auth/ResetPassword";
 
 const routes = [
   {
@@ -40,7 +40,7 @@ const routes = [
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "forget", element: <Forgot /> },
-      { path: "reset", element: <ChangePassword /> },
+      { path: "reset", element: <ResetPassword /> },
     ],
   },
   {

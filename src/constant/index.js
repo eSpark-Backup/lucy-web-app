@@ -487,13 +487,13 @@ export const RESETPASSWORD = {
   description: "Please enter current password and a new password to continue.",
   fields: [
     {
-      label: "Password",
+      label: "New password",
       type: "password",
       placeholder: "******",
-      key: "password",
+      key: "new_password",
     },
     {
-      label: "Confirm Password",
+      label: "Confirm password",
       type: "password",
       placeholder: "******",
       key: "confirm_password",

@@ -1,11 +1,10 @@
 import * as Yup from "yup";
 
 export const resetPasswordSchema = Yup.object({
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-
+  new_password: Yup.string()
+    .min(6, "New password must be at least 6 characters")
+    .required("New password is required"),
   confirm_password: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .oneOf([Yup.ref("new_password"), null], "Passwords must match")
     .required("Confirm password is required"),
 });

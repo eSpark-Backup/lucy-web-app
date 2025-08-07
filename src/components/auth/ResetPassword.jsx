@@ -33,7 +33,7 @@ const ResetPassword = () => {
 
   const formik = useFormik({
     initialValues: {
-      password: "",
+      new_password: "",
       confirm_password: "",
     },
     validationSchema: resetPasswordSchema,
