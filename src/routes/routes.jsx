@@ -20,6 +20,7 @@ import { Navigate } from "react-router-dom";
 import ResetPassword from "../components/auth/ResetPassword";
 import EmailVerification from "../components/auth/EmailVerification";
 import VerifyEmail from "../components/auth/VerifyEmail";
+import CreateEvent from "../components/dashboard/CreateEvent";
 
 const routes = [
   {
@@ -57,8 +58,8 @@ const routes = [
     children: [
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/calendar", element: <Calendar /> },
-      { path: "/dashboard/calendar/events/add", element: <EventDetails /> },
-      { path: "/dashboard/calendar/events/:id", element: <EventDetails /> },
+      { path: "/dashboard/calendar/events/add", element: <CreateEvent /> },
+      { path: "/dashboard/calendar/events/:id", element: <CreateEvent /> },
       {
         path: "/dashboard/calendar/event-list",
         element: <EventList />,

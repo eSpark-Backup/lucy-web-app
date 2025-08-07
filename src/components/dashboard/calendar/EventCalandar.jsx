@@ -174,11 +174,16 @@ const EventCalendar = ({ events }) => {
         }}
         events={events}
         editable={false}
-        selectable={true}
-        select={(info) => {
+        selectable={false}
+        dateClick={(info) => {
+          const today = dayjs().startOf("day");
+          const clickedDate = dayjs(info.dateStr);
+          if (clickedDate.isBefore(today)) {
+            return;
+          }
           setPopupType("date");
-          setPopupAnchor(null); // No popper anchor
-          setOpenModal(true); // Show modal
+          setPopupAnchor(null);
+          setOpenModal(info.dateStr);
         }}
         eventClick={(info) => {
           setPopupType("event");

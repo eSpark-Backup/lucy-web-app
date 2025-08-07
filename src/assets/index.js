@@ -23,6 +23,7 @@ import review8 from "./icons/review8.svg";
 import review9 from "./icons/review9.svg";
 import formIcon from "./icons/form-icon.svg";
 import tick from "./icons/check-mark.svg";
+import deleteIcon from "./icons/deleteIcon.svg";
 
 import dashed from "./images/dashed.png";
 import ai from "./images/ai.png";
@@ -94,4 +95,5 @@ export {
   bannerVideo,
   service5,
   service6,
+  deleteIcon,
 };

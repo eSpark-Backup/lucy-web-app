@@ -558,49 +558,62 @@ export const SIDEBAR = {
 };
 
 export const EVENTFORM = {
-  fields: [
-    {
-      label: "Event Name",
-      placeholder: "Enter your Event Name",
-      type: "text",
-      name: "event_name",
-      size: { xs: 12, lg: 5.5 },
-    },
-    {
-      label: "Event Type",
-      placeholder: "Enter your Event Type",
-      type: "text",
-      name: "event_type",
-      size: { xs: 12, lg: 5.5 },
-    },
-    {
-      label: "Duration (Minutes) ",
-      placeholder: "Select Time",
-      type: "number",
-      name: "duration",
-      size: { xs: 12, lg: 5.5 },
-    },
-    {
-      label: "Select Start Time",
-      placeholder: "Enter your Event Type",
-      type: "time",
-      name: "start_time",
-      size: { xs: 12, lg: 5.5 },
-    },
-    {
-      label: "Upload Image/Avtar",
-      btnText: "Upload Image",
-      name: "image",
-      size: 12,
-    },
-    {
-      label: "Description",
-      placeholder: "Provide some small Description",
-      type: "text",
-      name: "description",
-      size: 12,
-    },
-  ],
+  fields: (date) => {
+    return [
+      {
+        label: "Event Name",
+        placeholder: "Enter your Event Name",
+        type: "text",
+        name: "event_name",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Event Type",
+        placeholder: "Enter your Event Type",
+        type: "text",
+        name: "event_type",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Duration (Minutes) ",
+        placeholder: "Select Time",
+        type: "number",
+        name: "duration",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Select Start Time",
+        placeholder: "Enter your Event Time",
+        type: "time",
+        name: "start_time",
+        size: { xs: 12, lg: 5.5 },
+      },
+       ...(!date
+        ? [
+            {
+              label: "Select Date",
+              placeholder: "Enter your Event Date",
+              type: "date",
+              name: "date",
+              size: 12,
+            },
+          ]
+        : []),
+      {
+        label: "Upload Image/Avtar",
+        btnText: "Upload Image",
+        name: "image",
+        size: 12,
+      },
+      {
+        label: "Description",
+        placeholder: "Provide some small Description",
+        type: "text",
+        name: "description",
+        size: 12,
+      },
+    ];
+  },
 };
 
 export const CONTENTFORM = {

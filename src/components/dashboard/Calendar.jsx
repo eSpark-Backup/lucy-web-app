@@ -1,179 +1,101 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import CreatedEvents from "./calendar/CreatedEvents";
 import EventCalandar from "./calendar/EventCalandar";
 import FormHeader from "../forms/FormHeader";
+import { useGetMyEventsQuery } from "../../services/event";
 
 function Calendar() {
-  const mockCalendarEvents = [
-    {
-      id: 1,
-      title: "Design Conference",
-      start: "2025-07-05T09:00:00",
-      end: "2025-07-05T17:00:00",
-      extendedProps: {
-        status: "confirmed",
-        userId: "user-1",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar1.png",
-        "/avatar2.png",
-        "/avatar3.png",
-      ],
-    },
-    {
-      id: 2,
-      title: "Team Sync Meeting",
-      start: "2025-07-07T10:00:00",
-      end: "2025-07-07T11:30:00",
-      extendedProps: {
-        status: "confirmed",
-        userId: "user-2",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar2.png",
-        "/avatar4.png",
-      ],
-    },
-    {
-      id: 3,
-      title: "Client Presentation",
-      start: "2025-07-09T14:00:00",
-      end: "2025-07-09T16:00:00",
-      extendedProps: {
-        status: "tentative",
-        userId: "user-3",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar1.png",
-        "/avatar5.png",
-        "/avatar6.png",
-      ],
-    },
-    {
-      id: 4,
-      title: "Product Roadmap Workshop",
-      start: "2025-07-12T09:30:00",
-      end: "2025-07-12T12:00:00",
-      extendedProps: {
-        status: "confirmed",
-        userId: "user-4",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar8.png",
-      ],
-    },
-    {
-      id: 5,
-      title: "Marketing Strategy Session",
-      start: "2025-07-15T13:00:00",
-      end: "2025-07-15T15:30:00",
-      extendedProps: {
-        status: "cancelled",
-        userId: "user-5",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar2.png",
-        "/avatar9.png",
-      ],
-    },
-    {
-      id: 6,
-      title: "HR Policy Review",
-      start: "2025-07-18T10:00:00",
-      end: "2025-07-18T12:00:00",
-      extendedProps: {
-        status: "confirmed",
-        userId: "user-6",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar1.png",
-        "/avatar3.png",
-        "/avatar6.png",
-      ],
-    },
-    {
-      id: 7,
-      title: "Team Building Event",
-      start: "2025-07-22T15:00:00",
-      end: "2025-07-22T20:00:00",
-      extendedProps: {
-        status: "confirmed",
-        userId: "user-7",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar4.png",
-        "/avatar5.png",
-        "/avatar8.png",
-        "/avatar9.png",
-      ],
-    },
-    {
-      id: 8,
-      title: "CEO Town Hall",
-      start: "2025-07-25T11:00:00",
-      end: "2025-07-25T12:30:00",
-      extendedProps: {
-        status: "confirmed",
-        userId: "user-8",
-      },
-      attendees: [
-        "/avatar3.png",
-        "/avatar7.png",
-        "/avatar1.png",
-        "/avatar2.png",
-        "/avatar3.png",
-        "/avatar4.png",
-      ],
-    },
-  ];
+  const formatDuration = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    if (hours > 0) {
+      return `${hours} hour${hours !== 1 ? "s" : ""} ${remainingMinutes} mint${
+        remainingMinutes !== 1 ? "s" : ""
+      }`;
+    } else {
+      return `${remainingMinutes} mint${remainingMinutes !== 1 ? "s" : ""}`;
+    }
+  };
+  const [calendarEvents, setCalendarEvents] = useState([]);
+  const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery();
+  useEffect(() => {
+    if (isSuccess) {
+      setCalendarEvents(
+        data?.map((item) => {
+          return {
+            id: item?.id,
+            title: item?.name,
+            date: dayjs(item?.date_time).format("DD/MM/YYYY"),
+            startTime: dayjs(item?.date_time).format("HH:MM a"),
+            endTime: dayjs(item?.date_time)
+              .add(item?.time_span, "minute")
+              .format("HH:MM a"),
+            duration: formatDuration(item?.time_span),
+            attendees: [],
+            image: item?.image,
+          };
+        })
+      );
+    }
+    if (isError) {
+      toast.error(error?.data?.meesage || "Something went wrong");
+    }
+  }, [data, isSuccess, isError, error]);
 
   return (
     <>
       <FormHeader title={"Calendar"} />
-      <Box
-        display="flex"
-        flexDirection={{ xs: "column", md: "row" }}
-        gap={2}
-        className="calendar-grid"
-      >
-        {/* Created Events Section */}
-        <Box flex={{ xs: "0 0 auto" }}>
-          <CreatedEvents events={mockCalendarEvents} />
-        </Box>
-
-        {/* Calendar Section */}
-        <Box flex={1} width="100%">
-          <Paper
-            sx={{
-              borderRadius: 4,
-              p: 2,
-              bgcolor: "white",
-              height: "100%",
-              width: "100%",
-              overflow: "hidden",
-              boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
-            }}
+      {isLoading ? (
+        <Stack
+          sx={{ minHeight: "100px" }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CircularProgress sx={{ color: "#194FFF" }} />
+        </Stack>
+      ) : (
+        <>
+          <Box
+            display="flex"
+            flexDirection={{ xs: "column", md: "row" }}
+            gap={2}
+            className="calendar-grid"
           >
-            <EventCalandar events={mockCalendarEvents} />
-          </Paper>
-        </Box>
-      </Box>
+            {/* Created Events Section */}
+            <Box flex={{ xs: "0 0 auto" }}>
+              <CreatedEvents events={calendarEvents} />
+            </Box>
+
+            {/* Calendar Section */}
+            <Box flex={1} width="100%">
+              <Paper
+                sx={{
+                  borderRadius: 4,
+                  p: 2,
+                  bgcolor: "white",
+                  height: "100%",
+                  width: "100%",
+                  overflow: "hidden",
+                  boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <EventCalandar events={calendarEvents} />
+              </Paper>
+            </Box>
+          </Box>
+        </>
+      )}
     </>
   );
 }
