@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DatePicker } from "@mui/lab";
 import {
   Button,
@@ -35,6 +35,7 @@ const EventForm = ({
   const date = search.get("date") || null;
   const inputRef = useRef(null);
   const [image, setImage] = useState(data?.image);
+  const { id } = useParams();
   useEffect(() => {
     setImage(data?.image);
   }, [data]);
@@ -175,7 +176,9 @@ const EventForm = ({
                   </Typography>
                 </Button>
                 <Button
-                  onClick={() => navigate(``)}
+                  onClick={() =>
+                    navigate(`/dashboard/calendar/events/${id}/contents`)
+                  }
                   variant="contained"
                   sx={{
                     ...buttonStyle,

@@ -19,6 +19,7 @@ export default function CreatedEvents({ events }) {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  console.log(events);
 
   const visibleEvents = showAll ? events : events.slice(0, 4);
 

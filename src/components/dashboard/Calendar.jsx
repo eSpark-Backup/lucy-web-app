@@ -33,17 +33,18 @@ function Calendar() {
     if (isSuccess) {
       setCalendarEvents(
         data?.map((item) => {
+          const start = dayjs(item?.date_time);
+          const end = start.add(item?.time_span, "minute");
+
           return {
             id: item?.id,
             title: item?.name,
-            date: dayjs(item?.date_time).format("DD/MM/YYYY"),
-            startTime: dayjs(item?.date_time).format("HH:MM a"),
-            endTime: dayjs(item?.date_time)
-              .add(item?.time_span, "minute")
-              .format("HH:MM a"),
+            start: start.toDate(), // ✅ JS Date object
+            end: end.toDate(), // ✅ JS Date object
             duration: formatDuration(item?.time_span),
             attendees: [],
             image: item?.image,
+            date: dayjs(item?.date_time).format("DD/MM/YYYY"),
           };
         })
       );

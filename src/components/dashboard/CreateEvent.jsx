@@ -49,7 +49,7 @@ const CreateEvent = () => {
     }
   }, [data, isSuccess, isError, error]);
 
-  const [createEvent, { addLoading }] = useCreateEventMutation();
+  const [createEvent, { isLoading: addLoading }] = useCreateEventMutation();
 
   const handleCreate = (formdata, resetForm) => {
     createEvent(formdata).then((res) => {
@@ -60,13 +60,12 @@ const CreateEvent = () => {
       if (res?.data) {
         toast.success(res?.data?.message || "Event created successfully");
         resetForm();
-        navigate(`/dashboard/calendar/
-          event/${res?.data?.id}`);
+        navigate(`/dashboard/calendar/events/${res?.data?.id}`);
       }
     });
   };
 
-  const [editEvent, { editLoading }] = useEditEventMutation();
+  const [editEvent, { isLoading: editLoading }] = useEditEventMutation();
 
   const handleEdit = (formdata) => {
     editEvent({ id, credentials: formdata }).then((res) => {

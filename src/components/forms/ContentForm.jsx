@@ -18,8 +18,12 @@ import { CONTENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { contentFormSchema } from "../../schemas/content";
 import ImageUploader from "../ImageUploader";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EmailsInput from "../EmailsInput";
+import { useAddContentMutation } from "../../services/content";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { useAddImageMutation } from "../../services/image";
 
 const initialEventData = {
   content_type: "",
@@ -27,6 +31,14 @@ const initialEventData = {
   image: null,
   post_method: "",
   recipients: [],
+};
+
+const contentTypeOptions = {
+  "Press Release": "press_release",
+  "Instagram Post": "instagram_post",
+  "Facebook Post": "facebook_post",
+  "Newsletter Inclusion": "newsletter",
+  Summary: "summary",
 };
 
 const ContentForm = ({
@@ -65,6 +77,9 @@ const ContentForm = ({
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showPopper, setShowPopper] = useState(false);
+  const [contentData, { isLoading }] = useAddContentMutation();
+
+  const { eventId } = useParams();
 
   const searchImages = async () => {
     if (!query) return;
@@ -91,14 +106,61 @@ const ContentForm = ({
     initialValues: data,
     validationSchema: contentFormSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log(values, "values");
-      resetForm();
-      setImage(null);
-      setEmails([]);
-      if (inputRef?.current) inputRef.current.value = null;
-      onSubmit(values);
+      // console.log(values, "values");
+      const selectedContentType = contentTypeOptions[values?.content_type];
+      let body = {
+        content_type: selectedContentType,
+        content_recipients: values?.recipients,
+        post_method: values?.post_method,
+        text_content: values?.description,
+        attachment: values?.image,
+      };
+      if (formik.values.image && typeof formik.values.image !== "string") {
+        const formData = new FormData();
+        formData.append("file", formik.values.image);
+        imageUpload({ body: formData }).then((res) => {
+          if (res?.data) {
+            // formik.setFieldValue("image", res?.data?.filePath);
+            body = { ...body, attachment: res?.data?.filePath };
+          } else if (res?.error) {
+            console.log(res?.error);
+          }
+        });
+      }
+      contentData({ body, eventId }).then((res) => {
+        if (res?.data) {
+          toast.success("Content added successfully");
+          console.log(res?.data);
+          return;
+        } else if (res?.error) {
+          toast.error(res?.error?.data?.message);
+          return;
+        }
+      });
+
+      // resetForm();
+      // setImage(null);
+      // setEmails([]);
+      // if (inputRef?.current) inputRef.current.value = null;
+      // onSubmit(values);
     },
   });
+
+  const [imageUpload, {}] = useAddImageMutation();
+
+  useEffect(() => {
+    if (formik.values.image && typeof formik.values.image !== "string") {
+      const formData = new FormData();
+      formData.append("file", formik.values.image);
+      imageUpload({ body: formData }).then((res) => {
+        if (res?.data) {
+          formik.setFieldValue("image", res?.data?.filePath);
+        } else if (res?.error) {
+          console.log(res?.error);
+        }
+      });
+    }
+  }, [formik.values.image]);
 
   return (
     <Paper elevation={0} sx={paperStyle}>
@@ -400,7 +462,12 @@ const ContentForm = ({
           ))}
         </Grid>
         <Grid size={12} pt={3}>
-          <Button type="submit" variant="contained" sx={buttonStyle}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={buttonStyle}
+            loading={isLoading}
+          >
             <Typography variant="h6" sx={buttonTypoStyle}>
               {isEdit ? "Save" : "Add"}
             </Typography>

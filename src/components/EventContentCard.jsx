@@ -7,20 +7,19 @@ import { Box, IconButton, Stack } from "@mui/material";
 import edit from "../assets/icons/edit.svg";
 import view from "../assets/icons/view.svg";
 import bin from "../assets/icons/bin.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const EventContentCard = ({ title, description, image }) => {
+const EventContentCard = ({ title, description, image, id }) => {
   const navigate = useNavigate();
+  const { eventId } = useParams();
 
   const handleClick = (id, click) => {
     if (click === "delete") {
       return null;
     } else if (click === "edit") {
-      navigate(`/dashboard/calendar/events/:eventId/contents/:contentId`);
+      navigate(`/dashboard/calendar/events/${eventId}/contents/${id}`);
     } else {
-      navigate(
-        `/dashboard/calendar/events/:eventId/contents/:contentId/preview`
-      );
+      navigate(`/dashboard/calendar/events/${eventId}/contents/${id}/preview`);
     }
   };
 
@@ -44,7 +43,7 @@ const EventContentCard = ({ title, description, image }) => {
         sx={{
           objectFit: "cover",
           width: { xs: "100%", sm: "300px" },
-          height: { xs: "170px", sm: "auto" },
+          height: { xs: "170px", sm: "146px" },
           borderRadius: "11.88px",
         }}
       />
@@ -91,7 +90,7 @@ const EventContentCard = ({ title, description, image }) => {
         >
           <IconButton
             size="small"
-            onClick={() => handleClick(1, "edit")}
+            onClick={() => handleClick(id, "edit")}
             sx={{
               width: "40px",
               height: "32px",
@@ -107,7 +106,7 @@ const EventContentCard = ({ title, description, image }) => {
 
           <IconButton
             size="small"
-            onClick={() => handleClick(1, "delete")}
+            onClick={() => handleClick(id, "delete")}
             sx={{
               width: "40px",
               height: "32px",
@@ -121,7 +120,7 @@ const EventContentCard = ({ title, description, image }) => {
 
           <IconButton
             size="small"
-            onClick={() => handleClick(1, "view")}
+            onClick={() => handleClick(id, "view")}
             sx={{
               width: "40px",
               height: "32px",
