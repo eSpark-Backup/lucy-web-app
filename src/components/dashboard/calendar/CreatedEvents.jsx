@@ -98,7 +98,7 @@ export default function CreatedEvents({ events }) {
               alignItems={"start"}
             >
               <Link
-                to={`/events/${event.id}`}
+                to={`/dashboard/calendar/events/${event.id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <Avatar
@@ -108,7 +108,7 @@ export default function CreatedEvents({ events }) {
               </Link>
               <Box>
                 <Link
-                  to={`/events/${event.id}`}
+                  to={`/dashboard/calendar/events/${event.id}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Typography
