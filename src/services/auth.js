@@ -48,7 +48,7 @@ export const authApi = api.injectEndpoints({
     }),
     resetPassword: builder.mutation({
       query: (credentials) => ({
-        url: "/users/reset-password",
+        url: "/auth/reset-password",
         method: "POST",
         body: credentials,
         credentials: "include",
@@ -60,6 +60,14 @@ export const authApi = api.injectEndpoints({
         method: "PATCH",
         body: credentials,
         credentials: "include",
+      }),
+    }),
+    forgetPassword: builder.mutation({
+      query: (body) => ({
+        url: "/auth/forgot-password",
+        body,
+        method: "POST",
+        // credentials: "include",
       }),
     }),
   }),
@@ -74,4 +82,6 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useUpdateUserMutation,
+  useForgetPasswordMutation,
+  user,
 } = authApi;

@@ -42,7 +42,7 @@ const routes = [
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "forget", element: <Forgot /> },
-      { path: "reset", element: <ResetPassword /> },
+      { path: "reset-password", element: <ResetPassword /> },
       { path: "verify-email", element: <EmailVerification /> },
       { path: "email-verification", element: <VerifyEmail /> },
     ],
@@ -85,6 +85,10 @@ const routes = [
         element: <CreateContent />,
       },
     ],
+  },
+  {
+    path: "/not-found",
+    element: <NotFound />,
   },
   {
     path: "*",

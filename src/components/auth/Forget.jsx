@@ -4,6 +4,8 @@ import { FORGET } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { Link } from "react-router-dom";
 import { forgetSchema } from "../../schemas/forget";
+import { useForgetPasswordMutation } from "../../services/auth";
+import { toast } from "react-toastify";
 
 const Forget = () => {
   const {
@@ -14,6 +16,8 @@ const Forget = () => {
     haveAnAccountText,
     signUpText,
   } = FORGET || {};
+
+  const [forgetData, { isLoading }] = useForgetPasswordMutation();
 
   const {
     authFormStyle,
@@ -32,9 +36,20 @@ const Forget = () => {
       email: "",
     },
     validationSchema: forgetSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log("Form values", values);
-      resetForm();
+      forgetData({ email: values?.email }).then((res) => {
+        if (res?.data) {
+          console.log(res?.data);
+          toast.success(res?.data?.message);
+          localStorage.removeItem("token");
+          return;
+        }
+        if (res?.error) {
+          toast.error(res?.error?.data?.message);
+          return;
+        }
+      });
     },
   });
 
@@ -72,7 +87,12 @@ const Forget = () => {
         />
       </Stack>
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
-        <Button type="submit" fullWidth sx={authButtonStyle}>
+        <Button
+          type="submit"
+          fullWidth
+          sx={authButtonStyle}
+          loading={isLoading}
+        >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>
