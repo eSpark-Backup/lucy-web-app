@@ -24,11 +24,7 @@ import VerifyEmail from "../components/auth/VerifyEmail";
 const routes = [
   {
     path: "/",
-    element: (
-      <PublicRoute>
-        <LandingPage />
-      </PublicRoute>
-    ),
+    element: <LandingPage />,
   },
   {
     path: "/auth",

@@ -9,8 +9,13 @@ import Services from "../services";
 import About from "../about";
 import Footer from "../footer";
 import WaitlistModal from "../waitlist-modal";
+import { useEffect } from "react";
 
 const LandingPage = () => {
+  useEffect(() => {
+    document.title = "Join the Waitlist | Edupulse";
+  }, []);
+
   return (
     <>
       <Navbar />
