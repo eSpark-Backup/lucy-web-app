@@ -40,7 +40,7 @@ const Navbar = ({ openMobileSidebar }) => {
         </IconButton>
         <Box display="flex" alignItems="center" gap={2}>
           <Link to={"/dashboard/profile"} style={{ textDecoration: "none" }}>
-            <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
               <Avatar
                 src={user?.profile_image}
                 alt="Moni Roy"

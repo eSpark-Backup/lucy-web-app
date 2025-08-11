@@ -16,7 +16,7 @@ const profileStyles = {
     p: 4,
     borderRadius: "14px",
     bgcolor: "#FFFFFF",
-    border: "0.3px solid #B9B9B9",
+    border: "0.3px solid rgba(185, 185, 185, 0.4)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -152,7 +152,7 @@ const Profile = () => {
             <Box
               sx={{
                 flex: 1,
-                minWidth: "280px",
+                minWidth: { xs: "100%", md: "280px" },
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -182,7 +182,7 @@ const Profile = () => {
             <Box
               sx={{
                 flex: 1,
-                minWidth: "280px",
+                minWidth: { xs: "100%", md: "280px" },
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -213,7 +213,7 @@ const Profile = () => {
             <Box
               sx={{
                 flex: 1,
-                minWidth: "280px",
+                minWidth: { xs: "100%", md: "280px" },
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
@@ -240,9 +240,9 @@ const Profile = () => {
             <Box
               sx={{
                 flex: 1,
-                minWidth: "280px",
                 display: "flex",
                 flexDirection: "column",
+                minWidth: { xs: "100%", md: "280px" },
                 gap: 1,
               }}
             >
