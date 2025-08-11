@@ -40,7 +40,6 @@ const Forget = () => {
       console.log("Form values", values);
       forgetData({ email: values?.email }).then((res) => {
         if (res?.data) {
-          console.log(res?.data);
           toast.success(res?.data?.message);
           localStorage.removeItem("token");
           return;
@@ -92,6 +91,7 @@ const Forget = () => {
           fullWidth
           sx={authButtonStyle}
           loading={isLoading}
+          disabled={isLoading}
         >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}

@@ -48,7 +48,6 @@ const ResetPassword = () => {
     onSubmit: (values, { resetForm }) => {
       resetData({ newPassword: values.new_password, token }).then((res) => {
         if (res?.data) {
-          console.log(res?.data?.message);
           toast.success(res?.data?.message);
           navigate("/auth/login");
           localStorage.removeItem("rememberedEmail");
@@ -192,6 +191,7 @@ const ResetPassword = () => {
           fullWidth
           sx={authButtonStyle}
           loading={isLoading}
+          disabled={isLoading}
         >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}

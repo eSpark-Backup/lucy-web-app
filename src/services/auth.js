@@ -38,14 +38,6 @@ export const authApi = api.injectEndpoints({
         credentials: "include",
       }),
     }),
-    forgotPassword: builder.mutation({
-      query: (credentials) => ({
-        url: "/users/forgot-password",
-        method: "POST",
-        body: credentials,
-        credentials: "include",
-      }),
-    }),
     resetPassword: builder.mutation({
       query: (credentials) => ({
         url: "/auth/reset-password",
@@ -67,7 +59,6 @@ export const authApi = api.injectEndpoints({
         url: "/auth/forgot-password",
         body,
         method: "POST",
-        // credentials: "include",
       }),
     }),
   }),
@@ -79,9 +70,7 @@ export const {
   useVerifyEmailQuery,
   useLoginMutation,
   useGetUserWithTokenQuery,
-  useForgotPasswordMutation,
   useResetPasswordMutation,
   useUpdateUserMutation,
   useForgetPasswordMutation,
-  user,
 } = authApi;
