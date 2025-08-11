@@ -45,57 +45,90 @@ export default function CreatedEvents({ events }) {
     more: event.attendees?.length > 3 ? `+${event.attendees?.length - 3}` : "",
   }));
 
-  const visibleEvents = showAll ? processedEvents : processedEvents.slice(0, 4);
+  const visibleEvents = showAll ? processedEvents : processedEvents.slice(0, 3);
 
   return (
     <Paper
       sx={{
         borderRadius: 4,
-        p: isMobile ? 1.5 : 2,
-        boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+        boxShadow: "none",
+        border: "0.3px solid rgba(185, 185, 185, 0.4)",
       }}
     >
-      {/* Add New Event Button */}
-      <Button
-        variant="contained"
-        fullWidth
-        startIcon={<AddIcon />}
-        onClick={() => navigate(`/dashboard/calendar/events/add`)}
-        sx={{
-          borderRadius: 2,
-          textTransform: "none",
-          mb: 2,
-          bgcolor: "#4880FF57",
-          fontSize: isMobile ? "0.8rem" : "1rem",
-          py: isMobile ? 0.8 : 1.2,
-        }}
-      >
-        Add New Event
-      </Button>
+      <Box sx={{ p: isMobile ? 2 : 3, pb: 0 }}>
+        {/* Add New Event Button */}
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={() => navigate(`/dashboard/calendar/events/add`)}
+          sx={{
+            borderRadius: 2,
+            textTransform: "none",
+            mb: 2,
+            bgcolor: "rgba(72, 128, 255, 0.34)",
+            height: { xs: "38px", md: "43px" },
+            boxShadow: "none",
+            opacity: "90%",
+            "&:hover": {
+              boxShadow: "none",
+            },
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 500,
+              color: "#FFFFFF",
+              fontFamily: "Nunito Sans",
+              letterSpacing: "-0.05px",
+            }}
+          >
+            + Add New Event
+          </Typography>
+        </Button>
 
-      {/* Heading */}
-      <Typography
-        variant={isMobile ? "subtitle1" : "h6"}
-        fontWeight="bold"
-        mb={2}
-      >
-        Created Events
-      </Typography>
-      <Divider />
+        {/* Heading */}
+        <Typography
+          variant="h5"
+          sx={{
+            mt: 3,
+            fontWeight: 700,
+            color: "#202224",
+            fontFamily: "Poppins",
+          }}
+        >
+          Created Events
+        </Typography>
+      </Box>
+      <Divider
+        sx={{
+          mt: 2,
+          borderWidth: "0",
+          border: "0.3px solid rgba(185, 185, 185, 0.1)",
+        }}
+      />
 
       {/* Events List */}
       <Stack
+        my={1}
         spacing={3}
-        mt={2}
-        maxHeight={showAll ? 550 : "auto"}
+        minWidth={{ xs: 200, md: 286 }}
+        maxHeight={showAll ? "100%" : 452}
         overflow="auto"
+        sx={{
+          p: isMobile ? 2 : 3,
+        }}
       >
         {visibleEvents.map((event, index) => (
           <Box key={index}>
             <Stack
               direction={isMobile ? "column" : "row"}
-              spacing={1}
+              spacing={1.8}
               alignItems={"start"}
+              sx={{
+                pb: { xs: 2, md: 3 },
+                borderBottom: "0.3px solid rgba(185, 185, 185, 0.2)",
+              }}
             >
               <Link
                 to={`/dashboard/calendar/events/${event.id}`}
@@ -103,7 +136,7 @@ export default function CreatedEvents({ events }) {
               >
                 <Avatar
                   src={event.attendees?.[0]}
-                  sx={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40 }}
+                  sx={{ width: isMobile ? 32 : 38, height: isMobile ? 32 : 38 }}
                 />
               </Link>
               <Box>
@@ -112,16 +145,25 @@ export default function CreatedEvents({ events }) {
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Typography
-                    fontWeight={600}
-                    fontSize={isMobile ? "0.9rem" : "1rem"}
+                    variant="h6"
+                    sx={{
+                      fontWeight: 500,
+                      fontFamily: "Poppins",
+                      color: "#202224",
+                      mb: 0.5,
+                    }}
                   >
                     {event.title}
                   </Typography>
                 </Link>
                 <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
+                  variant="body2"
+                  sx={{
+                    fontFamily: "Poppins",
+                    color: "#202224",
+                    opacity: "60%",
+                    mb: 0.5,
+                  }}
                 >
                   Date:{" "}
                   {event.startDate === event.endDate
@@ -129,16 +171,24 @@ export default function CreatedEvents({ events }) {
                     : `${event.startDate} - ${event.endDate}`}
                 </Typography>
                 <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
+                  variant="body2"
+                  sx={{
+                    fontFamily: "Poppins",
+                    color: "#202224",
+                    opacity: "60%",
+                    mb: 0.5,
+                  }}
                 >
                   Time: {event.startTime} - {event.endTime}
                 </Typography>
                 <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
+                  variant="body2"
+                  sx={{
+                    fontFamily: "Poppins",
+                    color: "#202224",
+                    opacity: "60%",
+                    mb: 0.5,
+                  }}
                 >
                   Duration: {event.duration}
                 </Typography>
@@ -182,28 +232,29 @@ export default function CreatedEvents({ events }) {
         ))}
       </Stack>
       <Box
+        my={2}
         textAlign="center"
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-        mt={3}
       >
         <Button
-          // variant="primary"
           onClick={() => setShowAll(!showAll)}
           sx={{
             width: 126,
             height: 38,
             borderRadius: "12px",
-            border: "2px solid #E2EAF8",
-            color: "#202224",
             fontFamily: "Nunito Sans",
-            fontWeight: 700,
-            fontSize: "14px",
-            lineHeight: "28px",
             background: "#E2EAF8",
-            opacity: 0.7,
+            opacity: "70%",
           }}
         >
-          <Typography fontWeight="bold">
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              fontFamily: "Nunito Sans",
+              color: "#202224",
+            }}
+          >
             {showAll
               ? "Show Less"
               : `Show More (${events.length - visibleEvents.length})`}

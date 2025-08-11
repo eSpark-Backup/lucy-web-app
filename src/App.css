@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Poppins&family=Roboto:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Poppins&family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
   margin: 0;
@@ -10,9 +10,9 @@
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 @font-face {
   font-family: "Gilroy";
@@ -33,55 +33,167 @@ body {
 }
 
 .swiper-pagination-bullet-active {
-  background: #282D4D !important;
+  background: #282d4d !important;
   width: 14px !important;
   height: 14px !important;
 }
 
-
-
-
+/* === FullCalendar Event Style === */
 .fc-event.event-yes:hover {
   opacity: 0.9;
   border-left: 4px solid #6c63ff;
 }
-.fc-daygrid-event-dot,.fc-event-time{
+
+/* Hide dot and time in month view */
+.fc-daygrid-event-dot,
+.fc-event-time {
   display: none;
 }
-/* Centered and bold title */
-.fc-toolbar-title {
-  font-size: 20px !important;
+
+/* === Calendar Container === */
+.calendar-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* === Typography and Font Sizes === */
+.fc,
+.fc * {
+  font-size: clamp(12px, 1.5vw, 14px) !important;
+}
+
+.fc td,
+.fc tr:last-child td {
+  border-right: none !important;
+  border-bottom: none !important;
+}
+.fc tr th {
   font-weight: 700 !important;
+}
+.fc tr td {
+  border: 1px solid rgba(63, 63, 63, 0.1);
+}
+
+.fc tr:last-child th {
+  border: none !important;
+}
+
+.fc .fc-col-header {
+  background-color: #f1f4f9; /* light gray bg */
+  /* border-bottom: 1px solid #ddd; */
+  padding: 0px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.fc .fc-col-header-cell {
+  padding: 10px 0;
+  border-right: 1px solid #f1f4f9;
+  background-color: inherit;
+}
+
+.fc-toolbar-title {
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 700 !important;
+  font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
   color: #000;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-/* Today, Prev, Next buttons */
+/* Event text */
+.fc-event,
+.fc-timegrid-event .fc-event-title {
+  font-size: clamp(12px, 1.3vw, 14px) !important;
+}
+
+.fc-timegrid-event .fc-event-time {
+  font-size: clamp(11px, 1vw, 13px) !important;
+}
+
+/* Day number in month grid */
+.fc-daygrid-day-number {
+  font-size: clamp(12px, 1.2vw, 14px) !important;
+  opacity: 1 !important;
+}
+
+/* Weekday header (Mon, Tue...) */
+.fc-col-header-cell-cushion {
+  font-size: clamp(12px, 1.2vw, 14px) !important;
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif !important;
+}
+
+/* Time labels */
+
+.fc-timegrid-axis,
+.fc-timegrid-slot-label {
+  font-size: clamp(11px, 1vw, 13px) !important;
+  font-family: "Nunito Sans", sans-serif !important;
+}
+
+/* === Grayed Out Days from Other Months === */
+.fc-day-other {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(80, 136, 255, 0.12),
+    rgba(80, 136, 255, 0.12) 1px,
+    transparent 2px,
+    transparent 9px
+  ) !important;
+}
+.fc-day-other .fc-daygrid-day-number {
+  opacity: 1 !important;
+}
+
+/* === General Button Styling === */
 .fc .fc-button {
-  background: #f5f5f5;
-  border: 1px solid #ddd;
-  color: #333;
-  font-size: 14px;
-  font-weight: 500;
+  background: #f5f5f5 !important;
+  border: 1px solid #ddd !important;
+  color: #333 !important;
+  font-size: clamp(12px, 1.4vw, 14px) !important;
+  font-weight: 500 !important;
   text-transform: capitalize;
   border-radius: 6px !important;
-  padding: 6px 12px;
-  box-shadow: none;
+  padding: 6px 12px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: none !important;
 }
 
-/* Active view buttons (Day, Week, Month) */
+/* Today Button */
+.fc .fc-button.fc-today-button {
+  background: transparent !important;
+  border: none !important;
+  color: #202224 !important;
+  font-size: 14px;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 600 !important;
+  padding: 6px 8px !important;
+}
+
+/* Hover / Focus Buttons */
+.fc .fc-button:hover,
+.fc .fc-button:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Active Button Styling */
 .fc .fc-button.fc-button-active {
   background: #007bff !important;
   color: #fff !important;
   border-color: #007bff !important;
 }
 
-/* Segmented control look for view switch buttons */
+/* Button Group Styling */
 .fc .fc-button-group .fc-button {
   border-radius: 0 !important;
   border-right: none !important;
+  border-right: 1px solid #ddd !important;
 }
 .fc .fc-button-group .fc-button:first-child {
+  border-right: 1px solid #ddd !important;
   border-top-left-radius: 6px !important;
   border-bottom-left-radius: 6px !important;
 }
@@ -90,82 +202,3 @@ body {
   border-top-right-radius: 6px !important;
   border-bottom-right-radius: 6px !important;
 }
-
-.fc-toolbar-title {
-  font-family: 'Poppins', sans-serif !important;
-  font-weight: 700 !important;
-  font-size: 40px !important;
-  color: #000;
-  cursor: pointer;
-}
-.calendar-container {
-  width: 100%;
-  height: 100vh; /* or any height */
-}
-
-.checkmark-icon,
-.crossmark-icon {
-  width: 56px;
-  height: 56px;
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke: #4caf50;
-  fill: none;
-  animation: popIn 0.3s ease forwards;
-  overflow: inherit;
-}
-
-.crossmark-icon {
-  stroke: #f44336;
-}
-
-.checkmark-circle,
-.crossmark-circle {
-  stroke-dasharray: 166;
-  stroke-dashoffset: 166;
-  animation: strokeCircle 0.6s ease-in-out forwards;
-}
-
-.checkmark-check {
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  animation: strokeCheck 0.3s ease forwards 0.6s;
-}
-
-.crossmark-line1,
-.crossmark-line2 {
-  stroke-dasharray: 28;
-  stroke-dashoffset: 28;
-  animation: strokeCross 0.3s ease forwards;
-}
-
-@keyframes strokeCircle {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes strokeCheck {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes strokeCross {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes popIn {
-  0% {
-    transform: scale(0.6);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-

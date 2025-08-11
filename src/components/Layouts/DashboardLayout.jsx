@@ -54,9 +54,7 @@ export default function RootLayout() {
             minHeight: "calc(100vh - 70px)",
             overflow: "auto",
             p: 3,
-            background: `url(${
-              pathname === "/dashboard" ? null : bgLogo
-            })`,
+            background: `url(${pathname === "/dashboard" ? null : bgLogo})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "80%",
             backgroundPosition: "center",
