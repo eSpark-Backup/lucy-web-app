@@ -19,6 +19,7 @@ const PageWrapper = styled("div")(() => ({
   zIndex: 1,
   overflow: "hidden",
   backgroundColor: "rgba(245, 246, 250, 1)",
+  paddingTop: "70px",
 }));
 
 export default function RootLayout() {
@@ -51,9 +52,10 @@ export default function RootLayout() {
         {/* ------------------------------------------- */}
         <Box
           sx={{
-            minHeight: "calc(100vh - 70px)",
-            overflow: "auto",
             p: 3,
+            flexGrow: 1,
+            height: "calc(100vh - 70px)", // 70px = navbar height
+            overflowY: "auto", // vertical scroll
             background: `url(${pathname === "/dashboard" ? null : bgLogo})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "80%",
