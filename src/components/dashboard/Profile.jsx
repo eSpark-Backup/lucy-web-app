@@ -3,6 +3,9 @@ import { Avatar, Box, Button, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import FormHeader from "../forms/FormHeader";
 import { profileSchema } from "../../schemas/profile";
+import { useSelector } from "react-redux";
+import { useUpdateUserMutation } from "../../services/auth";
+import { toast } from "react-toastify";
 
 const profileStyles = {
   container: {
@@ -45,23 +48,40 @@ const profileStyles = {
 };
 
 const Profile = () => {
+  const [update, { isLoading }] = useUpdateUserMutation();
+  const { user } = useSelector((state) => state?.auth);
   const [isEditing, setIsEditing] = useState(false);
-  const [image, setImage] = useState(null); // Preview URL
+  const [image, setImage] = useState(null);
   const fileInputRef = useRef();
 
   const formik = useFormik({
     initialValues: {
-      firstName: "Kevin",
-      lastName: "Fleming",
-      email: "jaskolski.brent@yahoo.com",
-      phone: "546-933-2772",
+      firstName: user?.first_name,
+      lastName: user?.last_name,
+      email: user?.email,
+      phone: user?.phone || "",
     },
     validationSchema: profileSchema,
-    onSubmit: (values) => {
-      console.log("Form submitted:", values);
-      setIsEditing(false);
-    },
     enableReinitialize: true,
+    onSubmit: (values) => {
+      const formdata = new FormData();
+      formdata.append("first_name", values?.firstName);
+      formdata.append("last_name", values?.lastName);
+      formdata.append("phone", values?.phone);
+      if (image) formdata.append("profile_image", image);
+      update(formdata).then((res) => {
+        if (res?.error) {
+          res?.error?.data?.message !== "Authorization token is missing" &&
+            toast.error(res?.error?.data?.message);
+          return;
+        }
+        if (res?.data) {
+          toast.success(res?.data?.message);
+          setIsEditing(false);
+          return;
+        }
+      });
+    },
   });
 
   const handleEditClick = () => {
@@ -81,9 +101,7 @@ const Profile = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      // Optionally: formik.setFieldValue('profileImage', file);
+      setImage(file);
     }
   };
 
@@ -98,7 +116,7 @@ const Profile = () => {
         <Box sx={profileStyles.formArea}>
           <Box sx={{ textAlign: "center", mb: "5px" }}>
             <Avatar
-              src={image || "/src/assets/icons/Profile.svg"}
+              src={image ? URL.createObjectURL(image) : user?.profile_image}
               alt="User Avatar"
               sx={{
                 width: 80,
@@ -213,7 +231,7 @@ const Profile = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                disabled={!isEditing}
+                disabled={true}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />
@@ -250,6 +268,8 @@ const Profile = () => {
 
         <Box sx={{ textAlign: "center", mb: "30px" }}>
           <Button
+            loading={isLoading}
+            disabled={isLoading}
             variant="contained"
             size="large"
             onClick={handleEditClick}

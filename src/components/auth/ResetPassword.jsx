@@ -14,10 +14,18 @@ import { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { resetPasswordSchema } from "../../schemas/changePassword";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { useResetPasswordMutation } from "../../services/auth";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const [resetData, { isLoading }] = useResetPasswordMutation();
+
+  const navigate = useNavigate();
 
   const { title, description, fields, buttonText } = RESETPASSWORD || {};
 
@@ -38,14 +46,29 @@ const ResetPassword = () => {
     },
     validationSchema: resetPasswordSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log("Form values", values);
-      resetForm();
+      resetData({ newPassword: values.new_password, token }).then((res) => {
+        if (res?.data) {
+          toast.success(res?.data?.message);
+          navigate("/auth/login");
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+          return;
+        }
+        if (res?.error) {
+          toast.error(res?.error?.data?.message);
+          return;
+        }
+      });
     },
   });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
+
+  if (!token) {
+    return <Navigate to={"/not-found"} />;
+  }
   return (
     <Box component="form" onSubmit={formik?.handleSubmit} sx={authFormStyle}>
       <Stack spacing={2} pb={2} alignItems="center" justifyContent="center">
@@ -163,7 +186,13 @@ const ResetPassword = () => {
         );
       })}
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
-        <Button type="submit" fullWidth sx={authButtonStyle}>
+        <Button
+          type="submit"
+          fullWidth
+          sx={authButtonStyle}
+          loading={isLoading}
+          disabled={isLoading}
+        >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}
           </Typography>

@@ -94,6 +94,22 @@ let theme = createTheme({
           },
         },
         {
+          props: { variant: "delete" },
+          style: {
+            background: "#DF1C41 !important",
+            border: "none",
+            height: "44px",
+            borderRadius: "12px",
+            color: "#FFFFFF",
+            "&:hover": {
+              border: "none",
+              color: "#FFFFFF",
+              background: "#DF1C41",
+              boxShadow: "none",
+            },
+          },
+        },
+        {
           props: { variant: "secondary" },
           style: {
             background: "#FFFFFF",
@@ -221,6 +237,19 @@ let theme = createTheme({
       styleOverrides: {
         maxWidthLg: {
           maxWidth: "1596px",
+        },
+      },
+    },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          height: 5,
+          borderRadius: 2,
+          backgroundColor: "#e0e0e0",
+        },
+        bar: {
+          borderRadius: 2,
+          backgroundColor: "#194FFF",
         },
       },
     },

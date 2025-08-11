@@ -18,6 +18,8 @@ import EventList from "../components/dashboard/EventList";
 import EventContents from "../components/dashboard/EventContents";
 import { Navigate } from "react-router-dom";
 import ResetPassword from "../components/auth/ResetPassword";
+import EmailVerification from "../components/auth/EmailVerification";
+import VerifyEmail from "../components/auth/VerifyEmail";
 
 const routes = [
   {
@@ -40,7 +42,9 @@ const routes = [
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "forget", element: <Forgot /> },
-      { path: "reset", element: <ResetPassword /> },
+      { path: "reset-password", element: <ResetPassword /> },
+      { path: "verify-email", element: <EmailVerification /> },
+      { path: "email-verification", element: <VerifyEmail /> },
     ],
   },
   {
@@ -81,6 +85,10 @@ const routes = [
         element: <CreateContent />,
       },
     ],
+  },
+  {
+    path: "/not-found",
+    element: <NotFound />,
   },
   {
     path: "*",
