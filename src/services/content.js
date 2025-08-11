@@ -9,15 +9,65 @@ export const contentApi = api.injectEndpoints({
         credentials: "include",
         body,
       }),
+      invalidatesTags: ["content"],
     }),
-    getAllEvents: builder.query({
+    getAllContent: builder.query({
       query: ({ eventId }) => ({
         url: `/events/${eventId}/contents`,
         method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["content"],
+    }),
+    getAllRecipients: builder.query({
+      query: () => ({
+        url: `/events/content-recipients/me`,
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
+    getSingleContent: builder.query({
+      query: ({ eventId, contentId }) => ({
+        url: `/events/${eventId}/contents/${contentId}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["content"],
+    }),
+    updateContent: builder.mutation({
+      query: ({ eventId, contentId, body }) => ({
+        url: `/events/${eventId}/contents/${contentId}`,
+        method: "PUT",
+        body,
+        credentials: "include",
+      }),
+      invalidatesTags: ["content"],
+    }),
+    deleteContent: builder.mutation({
+      query: ({ eventId, contentId }) => ({
+        url: `/events/${eventId}/contents/${contentId}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: ["content"],
+    }),
+    resendRecipientEmail: builder.mutation({
+      query: ({ eventId, body }) => ({
+        url: `/events/${eventId}/send-email`,
+        method: "POST",
+        body,
         credentials: "include",
       }),
     }),
   }),
 });
 
-export const { useAddContentMutation, useGetAllEventsQuery } = contentApi;
+export const {
+  useAddContentMutation,
+  useGetAllContentQuery,
+  useGetAllRecipientsQuery,
+  useGetSingleContentQuery,
+  useUpdateContentMutation,
+  useDeleteContentMutation,
+  useResendRecipientEmailMutation,
+} = contentApi;

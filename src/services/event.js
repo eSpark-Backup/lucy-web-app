@@ -9,6 +9,7 @@ export const authApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
+      providesTags: ["event"],
     }),
     createEvent: builder.mutation({
       query: (credentials) => ({
@@ -17,12 +18,14 @@ export const authApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
+      invalidatesTags: ["event"],
     }),
     getEventById: builder.query({
       query: (id) => ({
         url: `/events/${id}`,
         method: "GET",
       }),
+      providesTags: ["event"],
     }),
     editEvent: builder.mutation({
       query: ({ id, credentials }) => ({
@@ -31,12 +34,14 @@ export const authApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
+      invalidatesTags: ["event"],
     }),
     deleteEvent: builder.mutation({
       query: (id) => ({
         url: `/events/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["event"],
     }),
   }),
 });

@@ -32,16 +32,19 @@ const CreateEvent = () => {
   useEffect(() => {
     if (id) {
       if (isSuccess && data) {
+        const localDateTime = dayjs.utc(data?.date_time).local();
+
         setEvent({
           event_name: data?.name,
           event_type: data?.type,
           duration: data?.time_span,
-          date: data?.date_time?.split("T")[0],
-          start_time: data?.date_time?.split("T")[1]?.replace(":00.000Z", ""),
+          date: localDateTime.format("YYYY-MM-DD"), // Local date
+          start_time: localDateTime.format("HH:mm"), // Local time
           image: data?.image,
           description: data?.description,
         });
       }
+
       if (isError) {
         toast.error(error?.data?.message || "Event not found");
         navigate(-1);
@@ -75,20 +78,29 @@ const CreateEvent = () => {
       }
       if (res?.data) {
         toast.success(res?.data?.message || "Event edited successfully");
+        navigate("/dashboard/calendar");
       }
     });
   };
 
   const handleSubmit = (values, resetForm) => {
-    const date_time = `${values?.date}T${values?.start_time}:00.000Z`;
+    // Combine date & time in local timezone
+    const localDateTime = dayjs(`${values.date}T${values.start_time}`);
+
+    // Format with offset instead of "Z"
+    const date_time = localDateTime.format("YYYY-MM-DDTHH:mm:ssZ");
+
     const formdata = new FormData();
     formdata.append("name", values?.event_name);
     formdata.append("type", values?.event_type);
     formdata.append("time_span", Number(values?.duration));
     formdata.append("description", values?.description);
     formdata.append("date_time", date_time);
-    if (values?.image && typeof values?.image === "object")
+
+    if (values?.image && typeof values?.image === "object") {
       formdata.append("image", values?.image);
+    }
+
     if (id) {
       handleEdit(formdata, resetForm);
     } else {

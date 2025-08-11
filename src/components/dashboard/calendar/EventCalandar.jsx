@@ -34,8 +34,9 @@ const EventCalendar = ({ events }) => {
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [timeZone, setTimeZone] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [activeId, setActiveId] = useState("");
 
-  console.log("popupAnchor", popupAnchor);
+  // console.log("popupAnchor", popupAnchor);
 
   const calendarWrapperRef = useRef(null);
 
@@ -164,11 +165,11 @@ const EventCalendar = ({ events }) => {
         }}
         views={{
           timeGridWeek: {
-            allDaySlot: false,
+            allDaySlot: true,
             dayHeaderContent: weekDayHeaderContent,
           },
           timeGridDay: {
-            allDaySlot: false,
+            allDaySlot: true,
             dayHeaderContent: dayHeaderContent,
           },
         }}
@@ -188,6 +189,7 @@ const EventCalendar = ({ events }) => {
         eventClick={(info) => {
           setPopupType("event");
           setPopupAnchor(info.jsEvent.target);
+          setActiveId(info.event.id);
         }}
         eventClassNames={(arg) => getEventClassNames(arg.event)}
         viewDidMount={handleViewDidMount}
@@ -201,12 +203,7 @@ const EventCalendar = ({ events }) => {
         type={popupType}
         anchorEl={popupAnchor}
         onClose={() => setPopupAnchor(null)}
-        eventId={
-          popupType === "event" && popupAnchor
-            ? events.find((event) => event.title === popupAnchor.textContent)
-                ?.id
-            : null
-        }
+        eventId={activeId}
       />
       <ModalCard openModal={openModal} setOpenModal={setOpenModal} />
     </Box>

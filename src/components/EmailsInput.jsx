@@ -14,6 +14,7 @@ export default function EmailsInput({
   setEmails,
   placeholder,
   formik,
+  data,
 }) {
   const [inputValue, setInputValue] = useState("");
 
@@ -30,7 +31,7 @@ export default function EmailsInput({
     <Autocomplete
       multiple
       freeSolo
-      options={suggestedEmails}
+      options={data}
       value={emails}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {

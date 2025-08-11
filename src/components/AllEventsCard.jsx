@@ -1,7 +1,10 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import EventContentCard from "./EventContentCard";
 
-const AllEventsCard = ({ data }) => {
+const AllEventsCard = ({ data, isLoading }) => {
+  if (data?.length === 0 && !isLoading) {
+    return <Typography>No Contents Found</Typography>;
+  }
   return (
     <Grid container columnGap={3} rowGap={4}>
       {data?.map((item, index) => (

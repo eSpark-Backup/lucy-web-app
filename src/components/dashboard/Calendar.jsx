@@ -33,24 +33,36 @@ function Calendar() {
     if (isSuccess) {
       setCalendarEvents(
         data?.map((item) => {
-          const start = dayjs(item?.date_time);
-          const end = start.add(item?.time_span, "minute");
+          const start = dayjs(item.date_time).local();
+          let end;
+          let allDay = false;
+
+          console.log(item?.time_span);
+          if (item.time_span >= 1438 && item.time_span <= 1440) {
+            // Around 24h → treat as same-day all-day
+            end = start.endOf("day");
+            allDay = true;
+          } else {
+            end = start.add(item.time_span, "minute");
+          }
 
           return {
-            id: item?.id,
-            title: item?.name,
-            start: start.toDate(), // ✅ JS Date object
-            end: end.toDate(), // ✅ JS Date object
-            duration: formatDuration(item?.time_span),
+            id: item.id,
+            title: item.name,
+            start: start.toDate(),
+            end: end.toDate(),
+            allDay, // ✅ lets FC know if it should treat as all-day
+            duration: formatDuration(item.time_span),
             attendees: [],
-            image: item?.image,
-            date: dayjs(item?.date_time).format("DD/MM/YYYY"),
+            image: item.image,
+            date: start.format("DD/MM/YYYY"),
           };
         })
       );
     }
+
     if (isError) {
-      toast.error(error?.data?.meesage || "Something went wrong");
+      toast.error(error?.data?.message || "Something went wrong");
     }
   }, [data, isSuccess, isError, error]);
 

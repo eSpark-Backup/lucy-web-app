@@ -8,18 +8,37 @@ import edit from "../assets/icons/edit.svg";
 import view from "../assets/icons/view.svg";
 import bin from "../assets/icons/bin.svg";
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import ConfirmModal from "./ConfirmModal";
+import { useDeleteContentMutation } from "../services/content";
+import { toast } from "react-toastify";
 
 const EventContentCard = ({ title, description, image, id }) => {
   const navigate = useNavigate();
   const { eventId } = useParams();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteData, { isLoading }] = useDeleteContentMutation();
 
   const handleClick = (id, click) => {
-    if (click === "delete") {
-      return null;
-    } else if (click === "edit") {
+    if (click === "edit") {
       navigate(`/dashboard/calendar/events/${eventId}/contents/${id}`);
     } else {
       navigate(`/dashboard/calendar/events/${eventId}/contents/${id}/preview`);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await deleteData({ eventId, contentId: id });
+      if (res?.data) {
+        toast.success("Content Deleted Successfully");
+        setDeleteModal(false);
+      }
+      if (res?.error) {
+        toast.error(res?.error?.data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.data?.message);
     }
   };
 
@@ -106,7 +125,7 @@ const EventContentCard = ({ title, description, image, id }) => {
 
           <IconButton
             size="small"
-            onClick={() => handleClick(id, "delete")}
+            onClick={() => setDeleteModal(id)}
             sx={{
               width: "40px",
               height: "32px",
@@ -135,6 +154,16 @@ const EventContentCard = ({ title, description, image, id }) => {
           </IconButton>
         </Box>
       </CardContent>
+      <ConfirmModal
+        open={deleteModal}
+        handleClose={() => setDeleteModal(false)}
+        description="Are you sure you want to delete?"
+        handleCancel={() => setDeleteModal(false)}
+        handleAccept={handleDelete}
+        loading={isLoading}
+        heading="Delete Content"
+        button2Text="Delete"
+      />
     </Card>
   );
 };
