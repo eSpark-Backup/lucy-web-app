@@ -67,14 +67,15 @@ const ContentForm = ({
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [showPopper, setShowPopper] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm")); // <600px
   const cols = isXs ? 2 : 3; // set cols dynamically
 
   const searchImages = async () => {
     if (!query) return;
+    setHasSearched(true);
     setLoading(true);
     try {
       const res = await fetch(
@@ -106,6 +107,13 @@ const ContentForm = ({
       onSubmit(values);
     },
   });
+
+  const handleClosePopper = () => {
+    setShowPopper(false);
+    setQuery("");
+    setResults([]);
+    setHasSearched(false); // reset search state
+  };
 
   return (
     <Paper elevation={0} sx={paperStyle}>
@@ -233,8 +241,7 @@ const ContentForm = ({
                               backgroundColor: "#9C27B0",
                             },
                           }}
-                          onClick={(e) => {
-                            setAnchorEl(e.currentTarget);
+                          onClick={() => {
                             setShowPopper((prev) => !prev);
                           }}
                         >
@@ -273,7 +280,7 @@ const ContentForm = ({
                             backdropFilter: "blur(1px)", // blur effect
                             zIndex: 1199, // popper ke neeche
                           }}
-                          onClick={() => setShowPopper(false)}
+                          onClick={handleClosePopper}
                         />
                       )}
                       <Popper
@@ -287,9 +294,7 @@ const ContentForm = ({
                           transform: "translate(-50%, -50%)", // perfect center
                         }}
                       >
-                        <ClickAwayListener
-                          onClickAway={() => setShowPopper(false)}
-                        >
+                        <ClickAwayListener onClickAway={handleClosePopper}>
                           <Paper
                             sx={{
                               p: 2,
@@ -354,23 +359,34 @@ const ContentForm = ({
                                     },
                                   }}
                                 >
-                                  {loading ? "Searching..." : "Search"}
+                                  {"Search"}
                                 </Button>
                               </Box>
 
                               {/* Image results */}
-                              {results?.length > 0 ? (
+                              {loading ? (
+                                <Typography align="center">
+                                  Searching...
+                                </Typography>
+                              ) : hasSearched && results?.length === 0 ? (
+                                <Typography
+                                  align="center"
+                                  sx={{ color: "#A6A6A6", fontSize: 14, mt: 2 }}
+                                >
+                                  No images found
+                                </Typography>
+                              ) : results?.length > 0 ? (
                                 <ImageList
                                   sx={{
                                     width: "100%",
-                                    height: 250,
+                                    maxHeight: 250,
                                     overflowY: "auto",
                                   }}
                                   cols={cols}
                                   rowHeight={164}
                                 >
-                                  {results.map((img) => (
-                                    <ImageListItem key={img.id}>
+                                  {results?.map((img) => (
+                                    <ImageListItem key={img?.id}>
                                       <img
                                         srcSet={`${img.src.small}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                                         src={`${img.src.small}?w=164&h=164&fit=crop&auto=format`}
@@ -386,28 +402,13 @@ const ContentForm = ({
                                             "image",
                                             img.src.medium
                                           );
-                                          setShowPopper(false);
+                                          handleClosePopper();
                                         }}
                                       />
                                     </ImageListItem>
                                   ))}
                                 </ImageList>
-                              ) : (
-                                !loading && (
-                                  <Box
-                                    sx={{
-                                      height: 150,
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      color: "#888",
-                                      fontSize: 14,
-                                    }}
-                                  >
-                                    No images found
-                                  </Box>
-                                )
-                              )}
+                              ) : null}
                             </Stack>
                           </Paper>
                         </ClickAwayListener>
