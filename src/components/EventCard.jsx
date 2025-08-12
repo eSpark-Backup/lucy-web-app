@@ -21,9 +21,9 @@ const EventCard = ({ title, todayTime, duration, id }) => {
 
   const handleClick = (id, click) => {
     if (click === "edit") {
-      navigate(`/dashboard/calendar/create-event`);
+      navigate(`/dashboard/calendar/events/${id}`);
     } else {
-      navigate(`/dashboard/calendar/create-event`);
+      navigate(`/dashboard/calendar/events/${id}`);
     }
   };
 
