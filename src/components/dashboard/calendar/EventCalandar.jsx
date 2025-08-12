@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { Box, Modal, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -35,8 +35,6 @@ const EventCalendar = ({ events }) => {
   const [timeZone, setTimeZone] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [activeId, setActiveId] = useState("");
-
-  // console.log("popupAnchor", popupAnchor);
 
   const calendarWrapperRef = useRef(null);
 
@@ -109,7 +107,33 @@ const EventCalendar = ({ events }) => {
   };
 
   return (
-    <Box ref={calendarWrapperRef}>
+    <Box
+      ref={calendarWrapperRef}
+      sx={{
+        width: "100%",
+        overflowX: "auto",
+        "& .fc .fc-scrollgrid": {
+          border: "1px solid rgba(63, 63, 63, 0.1)",
+          borderTopLeftRadius: "12px",
+          borderTopRightRadius: "12px",
+        },
+        "@media(max-width: 1439px)": {
+          "& .fc .fc-scrollgrid": {
+            mt: 1,
+            minWidth: "850px",
+          },
+          "& .fc-view-harness": {
+            minWidth: "850px",
+          },
+          "& .fc-header-toolbar": {
+            minWidth: "500px",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: 2,
+          },
+        },
+      }}
+    >
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -131,15 +155,16 @@ const EventCalendar = ({ events }) => {
           info.el.style.borderLeft = `4px solid ${color}`;
           info.el.style.opacity = "0.5";
           info.el.style.color = color;
-          info.el.style.fontWeight = "600";
+          info.el.style.fontWeight = "700";
           info.el.style.padding = "6px 12px";
-          info.el.style.fontSize = "16px";
+          info.el.style.fontSize = "10px";
           info.el.style.borderRadius = "0px";
           info.el.style.cursor = "pointer";
           info.el.style.whiteSpace = "nowrap";
           info.el.style.overflow = "hidden";
           info.el.style.textOverflow = "ellipsis";
           info.el.style.boxShadow = "none";
+          info.el.style.fontFamily = "'Nunito Sans', sans-serif";
 
           info.el.addEventListener("mouseenter", () => {
             info.el.style.opacity = "0.5";

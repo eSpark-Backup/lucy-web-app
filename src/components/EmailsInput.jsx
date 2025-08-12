@@ -54,7 +54,22 @@ export default function EmailsInput({
         value.map((option, index) => {
           const { key, ...tagProps } = getTagProps({ index });
           return (
-            <Chip key={key} variant="outlined" label={option} {...tagProps} />
+            <Chip
+              key={key}
+              variant="outlined"
+              label={option}
+              {...tagProps}
+              sx={{
+                height: "36px",
+                backgroundColor: "rgba(217, 217, 217, 1)",
+                borderRadius: "5.75px",
+                color: "#000000",
+                border: "none",
+                fontSize: "12px",
+                fontWeight: 400,
+                fontFamily: "Nunito Sans",
+              }}
+            />
           );
         })
       }

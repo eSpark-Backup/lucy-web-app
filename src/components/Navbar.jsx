@@ -15,12 +15,13 @@ const Navbar = ({ openMobileSidebar }) => {
   const { user } = useSelector((state) => state?.auth);
   return (
     <AppBar
-      position="static"
+      position="fixed" // static -> fixed
       elevation={0}
       sx={{
         backgroundColor: "#fff",
         borderBottom: "1px solid #e0e0e0",
         px: 2,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Toolbar
@@ -40,7 +41,7 @@ const Navbar = ({ openMobileSidebar }) => {
         </IconButton>
         <Box display="flex" alignItems="center" gap={2}>
           <Link to={"/dashboard/profile"} style={{ textDecoration: "none" }}>
-            <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
               <Avatar
                 src={user?.profile_image}
                 alt="Moni Roy"

@@ -15,7 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function CreatedEvents({ events }) {
-  const [showAll, setShowAll] = useState(events?.length < 4);
+  const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -27,44 +27,73 @@ export default function CreatedEvents({ events }) {
     <Paper
       sx={{
         borderRadius: 4,
-        p: isMobile ? 1.5 : 2,
-        boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+        boxShadow: "none",
+        border: "0.3px solid rgba(185, 185, 185, 0.4)",
       }}
     >
-      {/* Add New Event Button */}
-      <Button
-        variant="contained"
-        fullWidth
-        startIcon={<AddIcon />}
-        onClick={() => navigate(`/dashboard/calendar/events/add`)}
-        sx={{
-          borderRadius: 2,
-          textTransform: "none",
-          mb: 2,
-          bgcolor: "#4880FF57",
-          fontSize: isMobile ? "0.8rem" : "1rem",
-          py: isMobile ? 0.8 : 1.2,
-        }}
-      >
-        Add New Event
-      </Button>
+      <Box sx={{ p: isMobile ? 2 : 3, pb: 0 }}>
+        {/* Add New Event Button */}
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={() => navigate(`/dashboard/calendar/events/add`)}
+          sx={{
+            borderRadius: 2,
+            textTransform: "none",
+            mb: 2,
+            bgcolor: "rgba(72, 128, 255, 0.34)",
+            height: { xs: "38px", md: "43px" },
+            boxShadow: "none",
+            opacity: "90%",
+            "&:hover": {
+              boxShadow: "none",
+            },
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 500,
+              color: "#FFFFFF",
+              fontFamily: "Nunito Sans",
+              letterSpacing: "-0.05px",
+            }}
+          >
+            + Add New Event
+          </Typography>
+        </Button>
 
-      {/* Heading */}
-      <Typography
-        variant={isMobile ? "subtitle1" : "h6"}
-        fontWeight="bold"
-        mb={2}
-      >
-        Created Events
-      </Typography>
-      <Divider />
+        {/* Heading */}
+        <Typography
+          variant="h5"
+          sx={{
+            mt: 3,
+            fontWeight: 700,
+            color: "#202224",
+            fontFamily: "Poppins",
+          }}
+        >
+          Created Events
+        </Typography>
+      </Box>
+      <Divider
+        sx={{
+          mt: 2,
+          borderWidth: "0",
+          border: "0.3px solid rgba(185, 185, 185, 0.1)",
+        }}
+      />
 
       {/* Events List */}
       <Stack
+        my={1}
         spacing={3}
-        mt={2}
-        maxHeight={showAll ? 550 : "auto"}
+        minWidth={{ xs: 200, md: 286 }}
+        maxHeight={452}
         overflow="auto"
+        sx={{
+          p: isMobile ? 2 : 3,
+        }}
       >
         {visibleEvents?.length > 0 ? (
           visibleEvents?.map((event, index) => (
@@ -159,7 +188,7 @@ export default function CreatedEvents({ events }) {
             justifyContent: "center",
             alignItems: "center",
           }}
-          mt={3}
+          my={3}
         >
           <Button
             // variant="primary"
