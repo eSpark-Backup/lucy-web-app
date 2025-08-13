@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
+import { Box, CircularProgress, Paper, Stack } from "@mui/material";
 import { toast } from "react-toastify";
-import dayjs from "dayjs";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
 import CreatedEvents from "./calendar/CreatedEvents";
 import EventCalandar from "./calendar/EventCalandar";
 import FormHeader from "../forms/FormHeader";
 import { useGetMyEventsQuery } from "../../services/event";
+import { componentStyles } from "../../style/componentStyles";
+import dayjs from "dayjs";
 
 function Calendar() {
+  const { CalendarScreenStyle } = componentStyles || {};
+  const { mainBoxStyle, paperStyle } = CalendarScreenStyle || {};
   const formatDuration = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
@@ -70,21 +66,12 @@ function Calendar() {
     <>
       <FormHeader title={"Calendar"} />
       {isLoading ? (
-        <Stack
-          sx={{ minHeight: "100px" }}
-          justifyContent="center"
-          alignItems="center"
-        >
+        <Stack justifyContent="center" alignItems="center" minHeight={"100px"}>
           <CircularProgress sx={{ color: "#194FFF" }} />
         </Stack>
       ) : (
         <>
-          <Box
-            display="flex"
-            flexDirection={{ xs: "column", lg: "row" }}
-            gap={2}
-            className="calendar-grid"
-          >
+          <Box className="calendar-grid" sx={mainBoxStyle}>
             {/* Created Events Section */}
             <Box flex={{ xs: "0 0 auto" }}>
               <CreatedEvents events={calendarEvents} />
@@ -92,18 +79,7 @@ function Calendar() {
 
             {/* Calendar Section */}
             <Box flex={1} width="100%">
-              <Paper
-                sx={{
-                  p: 2,
-                  borderRadius: 4,
-                  bgcolor: "white",
-                  height: "100%",
-                  width: "100%",
-                  overflow: "hidden",
-                  boxShadow: "none",
-                  border: "0.3px solid rgba(185, 185, 185, 0.4)",
-                }}
-              >
+              <Paper sx={paperStyle}>
                 <EventCalandar events={calendarEvents} />
               </Paper>
             </Box>

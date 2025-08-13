@@ -99,6 +99,7 @@ const EventCalendar = ({ events }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  
   const COLORS_MAP = {
     "user-1": "#6C63FF", // purple
     "user-2": "#00BFA6", // teal

@@ -1,7 +1,7 @@
 import { useMediaQuery, Box, Drawer } from "@mui/material";
 import Sidebar from "./Sidebar";
 
-const SideNav = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
+const SideNav = ({ isMobileSidebarOpen, onSidebarClose }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
   const sidebarWidth = 240;
@@ -28,7 +28,7 @@ const SideNav = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
         {/* ------------------------------------------- */}
         <Drawer
           anchor="left"
-          open={isSidebarOpen}
+          open={true}
           variant="permanent"
           PaperProps={{
             sx: {

@@ -10,7 +10,6 @@ import {
   Radio,
   Popper,
   ClickAwayListener,
-  IconButton,
   Box,
   LinearProgress,
   ImageListItem,
@@ -53,12 +52,7 @@ const contentTypeOptions = {
   Summary: "summary",
 };
 
-const ContentForm = ({
-  // isEdit = false,
-  data = initialEventData,
-  contentId,
-  onSubmit = () => {},
-}) => {
+const ContentForm = ({ data = initialEventData, contentId }) => {
   const {
     fields,
     radioButtons,
@@ -71,6 +65,7 @@ const ContentForm = ({
 
   const { ContentFormStyles } = componentStyles;
   const {
+    radioStyle,
     paperStyle,
     inputLabelStyle,
     inputStyle,
@@ -78,6 +73,18 @@ const ContentForm = ({
     buttonStyle,
     aiButtonStyle,
     radioButtonsLableStyle,
+    recipientsFielStyle,
+    searchButtonStyle,
+    uploadButtonStyle,
+    poperBackgroundStyle,
+    popperStyle,
+    searchPaperStyle,
+    searchTextFieldStyle,
+    imageSearchButtonStyle,
+    imageListStyle,
+    lazyImageStyle,
+    methodTypoStyle,
+    formControlStyle,
   } = ContentFormStyles;
 
   const inputRef = useRef(null);
@@ -86,7 +93,6 @@ const ContentForm = ({
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [suggestedEmails, setSuggestedEmails] = useState([]);
 
-  // Pexels search
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -103,8 +109,6 @@ const ContentForm = ({
     data: eventData,
     isLoading: eventLoading,
     isSuccess,
-    isError,
-    error,
   } = useGetEventByIdQuery(eventId, {
     skip: !eventId,
     refetchOnMountOrArgChange: true,
@@ -124,8 +128,8 @@ const ContentForm = ({
   }, [eventData, isSuccess]);
   const [hasSearched, setHasSearched] = useState(false);
   const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("sm")); // <600px
-  const cols = isXs ? 2 : 3; // set cols dynamically
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const cols = isXs ? 2 : 3;
 
   const searchImages = async () => {
     if (!query) return;
@@ -137,7 +141,7 @@ const ContentForm = ({
         {
           headers: {
             Authorization:
-              "E4AB8hPKj3zShBgIuY1U3ZsNz7JFIeYyqmdOeJoYAENQLBhyBaPjnjUD", // For production, use process.env
+              "E4AB8hPKj3zShBgIuY1U3ZsNz7JFIeYyqmdOeJoYAENQLBhyBaPjnjUD",
           },
         }
       );
@@ -153,7 +157,6 @@ const ContentForm = ({
     initialValues: data,
     validationSchema: contentFormSchema,
     onSubmit: (values, { resetForm }) => {
-      // console.log(values, "values");
       const selectedContentType = contentTypeOptions[values?.content_type];
       let body = {
         content_type: selectedContentType,
@@ -197,12 +200,6 @@ const ContentForm = ({
           }
         });
       }
-
-      // resetForm();
-      // setImage(null);
-      // setEmails([]);
-      // if (inputRef?.current) inputRef.current.value = null;
-      // onSubmit(values);
     },
   });
 
@@ -279,7 +276,7 @@ const ContentForm = ({
     setShowPopper(false);
     setQuery("");
     setResults([]);
-    setHasSearched(false); // reset search state
+    setHasSearched(false);
   };
 
   return (
@@ -297,21 +294,11 @@ const ContentForm = ({
         >
           {radioButtons?.map((item, index) => (
             <FormControlLabel
+              label={item}
               value={item}
               key={index}
               sx={{ gap: "8px", marginRight: "16px", alignItems: "center" }}
-              control={
-                <Radio
-                  sx={{
-                    width: 24,
-                    height: 24,
-                    color: "#666666",
-                    "&.Mui-checked": { color: "#5088FF" },
-                    "& .MuiSvgIcon-root": { width: 24, height: 24 },
-                  }}
-                />
-              }
-              label={item}
+              control={<Radio sx={radioStyle} />}
             />
           ))}
         </RadioGroup>
@@ -344,18 +331,7 @@ const ContentForm = ({
                         : `${index}`
                     }
                     sx={inputStyle(name)}
-                    inputProps={{
-                      sx: {
-                        fontSize: "14px",
-                        fontFamily: "Nunito Sans",
-                        fontWeight: 400,
-                        "&::placeholder": {
-                          fontSize: "14px",
-                          fontFamily: "Nunito Sans",
-                          fontWeight: 400,
-                        },
-                      },
-                    }}
+                    inputProps={recipientsFielStyle}
                     error={
                       formik?.touched?.[name] && Boolean(formik?.errors?.[name])
                     }
@@ -390,10 +366,10 @@ const ContentForm = ({
                     </Grid>
                     <Grid size={12} pt={1.5}>
                       <ImageUploader
-                        ref={inputRef}
                         image={image}
-                        setImage={setImage}
+                        ref={inputRef}
                         formik={formik}
+                        setImage={setImage}
                       />
                       {formik?.touched?.image && formik?.errors?.image && (
                         <Typography color="error" fontSize={12} m={"3px 14px"}>
@@ -405,16 +381,7 @@ const ContentForm = ({
                       <Box display="flex" justifyContent={"end"} gap={2}>
                         <Button
                           variant="contained"
-                          sx={{
-                            color: "#fff",
-                            maxWidth: "148px",
-                            backgroundColor: "#9C27B0",
-                            opacity: "90%",
-                            textWrap: "nowrap",
-                            "&:hover": {
-                              backgroundColor: "#9C27B0",
-                            },
-                          }}
+                          sx={searchButtonStyle}
                           onClick={() => {
                             setShowPopper((prev) => !prev);
                           }}
@@ -425,16 +392,7 @@ const ContentForm = ({
                         </Button>
                         <Button
                           variant="contained"
-                          sx={{
-                            color: "#fff",
-                            maxWidth: "148px",
-                            backgroundColor: "#4880FF",
-                            opacity: "90%",
-                            textWrap: "nowrap",
-                            "&:hover": {
-                              backgroundColor: "#4880FF",
-                            },
-                          }}
+                          sx={uploadButtonStyle}
                           onClick={() => !image && inputRef?.current?.click()}
                         >
                           <Typography variant="h6" sx={buttonTypoStyle}>
@@ -444,41 +402,18 @@ const ContentForm = ({
                       </Box>
                       {showPopper && (
                         <Box
-                          sx={{
-                            position: "fixed",
-                            top: 0,
-                            left: 0,
-                            width: "100vw",
-                            height: "100vh",
-                            backgroundColor: "rgba(0,0,0,0.05)",
-                            backdropFilter: "blur(1px)", // blur effect
-                            zIndex: 1199, // popper ke neeche
-                          }}
+                          sx={poperBackgroundStyle}
                           onClick={handleClosePopper}
                         />
                       )}
                       <Popper
+                        anchorEl={null}
                         open={showPopper}
-                        anchorEl={null} // anchor remove
-                        style={{
-                          zIndex: 1200,
-                          top: "50%",
-                          left: "50%",
-                          position: "fixed",
-                          transform: "translate(-50%, -50%)", // perfect center
-                        }}
+                        style={popperStyle}
                       >
                         <ClickAwayListener onClickAway={handleClosePopper}>
-                          <Paper
-                            sx={{
-                              p: 2,
-                              width: { xs: "280px", sm: "400px" },
-                              backgroundColor: "rgba(255, 255, 255)",
-                              boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
-                            }}
-                          >
+                          <Paper sx={searchPaperStyle}>
                             <Stack spacing={2}>
-                              {/* Search bar & button */}
                               <Box
                                 display="flex"
                                 flexDirection={{ xs: "column", sm: "row" }}
@@ -489,49 +424,19 @@ const ContentForm = ({
                               >
                                 <TextField
                                   fullWidth
-                                  placeholder="Search images..."
                                   value={query}
-                                  onChange={(e) => setQuery(e.target.value)}
+                                  sx={searchTextFieldStyle}
+                                  placeholder="Search images..."
+                                  onChange={(e) => setQuery(e?.target?.value)}
                                   onKeyDown={(e) =>
                                     e.key === "Enter" && searchImages()
                                   }
-                                  sx={{
-                                    "& .MuiInputBase-root": {
-                                      height: { xs: "40px", md: "40px" },
-                                      border: "1px solid #D8D8D8",
-                                      backgroundColor: "#F1F4F9",
-                                      borderRadius: "4px",
-                                      paddingLeft: "15px",
-                                      paddingRight: "15px",
-                                    },
-                                    "& input": {
-                                      fontSize: "18px",
-                                      backgroundColor: "#F1F4F9",
-                                      color: "#000",
-                                      "&::placeholder": {
-                                        color: "#A6A6A6",
-                                        opacity: 1,
-                                      },
-                                    },
-                                  }}
                                 />
                                 <Button
-                                  onClick={searchImages}
-                                  variant="contained"
                                   disabled={loading}
-                                  sx={{
-                                    maxWidth: { xs: "100%", sm: "100px" },
-                                    height: "40px",
-                                    borderRadius: "8px",
-                                    backgroundColor: "#9C27B0",
-                                    color: "#fff",
-                                    opacity: 0.9,
-                                    fontWeight: 500,
-                                    textTransform: "none",
-                                    "&:hover": {
-                                      backgroundColor: "#8e24aa",
-                                    },
-                                  }}
+                                  variant="contained"
+                                  onClick={searchImages}
+                                  sx={imageSearchButtonStyle}
                                 >
                                   {"Search"}
                                 </Button>
@@ -551,11 +456,7 @@ const ContentForm = ({
                                 </Typography>
                               ) : results?.length > 0 ? (
                                 <ImageList
-                                  sx={{
-                                    width: "100%",
-                                    maxHeight: 250,
-                                    overflowY: "auto",
-                                  }}
+                                  sx={imageListStyle}
                                   cols={cols}
                                   rowHeight={164}
                                 >
@@ -566,10 +467,7 @@ const ContentForm = ({
                                         src={`${img.src.small}?w=164&h=164&fit=crop&auto=format`}
                                         alt={img.alt}
                                         loading="lazy"
-                                        style={{
-                                          cursor: "pointer",
-                                          borderRadius: "6px",
-                                        }}
+                                        style={lazyImageStyle}
                                         onClick={() => {
                                           setImage(img.src.medium);
                                           formik.setFieldValue(
@@ -589,14 +487,7 @@ const ContentForm = ({
                       </Popper>
                     </Grid>
                     <Grid size={12} pt={1.5}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontWeight: 600,
-                          fontFamily: "Nunito Sans",
-                          color: "#606060",
-                        }}
-                      >
+                      <Typography variant="h6" sx={methodTypoStyle}>
                         {methodText}
                       </Typography>
                       <RadioGroup
@@ -606,33 +497,17 @@ const ContentForm = ({
                       >
                         <FormControlLabel
                           value={methodRadioButton}
-                          sx={{
-                            gap: "8px",
-                            marginRight: "16px",
-                            alignItems: "center",
-                            px: 1.2,
-                            py: 2.5,
-                          }}
-                          control={
-                            <Radio
-                              sx={{
-                                width: 24,
-                                height: 24,
-                                color: "#666666",
-                                "&.Mui-checked": { color: "#5088FF" },
-                                "& .MuiSvgIcon-root": { width: 24, height: 24 },
-                              }}
-                            />
-                          }
+                          sx={formControlStyle}
+                          control={<Radio sx={radioStyle} />}
                           label={methodRadioButton}
                         />
                         {formik?.touched?.post_method &&
                           formik?.errors?.post_method && (
                             <Typography
-                              color="error"
-                              fontSize={12}
                               mb={2}
                               mt={-0.5}
+                              color="error"
+                              fontSize={12}
                             >
                               {formik?.errors?.post_method}
                             </Typography>
@@ -648,8 +523,8 @@ const ContentForm = ({
         <Grid size={12} pt={3}>
           <Button
             type="submit"
-            variant="contained"
             sx={buttonStyle}
+            variant="contained"
             loading={isLoading || editLoading}
           >
             <Typography variant="h6" sx={buttonTypoStyle}>

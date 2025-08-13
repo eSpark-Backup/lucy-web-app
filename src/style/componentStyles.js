@@ -266,6 +266,121 @@ export const componentStyles = {
       fontFamily: "Nunito Sans",
       color: "#606060",
     },
+    radioStyle: {
+      width: 24,
+      height: 24,
+      color: "#666666",
+      "&.Mui-checked": { color: "#5088FF" },
+      "& .MuiSvgIcon-root": { width: 24, height: 24 },
+    },
+    recipientsFielStyle: {
+      sx: {
+        fontSize: "14px",
+        fontFamily: "Nunito Sans",
+        fontWeight: 400,
+        "&::placeholder": {
+          fontSize: "14px",
+          fontFamily: "Nunito Sans",
+          fontWeight: 400,
+        },
+      },
+    },
+    searchButtonStyle: {
+      color: "#fff",
+      maxWidth: "148px",
+      backgroundColor: "#9C27B0",
+      opacity: "90%",
+      textWrap: "nowrap",
+      "&:hover": {
+        backgroundColor: "#9C27B0",
+      },
+    },
+    uploadButtonStyle: {
+      color: "#fff",
+      maxWidth: "148px",
+      backgroundColor: "#4880FF",
+      opacity: "90%",
+      textWrap: "nowrap",
+      "&:hover": {
+        backgroundColor: "#4880FF",
+      },
+    },
+    poperBackgroundStyle: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "rgba(0,0,0,0.05)",
+      backdropFilter: "blur(1px)", // blur effect
+      zIndex: 1199, // popper ke neeche
+    },
+    popperStyle: {
+      zIndex: 1200,
+      top: "50%",
+      left: "50%",
+      position: "fixed",
+      transform: "translate(-50%, -50%)", // perfect center
+    },
+    searchPaperStyle: {
+      p: 2,
+      width: { xs: "280px", sm: "400px" },
+      backgroundColor: "rgba(255, 255, 255)",
+      boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
+    },
+    searchTextFieldStyle: {
+      "& .MuiInputBase-root": {
+        height: { xs: "40px", md: "40px" },
+        border: "1px solid #D8D8D8",
+        backgroundColor: "#F1F4F9",
+        borderRadius: "4px",
+        paddingLeft: "15px",
+        paddingRight: "15px",
+      },
+      "& input": {
+        fontSize: "18px",
+        backgroundColor: "#F1F4F9",
+        color: "#000",
+        "&::placeholder": {
+          color: "#A6A6A6",
+          opacity: 1,
+        },
+      },
+    },
+    imageSearchButtonStyle: {
+      maxWidth: { xs: "100%", sm: "100px" },
+      height: "40px",
+      borderRadius: "8px",
+      backgroundColor: "#9C27B0",
+      color: "#fff",
+      opacity: 0.9,
+      fontWeight: 500,
+      textTransform: "none",
+      "&:hover": {
+        backgroundColor: "#8e24aa",
+      },
+    },
+    imageListStyle: {
+      width: "100%",
+      maxHeight: 250,
+      overflowY: "auto",
+    },
+    lazyImageStyle: {
+      cursor: "pointer",
+      borderRadius: "6px",
+    },
+    methodTypoStyle: {
+      fontWeight: 600,
+      fontFamily: "Nunito Sans",
+      color: "#606060",
+    },
+    formControlStyle: {
+      gap: "8px",
+      marginRight: "16px",
+      alignItems: "center",
+      px: 1.2,
+      py: 2.5,
+    },
   },
   EventDetailsFormStyles: {
     paperStyle: {
@@ -440,6 +555,345 @@ export const componentStyles = {
       fontFamily: "Poppins",
       fontWeight: 400,
       opacity: "60%",
+    },
+  },
+  FormHeaderStyle: {
+    boxStyle: {
+      justifyContent: "space-between",
+      alignItems: "center",
+      maxWidth: "862px",
+      gap: 2,
+      mb: 2,
+    },
+    titleStyle: {
+      fontWeight: 700,
+      color: "#202224",
+      fontFamily: "Poppins",
+      fontStyle: "bold",
+    },
+  },
+
+  // AuthLayout component styles
+  AuthLayoutStyle: {
+    mainBoxStyle: (bgImage) => ({
+      margin: 0,
+      padding: 0,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "100vh",
+      overflow: "hidden",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${bgImage})`,
+      backgroundColor: "#4880FF",
+    }),
+    innerBoxStyle: {
+      width: "90%",
+      height: "auto",
+      maxWidth: "630px",
+      backgroundColor: "#FFFFFF",
+      borderRadius: "24px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      px: { xs: 4, md: 5 },
+      py: { xs: 5, sm: 6, md: 8 },
+      my: { xs: 3, md: 5 },
+      overflow: "auto",
+    },
+  },
+
+  // DashboardLayout component styles
+  DashboardLayoutStyle: {
+    mainWrapper: {
+      display: "flex",
+      minHeight: "100vh",
+      width: "100%",
+      overflow: "hidden",
+    },
+    pageWrapper: {
+      display: "flex",
+      flexGrow: 1,
+      flexDirection: "column",
+      zIndex: 1,
+      overflow: "hidden",
+      backgroundColor: "rgba(245, 246, 250, 1)",
+      paddingTop: "70px",
+    },
+    childrenStyle: (pathname, bgLogo) => ({
+      p: 3,
+      flexGrow: 1,
+      overflowY: "auto",
+      backgroundSize: "80%",
+      height: "calc(100vh - 70px)",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      ...(pathname !== "/dashboard" && { backgroundImage: `url(${bgLogo})` }),
+    }),
+  },
+
+  // Dashboard screen component styles
+  DashboardScreenStyle: {
+    mainBoxStyle: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    imageStyle: {
+      mx: "auto",
+      maxWidth: "398px",
+      width: { xs: "50%", lg: "100%" },
+    },
+    textStyle: {
+      fontWeight: 400,
+      fontSize: "clamp(22px, 6.5vw, 44px)",
+      color: "#000000",
+    },
+    logoImageStyle: {
+      mx: "auto",
+      maxWidth: "621px",
+      width: { xs: "60%", lg: "100%" },
+    },
+  },
+
+  // Calendar screen component styles
+  CalendarScreenStyle: {
+    mainBoxStyle: {
+      display: "flex",
+      flexDirection: { xs: "column", lg: "row" },
+      gap: 2,
+    },
+    paperStyle: {
+      p: 2,
+      borderRadius: 4,
+      bgcolor: "white",
+      height: "100%",
+      width: "100%",
+      overflow: "hidden",
+      boxShadow: "none",
+      border: "0.3px solid rgba(185, 185, 185, 0.4)",
+    },
+    CreatedEventsStyle: {
+      paperStyle: {
+        borderRadius: 4,
+        boxShadow: "none",
+        border: "0.3px solid rgba(185, 185, 185, 0.4)",
+      },
+      typoAndButtonBoxStyle: (isMobile) => ({ p: isMobile ? 2 : 3, pb: 0 }),
+      buttonStyle: {
+        borderRadius: 2,
+        textTransform: "none",
+        mb: 2,
+        bgcolor: "rgba(72, 128, 255, 0.34)",
+        height: { xs: "38px", md: "43px" },
+        boxShadow: "none",
+        opacity: "90%",
+        "&:hover": {
+          boxShadow: "none",
+        },
+      },
+      newEventTypoStyle: {
+        fontWeight: 500,
+        color: "#FFFFFF",
+        fontFamily: "Nunito Sans",
+        letterSpacing: "-0.05px",
+      },
+      createEventTypoStyle: {
+        mt: 3,
+        fontWeight: 700,
+        color: "#202224",
+        fontFamily: "Poppins",
+      },
+      dividerStyle: {
+        mt: 2,
+        borderWidth: "0",
+        border: "0.3px solid rgba(185, 185, 185, 0.1)",
+      },
+      eventListBoxStyle: (isMobile) => ({
+        my: 1,
+        maxHeight: 452,
+        overflow: "auto",
+        p: isMobile ? 2 : 3,
+        minWidth: { xs: 200, md: 286 },
+      }),
+      avatarStyle: (isMobile) => ({
+        width: isMobile ? 32 : 40,
+        height: isMobile ? 32 : 40,
+      }),
+      avatarGroupStyle: { "& .MuiAvatar-root": { width: 24, height: 24 } },
+      moreAvatarStyle: {
+        width: 24,
+        height: 24,
+        bgcolor: "#DFE9FF5E",
+        fontSize: "0.75rem",
+        border: " 1px solid #4880FF",
+        color: "#4880FF",
+      },
+      showMoreButtonBoxStyle: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      showMoreButtonStyle: {
+        width: 126,
+        height: 38,
+        borderRadius: "12px",
+        border: "2px solid #E2EAF8",
+        color: "#202224",
+        fontFamily: "Nunito Sans",
+        fontWeight: 700,
+        fontSize: "14px",
+        lineHeight: "28px",
+        background: "#E2EAF8",
+        opacity: 0.7,
+      },
+    },
+  },
+
+  // Profile screen component styles
+  ProfileScreenStyle: {
+    container: {
+      width: "100%",
+      height: "744px",
+      margin: "auto",
+      mt: 1,
+      py: 4,
+      px: { xs: 2.5, md: 4 },
+      borderRadius: "14px",
+      bgcolor: "#FFFFFF",
+      border: "0.3px solid rgba(185, 185, 185, 0.4)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    formArea: {
+      width: "100%",
+      maxWidth: "800px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    row: {
+      display: "flex",
+      gap: { xs: 2, sm: 4, md: 5 },
+      mt: { xs: "10px", sm: "20px", md: "55px" },
+      flexWrap: "wrap",
+    },
+    input: {
+      "& .MuiOutlinedInput-root": {
+        width: "100%",
+        height: { xs: "42px", md: "52px" },
+        borderRadius: "4px",
+        backgroundColor: "#F5F6FA",
+        border: "0.6px solid #D5D5D5",
+        p: "10px",
+      },
+    },
+    labelStyle: {
+      fontWeight: 500,
+      color: "#ADADAD",
+      fontSize: "14px",
+    },
+    avatar: (isEditing) => ({
+      width: 80,
+      height: 80,
+      margin: "auto",
+      cursor: isEditing ? "pointer" : "default",
+    }),
+    editPhotoText: (isEditing) => ({
+      mt: 1,
+      cursor: isEditing ? "pointer" : "default",
+      color: "#4379EE",
+      fontSize: "14px",
+    }),
+    submitBtn: {
+      width: { xs: "200px", sm: "300px", md: "274px" },
+      height: { xs: "46px", md: "56px" },
+      bgcolor: "#4880FF",
+      borderRadius: "12px",
+      color: "#FFFFFF",
+      fontSize: "18px",
+      fontWeight: 500,
+      opacity: "90%",
+      boxShadow: "none",
+    },
+  },
+
+  // Subscripiton Plan screen component styles
+  SubscriptionCardStyle: {
+    headingStyle: {
+      fontWeight: "bold",
+      fontFamily: "Nunito Sans",
+      mb: 3,
+    },
+    container: {
+      display: "flex",
+      justifyContent: { xs: "center", sm: "center", md: "flex-start" },
+      gap: 3,
+      flexWrap: "wrap",
+      mt: 2,
+    },
+    card: {
+      width: "350px",
+      height: "460px",
+      borderRadius: "24px",
+      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
+      textAlign: "center",
+      p: 2,
+      display: "flex",
+      flexDirection: "column",
+    },
+    cardContent: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+    },
+    title: {
+      fontWeight: 700,
+      mb: 1,
+      color: "#202224",
+      fontFamily: "Nunito Sans",
+    },
+    description: {
+      mb: 2,
+      color: "#212121",
+      fontFamily: "Nunito Sans",
+    },
+    price: {
+      fontWeight: 800,
+      color: "#4880FF",
+      mb: 1,
+      fontFamily: "Nunito Sans",
+    },
+    subText: {
+      color: "#212121",
+      fontFamily: "Nunito Sans",
+    },
+    buttonWrapper: {
+      textAlign: "center",
+      mb: 2,
+    },
+    buttonStyle: {
+      width: "180px",
+      height: "60px",
+      borderColor: "#4880FF",
+      color: "#4880FF",
+      fontWeight: "bold",
+      borderRadius: "30px",
+      margin: "auto",
+      "&:hover": {
+        backgroundColor: "#FFFFFF",
+        borderColor: "#4880FF",
+      },
+    },
+    buttonText: {
+      color: "#4880FF",
+      fontFamily: "Nunito Sans",
+      fontWeight: 700,
     },
   },
 };

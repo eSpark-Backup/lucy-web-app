@@ -1,73 +1,41 @@
-import { styled, Box } from "@mui/material";
 import { useState } from "react";
-import SideNav from "../SideNav";
-import Navbar from "../Navbar";
+import { Box } from "@mui/material";
 import { Outlet, useLocation } from "react-router-dom";
 import bgLogo from "../../assets/images/background-logo.svg";
-
-const MainWrapper = styled("div")(() => ({
-  display: "flex",
-  minHeight: "100vh",
-  width: "100%",
-  overflow: "hidden",
-}));
-
-const PageWrapper = styled("div")(() => ({
-  display: "flex",
-  flexGrow: 1,
-  flexDirection: "column",
-  zIndex: 1,
-  overflow: "hidden",
-  backgroundColor: "rgba(245, 246, 250, 1)",
-  paddingTop: "70px",
-}));
+import { componentStyles } from "../../style/componentStyles";
+import SideNav from "../SideNav";
+import Navbar from "../Navbar";
 
 export default function RootLayout() {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const { DashboardLayoutStyle } = componentStyles || {};
+  const { mainWrapper, pageWrapper, childrenStyle } =
+    DashboardLayoutStyle || {};
   const { pathname } = useLocation();
 
   return (
-    <MainWrapper className="mainwrapper">
+    <Box sx={mainWrapper} className="mainwrapper">
       {/* ------------------------------------------- */}
       {/* Sidebar */}
       {/* ------------------------------------------- */}
       <SideNav
-        isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
         onSidebarClose={() => setMobileSidebarOpen(false)}
       />
       {/* ------------------------------------------- */}
       {/* Main Wrapper */}
       {/* ------------------------------------------- */}
-      <PageWrapper>
+      <Box sx={pageWrapper}>
         {/* ------------------------------------------- */}
         {/* Header */}
-        <Navbar
-          isSidebarOpen={isSidebarOpen}
-          openMobileSidebar={setMobileSidebarOpen}
-        />
+        <Navbar openMobileSidebar={setMobileSidebarOpen} />
         {/* ------------------------------------------- */}
         {/* Page Route */}
         {/* ------------------------------------------- */}
-        <Box
-          sx={{
-            p: 3,
-            flexGrow: 1,
-            height: "calc(100vh - 70px)", // 70px = navbar height
-            overflowY: "auto", // vertical scroll
-            background: `url(${pathname === "/dashboard" ? null : bgLogo})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "80%",
-            backgroundPosition: "center",
-          }}
-        >
+        <Box sx={childrenStyle(pathname, bgLogo)}>
           <Outlet />
         </Box>
-        {/* ------------------------------------------- */}
-        {/* End Page */}
-        {/* ------------------------------------------- */}
-      </PageWrapper>
-    </MainWrapper>
+      </Box>
+    </Box>
   );
 }

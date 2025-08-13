@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Button,
@@ -7,117 +6,57 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import { plans } from "../../constant";
+import { plans, SUBSCRIPTION_PLAN_DATA } from "../../constant";
+import { componentStyles } from "../../style/componentStyles";
 
 const SubscriptionCard = () => {
+  const { heading, subPrice, button } = SUBSCRIPTION_PLAN_DATA || {};
+  const { SubscriptionCardStyle } = componentStyles || {};
+  const {
+    headingStyle,
+    container,
+    card,
+    cardContent,
+    title,
+    description,
+    price,
+    subText,
+    buttonWrapper,
+    buttonStyle,
+    buttonText,
+  } = SubscriptionCardStyle || {};
+
   return (
     <>
-      <Typography
-        variant="h2"
-        sx={{ fontWeight: "bold", fontFamily: "Nunito Sans", mb: 3 }}
-      >
-        Choose Your Subscription Plan
+      <Typography variant="h2" sx={headingStyle}>
+        {heading}
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: { xs: "center", sm: "center", md: "flex-start" },
-          gap: 3,
-          flexWrap: "wrap",
-          mt: 2,
-        }}
-      >
-        {plans.map((plan, index) => (
-          <Card
-            key={index}
-            sx={{
-              width: "350px",
-              height: "460px",
-              borderRadius: "24px",
-              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
-              textAlign: "center",
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <CardContent
-              sx={{ flex: 1, display: "flex", flexDirection: "column" }}
-            >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                  mb: 1,
-                  color: "#202224",
-                  fontFamily: "Nunito Sans",
-                }}
-              >
+      <Box sx={container}>
+        {plans?.map((plan, index) => (
+          <Card key={index} sx={card}>
+            <CardContent sx={cardContent}>
+              <Typography variant="h4" sx={title}>
                 {plan?.title}
               </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  mb: 2,
-                  color: "#212121",
-                  fontFamily: "Nunito Sans",
-                }}
-              >
+              <Typography variant="body1" sx={description}>
                 {plan?.description}
               </Typography>
-              <Typography
-                variant="h1"
-                sx={{
-                  fontWeight: 800,
-                  color: "#4880FF",
-                  mb: 1,
-                  fontFamily: "Nunito Sans",
-                }}
-              >
-                {plan.price}
+              <Typography variant="h1" sx={price}>
+                {plan?.price}
               </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "#212121", fontFamily: "Nunito Sans" }}
-              >
-                Per School/Months
+              <Typography variant="body1" sx={subText}>
+                {subPrice}
               </Typography>
               <Divider sx={{ my: 2 }} />
-              <Typography
-                variant="body1"
-                sx={{ color: "#212121", fontFamily: "Nunito Sans" }}
-              >
-                {plan.details}
+              <Typography variant="body1" sx={subText}>
+                {plan?.details}
               </Typography>
-              <Divider sx={{ mt: "auto" }} />{" "}
+              <Divider sx={{ mt: "auto" }} />
             </CardContent>
-
-            <Box sx={{ textAlign: "center", mb: 2 }}>
-              <Button
-                variant="outlined"
-                sx={{
-                  width: "180px",
-                  height: "60px",
-                  borderColor: "#4880FF",
-                  color: "#4880FF",
-                  fontWeight: "bold",
-                  borderRadius: "30px",
-                  margin: "auto",
-                  "&:hover": {
-                    backgroundColor: "#FFFFFF",
-                    borderColor: "#4880FF",
-                  },
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#4880FF",
-                    fontFamily: "Nunito Sans",
-                    fontWeight: 700,
-                  }}
-                >
-                  Subscribe Now
+            <Box sx={buttonWrapper}>
+              <Button variant="outlined" sx={buttonStyle}>
+                <Typography variant="body1" sx={buttonText}>
+                  {button}
                 </Typography>
               </Button>
             </Box>

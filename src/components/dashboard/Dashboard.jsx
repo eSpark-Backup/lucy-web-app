@@ -1,46 +1,21 @@
 import { Box, Typography, Stack } from "@mui/material";
 import congrats from "../../assets/images/congrats.png";
 import logo from "../../assets/images/logo.png";
+import { componentStyles } from "../../style/componentStyles";
+import { DASHBOARD_DATA } from "../../constant";
 
 const Dashboard = () => {
+  const { text } = DASHBOARD_DATA || {};
+  const { DashboardScreenStyle } = componentStyles || {};
+  const { mainBoxStyle, imageStyle, textStyle, logoImageStyle } =
+    DashboardScreenStyle || {};
+
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Box sx={mainBoxStyle}>
       <Stack spacing={2} justifyContent={"center"} alignItems={"center"}>
-        <Box
-          component={"img"}
-          src={congrats}
-          sx={{
-            mx: "auto",
-            maxWidth: "398px",
-            width: { xs: "50%", lg: "100%" },
-          }}
-        />
-        <Typography
-          sx={{
-            fontWeight: 400,
-            fontSize: "clamp(22px, 6.5vw, 44px)",
-            color: "#000000",
-          }}
-        >
-          Welcome To
-        </Typography>
-        <Box
-          component={"img"}
-          src={logo}
-          sx={{
-            mx: "auto",
-            maxWidth: "621px",
-            width: { xs: "60%", lg: "100%" },
-          }}
-        />
+        <Box component={"img"} src={congrats} sx={imageStyle} />
+        <Typography sx={textStyle}>{text}</Typography>
+        <Box component={"img"} src={logo} sx={logoImageStyle} />
       </Stack>
     </Box>
   );

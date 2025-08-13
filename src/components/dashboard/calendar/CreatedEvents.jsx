@@ -11,139 +11,100 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
+import { componentStyles } from "../../../style/componentStyles.js";
+import { CALENDAR_DATA } from "../../../constant/index.js";
 
 export default function CreatedEvents({ events }) {
+  const { CalendarScreenStyle } = componentStyles || {};
+  const { CreatedEventsStyle } = CalendarScreenStyle || {};
+  const {
+    paperStyle,
+    typoAndButtonBoxStyle,
+    buttonStyle,
+    newEventTypoStyle,
+    createEventTypoStyle,
+    dividerStyle,
+    eventListBoxStyle,
+    avatarStyle,
+    avatarGroupStyle,
+    moreAvatarStyle,
+    showMoreButtonBoxStyle,
+    showMoreButtonStyle,
+  } = CreatedEventsStyle || {};
+  const { CREATEDEVENTS_DATA } = CALENDAR_DATA || {};
+  const { addEventButtonText, createEventText, eventsLink, noEventsText } =
+    CREATEDEVENTS_DATA || {};
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  console.log(events);
-
-  const visibleEvents = showAll ? events : events.slice(0, 4);
+  const isMobile = useMediaQuery(theme?.breakpoints?.down("sm"));
+  const visibleEvents = showAll ? events : events?.slice(0, 4);
 
   return (
-    <Paper
-      sx={{
-        borderRadius: 4,
-        boxShadow: "none",
-        border: "0.3px solid rgba(185, 185, 185, 0.4)",
-      }}
-    >
-      <Box sx={{ p: isMobile ? 2 : 3, pb: 0 }}>
-        {/* Add New Event Button */}
+    <Paper sx={paperStyle}>
+      <Box sx={typoAndButtonBoxStyle(isMobile)}>
         <Button
-          variant="contained"
           fullWidth
+          sx={buttonStyle}
+          variant="contained"
           onClick={() => navigate(`/dashboard/calendar/events/add`)}
-          sx={{
-            borderRadius: 2,
-            textTransform: "none",
-            mb: 2,
-            bgcolor: "rgba(72, 128, 255, 0.34)",
-            height: { xs: "38px", md: "43px" },
-            boxShadow: "none",
-            opacity: "90%",
-            "&:hover": {
-              boxShadow: "none",
-            },
-          }}
         >
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 500,
-              color: "#FFFFFF",
-              fontFamily: "Nunito Sans",
-              letterSpacing: "-0.05px",
-            }}
-          >
-            + Add New Event
+          <Typography variant="h5" sx={newEventTypoStyle}>
+            {addEventButtonText}
           </Typography>
         </Button>
-
-        {/* Heading */}
-        <Typography
-          variant="h5"
-          sx={{
-            mt: 3,
-            fontWeight: 700,
-            color: "#202224",
-            fontFamily: "Poppins",
-          }}
-        >
-          Created Events
+        <Typography variant="h5" sx={createEventTypoStyle}>
+          {createEventText}
         </Typography>
       </Box>
-      <Divider
-        sx={{
-          mt: 2,
-          borderWidth: "0",
-          border: "0.3px solid rgba(185, 185, 185, 0.1)",
-        }}
-      />
+      <Divider sx={dividerStyle} />
 
       {/* Events List */}
-      <Stack
-        my={1}
-        spacing={3}
-        minWidth={{ xs: 200, md: 286 }}
-        maxHeight={452}
-        overflow="auto"
-        sx={{
-          p: isMobile ? 2 : 3,
-        }}
-      >
+      <Stack spacing={3} sx={eventListBoxStyle}>
         {visibleEvents?.length > 0 ? (
           visibleEvents?.map((event, index) => (
             <Box key={index}>
               <Stack
-                direction={isMobile ? "column" : "row"}
                 spacing={1}
                 alignItems={"start"}
+                direction={isMobile ? "column" : "row"}
               >
-                <Avatar
-                  src={event.image}
-                  sx={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40 }}
-                />
+                <Avatar src={event?.image} sx={avatarStyle(isMobile)} />
                 <Box>
                   <Link
-                    to={`/dashboard/calendar/events/${event.id}`}
+                    to={`${eventsLink} ${event?.id}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
                     <Typography
                       fontWeight={600}
                       fontSize={isMobile ? "0.9rem" : "1rem"}
                     >
-                      {event.title}
+                      {event?.title}
                     </Typography>
                   </Link>
                   <Typography
+                    display="block"
                     variant="caption"
                     color="text.secondary"
-                    display="block"
                   >
-                    Date: {event.date}
+                    Date: {event?.date}
                   </Typography>
                   <Typography
+                    display="block"
                     variant="caption"
                     color="text.secondary"
-                    display="block"
                   >
-                    Duration: {event.duration}
+                    Duration: {event?.duration}
                   </Typography>
                   <Stack
+                    mt={1}
+                    spacing={0.5}
                     direction="row"
                     alignItems="center"
-                    spacing={0.5}
-                    mt={1}
                   >
-                    <AvatarGroup
-                      max={3}
-                      sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
-                    >
-                      {event.attendees.slice(0, 3)?.map((src, idx) => (
+                    <AvatarGroup max={3} sx={avatarGroupStyle}>
+                      {event?.attendees?.slice(0, 3)?.map((src, idx) => (
                         <Link to={`/members${src.split(".")[0]}`}>
                           <Avatar
                             key={idx}
@@ -157,19 +118,8 @@ export default function CreatedEvents({ events }) {
                         </Link>
                       ))}
                     </AvatarGroup>
-                    {event.more && (
-                      <Avatar
-                        sx={{
-                          width: 24,
-                          height: 24,
-                          bgcolor: "#DFE9FF5E",
-                          fontSize: "0.75rem",
-                          border: " 1px solid #4880FF",
-                          color: "#4880FF",
-                        }}
-                      >
-                        {event.more}
-                      </Avatar>
+                    {event?.more && (
+                      <Avatar sx={moreAvatarStyle}>{event?.more}</Avatar>
                     )}
                   </Stack>
                 </Box>
@@ -177,40 +127,18 @@ export default function CreatedEvents({ events }) {
             </Box>
           ))
         ) : (
-          <Typography textAlign="center">No Events Available</Typography>
+          <Typography variant={"body1"} textAlign="center">
+            {noEventsText}
+          </Typography>
         )}
       </Stack>
       {events?.length > 4 && (
-        <Box
-          textAlign="center"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          my={3}
-        >
-          <Button
-            // variant="primary"
-            onClick={() => setShowAll(!showAll)}
-            sx={{
-              width: 126,
-              height: 38,
-              borderRadius: "12px",
-              border: "2px solid #E2EAF8",
-              color: "#202224",
-              fontFamily: "Nunito Sans",
-              fontWeight: 700,
-              fontSize: "14px",
-              lineHeight: "28px",
-              background: "#E2EAF8",
-              opacity: 0.7,
-            }}
-          >
+        <Box my={3} textAlign="center" sx={showMoreButtonBoxStyle}>
+          <Button onClick={() => setShowAll(!showAll)} sx={showMoreButtonStyle}>
             <Typography fontWeight="bold">
               {showAll
                 ? "Show Less"
-                : `Show More (${events.length - visibleEvents.length})`}
+                : `Show More (${events?.length - visibleEvents?.length})`}
             </Typography>
           </Button>
         </Box>

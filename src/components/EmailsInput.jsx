@@ -1,13 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Autocomplete, TextField, Chip } from "@mui/material";
-
-// Example predefined emails (options)
-const suggestedEmails = [
-  "ali@example.com",
-  "fatima@mail.com",
-  "ahmed@company.org",
-];
-
 export default function EmailsInput({
   name,
   emails,

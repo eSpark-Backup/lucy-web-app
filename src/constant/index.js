@@ -588,7 +588,7 @@ export const EVENTFORM = {
         name: "start_time",
         size: { xs: 12, lg: 5.5 },
       },
-       ...(!date
+      ...(!date
         ? [
             {
               label: "Select Date",
@@ -665,3 +665,32 @@ export const plans = [
       "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
   },
 ];
+
+export const DASHBOARD_DATA = {
+  text: "Welcome To",
+};
+
+export const CALENDAR_DATA = {
+  CREATEDEVENTS_DATA: {
+    addEventButtonText: "+ Add New Event",
+    createEventText: "Created Events",
+    eventsLink: "/dashboard/calendar/events/",
+    noEventsText: "No Events Available",
+  },
+};
+
+export const PROFILE_DATA = {
+  text: "Edit Photo",
+  fields: (isEditing) => [
+    { label: "First Name", name: "firstName", disabled: !isEditing },
+    { label: "Last Name", name: "lastName", disabled: !isEditing },
+    { label: "Your Email", name: "email", disabled: true },
+    { label: "Phone Number", name: "phone", disabled: !isEditing },
+  ],
+};
+
+export const SUBSCRIPTION_PLAN_DATA = {
+  heading: "Choose Your Subscription Plan",
+  subPrice: "Per School/Months",
+  button: "Subscribe Now",
+};
