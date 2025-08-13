@@ -13,6 +13,10 @@ import {
   IconButton,
   Box,
   LinearProgress,
+  ImageListItem,
+  ImageList,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { CONTENTFORM } from "../../constant";
@@ -86,7 +90,6 @@ const ContentForm = ({
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [showPopper, setShowPopper] = useState(false);
   const [contentData, { isLoading }] = useAddContentMutation();
   const [editContent, { isLoading: editLoading }] = useUpdateContentMutation();
@@ -119,9 +122,14 @@ const ContentForm = ({
       setEventName(eventData?.name);
     }
   }, [eventData, isSuccess]);
+  const [hasSearched, setHasSearched] = useState(false);
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm")); // <600px
+  const cols = isXs ? 2 : 3; // set cols dynamically
 
   const searchImages = async () => {
     if (!query) return;
+    setHasSearched(true);
     setLoading(true);
     try {
       const res = await fetch(
@@ -267,6 +275,13 @@ const ContentForm = ({
     return <LinearProgress />;
   }
 
+  const handleClosePopper = () => {
+    setShowPopper(false);
+    setQuery("");
+    setResults([]);
+    setHasSearched(false); // reset search state
+  };
+
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
@@ -395,12 +410,12 @@ const ContentForm = ({
                             maxWidth: "148px",
                             backgroundColor: "#9C27B0",
                             opacity: "90%",
+                            textWrap: "nowrap",
                             "&:hover": {
                               backgroundColor: "#9C27B0",
                             },
                           }}
-                          onClick={(e) => {
-                            setAnchorEl(e.currentTarget);
+                          onClick={() => {
                             setShowPopper((prev) => !prev);
                           }}
                         >
@@ -415,6 +430,7 @@ const ContentForm = ({
                             maxWidth: "148px",
                             backgroundColor: "#4880FF",
                             opacity: "90%",
+                            textWrap: "nowrap",
                             "&:hover": {
                               backgroundColor: "#4880FF",
                             },
@@ -426,24 +442,53 @@ const ContentForm = ({
                           </Typography>
                         </Button>
                       </Box>
+                      {showPopper && (
+                        <Box
+                          sx={{
+                            position: "fixed",
+                            top: 0,
+                            left: 0,
+                            width: "100vw",
+                            height: "100vh",
+                            backgroundColor: "rgba(0,0,0,0.05)",
+                            backdropFilter: "blur(1px)", // blur effect
+                            zIndex: 1199, // popper ke neeche
+                          }}
+                          onClick={handleClosePopper}
+                        />
+                      )}
                       <Popper
                         open={showPopper}
-                        anchorEl={anchorEl}
-                        placement="bottom-start"
-                        style={{ zIndex: 1200 }}
+                        anchorEl={null} // anchor remove
+                        style={{
+                          zIndex: 1200,
+                          top: "50%",
+                          left: "50%",
+                          position: "fixed",
+                          transform: "translate(-50%, -50%)", // perfect center
+                        }}
                       >
-                        <ClickAwayListener
-                          onClickAway={() => setShowPopper(false)}
-                        >
-                          <Paper sx={{ p: 2, width: 400 }}>
+                        <ClickAwayListener onClickAway={handleClosePopper}>
+                          <Paper
+                            sx={{
+                              p: 2,
+                              width: { xs: "280px", sm: "400px" },
+                              backgroundColor: "rgba(255, 255, 255)",
+                              boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
+                            }}
+                          >
                             <Stack spacing={2}>
+                              {/* Search bar & button */}
                               <Box
                                 display="flex"
-                                alignItems="center"
+                                flexDirection={{ xs: "column", sm: "row" }}
+                                alignItems={{ xs: "stretch", sm: "center" }}
+                                justifyContent={"center"}
                                 width="100%"
                                 gap={1}
                               >
                                 <TextField
+                                  fullWidth
                                   placeholder="Search images..."
                                   value={query}
                                   onChange={(e) => setQuery(e.target.value)}
@@ -451,14 +496,22 @@ const ContentForm = ({
                                     e.key === "Enter" && searchImages()
                                   }
                                   sx={{
-                                    width: "70%",
                                     "& .MuiInputBase-root": {
-                                      height: "40px",
-                                      borderRadius: "8px",
-                                      paddingX: 1, // outer padding inside input root
+                                      height: { xs: "40px", md: "40px" },
+                                      border: "1px solid #D8D8D8",
+                                      backgroundColor: "#F1F4F9",
+                                      borderRadius: "4px",
+                                      paddingLeft: "15px",
+                                      paddingRight: "15px",
                                     },
                                     "& input": {
-                                      padding: "8px 12px", // inner padding for text and placeholder
+                                      fontSize: "18px",
+                                      backgroundColor: "#F1F4F9",
+                                      color: "#000",
+                                      "&::placeholder": {
+                                        color: "#A6A6A6",
+                                        opacity: 1,
+                                      },
                                     },
                                   }}
                                 />
@@ -467,7 +520,7 @@ const ContentForm = ({
                                   variant="contained"
                                   disabled={loading}
                                   sx={{
-                                    width: "30%",
+                                    maxWidth: { xs: "100%", sm: "100px" },
                                     height: "40px",
                                     borderRadius: "8px",
                                     backgroundColor: "#9C27B0",
@@ -480,37 +533,56 @@ const ContentForm = ({
                                     },
                                   }}
                                 >
-                                  {loading ? "Searching..." : "Search"}
+                                  {"Search"}
                                 </Button>
                               </Box>
-                              <Stack
-                                direction="row"
-                                flexWrap="wrap"
-                                gap={1}
-                                maxHeight={200}
-                                overflow="auto"
-                              >
-                                {results.map((img) => (
-                                  <img
-                                    key={img.id}
-                                    src={img.src.medium}
-                                    alt={img.alt}
-                                    width={100}
-                                    style={{
-                                      borderRadius: "6px",
-                                      cursor: "pointer",
-                                    }}
-                                    onClick={() => {
-                                      setImage(img.src.medium);
-                                      formik.setFieldValue(
-                                        "image",
-                                        img.src.medium
-                                      );
-                                      setShowPopper(false);
-                                    }}
-                                  />
-                                ))}
-                              </Stack>
+
+                              {/* Image results */}
+                              {loading ? (
+                                <Typography align="center">
+                                  Searching...
+                                </Typography>
+                              ) : hasSearched && results?.length === 0 ? (
+                                <Typography
+                                  align="center"
+                                  sx={{ color: "#A6A6A6", fontSize: 14, mt: 2 }}
+                                >
+                                  No images found
+                                </Typography>
+                              ) : results?.length > 0 ? (
+                                <ImageList
+                                  sx={{
+                                    width: "100%",
+                                    maxHeight: 250,
+                                    overflowY: "auto",
+                                  }}
+                                  cols={cols}
+                                  rowHeight={164}
+                                >
+                                  {results?.map((img) => (
+                                    <ImageListItem key={img?.id}>
+                                      <img
+                                        srcSet={`${img.src.small}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                        src={`${img.src.small}?w=164&h=164&fit=crop&auto=format`}
+                                        alt={img.alt}
+                                        loading="lazy"
+                                        style={{
+                                          cursor: "pointer",
+                                          borderRadius: "6px",
+                                        }}
+                                        onClick={() => {
+                                          setImage(img.src.medium);
+                                          formik.setFieldValue(
+                                            "image",
+                                            img.src.medium
+                                          );
+                                          handleClosePopper();
+                                        }}
+                                      />
+                                    </ImageListItem>
+                                  ))}
+                                </ImageList>
+                              ) : null}
                             </Stack>
                           </Paper>
                         </ClickAwayListener>

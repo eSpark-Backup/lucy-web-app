@@ -51,7 +51,11 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
             component="img"
             src={image}
             alt="preview"
-            sx={{ height: "80px", objectFit: "contain" }}
+            sx={{
+              height: "100%",
+              width: "100%",
+              objectFit: "cover", // full fill with crop
+            }}
           />
           <IconButton
             size="small"
