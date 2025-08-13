@@ -7,20 +7,38 @@ import { Box, IconButton, Stack } from "@mui/material";
 import edit from "../assets/icons/edit.svg";
 import view from "../assets/icons/view.svg";
 import bin from "../assets/icons/bin.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import ConfirmModal from "./ConfirmModal";
+import { useDeleteContentMutation } from "../services/content";
+import { toast } from "react-toastify";
 
-const EventContentCard = ({ title, description, image }) => {
+const EventContentCard = ({ title, description, image, id }) => {
   const navigate = useNavigate();
+  const { eventId } = useParams();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteData, { isLoading }] = useDeleteContentMutation();
 
   const handleClick = (id, click) => {
-    if (click === "delete") {
-      return null;
-    } else if (click === "edit") {
-      navigate(`/dashboard/calendar/events/:eventId/contents/:contentId`);
+    if (click === "edit") {
+      navigate(`/dashboard/calendar/events/${eventId}/contents/${id}`);
     } else {
-      navigate(
-        `/dashboard/calendar/events/:eventId/contents/:contentId/preview`
-      );
+      navigate(`/dashboard/calendar/events/${eventId}/contents/${id}/preview`);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await deleteData({ eventId, contentId: id });
+      if (res?.data) {
+        toast.success("Content Deleted Successfully");
+        setDeleteModal(false);
+      }
+      if (res?.error) {
+        toast.error(res?.error?.data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.data?.message);
     }
   };
 
@@ -44,7 +62,7 @@ const EventContentCard = ({ title, description, image }) => {
         sx={{
           objectFit: "cover",
           width: { xs: "100%", sm: "300px" },
-          height: { xs: "170px", sm: "auto" },
+          height: { xs: "170px", sm: "146px" },
           borderRadius: "11.88px",
         }}
       />
@@ -91,7 +109,7 @@ const EventContentCard = ({ title, description, image }) => {
         >
           <IconButton
             size="small"
-            onClick={() => handleClick(1, "edit")}
+            onClick={() => handleClick(id, "edit")}
             sx={{
               width: "40px",
               height: "32px",
@@ -107,7 +125,7 @@ const EventContentCard = ({ title, description, image }) => {
 
           <IconButton
             size="small"
-            onClick={() => handleClick(1, "delete")}
+            onClick={() => setDeleteModal(id)}
             sx={{
               width: "40px",
               height: "32px",
@@ -121,7 +139,7 @@ const EventContentCard = ({ title, description, image }) => {
 
           <IconButton
             size="small"
-            onClick={() => handleClick(1, "view")}
+            onClick={() => handleClick(id, "view")}
             sx={{
               width: "40px",
               height: "32px",
@@ -136,6 +154,16 @@ const EventContentCard = ({ title, description, image }) => {
           </IconButton>
         </Box>
       </CardContent>
+      <ConfirmModal
+        open={deleteModal}
+        handleClose={() => setDeleteModal(false)}
+        description="Are you sure you want to delete?"
+        handleCancel={() => setDeleteModal(false)}
+        handleAccept={handleDelete}
+        loading={isLoading}
+        heading="Delete Content"
+        button2Text="Delete"
+      />
     </Card>
   );
 };

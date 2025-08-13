@@ -10,6 +10,7 @@ const PopperCard = forwardRef(function PopperCard(
 ) {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  console.log(eventId);
 
   const handleNavigate = (path) => {
     onClose();
@@ -82,7 +83,7 @@ const PopperCard = forwardRef(function PopperCard(
                 sx={{ cursor: "pointer" }}
                 onClick={() =>
                   handleNavigate(
-                    "/dashboard/calendar/events/:eventId/contents/add"
+                    `/dashboard/calendar/events/${eventId}/contents/add`
                   )
                 }
               >

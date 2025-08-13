@@ -1,14 +1,91 @@
-import { Box } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import FormHeader from "../forms/FormHeader";
 import { useLocation, useParams } from "react-router-dom";
 import AllEventsCard from "../AllEventsCard";
 import ContentPreview from "../ContentPreview";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  useGetAllContentQuery,
+  useGetSingleContentQuery,
+} from "../../services/content";
+import dayjs from "dayjs";
+
+const contentTypeOptions = {
+  "Press Release": "press_release",
+  "Instagram Post": "instagram_post",
+  "Facebook Post": "facebook_post",
+  "Newsletter Inclusion": "newsletter",
+  Summary: "summary",
+};
 
 const EventContents = () => {
   const { eventId, contentId } = useParams();
   const location = useLocation();
+  const [events, setEvents] = useState([]);
+  const [previewData, setPreviewData] = useState({});
 
   const isPreview = location.pathname.includes("/preview");
+
+  const { data, isLoading, isError, error, is } = useGetAllContentQuery(
+    { eventId },
+    { skip: isPreview }
+  );
+
+  const {
+    data: viewContentData,
+    isLoading: viewContentLoading,
+    isSuccess: viewContentSuccess,
+    isFetching,
+  } = useGetSingleContentQuery(
+    { eventId, contentId },
+    { skip: !isPreview, refetchOnMountOrArgChange: true }
+  );
+
+  useEffect(() => {
+    if (data) {
+      const myEvents = data?.map((item) => {
+        const title = item?.content_type;
+        const key = Object.keys(contentTypeOptions).find(
+          (k) => contentTypeOptions[k] === title
+        );
+        return {
+          title: key,
+          description: item?.text_content,
+          image: item?.attachment,
+          id: item?.id,
+        };
+      });
+      setEvents(myEvents);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (viewContentData && viewContentSuccess) {
+      const body = {
+        title: viewContentData?.content_type,
+        date: dayjs(viewContentData?.updated_at).format("YYYY-MM-DD"),
+        image: viewContentData?.attachment,
+        description: viewContentData?.text_content,
+        recipients: viewContentData?.content_recipients?.map(
+          (item) => item?.recipient
+        ),
+        contentType: viewContentData?.content_type,
+      };
+      setPreviewData(body);
+    }
+  }, [viewContentData, viewContentSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+      return;
+    }
+  }, [isError, error]);
+
+  if (isLoading || viewContentLoading || isFetching) {
+    return <LinearProgress />;
+  }
 
   return (
     <Box>
@@ -16,12 +93,15 @@ const EventContents = () => {
 
       {isPreview ? (
         <ContentPreview
-          title="Docusaurus: The Modern Framework for Building Documentation That Doesn’t Suck"
-          date="2025-06-25"
-          description="Docusaurus is a modern static site generator (SSG) built by Meta to help developers quickly create beautiful, versioned documentation websites..."
+          title={previewData?.title}
+          date={previewData?.date}
+          description={previewData?.description}
+          image={previewData?.image}
+          recipients={previewData?.recipients}
+          contentType={previewData?.contentType}
         />
       ) : (
-        <AllEventsCard />
+        <AllEventsCard data={events} isLoading={isLoading} />
       )}
     </Box>
   );

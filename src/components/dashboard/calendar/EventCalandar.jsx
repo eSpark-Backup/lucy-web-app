@@ -34,6 +34,7 @@ const EventCalendar = ({ events }) => {
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [timeZone, setTimeZone] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [activeId, setActiveId] = useState("");
 
   const calendarWrapperRef = useRef(null);
 
@@ -172,6 +173,10 @@ const EventCalendar = ({ events }) => {
           info.el.addEventListener("mouseleave", () => {
             info.el.style.opacity = "0.7";
           });
+          // info.el.addEventListener("contextmenu", (e) => {
+          //   e.preventDefault();
+          //   console.log("RIGHT BUTTON CLICKED");
+          // });
         }}
         datesSet={() => {
           const titleElement = document.querySelector(".fc-toolbar-title");
@@ -189,25 +194,31 @@ const EventCalendar = ({ events }) => {
         }}
         views={{
           timeGridWeek: {
-            allDaySlot: false,
+            allDaySlot: true,
             dayHeaderContent: weekDayHeaderContent,
           },
           timeGridDay: {
-            allDaySlot: false,
+            allDaySlot: true,
             dayHeaderContent: dayHeaderContent,
           },
         }}
         events={events}
         editable={false}
-        selectable={true}
-        select={(info) => {
+        selectable={false}
+        dateClick={(info) => {
+          const today = dayjs().startOf("day");
+          const clickedDate = dayjs(info.dateStr);
+          if (clickedDate.isBefore(today)) {
+            return;
+          }
           setPopupType("date");
-          setPopupAnchor(null); // No popper anchor
-          setOpenModal(true); // Show modal
+          setPopupAnchor(null);
+          setOpenModal(info.dateStr);
         }}
         eventClick={(info) => {
           setPopupType("event");
           setPopupAnchor(info.jsEvent.target);
+          setActiveId(info.event.id);
         }}
         eventClassNames={(arg) => getEventClassNames(arg.event)}
         viewDidMount={handleViewDidMount}
@@ -221,12 +232,7 @@ const EventCalendar = ({ events }) => {
         type={popupType}
         anchorEl={popupAnchor}
         onClose={() => setPopupAnchor(null)}
-        eventId={
-          popupType === "event" && popupAnchor
-            ? events.find((event) => event.title === popupAnchor.textContent)
-                ?.id
-            : null
-        }
+        eventId={activeId}
       />
       <ModalCard openModal={openModal} setOpenModal={setOpenModal} />
     </Box>

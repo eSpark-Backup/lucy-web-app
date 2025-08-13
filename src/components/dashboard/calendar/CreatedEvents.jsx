@@ -14,38 +14,14 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
 
-// Helpers
-const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString("en-GB");
-const formatTime = (dateStr) =>
-  new Date(dateStr).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-const calculateDuration = (start, end) => {
-  const diffMs = new Date(end) - new Date(start);
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-  const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-  return `${diffHours} ${diffHours > 1 ? "hours" : "hour"} ${diffMinutes} min `;
-};
-
 export default function CreatedEvents({ events }) {
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  console.log(events);
 
-  const processedEvents = events.map((event) => ({
-    ...event,
-    startDate: formatDate(event.start),
-    startTime: formatTime(event.start),
-    endDate: formatDate(event.end),
-    endTime: formatTime(event.end),
-    duration: calculateDuration(event.start, event.end),
-    more: event.attendees?.length > 3 ? `+${event.attendees?.length - 3}` : "",
-  }));
-
-  const visibleEvents = showAll ? processedEvents : processedEvents.slice(0, 3);
+  const visibleEvents = showAll ? events : events.slice(0, 4);
 
   return (
     <Paper
@@ -113,154 +89,132 @@ export default function CreatedEvents({ events }) {
         my={1}
         spacing={3}
         minWidth={{ xs: 200, md: 286 }}
-        maxHeight={showAll ? "100%" : 452}
+        maxHeight={452}
         overflow="auto"
         sx={{
           p: isMobile ? 2 : 3,
         }}
       >
-        {visibleEvents.map((event, index) => (
-          <Box key={index}>
-            <Stack
-              direction={isMobile ? "column" : "row"}
-              spacing={1.8}
-              alignItems={"start"}
-              sx={{
-                pb: { xs: 2, md: 3 },
-                borderBottom: "0.3px solid rgba(185, 185, 185, 0.2)",
-              }}
-            >
-              <Link
-                to={`/dashboard/calendar/events/${event.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+        {visibleEvents?.length > 0 ? (
+          visibleEvents?.map((event, index) => (
+            <Box key={index}>
+              <Stack
+                direction={isMobile ? "column" : "row"}
+                spacing={1}
+                alignItems={"start"}
               >
                 <Avatar
-                  src={event.attendees?.[0]}
-                  sx={{ width: isMobile ? 32 : 38, height: isMobile ? 32 : 38 }}
+                  src={event.image}
+                  sx={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40 }}
                 />
-              </Link>
-              <Box>
-                <Link
-                  to={`/dashboard/calendar/events/${event.id}`}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontWeight: 500,
-                      fontFamily: "Poppins",
-                      color: "#202224",
-                      mb: 0.5,
-                    }}
+                <Box>
+                  <Link
+                    to={`/dashboard/calendar/events/${event.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    {event.title}
-                  </Typography>
-                </Link>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "Poppins",
-                    color: "#202224",
-                    opacity: "60%",
-                    mb: 0.5,
-                  }}
-                >
-                  Date:{" "}
-                  {event.startDate === event.endDate
-                    ? event.startDate
-                    : `${event.startDate} - ${event.endDate}`}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "Poppins",
-                    color: "#202224",
-                    opacity: "60%",
-                    mb: 0.5,
-                  }}
-                >
-                  Time: {event.startTime} - {event.endTime}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "Poppins",
-                    color: "#202224",
-                    opacity: "60%",
-                    mb: 0.5,
-                  }}
-                >
-                  Duration: {event.duration}
-                </Typography>
-                <Stack direction="row" alignItems="center" spacing={0.5} mt={1}>
-                  <AvatarGroup
-                    max={3}
-                    sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
-                  >
-                    {event.attendees.slice(0, 3)?.map((src, idx) => (
-                      <Link to={`/members${src.split(".")[0]}`}>
-                        <Avatar
-                          key={idx}
-                          src={src}
-                          sx={{
-                            "&:hover": {
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
-                      </Link>
-                    ))}
-                  </AvatarGroup>
-                  {event.more && (
-                    <Avatar
-                      sx={{
-                        width: 24,
-                        height: 24,
-                        bgcolor: "#DFE9FF5E",
-                        fontSize: "0.75rem",
-                        border: " 1px solid #4880FF",
-                        color: "#4880FF",
-                      }}
+                    <Typography
+                      fontWeight={600}
+                      fontSize={isMobile ? "0.9rem" : "1rem"}
                     >
-                      {event.more}
-                    </Avatar>
-                  )}
-                </Stack>
-              </Box>
-            </Stack>
-          </Box>
-        ))}
+                      {event.title}
+                    </Typography>
+                  </Link>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    Date: {event.date}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    display="block"
+                  >
+                    Duration: {event.duration}
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={0.5}
+                    mt={1}
+                  >
+                    <AvatarGroup
+                      max={3}
+                      sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
+                    >
+                      {event.attendees.slice(0, 3)?.map((src, idx) => (
+                        <Link to={`/members${src.split(".")[0]}`}>
+                          <Avatar
+                            key={idx}
+                            src={src}
+                            sx={{
+                              "&:hover": {
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </Link>
+                      ))}
+                    </AvatarGroup>
+                    {event.more && (
+                      <Avatar
+                        sx={{
+                          width: 24,
+                          height: 24,
+                          bgcolor: "#DFE9FF5E",
+                          fontSize: "0.75rem",
+                          border: " 1px solid #4880FF",
+                          color: "#4880FF",
+                        }}
+                      >
+                        {event.more}
+                      </Avatar>
+                    )}
+                  </Stack>
+                </Box>
+              </Stack>
+            </Box>
+          ))
+        ) : (
+          <Typography textAlign="center">No Events Available</Typography>
+        )}
       </Stack>
-      <Box
-        my={2}
-        textAlign="center"
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
-        <Button
-          onClick={() => setShowAll(!showAll)}
+      {events?.length > 4 && (
+        <Box
+          textAlign="center"
           sx={{
-            width: 126,
-            height: 38,
-            borderRadius: "12px",
-            fontFamily: "Nunito Sans",
-            background: "#E2EAF8",
-            opacity: "70%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
+          my={3}
         >
-          <Typography
-            variant="h6"
+          <Button
+            // variant="primary"
+            onClick={() => setShowAll(!showAll)}
             sx={{
-              fontWeight: 700,
-              fontFamily: "Nunito Sans",
+              width: 126,
+              height: 38,
+              borderRadius: "12px",
+              border: "2px solid #E2EAF8",
               color: "#202224",
+              fontFamily: "Nunito Sans",
+              fontWeight: 700,
+              fontSize: "14px",
+              lineHeight: "28px",
+              background: "#E2EAF8",
+              opacity: 0.7,
             }}
           >
-            {showAll
-              ? "Show Less"
-              : `Show More (${events.length - visibleEvents.length})`}
-          </Typography>
-        </Button>
-      </Box>
+            <Typography fontWeight="bold">
+              {showAll
+                ? "Show Less"
+                : `Show More (${events.length - visibleEvents.length})`}
+            </Typography>
+          </Button>
+        </Box>
+      )}
     </Paper>
   );
 }

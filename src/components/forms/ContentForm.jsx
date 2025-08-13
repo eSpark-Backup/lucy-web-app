@@ -12,6 +12,7 @@ import {
   ClickAwayListener,
   IconButton,
   Box,
+  LinearProgress,
   ImageListItem,
   ImageList,
   useTheme,
@@ -22,20 +23,40 @@ import { CONTENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { contentFormSchema } from "../../schemas/content";
 import ImageUploader from "../ImageUploader";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EmailsInput from "../EmailsInput";
+import {
+  useAddContentMutation,
+  useGetAllRecipientsQuery,
+  useUpdateContentMutation,
+} from "../../services/content";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAddImageMutation } from "../../services/image";
+import { useGetEventByIdQuery } from "../../services/event";
+import { useAiContentMutation } from "../../services/ai";
+import AiGenerate from "../modals/AiGenerate";
 
 const initialEventData = {
-  content_type: "",
+  content_type: "Press Release",
   description: "",
   image: null,
   post_method: "",
   recipients: [],
 };
 
+const contentTypeOptions = {
+  "Press Release": "press_release",
+  "Instagram Post": "instagram_post",
+  "Facebook Post": "facebook_post",
+  "Newsletter Inclusion": "newsletter",
+  Summary: "summary",
+};
+
 const ContentForm = ({
-  isEdit = false,
+  // isEdit = false,
   data = initialEventData,
+  contentId,
   onSubmit = () => {},
 }) => {
   const {
@@ -60,14 +81,47 @@ const ContentForm = ({
   } = ContentFormStyles;
 
   const inputRef = useRef(null);
-  const [image, setImage] = useState(null);
-  const [emails, setEmails] = useState([]);
+  const [image, setImage] = useState(data?.image);
+  const [emails, setEmails] = useState(data?.recipients);
+  const [aiModalOpen, setAiModalOpen] = useState(false);
+  const [suggestedEmails, setSuggestedEmails] = useState([]);
 
   // Pexels search
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showPopper, setShowPopper] = useState(false);
+  const [contentData, { isLoading }] = useAddContentMutation();
+  const [editContent, { isLoading: editLoading }] = useUpdateContentMutation();
+  const [eventName, setEventName] = useState("");
+  const [aiContent, setAiContent] = useState("");
+  const navigate = useNavigate();
+
+  const { eventId } = useParams();
+
+  const {
+    data: eventData,
+    isLoading: eventLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetEventByIdQuery(eventId, {
+    skip: !eventId,
+    refetchOnMountOrArgChange: true,
+  });
+
+  const [aiPayload, { isLoading: aiLoading }] = useAiContentMutation();
+  const {
+    data: recipientsData,
+    isLoading: recipientsLoading,
+    isSuccess: recipientsSuccess,
+  } = useGetAllRecipientsQuery({}, { refetchOnMountOrArgChange: true });
+
+  useEffect(() => {
+    if (eventData && eventData?.name) {
+      setEventName(eventData?.name);
+    }
+  }, [eventData, isSuccess]);
   const [hasSearched, setHasSearched] = useState(false);
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm")); // <600px
@@ -99,14 +153,127 @@ const ContentForm = ({
     initialValues: data,
     validationSchema: contentFormSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log(values, "values");
-      resetForm();
-      setImage(null);
-      setEmails([]);
-      if (inputRef?.current) inputRef.current.value = null;
-      onSubmit(values);
+      // console.log(values, "values");
+      const selectedContentType = contentTypeOptions[values?.content_type];
+      let body = {
+        content_type: selectedContentType,
+        content_recipients: emails,
+        post_method: values?.post_method,
+        text_content: values?.description,
+        attachment: values?.image,
+      };
+      if (formik.values.image && typeof formik.values.image !== "string") {
+        const formData = new FormData();
+        formData.append("file", formik.values.image);
+        imageUpload({ body: formData }).then((res) => {
+          if (res?.data) {
+            // formik.setFieldValue("image", res?.data?.filePath);
+            body = { ...body, attachment: res?.data?.filePath };
+          } else if (res?.error) {
+            console.log(res?.error);
+          }
+        });
+      }
+      if (!contentId) {
+        contentData({ body, eventId }).then((res) => {
+          if (res?.data) {
+            toast.success("Content added successfully");
+            navigate(`/dashboard/calendar/events/${eventId}/contents`);
+            return;
+          } else if (res?.error) {
+            toast.error(res?.error?.data?.message);
+            return;
+          }
+        });
+      } else {
+        editContent({ body, eventId, contentId }).then((res) => {
+          if (res?.data) {
+            toast.success("Content updated successfully");
+            navigate(`/dashboard/calendar/events/${eventId}/contents`);
+            return;
+          } else if (res?.error) {
+            toast.error(res?.error?.data?.message);
+            return;
+          }
+        });
+      }
+
+      // resetForm();
+      // setImage(null);
+      // setEmails([]);
+      // if (inputRef?.current) inputRef.current.value = null;
+      // onSubmit(values);
     },
   });
+
+  const [imageUpload, {}] = useAddImageMutation();
+
+  useEffect(() => {
+    if (formik.values.image && typeof formik.values.image !== "string") {
+      const formData = new FormData();
+      formData.append("file", formik.values.image);
+      imageUpload({ body: formData }).then((res) => {
+        if (res?.data) {
+          formik.setFieldValue("image", res?.data?.filePath);
+        } else if (res?.error) {
+          console.log(res?.error);
+        }
+      });
+    }
+  }, [formik.values.image]);
+
+  const handleAiGenerate = async () => {
+    try {
+      const obj = {
+        content_type: contentTypeOptions[formik.values.content_type],
+        event_name: eventName,
+        prompt_text: formik.values.description,
+      };
+
+      // Call the RTK mutation
+      const res = await aiPayload({ body: obj });
+
+      if (res?.data) {
+        // console.log("✅ JSON Response:", res.data);
+        setAiContent(res.data);
+      } else if (res?.error) {
+        if (typeof res.error.data === "string") {
+          // console.log("✅ Text Response:", res.error.data);
+          setAiContent(res?.error?.data);
+        } else {
+          console.error("❌ API Error:", res.error);
+        }
+      }
+    } catch (error) {
+      console.error("CATCH ERROR", error);
+    }
+  };
+
+  useEffect(() => {
+    if (aiContent) {
+      setAiModalOpen(true);
+    }
+  }, [aiContent]);
+
+  const handleKeep = (content) => {
+    formik.setFieldValue("description", content);
+    setAiContent("");
+    setAiModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (recipientsData && recipientsSuccess) {
+      setSuggestedEmails(recipientsData);
+    }
+  }, [recipientsData, recipientsSuccess]);
+
+  useEffect(() => {
+    console.log(emails);
+  }, [emails]);
+
+  if (eventLoading || recipientsLoading) {
+    return <LinearProgress />;
+  }
 
   const handleClosePopper = () => {
     setShowPopper(false);
@@ -203,12 +370,19 @@ const ContentForm = ({
                     setEmails={setEmails}
                     placeholder={placeholder}
                     formik={formik}
+                    data={suggestedEmails}
                   />
                 )}
                 {name === "description" && (
                   <>
                     <Grid size={12} pt={1.5}>
-                      <Button variant="contained" sx={aiButtonStyle}>
+                      <Button
+                        variant="contained"
+                        sx={aiButtonStyle}
+                        onClick={handleAiGenerate}
+                        loading={aiLoading}
+                        disabled={aiLoading}
+                      >
                         <Typography variant="h6" sx={buttonTypoStyle}>
                           {aiButtonText}
                         </Typography>
@@ -472,13 +646,24 @@ const ContentForm = ({
           ))}
         </Grid>
         <Grid size={12} pt={3}>
-          <Button type="submit" variant="contained" sx={buttonStyle}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={buttonStyle}
+            loading={isLoading || editLoading}
+          >
             <Typography variant="h6" sx={buttonTypoStyle}>
-              {isEdit ? "Save" : "Add"}
+              {contentId ? "Save" : "Add"}
             </Typography>
           </Button>
         </Grid>
       </form>
+      <AiGenerate
+        open={aiModalOpen}
+        onClose={() => setAiModalOpen(false)}
+        enhancedContent={aiContent}
+        onKeep={handleKeep}
+      />
     </Paper>
   );
 };

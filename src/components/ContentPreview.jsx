@@ -1,7 +1,42 @@
-import { Box, Typography, Stack } from "@mui/material";
+import { Box, Typography, Stack, Button } from "@mui/material";
 import cardImage from "../assets/images/choose-your-path.svg";
+import { useResendRecipientEmailMutation } from "../services/content";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-const ContentPreview = ({ title, date, image, description }) => {
+const ContentPreview = ({
+  title,
+  date,
+  image,
+  description,
+  recipients,
+  contentType,
+}) => {
+  const [emailData, { isLoading }] = useResendRecipientEmailMutation();
+  const { eventId } = useParams();
+
+  const handleResendEmail = async () => {
+    const body = {
+      content_type: contentType,
+      text_content: description,
+      attachment: image,
+      content_recipients: recipients,
+      post_method: "Email",
+    };
+    try {
+      const res = await emailData({ body, eventId });
+      if (res?.data) {
+        toast.success("Email resent successfully");
+        return;
+      } else if (res?.error) {
+        toast.error(res?.error?.data?.message);
+        return;
+      }
+    } catch (error) {
+      toast.error(error?.data?.message);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -18,9 +53,14 @@ const ContentPreview = ({ title, date, image, description }) => {
       {/* Title */}
       <Typography
         variant="h3"
-        sx={{ fontWeight: 600, fontFamily: "Poppins", lineHeight: 1.3 }}
+        sx={{
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          lineHeight: 1.3,
+          textTransform: "capitalize",
+        }}
       >
-        {title}
+        {title?.replace(/_/g, " ")}
       </Typography>
 
       {/* Date */}
@@ -60,6 +100,15 @@ const ContentPreview = ({ title, date, image, description }) => {
       >
         {description}
       </Typography>
+      <Button
+        sx={{ width: "fit-content", px: "15px" }}
+        variant="primary"
+        onClick={handleResendEmail}
+        loading={isLoading}
+        disabled={isLoading}
+      >
+        Send Email
+      </Button>
     </Box>
   );
 };

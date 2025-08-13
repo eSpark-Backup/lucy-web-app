@@ -25,8 +25,7 @@ export const api = createApi({
     baseUrl,
     prepareHeaders,
   }),
-  tagTypes: ["auth"],
   baseQuery: customBaseQuery,
-  tagTypes: ["auth"],
+  tagTypes: ["auth", "content", "event"],
   endpoints: () => ({}),
 });
