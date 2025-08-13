@@ -81,7 +81,7 @@ function Calendar() {
         <>
           <Box
             display="flex"
-            flexDirection={{ xs: "column", md: "row" }}
+            flexDirection={{ xs: "column", lg: "row" }}
             gap={2}
             className="calendar-grid"
           >
@@ -94,13 +94,14 @@ function Calendar() {
             <Box flex={1} width="100%">
               <Paper
                 sx={{
-                  borderRadius: 4,
                   p: 2,
+                  borderRadius: 4,
                   bgcolor: "white",
                   height: "100%",
                   width: "100%",
                   overflow: "hidden",
-                  boxShadow: "4px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+                  boxShadow: "none",
+                  border: "0.3px solid rgba(185, 185, 185, 0.4)",
                 }}
               >
                 <EventCalandar events={calendarEvents} />
