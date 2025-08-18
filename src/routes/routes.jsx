@@ -21,11 +21,16 @@ import ResetPassword from "../components/auth/ResetPassword";
 import EmailVerification from "../components/auth/EmailVerification";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import CreateEvent from "../components/dashboard/CreateEvent";
+import Subplan from "../components/auth/Subplan";
 
 const routes = [
   {
     path: "/",
     element: <LandingPage />,
+  },
+   {
+    path: "/sub-plan",
+    element: <Subplan />,
   },
   {
     path: "/auth",
