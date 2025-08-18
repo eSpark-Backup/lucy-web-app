@@ -91,18 +91,6 @@ const EventForm = ({
                           : `${index}`
                       }
                       sx={inputStyle(name)}
-                      inputProps={{
-                        sx: {
-                          fontSize: "14px",
-                          fontFamily: "Nunito Sans",
-                          fontWeight: 400,
-                          "&::placeholder": {
-                            fontSize: "14px",
-                            fontFamily: "Nunito Sans",
-                            fontWeight: 400,
-                          },
-                        },
-                      }}
                       error={
                         formik?.touched?.[name] &&
                         Boolean(formik?.errors?.[name])

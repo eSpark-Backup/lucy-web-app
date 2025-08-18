@@ -395,7 +395,7 @@ export const LOGIN = {
     {
       label: "Password",
       type: "password",
-      placeholder: "******",
+      placeholder: "••••••",
       key: "password",
     },
   ],
@@ -442,13 +442,13 @@ export const SIGNIN = {
     {
       label: "Password",
       type: "password",
-      placeholder: "******",
+      placeholder: "••••••",
       key: "password",
     },
     {
       label: "Confirm Password",
       type: "password",
-      placeholder: "******",
+      placeholder: "••••••",
       key: "confirm_password",
     },
   ],
@@ -489,13 +489,13 @@ export const RESETPASSWORD = {
     {
       label: "New password",
       type: "password",
-      placeholder: "******",
+      placeholder: "••••••",
       key: "new_password",
     },
     {
       label: "Confirm password",
       type: "password",
-      placeholder: "******",
+      placeholder: "••••••",
       key: "confirm_password",
     },
   ],

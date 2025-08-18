@@ -44,7 +44,7 @@ const CreateContent = () => {
   }
   return (
     <Box>
-      <FormHeader title={contentId ? "Edit Content" : "Add Content"} />
+      <FormHeader title={contentId ? "Edit Content" : "SEND EMAIL"} />
       <ContentForm
         data={contentId ? editData : undefined}
         contentId={contentId}

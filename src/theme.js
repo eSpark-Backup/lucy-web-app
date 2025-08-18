@@ -140,11 +140,9 @@ let theme = createTheme({
             input: {
               padding: 0,
               height: "100%",
-              fontSize: "18px",
               "&:-webkit-autofill": {
                 WebkitBoxShadow: `0 0 0 1000px #F1F4F9 inset !important`,
                 transition: "background-color 5000s ease-in-out 0s",
-                fontSize: "18px",
               },
             },
           },
@@ -161,11 +159,9 @@ let theme = createTheme({
         input: {
           padding: 0,
           height: "100%",
-          fontSize: "18px",
           "&:-webkit-autofill": {
             WebkitBoxShadow: `0 0 0 1000px ${"#F1F4F9"} inset !important`,
             transition: "background-color 5000s ease-in-out 0s",
-            fontSize: "18px",
           },
         },
       },
