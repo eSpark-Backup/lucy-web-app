@@ -753,13 +753,6 @@ export const SCHOOL_INFORMATION_FORM = {
         size: { xs: 12, lg: 5.5 },
       },
       {
-        label: "School name",
-        placeholder: "Enter your school  name ",
-        type: "text",
-        name: "school_name",
-        size: { xs: 12, lg: 5.5 },
-      },
-      {
         label: "Location",
         placeholder: "Enter your location",
         type: "text",
@@ -780,17 +773,6 @@ export const SCHOOL_INFORMATION_FORM = {
         name: "email",
         size: { xs: 12, lg: 5.5 },
       },
-      // ...(!date
-      //   ? [
-      //       {
-      //         label: "Select Date",
-      //         placeholder: "Enter your Event Date",
-      //         type: "date",
-      //         name: "date",
-      //         size: 12,
-      //       },
-      //     ]
-      //   : []),
       {
         label: "Description",
         placeholder: "Provide some small Description",

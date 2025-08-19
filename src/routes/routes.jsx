@@ -1,4 +1,3 @@
-import PrivateRoute from "./PrivateRoute";
 import AuthLayout from "../components/Layouts/AuthLayout";
 import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
@@ -21,8 +20,9 @@ import EmailVerification from "../components/auth/EmailVerification";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import CreateEvent from "../components/dashboard/CreateEvent";
 import Subplan from "../components/auth/Subplan";
-import AccountForSchool from "../components/auth/Account";
 import SchoolOverview from "../components/dashboard/SchoolOverview";
+import SchoolProfileForm from "../components/forms/SchoolProfileForm";
+import SchoolFormSubmission from "../components/SchoolFormSubmission";
 
 const routes = [
   {
@@ -68,6 +68,14 @@ const routes = [
       },
       { path: "/dashboard/about", element: <About /> },
       { path: "/dashboard/school-overview", element: <SchoolOverview /> },
+      {
+        path: "/dashboard/school-overview/add",
+        element: <SchoolFormSubmission />,
+      },
+      {
+        path: "/dashboard/school-overview/:mode/:schoolId",
+        element: <SchoolFormSubmission />,
+      },
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
       {

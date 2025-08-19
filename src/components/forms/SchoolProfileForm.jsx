@@ -9,8 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { eventValidationSchema } from "../../schemas/event";
-import { EVENTFORM, SCHOOL_INFORMATION_FORM } from "../../constant";
+import { SCHOOL_INFORMATION_FORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import ImageUploader from "../ImageUploader";
 import { useEffect, useRef, useState } from "react";
