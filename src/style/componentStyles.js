@@ -94,6 +94,10 @@ export const componentStyles = {
     "&:hover": {
       backgroundColor: "#3a6edc",
     },
+    "&.Mui-disabled": {
+      color: "#fff",
+      backgroundColor: "#999",
+    },
   },
   authButtonTypoStyle: {
     fontWeight: 500,
@@ -597,8 +601,7 @@ export const componentStyles = {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      px: { xs: 4, md: 5 },
-      py: { xs: 5, sm: 6, md: 8 },
+      p: { xs: 3.5, sm: 4.5 },
       my: { xs: 3, md: 5 },
       overflow: "auto",
     },

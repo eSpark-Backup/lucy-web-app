@@ -408,7 +408,7 @@ export const LOGIN = {
   haveAnAccountText: "Don’t have an account?",
   signUpText: {
     text: "Create Account",
-    link: "/auth/signup",
+    link: "/sub-plan",
   },
 };
 
@@ -528,6 +528,127 @@ export const GOTLOST = {
   buttonText: "Back to Dashboard",
 };
 
+export const ACCOUNT_FOR_SCHOOL = {
+  title: "Create an Account For School",
+  description: "Create a account to continue",
+  fields: [
+    {
+      label: "School Name",
+      type: "text",
+      placeholder: "School name",
+      key: "school_name",
+    },
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      isRow: true,
+      fields: [
+        {
+          label: "Phone Number",
+          type: "number",
+          placeholder: "Phone number",
+          key: "phone_number",
+        },
+        {
+          label: "Location",
+          type: "text",
+          placeholder: "Location",
+          key: "location",
+        },
+      ],
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "confirm_password",
+    },
+  ],
+  checkboxText: "I accept terms and conditions",
+  buttonText: "Sign Up",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Login",
+    link: "/auth/login",
+  },
+};
+
+export const ACCOUNT_FOR_TRUST = {
+  title: "Create an Account For Trust",
+  description: "Create a account to continue",
+  fields: [
+    {
+      label: "Trust Name",
+      type: "text",
+      placeholder: "Trust name",
+      key: "trust_name",
+    },
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      isRow: true,
+      fields: [
+        {
+          label: "Phone Number",
+          type: "number",
+          placeholder: "Phone number",
+          key: "phone_number",
+        },
+        {
+          label: "Location",
+          type: "text",
+          placeholder: "Location",
+          key: "location",
+        },
+      ],
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "confirm_password",
+    },
+    {
+      label: "Add A school",
+      type: "select",
+      placeholder: "Add a school",
+      key: "school_count",
+      options: [
+        { value: "1", label: "1" },
+        { value: "2", label: "2" },
+        { value: "3", label: "3" },
+      ],
+    },
+  ],
+  checkboxText: "I accept terms and conditions",
+  buttonText: "Sign Up",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Login",
+    link: "/auth/login",
+  },
+};
+
 export const SIDEBAR = {
   sidebarLink: [
     {
@@ -543,6 +664,11 @@ export const SIDEBAR = {
     {
       text: "About",
       link: "/dashboard/about",
+      icon: about,
+    },
+    {
+      text: "School Overview",
+      link: "/dashboard/school-overview",
       icon: about,
     },
   ],
@@ -605,6 +731,66 @@ export const EVENTFORM = {
         name: "image",
         size: 12,
       },
+      {
+        label: "Description",
+        placeholder: "Provide some small Description",
+        type: "text",
+        name: "description",
+        size: 12,
+      },
+    ];
+  },
+};
+
+export const SCHOOL_INFORMATION_FORM = {
+  fields: (date) => {
+    return [
+      {
+        label: "School name",
+        placeholder: "Enter your school  name ",
+        type: "text",
+        name: "school_name",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "School name",
+        placeholder: "Enter your school  name ",
+        type: "text",
+        name: "school_name",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Location",
+        placeholder: "Enter your location",
+        type: "text",
+        name: "location",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Phone Number",
+        placeholder: "Enter your phone number",
+        type: "number",
+        name: "phone_number",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "E-mail address",
+        placeholder: "school@gmail.com",
+        type: "email",
+        name: "email",
+        size: { xs: 12, lg: 5.5 },
+      },
+      // ...(!date
+      //   ? [
+      //       {
+      //         label: "Select Date",
+      //         placeholder: "Enter your Event Date",
+      //         type: "date",
+      //         name: "date",
+      //         size: 12,
+      //       },
+      //     ]
+      //   : []),
       {
         label: "Description",
         placeholder: "Provide some small Description",
@@ -711,7 +897,7 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
       description:
         "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
       buttonText: "Choose plan",
-      buttonLink: "for-school",
+      buttonLink: "/auth/signup/user",
     },
     {
       title: "Basic",
@@ -721,7 +907,7 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
       description:
         "Every school within the trust gets one login. This discounted rate is available only if all schools in the trust sign up.",
       buttonText: "Choose plan",
-      buttonLink: "for-trust",
+      buttonLink: "/auth/signup/trust",
     },
   ],
 };

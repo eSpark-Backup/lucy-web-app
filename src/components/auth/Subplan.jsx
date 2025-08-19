@@ -10,7 +10,7 @@ import {
 import { componentStyles } from "../../style/componentStyles";
 import bgImage from "../../assets/images/sub-plan.png";
 import { GLOBAL_SUBSCRIPTION_PLAN_DATA } from "../../constant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Subplan = () => {
@@ -37,13 +37,22 @@ const Subplan = () => {
     price,
   } = subscriptionPlanScreenStyles || {};
 
+  const navigate = useNavigate();
+
+  const handleClick = (link) => {
+    navigate(`${link}`);
+  };
+
   return (
     <Box sx={containerBoxStyle(bgImage)}>
       <Box sx={innerBoxStyle}>
         <Stack width={"100%"}>
           <Stack alignSelf={"flex-end"} px={2}>
             <Typography variant="h4" sx={skipLinkStyle}>
-              <Link style={{ textDecoration: "none", color: "#5088FF" }}>
+              <Link
+                to={"/auth/login"}
+                style={{ textDecoration: "none", color: "#5088FF" }}
+              >
                 {skipText}
               </Link>
             </Typography>
@@ -97,7 +106,11 @@ const Subplan = () => {
                   <Divider sx={{ mt: "auto" }} />
                 </CardContent>
                 <Box sx={buttonWrapper}>
-                  <Button variant="outlined" sx={buttonStyle}>
+                  <Button
+                    variant="outlined"
+                    sx={buttonStyle}
+                    onClick={() => handleClick(plan?.buttonLink)}
+                  >
                     <Typography variant="body1" sx={buttonText}>
                       {plan?.buttonText}
                     </Typography>

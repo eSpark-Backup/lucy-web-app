@@ -13,7 +13,6 @@ import NotFound from "../components/NotFound";
 import Profile from "../components/dashboard/Profile";
 import SubscriptionCard from "../components/dashboard/Subscription";
 import CreateContent from "../components/dashboard/CreateContent";
-import EventDetails from "../components/dashboard/EventDetails";
 import EventList from "../components/dashboard/EventList";
 import EventContents from "../components/dashboard/EventContents";
 import { Navigate } from "react-router-dom";
@@ -22,13 +21,15 @@ import EmailVerification from "../components/auth/EmailVerification";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import CreateEvent from "../components/dashboard/CreateEvent";
 import Subplan from "../components/auth/Subplan";
+import AccountForSchool from "../components/auth/Account";
+import SchoolOverview from "../components/dashboard/SchoolOverview";
 
 const routes = [
   {
     path: "/",
     element: <LandingPage />,
   },
-   {
+  {
     path: "/sub-plan",
     element: <Subplan />,
   },
@@ -42,7 +43,7 @@ const routes = [
     children: [
       { index: true, element: <Navigate to="/auth/login" replace /> },
       { path: "login", element: <Login /> },
-      { path: "signup", element: <Signup /> },
+      { path: "signup/:role", element: <Signup /> },
       { path: "forget", element: <Forgot /> },
       { path: "reset-password", element: <ResetPassword /> },
       { path: "verify-email", element: <EmailVerification /> },
@@ -52,9 +53,9 @@ const routes = [
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
+      // <PrivateRoute>
+      <DashboardLayout />
+      // </PrivateRoute>
     ),
     children: [
       { path: "/dashboard", element: <Dashboard /> },
@@ -66,10 +67,9 @@ const routes = [
         element: <EventList />,
       },
       { path: "/dashboard/about", element: <About /> },
+      { path: "/dashboard/school-overview", element: <SchoolOverview /> },
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
-
-      // new added
       {
         path: "/dashboard/calendar/events/:eventId/contents",
         element: <EventContents />,
