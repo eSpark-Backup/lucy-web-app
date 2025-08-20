@@ -3,7 +3,6 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import cardImage from "../assets/images/choose-your-path.svg";
@@ -26,11 +25,6 @@ export default function RecipeReviewCard() {
       }}
     >
       <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            {/* <MoreVertIcon /> */}
-          </IconButton>
-        }
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
         titleTypographyProps={{

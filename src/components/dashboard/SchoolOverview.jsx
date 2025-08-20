@@ -1,52 +1,41 @@
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
-import FormHeader from "../forms/FormHeader";
-import SchoolInformationForm from "../forms/SchoolProfileForm";
-import EventContentCard from "../EventContentCard";
-import RecipeReviewCard from "../SchoolProfileCard";
 import { useNavigate } from "react-router-dom";
+import SchoolIcon from "@mui/icons-material/School";
+
+import FormHeader from "../forms/FormHeader";
+import RecipeReviewCard from "../SchoolProfileCard";
+import { componentStyles } from "../../style/componentStyles";
+
+const TEXT = {
+  title: "School Profiles",
+  addButton: "Add",
+};
 
 const SchoolOverview = () => {
+  const { schoolOverviewScreenStyles } = componentStyles || {};
+  const { addButton, addButtonText } = schoolOverviewScreenStyles || {};
   const navigate = useNavigate();
 
   return (
     <Box>
-      <FormHeader title={"School Profiles"} />
-      {/* <SchoolInformationForm /> */}
-      <Stack py={3}>
+      <FormHeader title={TEXT.title} />
+
+      <Stack pb={3}>
         <Button
-          // loading={isLoading}
-          // disabled={isLoading}
           onClick={() => navigate("/dashboard/school-overview/add")}
+          endIcon={<SchoolIcon />}
           fullWidth
-          sx={{
-            color: "#fff",
-            maxWidth: "165px",
-            height: { xs: "46px" },
-            borderRadius: "8px",
-            backgroundColor: "#4880FF",
-            "&:hover": {
-              backgroundColor: "#3a6edc",
-            },
-            "&.Mui-disabled": {
-              color: "#fff",
-              backgroundColor: "#999",
-            },
-          }}
+          sx={addButton}
         >
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 500,
-              fontFamily: "Nunito Sans",
-            }}
-          >
-            {"Add school"}
+          <Typography variant="h5" sx={addButtonText}>
+            {TEXT.addButton}
           </Typography>
         </Button>
       </Stack>
-      <Grid container columnGap={3} rowGap={4}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]?.map((item, index) => (
-          <Grid size={{ xs: 12, sm: "auto" }} key={index}>
+
+      <Grid container spacing={3}>
+        {Array?.from({ length: 12 })?.map((_, index) => (
+          <Grid item xs={12} sm="auto" key={index}>
             <RecipeReviewCard />
           </Grid>
         ))}

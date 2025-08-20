@@ -165,8 +165,8 @@ export const componentStyles = {
     buttonStyle: {
       ml: "auto",
       color: "#fff",
-      maxWidth: "274px",
-      height: { xs: "46px", md: "56px" },
+      maxWidth: { xs: "100%", sm: "274px" },
+      height: { xs: "42px", md: "52px", lg: "56px" },
       borderRadius: "12px",
       backgroundColor: "#4880FF",
       opacity: "90%",
@@ -1046,6 +1046,28 @@ export const componentStyles = {
       color: "#4880FF",
       fontFamily: "Nunito Sans",
       fontWeight: 700,
+    },
+  },
+
+  // School overview screen components styles
+  schoolOverviewScreenStyles: {
+    addButton: {
+      color: "#fff",
+      maxWidth: { xs: "100%", sm: "132px" },
+      height: { xs: "42px", md: "46px" },
+      borderRadius: "8px",
+      backgroundColor: "#4880FF",
+      "&:hover": {
+        backgroundColor: "#3a6edc",
+      },
+      "&.Mui-disabled": {
+        color: "#fff",
+        backgroundColor: "#999",
+      },
+    },
+    addButtonText: {
+      fontWeight: 500,
+      fontFamily: "Nunito Sans",
     },
   },
 };

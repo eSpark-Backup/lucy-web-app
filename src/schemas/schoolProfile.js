@@ -10,11 +10,11 @@ export const schoolProfileValidationSchema = Yup.object().shape({
     .required("Location is required")
     .max(30, "Maximum 30 characters allowed"),
 
-  phone_number: Yup.number()
+  phone_number: Yup.string()
     .required("Phone number is required")
-    .typeError("Must be a number")
-    .positive("Must be greater than zero")
-    .integer("Must be a whole number"),
+    .matches(/^[0-9]+$/, "Must contain only digits")
+    .min(7, "Must be at least 7 digits")
+    .max(15, "Must be at most 15 digits"),
 
   email: Yup.string()
     .email("Invalid email address")

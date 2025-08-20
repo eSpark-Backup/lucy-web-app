@@ -69,7 +69,7 @@ const routes = [
       { path: "/dashboard/about", element: <About /> },
       { path: "/dashboard/school-overview", element: <SchoolOverview /> },
       {
-        path: "/dashboard/school-overview/add",
+        path: "/dashboard/school-overview/:mode",
         element: <SchoolFormSubmission />,
       },
       {

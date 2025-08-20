@@ -762,7 +762,7 @@ export const SCHOOL_INFORMATION_FORM = {
       {
         label: "Phone Number",
         placeholder: "Enter your phone number",
-        type: "number",
+        type: "text",
         name: "phone_number",
         size: { xs: 12, lg: 5.5 },
       },
@@ -892,4 +892,10 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
       buttonLink: "/auth/signup/trust",
     },
   ],
+};
+
+export const SCHOOL_FORM_SUBMISSION_TITLES = {
+  edit: "Edit School Information",
+  preview: "School Information",
+  add: "Add School",
 };

@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { DatePicker } from "@mui/lab";
 import {
   Button,
@@ -9,10 +9,10 @@ import {
   Stack,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { useEffect, useRef, useState } from "react";
 import { SCHOOL_INFORMATION_FORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import ImageUploader from "../ImageUploader";
-import { useEffect, useRef, useState } from "react";
 import { schoolProfileValidationSchema } from "../../schemas/schoolProfile";
 
 const initialEventData = {
@@ -24,20 +24,21 @@ const initialEventData = {
 };
 
 const SchoolProfileForm = ({
-  isEdit = false,
+  id = null,
+  mode = "add", // "add" | "edit" | "preview"
   data = initialEventData,
   isLoading,
   onSubmit = () => {},
 }) => {
-  const navigate = useNavigate();
   const [search] = useSearchParams();
   const date = search.get("date") || null;
   const inputRef = useRef(null);
   const [image, setImage] = useState(data?.image);
-  const { id } = useParams();
+
   useEffect(() => {
     setImage(data?.image);
   }, [data]);
+
   const { fields } = SCHOOL_INFORMATION_FORM || {};
   const { EventFormStyles } = componentStyles || {};
   const {
@@ -62,6 +63,10 @@ const SchoolProfileForm = ({
     },
   });
 
+  const isPreview = mode === "preview";
+  const isEdit = mode === "edit";
+  const isAdd = mode === "add";
+
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
@@ -74,45 +79,49 @@ const SchoolProfileForm = ({
                     {label}
                   </Typography>
                   {name !== "image" ? (
-                    <TextField
-                      fullWidth
-                      name={name}
-                      type={type}
-                      placeholder={placeholder}
-                      value={formik?.values?.[name]}
-                      onChange={formik?.handleChange}
-                      onBlur={formik?.handleBlur}
-                      multiline={name === "description"}
-                      rows={name === "description" ? 4 : 0}
-                      id={
-                        name === "description"
-                          ? "outlined-multiline-static"
-                          : `${index}`
-                      }
-                      sx={inputStyle(name)}
-                      error={
-                        formik?.touched?.[name] &&
-                        Boolean(formik?.errors?.[name])
-                      }
-                      helperText={
-                        formik?.touched?.[name] && formik?.errors?.[name]
-                      }
-                    />
-                  ) : name === "date" ? (
-                    <DatePicker
-                      label="Basic date picker"
-                      name={name}
-                      value={formik?.values?.[name]}
-                      onChange={formik?.handleChange}
-                      onBlur={formik?.handleBlur}
-                      error={
-                        formik?.touched?.[name] &&
-                        Boolean(formik?.errors?.[name])
-                      }
-                      helperText={
-                        formik?.touched?.[name] && formik?.errors?.[name]
-                      }
-                    />
+                    name !== "date" ? (
+                      <TextField
+                        fullWidth
+                        name={name}
+                        type={type}
+                        placeholder={placeholder}
+                        value={formik?.values?.[name]}
+                        onChange={formik?.handleChange}
+                        onBlur={formik?.handleBlur}
+                        disabled={isPreview}
+                        multiline={name === "description"}
+                        rows={name === "description" ? 4 : 0}
+                        id={
+                          name === "description"
+                            ? "outlined-multiline-static"
+                            : `${index}`
+                        }
+                        sx={inputStyle(name)}
+                        error={
+                          formik?.touched?.[name] &&
+                          Boolean(formik?.errors?.[name])
+                        }
+                        helperText={
+                          formik?.touched?.[name] && formik?.errors?.[name]
+                        }
+                      />
+                    ) : (
+                      <DatePicker
+                        label="Basic date picker"
+                        name={name}
+                        value={formik?.values?.[name]}
+                        onChange={formik?.handleChange}
+                        onBlur={formik?.handleBlur}
+                        disabled={isPreview}
+                        error={
+                          formik?.touched?.[name] &&
+                          Boolean(formik?.errors?.[name])
+                        }
+                        helperText={
+                          formik?.touched?.[name] && formik?.errors?.[name]
+                        }
+                      />
+                    )
                   ) : (
                     <>
                       <ImageUploader
@@ -120,23 +129,26 @@ const SchoolProfileForm = ({
                         image={image}
                         setImage={setImage}
                         formik={formik}
+                        disabled={isPreview}
                       />
                       {formik?.touched?.image && formik?.errors?.image && (
                         <Typography color="error" fontSize={12} m={"3px 14px"}>
                           {formik?.errors?.image}
                         </Typography>
                       )}
-                      <Stack pt={1}>
-                        <Button
-                          onClick={() => inputRef?.current?.click()}
-                          variant="contained"
-                          sx={uploadButtonStyle}
-                        >
-                          <Typography variant="h6" sx={buttonTypoStyle}>
-                            {"Upload Image"}
-                          </Typography>
-                        </Button>
-                      </Stack>
+                      {!isPreview && (
+                        <Stack pt={1}>
+                          <Button
+                            onClick={() => inputRef?.current?.click()}
+                            variant="contained"
+                            sx={uploadButtonStyle}
+                          >
+                            <Typography variant="h6" sx={buttonTypoStyle}>
+                              {"Upload Image"}
+                            </Typography>
+                          </Button>
+                        </Stack>
+                      )}
                     </>
                   )}
                 </Stack>
@@ -144,7 +156,7 @@ const SchoolProfileForm = ({
             )
           )}
           <Grid size={12} pt={2.5}>
-            {isEdit ? (
+            {isEdit && (
               <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -156,31 +168,26 @@ const SchoolProfileForm = ({
                   disabled={isLoading}
                   type="submit"
                   variant="contained"
-                  sx={{ ...buttonStyle, marginLeft: "0px", width: "191px" }}
-                >
-                  <Typography variant="h5" sx={buttonTypoStyle}>
-                    Edit
-                  </Typography>
-                </Button>
-                <Button
-                  onClick={() =>
-                    navigate(`/dashboard/calendar/events/${id}/contents`)
-                  }
-                  variant="contained"
                   sx={{
                     ...buttonStyle,
                     marginLeft: "0px",
-                    width: "191px",
-                    background: "#9C27B0",
+                    maxWidth: {
+                      xs: "100%",
+                      sm: "152px",
+                      md: "182px",
+                      lg: "191px",
+                    },
                   }}
                 >
                   <Typography variant="h5" sx={buttonTypoStyle}>
-                    See Content
+                    Save
                   </Typography>
                 </Button>
               </Stack>
-            ) : (
+            )}
+            {isAdd && (
               <Button
+                fullWidth
                 loading={isLoading}
                 disabled={isLoading}
                 type="submit"
