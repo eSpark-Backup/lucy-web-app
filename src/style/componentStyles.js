@@ -1070,4 +1070,218 @@ export const componentStyles = {
       fontFamily: "Nunito Sans",
     },
   },
+
+  // Payment Method screen components styles
+  paymentMethodScreenStyles: {
+    mainBoxStyle: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: { xs: "column", sm: "row" },
+      gap: { xs: 2, sm: 0 },
+      p: 2,
+    },
+    paymentSectionStyle: {
+      containerBoxStyle: {
+        width: "100%",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F6F6F6",
+      },
+      paymentBoxStyle: {
+        mx: { xs: "auto", sm: 0 },
+        width: "100%",
+        minHeight: "100%",
+        maxWidth: { sm: "545px", md: "742px" },
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#FFFFFF",
+        borderRadius: { xs: "24px", sm: "24px 0px 0px 24px" },
+        p: { xs: 3, md: 4 },
+      },
+      billingBoxStyle: {
+        width: "100%",
+        borderRadius: "5px",
+        alignItems: "center",
+        p: { xs: 1, md: 1.5 },
+        justifyContent: "space-between",
+        border: "1px solid rgba(151, 151, 151, 0.5)",
+      },
+      billingTextStyle: {
+        fontWeight: 600,
+        fontSize: { xs: "16px", md: "20px" },
+        fontFamily: "Nunito Sans",
+      },
+      switchStyle: {
+        width: { xs: 64, lg: 74 },
+        height: { xs: 28, lg: 38 },
+        padding: 0,
+        "& .MuiSwitch-switchBase": {
+          padding: { xs: 0.4, lg: 0.5 },
+          "&.Mui-checked": {
+            transform: "translateX(34px)",
+            color: "#fff",
+            "& + .MuiSwitch-track": {
+              backgroundColor: "#5088FF",
+              opacity: 1,
+            },
+          },
+        },
+        "& .MuiSwitch-thumb": {
+          width: { xs: 22, lg: 30 },
+          height: { xs: 22, lg: 30 },
+        },
+        "& .MuiSwitch-track": {
+          borderRadius: 20,
+          backgroundColor: "#ccc",
+          opacity: 1,
+        },
+      },
+      paymentTextStyle: { fontWeight: 600, fontFamily: "Nunito Sans" },
+      paymentDescriptionStyle: {
+        fontWeight: 500,
+        color: "#979797",
+        fontFamily: "Nunito Sans",
+      },
+      paymentMethodBoxStyle: (method, item) => ({
+        p: { xs: 1 },
+        px: { xs: 2 },
+        borderRadius: "5px",
+        border:
+          method === item.value
+            ? "1.5px solid #5088FF"
+            : "1px solid rgba(151,151,151,0.5)",
+        backgroundColor:
+          method === item.value ? "rgba(80, 136, 255, 0.22)" : "transparent",
+        transition: "all 0.3s ease",
+      }),
+      radioStyle: {
+        color: "#979797",
+        "&.Mui-checked": { color: "#5088FF" },
+      },
+      radioLabelStyle: {
+        fontWeight: 500,
+        fontSize: { xs: "16px", md: "20px" },
+      },
+      inputStyle: {
+        "& .MuiInputBase-root": {
+          height: { xs: "46px", lg: "56px" },
+          border: "1px solid #D8D8D8",
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          px: "15px",
+        },
+        "& input": {
+          fontSize: "16px",
+          backgroundColor: "#fff",
+          color: "#000",
+          "&::placeholder": {
+            color: "#A6A6A6",
+            opacity: 1,
+          },
+          "&:-webkit-autofill": {
+            WebkitBoxShadow: `0 0 0 1000px #fff inset !important`,
+            transition: "background-color 5000s ease-in-out 0s",
+          },
+        },
+      },
+    },
+    planSectionStyle: {
+      containerBoxStyle: {
+        mx: { xs: "auto", sm: 0 },
+        width: "100%",
+        minHeight: "100%",
+        maxWidth: { sm: "545px" },
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "#5088FF5C",
+        p: { xs: 3, md: 4 },
+        borderRadius: { xs: "24px", sm: "0px 24px 24px 0px" },
+      },
+      planBoxStyle: {
+        width: "100%",
+        borderRadius: "13px",
+        backgroundColor: "#FFFFFF",
+        maxWidth: { sm: "485px" },
+        maxHeight: { sm: "707px" },
+        p: 2.5,
+      },
+      qontoStepIconStyle: (active, completed) => ({
+        width: 25,
+        height: 25,
+        borderRadius: "50%",
+        border: `4px solid ${
+          active && completed
+            ? "rgba(80, 136, 255, 1)"
+            : "rgba(151, 151, 151, 1)"
+        }`,
+      }),
+      planSummaryStyle: {
+        justifyContent: "space-between",
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          gap: 1,
+        },
+      },
+      billingCycleStyle: {
+        justifyContent: "space-between",
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          gap: 1,
+        },
+      },
+      steperLableStyle: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        pr: 1,
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.5,
+        },
+      },
+      stepContentStyle: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        pl: 1.5,
+        pt: 1,
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.5,
+        },
+      },
+      accountSummaryStyle: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        pt: 1,
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.5,
+        },
+      },
+      buttonStyle: {
+        color: "#fff",
+        height: { xs: "46px", md: "56px" },
+        borderRadius: "8px",
+        backgroundColor: "#4880FF",
+        "&:hover": {
+          backgroundColor: "#3a6edc",
+        },
+        "&.Mui-disabled": {
+          color: "#fff",
+          backgroundColor: "#999",
+        },
+      },
+      buttonTypoStyle: {
+        fontWeight: 500,
+        fontFamily: "Nunito Sans",
+      },
+    },
+  },
 };

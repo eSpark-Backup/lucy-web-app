@@ -899,3 +899,124 @@ export const SCHOOL_FORM_SUBMISSION_TITLES = {
   preview: "School Information",
   add: "Add School",
 };
+
+export const PAYMENT_METHOD_DATA = {
+  paymentSection: {
+    yearBillingText: "Save with yearly billing",
+    paymentText: "Payment Method",
+    paymentDescription: "Select your preferred payment method for ShopSwift",
+    paymentOptions: [
+      {
+        title: "Credit or debit card",
+        value: "card",
+        form: [
+          {
+            isRow: true,
+            fields: [
+              {
+                label: "First name",
+                placeholder: "Input first name",
+                name: "first_name",
+                type: "text",
+              },
+              {
+                label: "Last name",
+                placeholder: "Input last name",
+                name: "last_name",
+                type: "text",
+              },
+            ],
+          },
+          {
+            isRow: true,
+            fields: [
+              {
+                label: "Card number",
+                placeholder: "xxxx-xxxx-xxxxx",
+                name: "card_number",
+                type: "text",
+              },
+              {
+                label: "Expires",
+                placeholder: "mm/yy",
+                name: "expires",
+                type: "month",
+              },
+              { label: "CVV", placeholder: "xxx", name: "cvv", type: "number" },
+            ],
+          },
+          {
+            isRow: true,
+            fields: [
+              {
+                label: "Country/region",
+                placeholder: "Indonesia",
+                name: "country",
+                type: "text",
+              },
+              {
+                label: "ZIP Code",
+                placeholder: "Input ZIP Code",
+                name: "zip_code",
+                type: "text",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Paypal",
+        value: "paypal",
+        form: [
+          {
+            label: "Email",
+            placeholder: "Input email",
+            name: "email",
+            type: "email",
+          },
+          {
+            label: "Password",
+            placeholder: "Input password",
+            name: "password",
+            type: "password",
+          },
+        ],
+      },
+    ],
+  },
+  planSection: {
+    planSummary: {
+      title: "Advanced plan",
+      price: "$299.00",
+      billingCycle: "Monthly",
+      offer: "$1 x 2 months",
+    },
+    stepperData: [
+      {
+        date: "Today",
+        title: "Trial",
+        price: "Free",
+      },
+      {
+        date: "March 1, 2024",
+        title: "$1 x 2 months",
+        price: "$1.00",
+        period: "Every 30 days",
+      },
+      {
+        date: "May 1, 2024",
+        title: "Advanced plan",
+        price: "$299.00",
+        period: "Every 30 days",
+      },
+    ],
+    amountSummary: {
+      title: "Amount due",
+      date: "March 1, 2024",
+      text: "Plus applicable taxes",
+      buttonText: "Subscribe",
+      buttonLink: "#",
+      subText: "Change or cancel your plan at any time",
+    },
+  },
+};
