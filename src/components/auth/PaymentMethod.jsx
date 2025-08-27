@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { PAYMENT_METHOD_DATA } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
+import { useNavigate } from "react-router-dom";
 
 const PaymentMethod = () => {
   const [billingYearly, setBillingYearly] = useState(false);
@@ -33,7 +34,7 @@ const PaymentMethod = () => {
   const { paymentMethodScreenStyles } = componentStyles || {};
   const { mainBoxStyle, paymentSectionStyle, planSectionStyle } =
     paymentMethodScreenStyles || {};
-
+  const navigate = useNavigate();
   const initialValues = useMemo(() => {
     let values = { method };
     const currentOption = paymentOptions?.find((opt) => opt?.value === method);
@@ -326,7 +327,10 @@ const PaymentMethod = () => {
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
         console.log("✅ Submitted values:", values);
-        toast.success("Form submitted successfully!");
+        toast.success("Payment add successfully!");
+        setTimeout(() => {
+          navigate("/payment-method/planID");
+        }, 5000);
         resetForm();
       }}
     >

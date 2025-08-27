@@ -31,12 +31,12 @@ const routes = [
     element: <LandingPage />,
   },
   {
-    path: "/sub-plan",
-    element: <Subplan />,
-  },
-  {
     path: "/payment-method",
     element: <PaymentMethod />,
+  },
+  {
+    path: "/payment-method/:planID",
+    element: <Subplan />,
   },
   {
     path: "/auth",

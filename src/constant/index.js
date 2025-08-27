@@ -408,7 +408,7 @@ export const LOGIN = {
   haveAnAccountText: "Don’t have an account?",
   signUpText: {
     text: "Create Account",
-    link: "/sub-plan",
+    link: "/payment-method",
   },
 };
 
