@@ -125,7 +125,7 @@ const Step2 = () => {
     try {
       // const res = await axios.post("https://eduplusemail.esparkconsultants.com/start-survey", data);
       const res = await axios.post(
-        "https://luccy-landing-be.stg.esparkconsultants.com/start-survey",
+        "https://api.edupulse.co.uk/start-survey",
         data
       );
       setIsLoading(false);
