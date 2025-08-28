@@ -17,8 +17,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSignupMutation } from "../../services/auth";
+import { useCreateOrganizationMutation } from "../../services/organization";
+import { addListener } from "@reduxjs/toolkit";
 
-const Account = ({ role, data, styles, schema }) => {
+const Account = ({ is_trust = false, data, styles, schema }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -50,6 +52,8 @@ const Account = ({ role, data, styles, schema }) => {
 
   const navigate = useNavigate();
   const [signup, { isLoading }] = useSignupMutation();
+  const [createOrganization, { isLoading: createLoading }] =
+    useCreateOrganizationMutation();
 
   const initialValues = fields?.reduce((acc, field) => {
     if (field.isRow) {
@@ -61,27 +65,69 @@ const Account = ({ role, data, styles, schema }) => {
     }
     return acc;
   }, {});
-  console.log(initialValues, "initialValues");
+
+  const handleCreateOrganization = (formdata, resetForm, email) => {
+    createOrganization(formdata).then((res) => {
+      if (res?.error) {
+        toast.error(res?.error?.data?.message || "Something went wrong!");
+        return;
+      }
+      if (res?.data) {
+        toast.success(
+          res?.data?.message || "Organization created successfully"
+        );
+        resetForm();
+        navigate(`/auth/email-verification?email=${email}`);
+      }
+    });
+  };
+
   const formik = useFormik({
     initialValues: {
       ...initialValues,
-      ...(role === "Trust" && { school_count: "1" }),
+      ...(is_trust && { selected_school_count: "2" }),
       terms_and_conditions: false,
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
-      const objToSend = { ...values, role: role };
+      const {
+        email,
+        password,
+        first_name,
+        last_name,
+        name,
+        address,
+        phone,
+        selected_school_count,
+      } = values;
+      const objToSend = {
+        email,
+        password,
+        first_name,
+        last_name,
+        phone,
+        role: "User",
+      };
+      const obj_for_organization = {
+        name: name,
+        address,
+        ...(is_trust && {
+          is_trust: true,
+          selected_school_count: selected_school_count,
+        }),
+      };
       signup(objToSend).then((res) => {
         if (
           res?.data &&
           res?.data?.message ===
             "Registration successful! Please check your email to verify your account."
         ) {
-          navigate(`/auth/email-verification?email=${values?.email}`);
+          handleCreateOrganization(obj_for_organization, resetForm, email);
           return;
         }
         if (res?.error) {
           toast.error(res?.error?.data?.message);
+          handleCreateOrganization(obj_for_organization, resetForm, email);
           return;
         }
         resetForm();
@@ -245,8 +291,10 @@ const Account = ({ role, data, styles, schema }) => {
 
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
         <Button
-          loading={isLoading}
-          disabled={isLoading || !formik?.values?.terms_and_conditions}
+          loading={isLoading || createLoading}
+          disabled={
+            isLoading || createLoading || !formik?.values?.terms_and_conditions
+          }
           type="submit"
           fullWidth
           sx={authButtonStyle}

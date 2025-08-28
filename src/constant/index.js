@@ -533,10 +533,27 @@ export const ACCOUNT_FOR_SCHOOL = {
   description: "Create a account to continue",
   fields: [
     {
+      isRow: true,
+      fields: [
+        {
+          label: "First Name",
+          type: "text",
+          placeholder: "Enter first name",
+          key: "first_name",
+        },
+        {
+          label: "Last Name",
+          type: "text",
+          placeholder: "Enter last name",
+          key: "last_name",
+        },
+      ],
+    },
+    {
       label: "School Name",
       type: "text",
       placeholder: "School name",
-      key: "school_name",
+      key: "name",
     },
     {
       label: "Email address:",
@@ -551,13 +568,13 @@ export const ACCOUNT_FOR_SCHOOL = {
           label: "Phone Number",
           type: "number",
           placeholder: "Phone number",
-          key: "phone_number",
+          key: "phone",
         },
         {
           label: "Location",
           type: "text",
           placeholder: "Location",
-          key: "location",
+          key: "address",
         },
       ],
     },
@@ -588,10 +605,27 @@ export const ACCOUNT_FOR_TRUST = {
   description: "Create a account to continue",
   fields: [
     {
+      isRow: true,
+      fields: [
+        {
+          label: "First Name",
+          type: "text",
+          placeholder: "Enter first name",
+          key: "first_name",
+        },
+        {
+          label: "Last Name",
+          type: "text",
+          placeholder: "Enter last name",
+          key: "last_name",
+        },
+      ],
+    },
+    {
       label: "Trust Name",
       type: "text",
       placeholder: "Trust name",
-      key: "trust_name",
+      key: "name",
     },
     {
       label: "Email address:",
@@ -606,13 +640,13 @@ export const ACCOUNT_FOR_TRUST = {
           label: "Phone Number",
           type: "number",
           placeholder: "Phone number",
-          key: "phone_number",
+          key: "phone",
         },
         {
           label: "Location",
           type: "text",
           placeholder: "Location",
-          key: "location",
+          key: "address",
         },
       ],
     },
@@ -629,12 +663,11 @@ export const ACCOUNT_FOR_TRUST = {
       key: "confirm_password",
     },
     {
-      label: "Add A school",
+      label: "Add a school",
       type: "select",
       placeholder: "Add a school",
-      key: "school_count",
+      key: "selected_school_count",
       options: [
-        { value: "1", label: "1" },
         { value: "2", label: "2" },
         { value: "3", label: "3" },
       ],

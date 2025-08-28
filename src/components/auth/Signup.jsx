@@ -14,7 +14,6 @@ const Signup = () => {
     <Box>
       {role === "user" && (
         <Account
-          role="User"
           data={ACCOUNT_FOR_SCHOOL}
           styles={componentStyles}
           schema={accountForSchoolSchema}
@@ -22,10 +21,10 @@ const Signup = () => {
       )}
       {role === "trust" && (
         <Account
-          role="Trust"
           data={ACCOUNT_FOR_TRUST}
           styles={componentStyles}
           schema={accountForTrustSchema}
+          is_trust
         />
       )}
     </Box>
