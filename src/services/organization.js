@@ -2,15 +2,15 @@ import { api } from "./rtk";
 
 export const organizationApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    // getMyEvents: builder.query({
-    //   query: (credentials) => ({
-    //     url: "/events/me",
-    //     method: "GET",
-    //     body: credentials,
-    //     credentials: "include",
-    //   }),
-    //   providesTags: ["event"],
-    // }),
+    getMyOrganization: builder.query({
+      query: (credentials) => ({
+        url: "/organizations/me",
+        method: "GET",
+        body: credentials,
+        credentials: "include",
+      }),
+      providesTags: ["organization"],
+    }),
     createOrganization: builder.mutation({
       query: (credentials) => ({
         url: "/organizations/create",
@@ -18,38 +18,10 @@ export const organizationApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["event"],
+      invalidatesTags: ["organization"],
     }),
-    // getEventById: builder.query({
-    //   query: (id) => ({
-    //     url: `/events/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["event"],
-    // }),
-    // editEvent: builder.mutation({
-    //   query: ({ id, credentials }) => ({
-    //     url: `/events/${id}`,
-    //     method: "PUT",
-    //     body: credentials,
-    //     credentials: "include",
-    //   }),
-    //   invalidatesTags: ["event"],
-    // }),
-    // deleteEvent: builder.mutation({
-    //   query: (id) => ({
-    //     url: `/events/${id}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["event"],
-    // }),
   }),
 });
 
-export const {
-  // useGetMyEventsQuery,
-  useCreateOrganizationMutation,
-  // useGetEventByIdQuery,
-  // useEditEventMutation,
-  // useDeleteEventMutation,
-} = organizationApi;
+export const { useGetMyOrganizationQuery, useCreateOrganizationMutation } =
+  organizationApi;

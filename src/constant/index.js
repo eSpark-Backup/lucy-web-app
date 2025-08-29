@@ -667,10 +667,6 @@ export const ACCOUNT_FOR_TRUST = {
       type: "select",
       placeholder: "Add a school",
       key: "selected_school_count",
-      options: [
-        { value: "2", label: "2" },
-        { value: "3", label: "3" },
-      ],
     },
   ],
   checkboxText: "I accept terms and conditions",
@@ -782,21 +778,21 @@ export const SCHOOL_INFORMATION_FORM = {
         label: "School name",
         placeholder: "Enter your school  name ",
         type: "text",
-        name: "school_name",
+        name: "name",
         size: { xs: 12, lg: 5.5 },
       },
       {
         label: "Location",
         placeholder: "Enter your location",
         type: "text",
-        name: "location",
+        name: "address",
         size: { xs: 12, lg: 5.5 },
       },
       {
         label: "Phone Number",
         placeholder: "Enter your phone number",
         type: "text",
-        name: "phone_number",
+        name: "phone",
         size: { xs: 12, lg: 5.5 },
       },
       {
@@ -805,6 +801,12 @@ export const SCHOOL_INFORMATION_FORM = {
         type: "email",
         name: "email",
         size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Upload Image/Avtar",
+        btnText: "Upload Image",
+        name: "image",
+        size: 12,
       },
       {
         label: "Description",

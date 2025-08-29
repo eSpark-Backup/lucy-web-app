@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, LinearProgress, Typography } from "@mui/material";
 import FormHeader from "../forms/FormHeader";
 import EventCard from "../EventCard";
 import { componentStyles } from "../../style/componentStyles";

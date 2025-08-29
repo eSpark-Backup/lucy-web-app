@@ -23,6 +23,10 @@ import { addListener } from "@reduxjs/toolkit";
 const Account = ({ is_trust = false, data, styles, schema }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [options, setOptions] = useState([
+    { value: "2", label: "2" },
+    { value: "3", label: "3" },
+  ]);
 
   const {
     title,
@@ -127,13 +131,17 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         }
         if (res?.error) {
           toast.error(res?.error?.data?.message);
-          handleCreateOrganization(obj_for_organization, resetForm, email);
           return;
         }
         resetForm();
       });
     },
   });
+
+  const handleAddSchool = () => {
+    const nextValue = String(options.length + 2); // next number (start 2 se tha)
+    setOptions([...options, { value: nextValue, label: nextValue }]);
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -189,9 +197,14 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
           );
         }
 
-        const { label, type, placeholder, key, options } = field;
+        const { label, type, placeholder, key } = field;
         return (
-          <Stack width="100%" maxWidth={516} spacing={1} key={index}>
+          <Stack
+            width="100%"
+            maxWidth={516}
+            spacing={type === "select" ? 2 : 1}
+            key={index}
+          >
             <Typography variant="h5" sx={authLableStyle}>
               {label}
             </Typography>
@@ -253,6 +266,22 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
                   </MenuItem>
                 ))}
             </TextField>
+            {type === "select" && (
+              <Button
+                variant="outlined"
+                sx={{
+                  height: { xs: "46px", md: "54px", lg: "56px" },
+                  border: "1px solid #D8D8D8",
+                  backgroundColor: "#F1F4F9",
+                  borderRadius: "8px",
+                  fontSize: "18px",
+                  color: "#000",
+                }}
+                onClick={handleAddSchool}
+              >
+                + Add School
+              </Button>
+            )}
           </Stack>
         );
       })}

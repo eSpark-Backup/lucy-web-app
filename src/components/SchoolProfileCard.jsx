@@ -11,8 +11,19 @@ import view from "../assets/icons/view.svg";
 import bin from "../assets/icons/bin.svg";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
-export default function RecipeReviewCard() {
+dayjs.extend(localizedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export default function RecipeReviewCard({
+  school = {},
+  handleOpenDeleteModal = () => {},
+}) {
   const navigate = useNavigate();
 
   return (
@@ -25,14 +36,19 @@ export default function RecipeReviewCard() {
       }}
     >
       <CardHeader
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={school?.name || "No Name"}
+        subheader={
+          school?.created_at
+            ? dayjs(school.created_at).tz(dayjs.tz.guess()).format("L LT")
+            : ""
+        }
         titleTypographyProps={{
           sx: {
             color: "#202224",
             opacity: 0.9,
             fontWeight: 500,
             fontFamily: "Poppins",
+            mb: 1,
           },
           variant: "h5",
         }}
@@ -47,28 +63,30 @@ export default function RecipeReviewCard() {
         component="img"
         height="194"
         image={cardImage}
-        alt="Paella dish"
+        alt={school?.name}
       />
       <CardContent>
         <Typography variant="body2" sx={{ color: "#202224", opacity: "60%" }}>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {school?.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton disableRipple>
+        <IconButton disableRipple onClick={handleOpenDeleteModal}>
           <Box component="img" src={bin} sx={{ width: "60%" }} />
         </IconButton>
         <IconButton
           disableRipple
-          onClick={() => navigate(`/dashboard/school-overview/preview/${1}`)}
+          onClick={() =>
+            navigate(`/dashboard/school-overview/preview/${school?.id}`)
+          }
         >
           <Box component="img" src={view} />
         </IconButton>
         <IconButton
           disableRipple
-          onClick={() => navigate(`/dashboard/school-overview/edit/${1}`)}
+          onClick={() =>
+            navigate(`/dashboard/school-overview/edit/${school?.id}`)
+          }
         >
           <Box component="img" src={edit} />
         </IconButton>

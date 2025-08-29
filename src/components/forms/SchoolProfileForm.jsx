@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DatePicker } from "@mui/lab";
 import {
   Button,
@@ -9,35 +9,88 @@ import {
   Stack,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SCHOOL_INFORMATION_FORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import ImageUploader from "../ImageUploader";
 import { schoolProfileValidationSchema } from "../../schemas/schoolProfile";
+import {
+  useCreateSchoolMutation,
+  useEditSchoolMutation,
+} from "../../services/school";
+import { toast } from "react-toastify";
+import { useGetMyOrganizationQuery } from "../../services/organization";
 
 const initialEventData = {
-  school_name: "",
-  location: "",
-  phone_number: "",
+  name: "",
+  address: "",
+  phone: "",
   description: "",
   email: "",
+  image: {},
 };
 
 const SchoolProfileForm = ({
-  id = null,
   mode = "add", // "add" | "edit" | "preview"
   data = initialEventData,
-  isLoading,
-  onSubmit = () => {},
 }) => {
   const [search] = useSearchParams();
   const date = search.get("date") || null;
   const inputRef = useRef(null);
-  const [image, setImage] = useState(data?.image);
+  const navigate = useNavigate();
+  const [image, setImage] = useState();
+  const {
+    data: organizationData,
+    isLoading: organizationLoading,
+    isSuccess: organizationSuccess,
+    isError: organizationError,
+  } = useGetMyOrganizationQuery();
+  const [createSchool, { isLoading: addLoading }] = useCreateSchoolMutation();
+  const [editSchool, { isLoading: updateLoading }] = useEditSchoolMutation();
 
-  useEffect(() => {
-    setImage(data?.image);
-  }, [data]);
+  const handleCreate = async (formdata, resetForm) => {
+    try {
+      const res = await createSchool(formdata);
+
+      if (res?.error) {
+        toast.error(res?.error?.data?.message || "Something went wrong!");
+        return;
+      }
+
+      if (res?.data) {
+        toast.success(res?.data?.message || "School created successfully");
+        if (inputRef?.current) inputRef.current.value = null;
+        setImage(null);
+        resetForm();
+        navigate(`/dashboard/school-overview`);
+      }
+    } catch (err) {
+      toast.error("Something went wrong!");
+      console.error(err);
+    }
+  };
+
+  const handleUpdate = async (formdata, resetForm) => {
+    try {
+      const res = await editSchool(formdata);
+
+      if (res?.error) {
+        toast.error(res?.error?.data?.message || "Something went wrong!");
+        return;
+      }
+
+      if (res?.data) {
+        toast.success(res?.data?.message || "School updated successfully");
+        if (inputRef?.current) inputRef.current.value = null;
+        setImage(null);
+        resetForm();
+        navigate(`/dashboard/school-overview`);
+      }
+    } catch (err) {
+      toast.error("Something went wrong!");
+      console.error(err);
+    }
+  };
 
   const { fields } = SCHOOL_INFORMATION_FORM || {};
   const { EventFormStyles } = componentStyles || {};
@@ -50,22 +103,41 @@ const SchoolProfileForm = ({
     uploadButtonStyle,
   } = EventFormStyles || {};
 
-  const formik = useFormik({
-    initialValues: date ? { ...data, date } : data,
-    validationSchema: schoolProfileValidationSchema,
-    enableReinitialize: true,
-    onSubmit: (values, { resetForm }) => {
-      if (inputRef?.current) inputRef.current.value = null;
-      onSubmit(values, () => {
-        resetForm();
-        setImage(null);
-      });
-    },
-  });
-
   const isPreview = mode === "preview";
   const isEdit = mode === "edit";
   const isAdd = mode === "add";
+
+  const formik = useFormik({
+    initialValues: isEdit || isPreview ? data : initialEventData,
+    validationSchema: schoolProfileValidationSchema,
+    enableReinitialize: true,
+    onSubmit: async (values, { resetForm }) => {
+      const { id, name, is_trust, selected_school_count } =
+        organizationData || {};
+      const objToSend = {
+        ...values,
+        organization: {
+          id,
+          name,
+          is_trust,
+          selected_school_count,
+        },
+      };
+      console.log(objToSend, "objToSend");
+      // if organization is success then create and update the form
+      if (!organizationLoading) {
+        if (organizationError) {
+          toast.error("Organization fetching is failed!");
+        } else if (organizationSuccess) {
+          if (isEdit) {
+            await handleUpdate(objToSend, resetForm);
+          } else {
+            await handleCreate(objToSend, resetForm);
+          }
+        }
+      }
+    },
+  });
 
   return (
     <Paper elevation={0} sx={paperStyle}>
@@ -164,8 +236,8 @@ const SchoolProfileForm = ({
                 gap={2}
               >
                 <Button
-                  loading={isLoading}
-                  disabled={isLoading}
+                  loading={addLoading || updateLoading}
+                  disabled={addLoading || updateLoading}
                   type="submit"
                   variant="contained"
                   sx={{
@@ -188,8 +260,8 @@ const SchoolProfileForm = ({
             {isAdd && (
               <Button
                 fullWidth
-                loading={isLoading}
-                disabled={isLoading}
+                loading={addLoading || updateLoading}
+                disabled={addLoading || updateLoading}
                 type="submit"
                 variant="contained"
                 sx={buttonStyle}

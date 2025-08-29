@@ -3,23 +3,23 @@ import { useParams } from "react-router-dom";
 import SchoolProfileForm from "./forms/SchoolProfileForm";
 import FormHeader from "./forms/FormHeader";
 import { SCHOOL_FORM_SUBMISSION_TITLES } from "../constant";
+import { useGetSchoolByIdQuery } from "../services/school";
 
 const SchoolFormSubmission = () => {
   const { mode, schoolId } = useParams();
 
-  const schoolData = {
-    school_name: "Beaconhouse School",
-    location: "Karachi",
-    phone_number: "021-1234567",
-    description: "This is a sample description",
-    email: "info@beaconhouse.edu",
-    image: "/assets/school.png",
-  };
+  const { data: singleSchoolData, isSuccess: schoolDataSuccess } =
+    useGetSchoolByIdQuery(schoolId, {
+      skip: !schoolId,
+    });
 
   return (
     <Box>
       <FormHeader title={SCHOOL_FORM_SUBMISSION_TITLES[mode]} />
-      <SchoolProfileForm mode={mode} data={schoolData} id={schoolId} />
+      <SchoolProfileForm
+        mode={mode}
+        data={schoolDataSuccess && singleSchoolData}
+      />
     </Box>
   );
 };

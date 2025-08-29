@@ -1,7 +1,14 @@
 import { Modal, Box, Typography, Button } from "@mui/material";
 import { theme } from "../../theme";
 
-const ConformationModal = ({ open, onClose }) => {
+const ConformationModal = ({
+  open = false,
+  onClose = () => {},
+  title = "Are you sure you want to Delete ?",
+  description = "",
+  handleDelete = () => {},
+  isLoading = false,
+}) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -21,7 +28,7 @@ const ConformationModal = ({ open, onClose }) => {
       >
         <Box sx={{ fontFamily: theme.typography.fontFamily }}>
           <Typography variant="h3" sx={{ pb: "10px" }}>
-            Are you sure you want to Delete ?
+            {title}
           </Typography>
           <Typography
             sx={{
@@ -30,8 +37,7 @@ const ConformationModal = ({ open, onClose }) => {
               fontSize: { xs: "14px", sm: "16px" },
             }}
           >
-            Deleting is permanent and your Article will automatically be deleted
-            after 30 days if you do not log in again.
+            {description}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", gap: { xs: "10px", sm: "16px" } }}>
@@ -52,6 +58,10 @@ const ConformationModal = ({ open, onClose }) => {
             cancel
           </Button>
           <Button
+            loading={isLoading}
+            onClick={handleDelete}
+            disabled={isLoading}
+            variant="delete"
             sx={{
               width: "280px",
               height: { xs: "40px", sm: "45px", md: "48px" },
