@@ -10,23 +10,15 @@ import {
 import { componentStyles } from "../../style/componentStyles";
 import bgImage from "../../assets/images/sub-plan.png";
 import { GLOBAL_SUBSCRIPTION_PLAN_DATA } from "../../constant";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import NotFound from "../NotFound";
 
 const Subplan = () => {
   const [viewMode, setViewMode] = useState("month");
   const { title, description, skipText, cards, monthText, yearText } =
     GLOBAL_SUBSCRIPTION_PLAN_DATA || {};
   const { subscriptionPlanScreenStyles } = componentStyles || {};
-  const { planID } = useParams();
   const navigate = useNavigate();
-
-  // const validPlan = cards?.find((plan) => plan?.id === planID);
-
-  if (!planID) {
-    return <NotFound />;
-  }
 
   const {
     containerBoxStyle,

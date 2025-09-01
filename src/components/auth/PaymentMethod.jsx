@@ -21,7 +21,10 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { PAYMENT_METHOD_DATA } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useCreatePaymentMutation } from "../../services/payment";
+import NotFound from "../NotFound";
+import { useValidationSchema } from "../../schemas/payment";
 
 const PaymentMethod = () => {
   const [billingYearly, setBillingYearly] = useState(false);
@@ -30,11 +33,16 @@ const PaymentMethod = () => {
   const { yearBillingText, paymentText, paymentDescription, paymentOptions } =
     paymentSection || {};
   const { planSummary, stepperData, amountSummary } = planSection || {};
-
   const { paymentMethodScreenStyles } = componentStyles || {};
   const { mainBoxStyle, paymentSectionStyle, planSectionStyle } =
     paymentMethodScreenStyles || {};
   const navigate = useNavigate();
+  const [createPayment, { isLoading: createLoading }] =
+    useCreatePaymentMutation();
+  const [searchParams] = useSearchParams();
+  const raw = searchParams.get("session_id");
+  const session_id = raw?.replace(/[$"{}]/g, "");
+
   const initialValues = useMemo(() => {
     let values = { method };
     const currentOption = paymentOptions?.find((opt) => opt?.value === method);
@@ -48,31 +56,7 @@ const PaymentMethod = () => {
     return values;
   }, [method]);
 
-  const validationSchema = useMemo(() => {
-    if (method === "paypal") {
-      return Yup.object({
-        email: Yup.string()
-          .email("Invalid email address")
-          .required("Email is required"),
-        password: Yup.string()
-          .min(6, "Password must be at least 6 characters")
-          .required("Password is required"),
-      });
-    }
-    return Yup.object({
-      first_name: Yup.string().required("First name is required"),
-      last_name: Yup.string().required("Last name is required"),
-      card_number: Yup.string()
-        .matches(/^\d{16}$/, "Card number must be 16 digits")
-        .required("Card number is required"),
-      expires: Yup.string().required("Expiry date is required"),
-      cvv: Yup.string()
-        .matches(/^\d{3,4}$/, "CVV must be 3 or 4 digits")
-        .required("CVV is required"),
-      country: Yup.string().required("Country is required"),
-      zip_code: Yup.string().required("ZIP Code is required"),
-    });
-  }, [method]);
+  const validationSchema = useValidationSchema(method);
 
   const PaymentSection = ({
     handleChange,
@@ -177,6 +161,9 @@ const PaymentMethod = () => {
                                   }
                                   helperText={touched[f.name] && errors[f.name]}
                                   sx={paymentSectionStyle?.inputStyle}
+                                  InputProps={{
+                                    inputProps: { min: 0 },
+                                  }}
                                 />
                               </Stack>
                             ))}
@@ -202,6 +189,9 @@ const PaymentMethod = () => {
                                 touched[field.name] && errors[field.name]
                               }
                               sx={paymentSectionStyle?.inputStyle}
+                              InputProps={{
+                                inputProps: { min: 0 },
+                              }}
                             />
                           </Stack>
                         )
@@ -227,13 +217,14 @@ const PaymentMethod = () => {
         />
       );
     };
+
     return (
       <Box sx={planSectionStyle?.containerBoxStyle}>
         <Box sx={planSectionStyle?.planBoxStyle}>
           <Stack width={"100%"} spacing={1.5}>
             <Stack direction={"row"} sx={planSectionStyle?.planSummaryStyle}>
               <Typography variant="h4">{planSummary?.title}</Typography>
-              <Typography variant="h4">{planSummary?.price}</Typography>
+              {/* <Typography variant="h4">{planSummary?.price}</Typography> */}
             </Stack>
             <Stack direction={"row"} sx={planSectionStyle?.billingCycleStyle}>
               <Typography variant="h5" color="#979797" fontWeight={500}>
@@ -250,7 +241,7 @@ const PaymentMethod = () => {
             my={3.5}
           />
           <Stack>
-            <Stepper orientation="vertical" activeStep={2}>
+            {/* <Stepper orientation="vertical" activeStep={2}>
               {stepperData.map((step, index) => (
                 <Step key={index} active>
                   <StepLabel
@@ -288,8 +279,8 @@ const PaymentMethod = () => {
               component={"hr"}
               border={"1px solid rgba(151, 151, 151, 0.1)"}
               my={3.5}
-            />
-            <Stack sx={{ pr: 1 }}>
+            /> */}
+            {/* <Stack sx={{ pr: 1 }}>
               <Typography fontWeight={600}>{amountSummary.title}</Typography>
             </Stack>
             <Stack direction={"row"} sx={planSectionStyle?.accountSummaryStyle}>
@@ -299,7 +290,7 @@ const PaymentMethod = () => {
               <Typography variant="h6" fontWeight={500} color="#979797">
                 {amountSummary.text}
               </Typography>
-            </Stack>
+            </Stack> */}
             <Stack my={2}>
               <Button
                 type="submit"
@@ -320,18 +311,37 @@ const PaymentMethod = () => {
     );
   };
 
+  if (!session_id) {
+    return <NotFound />;
+  }
+
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
-        console.log("✅ Submitted values:", values);
-        toast.success("Payment add successfully!");
-        setTimeout(() => {
-          navigate("/payment-method/planID");
-        }, 5000);
-        resetForm();
+        console.log(values);
+        if (!session_id) {
+          toast.error("Session ID is missing!");
+          return;
+        }
+
+        const ObjToSend = {
+          session_id: session_id,
+        };
+
+        createPayment(ObjToSend).then((res) => {
+          if (res?.error) {
+            toast.error(res?.error?.data?.message || "Something went wrong!");
+            return;
+          }
+          if (res?.data) {
+            toast.success(res?.data?.message || "Session created successfully");
+            resetForm();
+            navigate("/dashboard");
+          }
+        });
       }}
     >
       {({ handleChange, handleBlur, values, errors, touched }) => (

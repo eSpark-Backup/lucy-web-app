@@ -126,7 +126,12 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
           res?.data?.message ===
             "Registration successful! Please check your email to verify your account."
         ) {
-          handleCreateOrganization(obj_for_organization, resetForm, email);
+          handleCreateOrganization(
+            obj_for_organization,
+            resetForm,
+            email,
+            is_trust
+          );
           return;
         }
         if (res?.error) {

@@ -9,7 +9,7 @@ export const organizationApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      providesTags: ["organization"],
+      providesTags: ["organizations"],
     }),
     createOrganization: builder.mutation({
       query: (credentials) => ({
@@ -18,7 +18,7 @@ export const organizationApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["organization"],
+      invalidatesTags: ["organizations"],
     }),
   }),
 });

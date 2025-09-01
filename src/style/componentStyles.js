@@ -1187,6 +1187,14 @@ export const componentStyles = {
             WebkitBoxShadow: `0 0 0 1000px #fff inset !important`,
             transition: "background-color 5000s ease-in-out 0s",
           },
+          // Chrome, Safari, Edge
+          "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+            {
+              display: "none",
+            },
+          "& input[type=number]": {
+            MozAppearance: "textfield", // Firefox
+          },
         },
       },
     },

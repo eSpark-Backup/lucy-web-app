@@ -11,7 +11,7 @@ export const accountForSchoolSchema = Yup.object({
 
   name: Yup.string().required("School name is required"),
 
-  phone: Yup.number().required("Phone number is required"),
+  phone: Yup.string().required("Phone number is required"),
 
   address: Yup.string().required("Location is required"),
 
@@ -39,7 +39,7 @@ export const accountForTrustSchema = Yup.object({
 
   name: Yup.string().required("Trust name is required"),
 
-  phone: Yup.number().required("Phone number is required"),
+  phone: Yup.string().required("Phone number is required"),
 
   address: Yup.string().required("Location is required"),
 

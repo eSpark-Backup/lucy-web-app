@@ -408,7 +408,7 @@ export const LOGIN = {
   haveAnAccountText: "Don’t have an account?",
   signUpText: {
     text: "Create Account",
-    link: "/payment-method",
+    link: "/sub-plan",
   },
 };
 
@@ -566,7 +566,7 @@ export const ACCOUNT_FOR_SCHOOL = {
       fields: [
         {
           label: "Phone Number",
-          type: "number",
+          type: "text",
           placeholder: "Phone number",
           key: "phone",
         },
@@ -638,7 +638,7 @@ export const ACCOUNT_FOR_TRUST = {
       fields: [
         {
           label: "Phone Number",
-          type: "number",
+          type: "text",
           placeholder: "Phone number",
           key: "phone",
         },
@@ -946,21 +946,10 @@ export const PAYMENT_METHOD_DATA = {
         value: "card",
         form: [
           {
-            isRow: true,
-            fields: [
-              {
-                label: "First name",
-                placeholder: "Input first name",
-                name: "first_name",
-                type: "text",
-              },
-              {
-                label: "Last name",
-                placeholder: "Input last name",
-                name: "last_name",
-                type: "text",
-              },
-            ],
+            label: "Card holder name",
+            placeholder: "Card holder name",
+            name: "holder_name",
+            type: "text",
           },
           {
             isRow: true,
@@ -999,24 +988,24 @@ export const PAYMENT_METHOD_DATA = {
           },
         ],
       },
-      {
-        title: "Paypal",
-        value: "paypal",
-        form: [
-          {
-            label: "Email",
-            placeholder: "Input email",
-            name: "email",
-            type: "email",
-          },
-          {
-            label: "Password",
-            placeholder: "Input password",
-            name: "password",
-            type: "password",
-          },
-        ],
-      },
+      // {
+      //   title: "Paypal",
+      //   value: "paypal",
+      //   form: [
+      //     {
+      //       label: "Email",
+      //       placeholder: "Input email",
+      //       name: "email",
+      //       type: "email",
+      //     },
+      //     {
+      //       label: "Password",
+      //       placeholder: "Input password",
+      //       name: "password",
+      //       type: "password",
+      //     },
+      //   ],
+      // },
     ],
   },
   planSection: {

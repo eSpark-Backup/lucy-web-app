@@ -21,7 +21,6 @@ import VerifyEmail from "../components/auth/VerifyEmail";
 import CreateEvent from "../components/dashboard/CreateEvent";
 import Subplan from "../components/auth/Subplan";
 import SchoolOverview from "../components/dashboard/SchoolOverview";
-import SchoolProfileForm from "../components/forms/SchoolProfileForm";
 import SchoolFormSubmission from "../components/SchoolFormSubmission";
 import PaymentMethod from "../components/auth/PaymentMethod";
 
@@ -35,7 +34,7 @@ const routes = [
     element: <PaymentMethod />,
   },
   {
-    path: "/payment-method/:planID",
+    path: "/sub-plan",
     element: <Subplan />,
   },
   {

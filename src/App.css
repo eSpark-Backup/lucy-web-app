@@ -275,3 +275,16 @@ body {
 .fc .fc-button:focus {
   box-shadow: none !important;
 }
+
+
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

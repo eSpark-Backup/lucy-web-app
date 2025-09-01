@@ -5,15 +5,41 @@ import { EMAIL_VERIFICATION } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { useVerifyEmailQuery } from "../../services/auth";
 import ProgressionStatus from "../progressionStatus";
+import { useCreateCheckoutSessionMutation } from "../../services/payment";
+import { useGetMyOrganizationQuery } from "../../services/organization";
+import { toast } from "react-toastify";
 
 const EmailVerification = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
   const [status, setStatus] = useState("loading");
+  const [createCheckoutSession] = useCreateCheckoutSessionMutation();
+
   const { data, isSuccess, isError, error } = useVerifyEmailQuery(token, {
     skip: !token,
   });
+
+  const { data: organizationData, isSuccess: organizationSuccess } =
+    useGetMyOrganizationQuery();
+
+  const handleCreateCheckoutSession = (formdata) => {
+    createCheckoutSession(formdata).then((res) => {
+      if (res?.error) {
+        toast.error(res?.error?.data?.message || "Something went wrong!");
+        return;
+      }
+      if (res?.data) {
+        toast.success(res?.data?.message || "Session created successfully");
+        if (res?.data?.plan === "trust") {
+          navigate(`/dashboard/school-overview/add`);
+        } else {
+          navigate(`/payment-method?session_id=${res?.data?.session_id}`);
+        }
+      }
+    });
+  };
+
   const { title, description, successMessage, failureMessage, buttonText } =
     EMAIL_VERIFICATION || {};
 
@@ -36,7 +62,13 @@ const EmailVerification = () => {
   }, [data, isSuccess, isError, error]);
 
   const handleClick = () => {
-    navigate("/dashboard");
+    if (organizationSuccess) {
+      const { id, is_trust } = organizationData || {};
+      handleCreateCheckoutSession({
+        plan: is_trust ? "trust" : "individual",
+        organizationId: id,
+      });
+    }
   };
 
   return (
