@@ -117,14 +117,23 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         address,
         ...(is_trust && {
           is_trust: true,
-          selected_school_count: selected_school_count,
+          selected_school_count: Number(selected_school_count),
         }),
       };
       signup(objToSend).then((res) => {
+        const { data } = res || {};
+        if (!data) return;
+
+        const { message, token } = data;
+
+        if (token) {
+          localStorage.setItem("token", token);
+        }
+
         if (
-          res?.data &&
-          res?.data?.message ===
-            "Registration successful! Please check your email to verify your account."
+          message ===
+            "Registration successful! Please check your email to verify your account." &&
+          token
         ) {
           handleCreateOrganization(
             obj_for_organization,
@@ -132,19 +141,13 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
             email,
             is_trust
           );
-          return;
         }
-        if (res?.error) {
-          toast.error(res?.error?.data?.message);
-          return;
-        }
-        resetForm();
       });
     },
   });
 
   const handleAddSchool = () => {
-    const nextValue = String(options.length + 2); // next number (start 2 se tha)
+    const nextValue = String(options.length + 2);
     setOptions([...options, { value: nextValue, label: nextValue }]);
   };
 
