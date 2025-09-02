@@ -2,12 +2,18 @@ import * as Yup from "yup";
 
 export const schoolProfileValidationSchema = Yup.object().shape({
   name: Yup.string()
+    .trim()
     .required("School name is required")
-    .max(50, "Maximum 50 characters allowed"),
+    .max(150, "School name can be up to 150 characters")
+    .matches(
+      /^[A-Za-z0-9\s'’-]+$/,
+      "School name can only contain letters, numbers, spaces, apostrophes, and hyphens"
+    ),
 
   address: Yup.string()
-    .required("Location is required")
-    .max(30, "Maximum 30 characters allowed"),
+    .trim()
+    .required("Address is required")
+    .max(500, "Address must not exceed 500 characters"),
 
   phone: Yup.string()
     .required("Phone number is required")
@@ -16,12 +22,16 @@ export const schoolProfileValidationSchema = Yup.object().shape({
     .max(15, "Must be at most 15 digits"),
 
   email: Yup.string()
-    .email("Invalid email address")
+    .trim()
+    .email("Enter a valid email")
+    .lowercase()
     .required("Email is required"),
 
   image: Yup.string().required("Image is required"),
 
   description: Yup.string()
+    .trim()
     .required("Description is required")
-    .max(300, "Maximum 300 characters allowed"),
+    .min(10, "Description must be at least 10 characters")
+    .max(500, "Description can be up to 500 characters"),
 });
