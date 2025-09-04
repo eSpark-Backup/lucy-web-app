@@ -8,6 +8,7 @@ import ProgressionStatus from "../progressionStatus";
 import { useCreateCheckoutSessionMutation } from "../../services/payment";
 import { useGetMyOrganizationQuery } from "../../services/organization";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
 const EmailVerification = () => {
   const [searchParams] = useSearchParams();
@@ -15,6 +16,12 @@ const EmailVerification = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState("loading");
   const [createCheckoutSession] = useCreateCheckoutSessionMutation();
+  const STRIPE_SECRET_KEY =
+    "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo";
+
+  const stripePromise = loadStripe(
+    "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
+  );
 
   const { data, isSuccess, isError, error } = useVerifyEmailQuery(token, {
     skip: !token,
@@ -22,22 +29,39 @@ const EmailVerification = () => {
 
   const { data: organizationData, isSuccess: organizationSuccess } =
     useGetMyOrganizationQuery();
+  console.log(organizationData, "organizationData");
+  // const handleCreateCheckoutSession = (formdata) => {
+  //   createCheckoutSession(formdata).then((res) => {
+  //     if (res?.error) {
+  //       toast.error(res?.error?.data?.message || "Something went wrong!");
+  //       return;
+  //     }
+  //     if (res?.data) {
+  //       toast.success(res?.data?.message || "Session created successfully");
+  //       if (formdata?.plan === "trust") {
+  //         navigate(`/dashboard/school-overview/add`);
+  //       } else {
+  //         navigate(`/payment-method?sessionId=${res?.data?.id}`);
+  //       }
+  //     }
+  //   });
+  // };
 
-  const handleCreateCheckoutSession = (formdata) => {
-    createCheckoutSession(formdata).then((res) => {
-      if (res?.error) {
-        toast.error(res?.error?.data?.message || "Something went wrong!");
-        return;
-      }
-      if (res?.data) {
-        toast.success(res?.data?.message || "Session created successfully");
-        if (res?.data?.plan === "trust") {
-          navigate(`/dashboard/school-overview/add`);
-        } else {
-          navigate(`/payment-method?sessionId=${res?.data?.id}`);
-        }
-      }
-    });
+  const handleCreateCheckoutSession = async (formdata) => {
+    const res = await createCheckoutSession(formdata);
+
+    if (res?.error) {
+      toast.error(res?.error?.data?.message || "Something went wrong!");
+      return;
+    }
+
+    if (res?.data?.data?.id) {
+      console.log(res?.data?.data?.id, "res?.data?.id");
+      const stripe = await stripePromise;
+      // Redirect user to Stripe-hosted checkout page
+      await stripe.redirectToCheckout({ sessionId: res?.data?.data?.id });
+    }
+    console.log(STRIPE_SECRET_KEY, "loadStripe");
   };
 
   const { title, description, successMessage, failureMessage, buttonText } =
@@ -66,6 +90,7 @@ const EmailVerification = () => {
   }, [data, isSuccess, isError, error]);
 
   const handleClick = () => {
+    console.log("click");
     if (organizationSuccess) {
       const { id, is_trust } = organizationData || {};
       handleCreateCheckoutSession({

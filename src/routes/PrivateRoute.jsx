@@ -95,7 +95,7 @@ const PrivateRoute = ({ children }) => {
 
   // 👇 yahan condition add kardo
   if (isAuthenticated() && !isEmailVerified()) {
-    return <Navigate to="/auth/email-verification" replace />;
+    return <Navigate to="/auth/login" replace />;
   }
 
   return isLoading ? (

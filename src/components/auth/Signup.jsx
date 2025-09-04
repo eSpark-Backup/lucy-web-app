@@ -11,7 +11,7 @@ import {
 const Signup = () => {
   const { role } = useParams();
   return (
-    <Box>
+    <Box width={"100%"}>
       {role === "user" && (
         <Account
           data={ACCOUNT_FOR_SCHOOL}
