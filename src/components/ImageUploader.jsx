@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import UploadIcon from "../assets/icons/upload.svg";
@@ -16,7 +17,7 @@ const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
     const file = e.target.files?.[0];
     if (file) {
       setImage(URL.createObjectURL(file));
-      formik?.setFieldValue("image", file);
+      formik.setFieldValue("image", file);
     }
   };
 
@@ -25,6 +26,14 @@ const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
     formik?.setFieldValue("image", null);
     if (ref?.current) ref.current.value = null;
   };
+
+  useEffect(() => {
+    if (typeof formik?.values?.image === "string") {
+      setImage(formik.values.image);
+    } else if (!formik?.values?.image) {
+      setImage(null);
+    }
+  }, [formik?.values?.image]);
 
   return (
     <Box
@@ -55,7 +64,7 @@ const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
             sx={{
               height: "100%",
               width: "100%",
-              objectFit: "cover", // full fill with crop
+              objectFit: "cover",
             }}
           />
           {!disabled && (

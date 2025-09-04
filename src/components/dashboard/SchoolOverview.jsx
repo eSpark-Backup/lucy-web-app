@@ -52,7 +52,7 @@ const SchoolOverview = () => {
       }
     });
   };
-
+  
   if (schoolsLoading) return <LinearProgress />;
 
   return (
@@ -72,19 +72,17 @@ const SchoolOverview = () => {
       </Stack>
       <Grid container spacing={3}>
         {schoolsSuccess &&
-          allSchools?.map((item) =>
-            item?.organization?.schools?.map((school) => (
-              <Grid item xs={12} sm="auto" key={school?.id}>
-                <RecipeReviewCard
-                  school={school}
-                  handleOpenDeleteModal={() => {
-                    setOpenDeleteModal(true);
-                    setModalDate(school);
-                  }}
-                />
-              </Grid>
-            ))
-          )}
+          allSchools?.data?.map((school, index) => (
+            <RecipeReviewCard
+              key={index}
+              school={school}
+              handleOpenDeleteModal={() => {
+                setOpenDeleteModal(true);
+                setModalDate(school);
+              }}
+            />
+          ))}
+
         <ConformationModal
           open={openDeleteModal}
           isLoading={deleteLoading}

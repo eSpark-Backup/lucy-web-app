@@ -13,13 +13,24 @@ const SchoolFormSubmission = () => {
       skip: !schoolId,
     });
 
+  const cleanedData =
+    schoolDataSuccess && singleSchoolData?.data
+      ? {
+          id: singleSchoolData?.data?.id,
+          name: singleSchoolData?.data?.name || "",
+          address: singleSchoolData?.data?.address || "",
+          phone: singleSchoolData?.data?.phone || "",
+          description: singleSchoolData?.data?.description || "",
+          email: singleSchoolData?.data?.email || "",
+          image: singleSchoolData?.data?.image || "",
+          organization_id: singleSchoolData?.data?.organization_id || "",
+        }
+      : null;
+
   return (
     <Box>
       <FormHeader title={SCHOOL_FORM_SUBMISSION_TITLES[mode]} />
-      <SchoolProfileForm
-        mode={mode}
-        data={schoolDataSuccess && singleSchoolData}
-      />
+      <SchoolProfileForm mode={mode} data={cleanedData} />
     </Box>
   );
 };

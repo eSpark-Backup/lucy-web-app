@@ -20,6 +20,7 @@ import {
 } from "../../services/school";
 import { toast } from "react-toastify";
 import { useGetMyOrganizationQuery } from "../../services/organization";
+import { useAddImageMutation } from "../../services/image";
 
 const initialEventData = {
   name: "",
@@ -27,7 +28,7 @@ const initialEventData = {
   phone: "",
   description: "",
   email: "",
-  image: {},
+  image: "",
 };
 
 const SchoolProfileForm = ({
@@ -39,14 +40,17 @@ const SchoolProfileForm = ({
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [image, setImage] = useState();
+
   const {
     data: organizationData,
     isLoading: organizationLoading,
     isSuccess: organizationSuccess,
     isError: organizationError,
   } = useGetMyOrganizationQuery();
+
   const [createSchool, { isLoading: addLoading }] = useCreateSchoolMutation();
   const [editSchool, { isLoading: updateLoading }] = useEditSchoolMutation();
+  const [imageUpload] = useAddImageMutation();
 
   const handleCreate = async (formdata, resetForm) => {
     try {
@@ -72,7 +76,10 @@ const SchoolProfileForm = ({
 
   const handleUpdate = async (formdata, resetForm) => {
     try {
-      const res = await editSchool(formdata);
+      const res = await editSchool({
+        id: formdata.id,
+        credentials: formdata,
+      });
 
       if (res?.error) {
         toast.error(res?.error?.data?.message || "Something went wrong!");
@@ -108,23 +115,43 @@ const SchoolProfileForm = ({
   const isAdd = mode === "add";
 
   const formik = useFormik({
-    initialValues: isEdit || isPreview ? data : initialEventData,
+    initialValues:
+      isEdit || isPreview ? { ...initialEventData, ...data } : initialEventData,
     validationSchema: schoolProfileValidationSchema,
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
-      const { id, name, is_trust, selected_school_count } =
-        organizationData || {};
+      const { id: organization_id } = organizationData || {};
+
+      let finalImage = values.image;
+
+      if (values.image && typeof values.image !== "string") {
+        const formData = new FormData();
+        formData.append("file", values.image);
+
+        try {
+          const res = await imageUpload({ body: formData });
+          if (res?.data) {
+            finalImage = res.data.filePath;
+          } else {
+            toast.error("Image upload failed!");
+            return;
+          }
+        } catch (err) {
+          toast.error("Image upload failed!");
+          console.error(err);
+          return;
+        }
+      }
+
       const objToSend = {
         ...values,
-        organization: {
-          id,
-          name,
-          is_trust,
-          selected_school_count,
-        },
+        image: finalImage,
+        organization_id,
+        id: data?.id,
       };
-      console.log(objToSend, "objToSend");
-      // if organization is success then create and update the form
+
+      console.log("final objToSend", objToSend);
+
       if (!organizationLoading) {
         if (organizationError) {
           toast.error("Organization fetching is failed!");

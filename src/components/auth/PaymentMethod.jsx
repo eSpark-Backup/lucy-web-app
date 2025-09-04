@@ -40,8 +40,8 @@ const PaymentMethod = () => {
   const [createPayment, { isLoading: createLoading }] =
     useCreatePaymentMutation();
   const [searchParams] = useSearchParams();
-  const raw = searchParams.get("session_id");
-  const session_id = raw?.replace(/[$"{}]/g, "");
+  const raw = searchParams.get("sessionId");
+  const sessionId = raw?.replace(/[$"{}]/g, "");
 
   const initialValues = useMemo(() => {
     let values = { method };
@@ -311,7 +311,7 @@ const PaymentMethod = () => {
     );
   };
 
-  if (!session_id) {
+  if (!sessionId || sessionId === "undefined") {
     return <NotFound />;
   }
 
@@ -322,13 +322,13 @@ const PaymentMethod = () => {
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
         console.log(values);
-        if (!session_id) {
+        if (!sessionId) {
           toast.error("Session ID is missing!");
           return;
         }
 
         const ObjToSend = {
-          session_id: session_id,
+          sessionId: sessionId,
         };
 
         createPayment(ObjToSend).then((res) => {

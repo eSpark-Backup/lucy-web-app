@@ -10,10 +10,10 @@ import { componentStyles } from "../../style/componentStyles";
 import { PROFILE_DATA } from "../../constant";
 
 const getInitialValues = (user) => ({
-  firstName: user?.first_name || "",
-  lastName: user?.last_name || "",
+  firstName: user?.profile?.first_name || "",
+  lastName: user?.profile?.last_name || "",
   email: user?.email || "",
-  phone: user?.phone || "",
+  phone: user?.profile?.phone || "",
 });
 
 const Profile = () => {
@@ -24,6 +24,7 @@ const Profile = () => {
   const fileInputRef = useRef();
   const { ProfileScreenStyle } = componentStyles || {};
   const { text, fields } = PROFILE_DATA || {};
+
   const {
     container,
     formArea,
@@ -41,10 +42,10 @@ const Profile = () => {
     enableReinitialize: true,
     onSubmit: (values) => {
       const formdata = new FormData();
-      formdata?.append("first_name", values?.firstName);
-      formdata?.append("last_name", values?.lastName);
-      formdata?.append("phone", values?.phone);
-      if (image) formdata?.append("profile_image", image);
+      formdata.append("first_name", values?.firstName);
+      formdata.append("last_name", values?.lastName);
+      formdata.append("phone", values?.phone);
+      if (image) formdata.append("profile_image", image);
 
       update(formdata).then((res) => {
         if (res?.error) {
@@ -53,7 +54,7 @@ const Profile = () => {
           return;
         }
         if (res?.data) {
-          toast?.success(res?.data?.message);
+          toast.success(res?.data?.message);
           setIsEditing(false);
         }
       });
@@ -61,12 +62,12 @@ const Profile = () => {
   });
 
   const handleEditClick = () => {
-    isEditing ? formik?.handleSubmit() : setIsEditing(true);
+    isEditing ? formik.handleSubmit() : setIsEditing(true);
   };
 
   const handlePhotoClick = () => {
-    if (isEditing && fileInputRef?.current) {
-      fileInputRef?.current?.click();
+    if (isEditing && fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -82,8 +83,8 @@ const Profile = () => {
         <Box sx={formArea}>
           <Box sx={{ textAlign: "center", mb: "5px" }}>
             <Avatar
-              src={image ? URL?.createObjectURL(image) : user?.profile_image}
-              alt="User Avatar"
+              src={image ? URL.createObjectURL(image) : user?.profile?.profile_image}
+              alt={user?.profile?.first_name}
               sx={avatar(isEditing)}
               onClick={handlePhotoClick}
             />
@@ -102,6 +103,7 @@ const Profile = () => {
               onChange={handleFileChange}
             />
           </Box>
+
           <Box sx={row} flexWrap="wrap">
             {fields(isEditing)?.map(({ label, name, disabled }) => (
               <Box
@@ -119,20 +121,20 @@ const Profile = () => {
                   name={name}
                   sx={input}
                   fullWidth
-                  value={formik?.values[name]}
-                  onChange={formik?.handleChange}
-                  onBlur={formik?.handleBlur}
+                  value={formik.values[name]}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   disabled={disabled}
-                  error={formik?.touched[name] && Boolean(formik?.errors[name])}
-                  helperText={formik?.touched[name] && formik?.errors[name]}
+                  error={formik.touched[name] && Boolean(formik.errors[name])}
+                  helperText={formik.touched[name] && formik.errors[name]}
                 />
               </Box>
             ))}
           </Box>
         </Box>
+
         <Box sx={{ textAlign: "center", mb: "30px" }}>
           <Button
-            loading={isLoading}
             disabled={isLoading}
             variant="contained"
             size="large"
@@ -148,3 +150,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

@@ -30,7 +30,7 @@ export const schoolApi = api.injectEndpoints({
     editSchool: builder.mutation({
       query: ({ id, credentials }) => ({
         url: `/schools/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: credentials,
         credentials: "include",
       }),
@@ -38,7 +38,7 @@ export const schoolApi = api.injectEndpoints({
     }),
     deleteSchool: builder.mutation({
       query: (id) => ({
-        url: `/school/${id}`,
+        url: `/schools/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["school"],

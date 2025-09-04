@@ -34,7 +34,7 @@ const EmailVerification = () => {
         if (res?.data?.plan === "trust") {
           navigate(`/dashboard/school-overview/add`);
         } else {
-          navigate(`/payment-method?session_id=${res?.data?.session_id}`);
+          navigate(`/payment-method?sessionId=${res?.data?.id}`);
         }
       }
     });
@@ -55,6 +55,10 @@ const EmailVerification = () => {
     if (isSuccess) {
       setStatus("success");
       localStorage.setItem("token", data?.accessToken);
+      localStorage.setItem(
+        "email-verify",
+        data?.accessToken ? "true" : "false"
+      );
     }
     if (isError) {
       setStatus("error");
@@ -90,7 +94,7 @@ const EmailVerification = () => {
         <Button
           disabled={status !== "success"}
           onClick={handleClick}
-          type="submit"
+          // type="submit"
           fullWidth
           sx={authButtonStyle}
         >

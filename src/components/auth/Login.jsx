@@ -89,12 +89,21 @@ const Login = () => {
           } else {
             clearSavedCredentials();
           }
-          if (res?.data?.accessToken) {
+          if (res?.data?.accessToken && res?.data?.email_verified) {
             localStorage.setItem("token", res?.data?.accessToken);
+            localStorage.setItem(
+              "email-verify",
+              `${res?.data?.email_verified}`
+            );
             navigate("/dashboard");
             resetForm();
           } else {
             navigate(`/auth/email-verification?email=${values?.email}`);
+            localStorage.setItem("token", "sadfasdfasdfxZzc");
+            localStorage.setItem(
+              "email-verify",
+              `${res?.data?.email_verified}`
+            );
             resetForm();
           }
           return;

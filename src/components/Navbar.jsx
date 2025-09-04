@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = ({ openMobileSidebar }) => {
   const { user } = useSelector((state) => state?.auth);
+
   return (
     <AppBar
       position="fixed" // static -> fixed
@@ -43,10 +44,16 @@ const Navbar = ({ openMobileSidebar }) => {
           <Link to={"/dashboard/profile"} style={{ textDecoration: "none" }}>
             <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
               <Avatar
-                src={user?.profile_image}
-                alt="Moni Roy"
-                sx={{ width: { sm: 37, md: 40 }, height: { sm: 37, md: 40 } }}
-              />
+                src={user?.profile?.profile_image || undefined || null}
+                alt={user?.profile?.first_name}
+                sx={{
+                  width: { sm: 37, md: 40 },
+                  height: { sm: 37, md: 40 },
+                  textTransform: "capitalize",
+                }}
+              >
+                {user?.profile?.first_name?.[0] || ""}
+              </Avatar>
               <Box
                 textAlign="left"
                 sx={{ display: { xs: "none", sm: "block" } }}
@@ -59,7 +66,7 @@ const Navbar = ({ openMobileSidebar }) => {
                     color: "#404040",
                   }}
                 >
-                  {`${user?.first_name} ${user?.last_name}`}
+                  {`${user?.profile?.first_name} ${user?.profile?.last_name}`}
                 </Typography>
                 <Typography
                   variant="body2"

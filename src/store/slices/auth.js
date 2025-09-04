@@ -14,6 +14,8 @@ const slice = createSlice({
       state.user = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("email-verify");
+      localStorage.removeItem("edupluse_user");
     },
     setRedirectToLogin: (state, action) => {
       state.redirectToLogin = action.payload;
@@ -31,9 +33,17 @@ const slice = createSlice({
       authApi.endpoints.updateUser.matchFulfilled,
       (state, { payload }) => {
         const { updated } = payload;
-        console.log(payload, "payload");
-        state.user = updated;
-        localStorage.setItem("edupluse_user", JSON.stringify(updated));
+
+        // Merge karo instead of overwrite
+        state.user = {
+          ...state.user,
+          profile: {
+            ...state.user?.profile,
+            ...updated, // sirf updated fields replace hongi
+          },
+        };
+
+        localStorage.setItem("edupluse_user", JSON.stringify(state.user));
       }
     );
   },

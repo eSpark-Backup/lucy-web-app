@@ -23,6 +23,7 @@ import Subplan from "../components/auth/Subplan";
 import SchoolOverview from "../components/dashboard/SchoolOverview";
 import SchoolFormSubmission from "../components/SchoolFormSubmission";
 import PaymentMethod from "../components/auth/PaymentMethod";
+import PrivateRoute from "./PrivateRoute";
 
 const routes = [
   {
@@ -31,7 +32,11 @@ const routes = [
   },
   {
     path: "/payment-method",
-    element: <PaymentMethod />,
+    element: (
+      <PrivateRoute>
+        <PaymentMethod />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/sub-plan",
@@ -57,9 +62,9 @@ const routes = [
   {
     path: "/dashboard",
     element: (
-      // <PrivateRoute>
-      <DashboardLayout />
-      // </PrivateRoute>
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
     ),
     children: [
       { path: "/dashboard", element: <Dashboard /> },

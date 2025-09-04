@@ -124,10 +124,15 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         const { data } = res || {};
         if (!data) return;
 
-        const { message, token } = data;
+        const { message, token, email_verified } = data;
 
         if (token) {
           localStorage.setItem("token", token);
+          // email verification status
+          localStorage.setItem(
+            "email-verify",
+            email_verified ? "true" : "false"
+          );
         }
 
         if (
@@ -135,6 +140,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
             "Registration successful! Please check your email to verify your account." &&
           token
         ) {
+          navigate(`/auth/email-verification?email=${email}`);
           handleCreateOrganization(
             obj_for_organization,
             resetForm,

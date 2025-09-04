@@ -7,8 +7,20 @@ export function useQuery() {
 
 export const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+// export const isAuthenticated = () => {
+//   const token = localStorage.getItem("token");
+//   const email_verification = localStorage.getItem("email-verify");
+
+//   return token && email_verification === "true";
+// };
+
 export const isAuthenticated = () => {
-  return localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  return !!token;
+};
+
+export const isEmailVerified = () => {
+  return localStorage.getItem("email-verify") === "true";
 };
 
 const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
