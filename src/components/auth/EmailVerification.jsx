@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Box, Stack, Typography, Button } from "@mui/material";
 import { EMAIL_VERIFICATION } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
@@ -13,7 +13,6 @@ import { loadStripe } from "@stripe/stripe-js";
 const EmailVerification = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const navigate = useNavigate();
   const [status, setStatus] = useState("loading");
   const [createCheckoutSession] = useCreateCheckoutSessionMutation();
   const STRIPE_SECRET_KEY =
@@ -30,22 +29,6 @@ const EmailVerification = () => {
   const { data: organizationData, isSuccess: organizationSuccess } =
     useGetMyOrganizationQuery();
   console.log(organizationData, "organizationData");
-  // const handleCreateCheckoutSession = (formdata) => {
-  //   createCheckoutSession(formdata).then((res) => {
-  //     if (res?.error) {
-  //       toast.error(res?.error?.data?.message || "Something went wrong!");
-  //       return;
-  //     }
-  //     if (res?.data) {
-  //       toast.success(res?.data?.message || "Session created successfully");
-  //       if (formdata?.plan === "trust") {
-  //         navigate(`/dashboard/school-overview/add`);
-  //       } else {
-  //         navigate(`/payment-method?sessionId=${res?.data?.id}`);
-  //       }
-  //     }
-  //   });
-  // };
 
   const handleCreateCheckoutSession = async (formdata) => {
     const res = await createCheckoutSession(formdata);

@@ -18,7 +18,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSignupMutation } from "../../services/auth";
 import { useCreateOrganizationMutation } from "../../services/organization";
-import { addListener } from "@reduxjs/toolkit";
 
 const Account = ({ is_trust = false, data, styles, schema }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -115,6 +114,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
       const obj_for_organization = {
         name: name,
         address,
+        is_trust: false,
         ...(is_trust && {
           is_trust: true,
           selected_school_count: Number(selected_school_count),

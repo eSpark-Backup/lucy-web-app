@@ -82,37 +82,46 @@ const Login = () => {
         email: values?.email,
         password: values?.password,
       };
-      login(objToSend).then((res) => {
-        if (res?.data) {
+      login(objToSend)
+        .then((res) => {
+          const { data, error } = res || {};
+
+          // 🔴 Handle API error
+          if (error) {
+            toast.error(error?.data?.message || "Login failed");
+            return;
+          }
+
+          // 🔴 If no data received
+          if (!data) {
+            toast.error("Unexpected error. Please try again.");
+            return;
+          }
+
+          // 🔐 Remember credentials
           if (values.remember) {
             saveEncryptedCredentials(values.email, values.password);
           } else {
             clearSavedCredentials();
           }
-          if (res?.data?.accessToken && res?.data?.email_verified) {
-            localStorage.setItem("token", res?.data?.accessToken);
-            localStorage.setItem(
-              "email-verify",
-              `${res?.data?.email_verified}`
-            );
+
+          // 🔑 Save token and email verify status
+          localStorage.setItem("token", data.accessToken || "");
+          localStorage.setItem("email-verify", String(data.email_verified));
+
+          // 🚀 Navigate according to verification
+          if (data.accessToken && data.email_verified) {
             navigate("/dashboard");
-            resetForm();
           } else {
-            navigate(`/auth/email-verification?email=${values?.email}`);
-            localStorage.setItem("token", "sadfasdfasdfxZzc");
-            localStorage.setItem(
-              "email-verify",
-              `${res?.data?.email_verified}`
-            );
-            resetForm();
+            navigate(`/auth/email-verification?email=${values.email}`);
           }
-          return;
-        }
-        if (res?.error) {
-          toast.error(res?.error?.data?.message);
-          return;
-        }
-      });
+
+          // ✅ Reset form after success
+          resetForm();
+        })
+        .catch(() => {
+          toast.error("Something went wrong. Please try again.");
+        });
     },
   });
 

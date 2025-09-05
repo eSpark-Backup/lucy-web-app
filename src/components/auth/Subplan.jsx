@@ -11,11 +11,9 @@ import { componentStyles } from "../../style/componentStyles";
 import bgImage from "../../assets/images/sub-plan.png";
 import { GLOBAL_SUBSCRIPTION_PLAN_DATA } from "../../constant";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const Subplan = () => {
-  const [viewMode, setViewMode] = useState("month");
-  const { title, description, skipText, cards, monthText, yearText } =
+  const { title, description, skipText, cards } =
     GLOBAL_SUBSCRIPTION_PLAN_DATA || {};
   const { subscriptionPlanScreenStyles } = componentStyles || {};
   const navigate = useNavigate();
@@ -27,9 +25,6 @@ const Subplan = () => {
     descriptionStyle,
     cardStyle,
     cardContent,
-    toggleButtonBoxStyle,
-    monthButtonStyle,
-    yearButtonStyle,
     cardBoxStyle,
     skipLinkStyle,
     subText,
@@ -67,20 +62,6 @@ const Subplan = () => {
               <Typography variant="h3" sx={descriptionStyle}>
                 {description}
               </Typography>
-              <Box sx={toggleButtonBoxStyle}>
-                <Button
-                  onClick={() => setViewMode("month")}
-                  sx={monthButtonStyle(viewMode)}
-                >
-                  {monthText}
-                </Button>
-                <Button
-                  onClick={() => setViewMode("year")}
-                  sx={yearButtonStyle(viewMode)}
-                >
-                  {yearText}
-                </Button>
-              </Box>
             </Stack>
           </Stack>
           <Box sx={cardBoxStyle}>
