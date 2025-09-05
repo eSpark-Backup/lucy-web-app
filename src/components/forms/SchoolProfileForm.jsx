@@ -150,8 +150,6 @@ const SchoolProfileForm = ({
         id: data?.id,
       };
 
-      console.log("final objToSend", objToSend);
-
       if (!organizationLoading) {
         if (organizationError) {
           toast.error("Organization fetching is failed!");

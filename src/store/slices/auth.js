@@ -12,10 +12,8 @@ const slice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("email-verify");
-      localStorage.removeItem("edupluse_user");
+      localStorage.clear(); // sab clear kar dega
+      window.location.href = "/auth/login"; // ya window.location.reload();
     },
     setRedirectToLogin: (state, action) => {
       state.redirectToLogin = action.payload;

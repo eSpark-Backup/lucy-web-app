@@ -64,9 +64,13 @@ const Navbar = ({ openMobileSidebar }) => {
                     fontFamily: "Poppins",
                     fontWeight: 700,
                     color: "#404040",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    maxWidth: "100px",
                   }}
                 >
-                  {`${user?.profile?.first_name} ${user?.profile?.last_name}`}
+                  {user?.profile?.first_name?.split(" ")[0] || ""}
                 </Typography>
                 <Typography
                   variant="body2"

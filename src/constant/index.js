@@ -24,6 +24,7 @@ import calendar from "../assets/images/sidebar/calendar.svg";
 import about from "../assets/images/sidebar/about.svg";
 import profile from "../assets/images/sidebar/profile.svg";
 import logout from "../assets/images/sidebar/logout.svg";
+import { loadStripe } from "@stripe/stripe-js";
 
 export const features = [
   {
@@ -1044,3 +1045,7 @@ export const PAYMENT_METHOD_DATA = {
     },
   },
 };
+
+export const stripePromise = loadStripe(
+  "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
+);

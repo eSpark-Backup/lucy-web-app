@@ -22,23 +22,13 @@ import CreateEvent from "../components/dashboard/CreateEvent";
 import Subplan from "../components/auth/Subplan";
 import SchoolOverview from "../components/dashboard/SchoolOverview";
 import SchoolFormSubmission from "../components/SchoolFormSubmission";
-import PaymentMethod from "../components/auth/PaymentMethod";
 import PrivateRoute from "./PrivateRoute";
-import TrustProtectedRoute from "./TrustProtectedRoute";
 import CheckoutResult from "../components/dashboard/CheckoutResult";
 
 const routes = [
   {
     path: "/",
     element: <LandingPage />,
-  },
-  {
-    path: "/payment-method",
-    element: (
-      <PrivateRoute>
-        <PaymentMethod />
-      </PrivateRoute>
-    ),
   },
   {
     path: "/sub-plan",
@@ -88,27 +78,15 @@ const routes = [
       { path: "/dashboard/about", element: <About /> },
       {
         path: "/dashboard/school-overview",
-        element: (
-          <TrustProtectedRoute>
-            <SchoolOverview />
-          </TrustProtectedRoute>
-        ),
+        element: <SchoolOverview />,
       },
       {
         path: "/dashboard/school-overview/:mode",
-        element: (
-          <TrustProtectedRoute>
-            <SchoolFormSubmission />
-          </TrustProtectedRoute>
-        ),
+        element: <SchoolFormSubmission />,
       },
       {
         path: "/dashboard/school-overview/:mode/:schoolId",
-        element: (
-          <TrustProtectedRoute>
-            <SchoolFormSubmission />
-          </TrustProtectedRoute>
-        ),
+        element: <SchoolFormSubmission />,
       },
       { path: "/dashboard/profile", element: <Profile /> },
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },

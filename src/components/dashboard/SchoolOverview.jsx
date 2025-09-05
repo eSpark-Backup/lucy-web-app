@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import SchoolIcon from "@mui/icons-material/School";
-
+import PaymentsIcon from "@mui/icons-material/Payments";
 import FormHeader from "../forms/FormHeader";
 import RecipeReviewCard from "../SchoolProfileCard";
 import { componentStyles } from "../../style/componentStyles";
@@ -19,10 +19,14 @@ import {
 import ConformationModal from "../modals/ConformationModal";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useCreateCheckoutSessionMutation } from "../../services/payment";
+import { stripePromise } from "../../constant";
+import { useGetMyOrganizationQuery } from "../../services/organization";
 
 const TEXT = {
   title: "School Profiles",
   addButton: "Add",
+  paymentButton: "Payment",
 };
 
 const SchoolOverview = () => {
@@ -36,9 +40,10 @@ const SchoolOverview = () => {
     isSuccess: schoolsSuccess,
   } = useGetAllSchoolsQuery();
   const navigate = useNavigate();
-
+  const [createCheckoutSession] = useCreateCheckoutSessionMutation();
   const [deleteSchool, { isLoading: deleteLoading }] =
     useDeleteSchoolMutation();
+  const { data: organizationData } = useGetMyOrganizationQuery();
 
   const handleDelete = () => {
     deleteSchool(modalData?.id).then((res) => {
@@ -52,23 +57,60 @@ const SchoolOverview = () => {
       }
     });
   };
-  
+
+  const handleCreateCheckoutsession = async () => {
+    const { id, is_trust } = organizationData || {};
+    const res = await createCheckoutSession({
+      plan: is_trust ? "trust" : "individual",
+      organizationId: id,
+    });
+
+    if (res?.error) {
+      toast.error(res?.error?.data?.message || "Something went wrong!");
+      return;
+    }
+    if (res?.data?.data?.id) {
+      const stripe = await stripePromise;
+      // Redirect user to Stripe-hosted checkout page
+      await stripe.redirectToCheckout({ sessionId: res?.data?.data?.id });
+    }
+  };
+
   if (schoolsLoading) return <LinearProgress />;
 
   return (
     <Box>
       <FormHeader title={TEXT?.title} />
-      <Stack pb={3}>
-        <Button
-          onClick={() => navigate("/dashboard/school-overview/add")}
-          endIcon={<SchoolIcon />}
-          fullWidth
-          sx={addButton}
-        >
-          <Typography variant="h5" sx={addButtonText}>
-            {TEXT?.addButton}
-          </Typography>
-        </Button>
+      <Stack
+        pb={3}
+        direction={organizationData?.is_trust ? "row" : "column"}
+        spacing={organizationData?.is_trust ? 1 : 0}
+      >
+        {(organizationData?.is_trust ||
+          (!organizationData?.is_trust && allSchools?.data?.length < 1)) && (
+          <Button
+            onClick={() => navigate("/dashboard/school-overview/add")}
+            endIcon={<SchoolIcon />}
+            fullWidth
+            sx={addButton}
+          >
+            <Typography variant="h5" sx={addButtonText}>
+              {TEXT?.addButton}
+            </Typography>
+          </Button>
+        )}
+        {organizationData?.is_trust && (
+          <Button
+            onClick={() => handleCreateCheckoutsession()}
+            endIcon={<PaymentsIcon />}
+            fullWidth
+            sx={addButton}
+          >
+            <Typography variant="h5" sx={addButtonText}>
+              {TEXT?.paymentButton}
+            </Typography>
+          </Button>
+        )}
       </Stack>
       <Grid container spacing={3}>
         {schoolsSuccess &&

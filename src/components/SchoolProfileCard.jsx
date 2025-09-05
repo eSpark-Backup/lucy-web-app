@@ -29,6 +29,7 @@ export default function RecipeReviewCard({
   return (
     <Card
       sx={{
+        width: "100%",
         maxWidth: { xs: "100%", sm: 325 },
         backgroundColor: "rgba(255, 255, 255, 0.48)",
         boxShadow: "5px 5px 45px 0px rgba(0, 0, 0, 0.05)",
@@ -36,7 +37,12 @@ export default function RecipeReviewCard({
       }}
     >
       <CardHeader
-        title={school?.name || "No Name"}
+        title={
+          school?.name
+            ? school.name.split(" ").slice(0, 2).join(" ") +
+              (school.name.split(" ").length > 2 ? "..." : "")
+            : "No Name"
+        }
         subheader={
           school?.created_at
             ? dayjs(school.created_at).tz(dayjs.tz.guess()).format("L LT")
@@ -49,6 +55,7 @@ export default function RecipeReviewCard({
             fontWeight: 500,
             fontFamily: "Poppins",
             mb: 1,
+            pr: 1.5,
           },
           variant: "h5",
         }}
@@ -58,15 +65,44 @@ export default function RecipeReviewCard({
             fontFamily: "Poppins",
           },
         }}
+        action={
+          <Box
+            sx={{
+              bgcolor: school?.is_paid ? "#4caf50" : "#f44336",
+              color: "white",
+              px: 1.5,
+              py: 0.5,
+              borderRadius: "8px",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              fontFamily: "Poppins",
+              textTransform: "uppercase",
+            }}
+          >
+            {school?.is_paid ? "Paid" : "Unpaid"}
+          </Box>
+        }
       />
+
       <CardMedia
         component="img"
         height="194"
-        image={cardImage}
+        image={school?.image || cardImage}
         alt={school?.name}
       />
       <CardContent>
-        <Typography variant="body2" sx={{ color: "#202224", opacity: "60%" }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "#202224",
+            opacity: "60%",
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 2,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
           {school?.description}
         </Typography>
       </CardContent>

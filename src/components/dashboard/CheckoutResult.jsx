@@ -36,10 +36,10 @@ const CheckoutResultPage = ({ resetForm }) => {
           toast.success(res?.data?.message || "Payment successful!");
           if (resetForm) resetForm();
           setStatus("success");
-          setTimeout(() => navigate("/dashboard"), 2000);
         }
       } catch (err) {
         toast.error("Something went wrong!");
+        console.log(err, "err");
         setStatus("cancel");
       }
     };
@@ -86,35 +86,35 @@ const CheckoutResultPage = ({ resetForm }) => {
             ❌ Payment Failed or Cancelled!
           </Typography>
           <Typography variant="body1">Please try again.</Typography>
-          <Button
-            variant="contained"
-            onClick={() => navigate("/dashboard")}
-            to="/dashboard"
-            sx={{
-              color: "#fff",
-              maxWidth: "150px",
-              height: { xs: "42px" },
-              borderRadius: "8px",
-              backgroundColor: "#4880FF",
-              textWrap: "nowrap",
-              "&:hover": {
-                backgroundColor: "#3a6edc",
-              },
-              "&.Mui-disabled": {
-                color: "#fff",
-                backgroundColor: "#999",
-              },
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 500, fontFamily: "Nunito Sans" }}
-            >
-              Go to Dashboard
-            </Typography>
-          </Button>
         </>
       )}
+      <Button
+        variant="contained"
+        onClick={() => navigate("/dashboard")}
+        to="/dashboard"
+        sx={{
+          color: "#fff",
+          maxWidth: "150px",
+          height: { xs: "42px" },
+          borderRadius: "8px",
+          backgroundColor: "#4880FF",
+          textWrap: "nowrap",
+          "&:hover": {
+            backgroundColor: "#3a6edc",
+          },
+          "&.Mui-disabled": {
+            color: "#fff",
+            backgroundColor: "#999",
+          },
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: 500, fontFamily: "Nunito Sans" }}
+        >
+          Go to Dashboard
+        </Typography>
+      </Button>
     </Box>
   );
 };
