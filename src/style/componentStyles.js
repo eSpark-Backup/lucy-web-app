@@ -955,7 +955,7 @@ export const componentStyles = {
       width: "100%",
       mx: "auto",
       maxWidth: "350px",
-      height: "460px",
+      minHeight: "460px",
       borderRadius: "24px",
       boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
       textAlign: "center",

@@ -122,7 +122,7 @@ const SchoolProfileForm = ({
     onSubmit: async (values, { resetForm }) => {
       const { id: organization_id } = organizationData || {};
 
-      let finalImage = values.image;
+      let finalImage = values?.image;
 
       if (values.image && typeof values.image !== "string") {
         const formData = new FormData();

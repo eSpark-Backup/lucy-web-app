@@ -4,7 +4,7 @@ export const paymentApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createCheckoutSession: builder.mutation({
       query: (credentials) => ({
-        url: "/stripe/create-checkout-session",
+        url: "/payment/create-checkout-session",
         method: "POST",
         body: credentials,
         credentials: "include",
@@ -13,7 +13,7 @@ export const paymentApi = api.injectEndpoints({
     }),
     createPayment: builder.mutation({
       query: (credentials) => ({
-        url: "/stripe/success",
+        url: "/payment/success",
         method: "POST",
         body: credentials,
         credentials: "include",

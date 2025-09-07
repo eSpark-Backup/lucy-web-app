@@ -84,7 +84,7 @@ const Subplan = () => {
                   <Typography variant="body1" sx={subText}>
                     {plan?.description}
                   </Typography>
-                  <Divider sx={{ mt: "auto" }} />
+                  <Divider sx={{ mt: "auto", my: 2 }} />
                 </CardContent>
                 <Box sx={buttonWrapper}>
                   <Button

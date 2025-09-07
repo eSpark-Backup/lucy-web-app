@@ -71,7 +71,6 @@ const SchoolOverview = () => {
     }
     if (res?.data?.data?.id) {
       const stripe = await stripePromise;
-      // Redirect user to Stripe-hosted checkout page
       await stripe.redirectToCheckout({ sessionId: res?.data?.data?.id });
     }
   };
@@ -83,8 +82,18 @@ const SchoolOverview = () => {
       <FormHeader title={TEXT?.title} />
       <Stack
         pb={3}
-        direction={organizationData?.is_trust ? "row" : "column"}
-        spacing={organizationData?.is_trust ? 1 : 0}
+        direction={
+          organizationData?.is_trust ||
+          (!organizationData?.is_trust && allSchools?.data?.length < 1)
+            ? "row"
+            : "column"
+        }
+        spacing={
+          organizationData?.is_trust ||
+          (!organizationData?.is_trust && allSchools?.data?.length < 1)
+            ? 1
+            : 0
+        }
       >
         {(organizationData?.is_trust ||
           (!organizationData?.is_trust && allSchools?.data?.length < 1)) && (
@@ -99,8 +108,11 @@ const SchoolOverview = () => {
             </Typography>
           </Button>
         )}
-        {organizationData?.is_trust && (
+        {(organizationData?.is_trust || !organizationData?.is_trust) && (
           <Button
+            disabled={allSchools?.data?.every(
+              (school) => school?.is_paid === true
+            )}
             onClick={() => handleCreateCheckoutsession()}
             endIcon={<PaymentsIcon />}
             fullWidth

@@ -24,6 +24,7 @@ import SchoolOverview from "../components/dashboard/SchoolOverview";
 import SchoolFormSubmission from "../components/SchoolFormSubmission";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutResult from "../components/dashboard/CheckoutResult";
+import TrustProtectedRoute from "./TrustProtectedRoute";
 
 const routes = [
   {
@@ -68,12 +69,37 @@ const routes = [
     ),
     children: [
       { path: "/dashboard", element: <Dashboard /> },
-      { path: "/dashboard/calendar", element: <Calendar /> },
-      { path: "/dashboard/calendar/events/add", element: <CreateEvent /> },
-      { path: "/dashboard/calendar/events/:id", element: <CreateEvent /> },
+      {
+        path: "/dashboard/calendar",
+        element: (
+          <TrustProtectedRoute>
+            <Calendar />
+          </TrustProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/calendar/events/add",
+        element: (
+          <TrustProtectedRoute>
+            <CreateEvent />
+          </TrustProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/calendar/events/:id",
+        element: (
+          <TrustProtectedRoute>
+            <CreateEvent />
+          </TrustProtectedRoute>
+        ),
+      },
       {
         path: "/dashboard/calendar/event-list",
-        element: <EventList />,
+        element: (
+          <TrustProtectedRoute>
+            <EventList />
+          </TrustProtectedRoute>
+        ),
       },
       { path: "/dashboard/about", element: <About /> },
       {
@@ -92,19 +118,35 @@ const routes = [
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
       {
         path: "/dashboard/calendar/events/:eventId/contents",
-        element: <EventContents />,
+        element: (
+          <TrustProtectedRoute>
+            <EventContents />
+          </TrustProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:eventId/contents/:contentId/preview",
-        element: <EventContents />,
+        element: (
+          <TrustProtectedRoute>
+            <EventContents />
+          </TrustProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:eventId/contents/:contentId",
-        element: <CreateContent />,
+        element: (
+          <TrustProtectedRoute>
+            <CreateContent />
+          </TrustProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:eventId/contents/add",
-        element: <CreateContent />,
+        element: (
+          <TrustProtectedRoute>
+            <CreateContent />
+          </TrustProtectedRoute>
+        ),
       },
     ],
   },

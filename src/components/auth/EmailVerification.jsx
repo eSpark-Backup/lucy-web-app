@@ -1,44 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Box, Stack, Typography, Button } from "@mui/material";
-import { EMAIL_VERIFICATION, stripePromise } from "../../constant";
+import { EMAIL_VERIFICATION } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { useVerifyEmailQuery } from "../../services/auth";
 import ProgressionStatus from "../progressionStatus";
-import { useCreateCheckoutSessionMutation } from "../../services/payment";
-import { useGetMyOrganizationQuery } from "../../services/organization";
-import { toast } from "react-toastify";
 
 const EmailVerification = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [status, setStatus] = useState("loading");
-  const [createCheckoutSession] = useCreateCheckoutSessionMutation();
   const navigate = useNavigate();
 
   const { data, isSuccess, isError, error } = useVerifyEmailQuery(token, {
     skip: !token,
   });
-
-  const { data: organizationData, isSuccess: organizationSuccess } =
-    useGetMyOrganizationQuery();
-  const handleCreateCheckoutSession = async (formdata) => {
-    const res = await createCheckoutSession(formdata);
-
-    if (res?.error) {
-      toast.error(res?.error?.data?.message || "Something went wrong!");
-      return;
-    }
-    if (res?.data?.data?.id) {
-      if (formdata?.plan === "trust") {
-        navigate("/dashboard/school-overview");
-      } else {
-        const stripe = await stripePromise;
-        // Redirect user to Stripe-hosted checkout page
-        await stripe.redirectToCheckout({ sessionId: res?.data?.data?.id });
-      }
-    }
-  };
 
   const { title, description, successMessage, failureMessage, buttonText } =
     EMAIL_VERIFICATION || {};
@@ -66,13 +42,7 @@ const EmailVerification = () => {
   }, [data, isSuccess, isError, error]);
 
   const handleClick = () => {
-    if (organizationSuccess) {
-      const { id, is_trust } = organizationData || {};
-      handleCreateCheckoutSession({
-        plan: is_trust ? "trust" : "individual",
-        organizationId: id,
-      });
-    }
+    navigate("/dashboard");
   };
 
   return (

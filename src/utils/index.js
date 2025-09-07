@@ -23,7 +23,8 @@ export const isEmailVerified = () => {
   return localStorage.getItem("email-verify") === "true";
 };
 
-const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+const SECRET_KEY =
+  import.meta.env.VITE_SECRET_KEY || "29bd7390-6c1d-4989-98ed-4fddf59a224a";
 
 export const saveEncryptedCredentials = (email, password) => {
   const encryptedPassword = CryptoJS.AES.encrypt(
