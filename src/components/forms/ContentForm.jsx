@@ -173,7 +173,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
             // formik.setFieldValue("image", res?.data?.filePath);
             body = { ...body, attachment: res?.data?.filePath };
           } else if (res?.error) {
-            console.log(res?.error);
+            console.error(res?.error);
           }
         });
       }
@@ -213,7 +213,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
         if (res?.data) {
           formik.setFieldValue("image", res?.data?.filePath);
         } else if (res?.error) {
-          console.log(res?.error);
+          console.error(res?.error);
         }
       });
     }
@@ -320,7 +320,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                     name={name}
                     type={type}
                     placeholder={placeholder}
-                    value={formik?.values?.[name]}
+                    value={formik?.values?.[name] || ""}
                     onChange={formik?.handleChange}
                     onBlur={formik?.handleBlur}
                     multiline={name === "description"}

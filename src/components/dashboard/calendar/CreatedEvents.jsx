@@ -73,7 +73,7 @@ export default function CreatedEvents({ events }) {
                 <Avatar src={event?.image} sx={avatarStyle(isMobile)} />
                 <Box>
                   <Link
-                    to={`${eventsLink} ${event?.id}`}
+                    to={`${eventsLink}${event?.id}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
                     <Typography

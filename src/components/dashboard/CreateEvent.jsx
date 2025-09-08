@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useEffect, useState } from "react";
 import ConfirmModal from "../ConfirmModal";
+import BackButton from "../BackButton";
 
 dayjs.extend(utc);
 
@@ -127,6 +128,7 @@ const CreateEvent = () => {
 
   return (
     <Box>
+      <BackButton />
       <FormHeader
         deleteLoading={deleteLoading}
         openModal={() => setOpenModal(true)}

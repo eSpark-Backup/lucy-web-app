@@ -39,7 +39,7 @@ const CheckoutResultPage = ({ resetForm }) => {
         }
       } catch (err) {
         toast.error("Something went wrong!");
-        console.log(err, "err");
+        console.error(err, "err");
         setStatus("cancel");
       }
     };
@@ -73,9 +73,6 @@ const CheckoutResultPage = ({ resetForm }) => {
         <>
           <Typography variant="h4" color="green">
             🎉 Payment Successful!
-          </Typography>
-          <Typography variant="body1">
-            You will be redirected to the dashboard shortly.
           </Typography>
         </>
       )}

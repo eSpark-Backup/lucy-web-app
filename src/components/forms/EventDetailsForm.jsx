@@ -48,7 +48,6 @@ const EventDetailsForm = ({
     initialValues: data,
     validationSchema: eventValidationSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log(values, "values");
       resetForm();
       setImage(null);
       if (inputRef?.current) inputRef.current.value = null;
@@ -76,7 +75,7 @@ const EventDetailsForm = ({
                     name={name}
                     type={type}
                     placeholder={placeholder}
-                    value={formik?.values?.[name]}
+                    value={formik?.values?.[name] || ""}
                     onChange={formik?.handleChange}
                     onBlur={formik?.handleBlur}
                     multiline={name === "description"}

@@ -4,6 +4,7 @@ import SchoolProfileForm from "./forms/SchoolProfileForm";
 import FormHeader from "./forms/FormHeader";
 import { SCHOOL_FORM_SUBMISSION_TITLES } from "../constant";
 import { useGetSchoolByIdQuery } from "../services/school";
+import BackButton from "./BackButton";
 
 const SchoolFormSubmission = () => {
   const { mode, schoolId } = useParams();
@@ -29,6 +30,7 @@ const SchoolFormSubmission = () => {
 
   return (
     <Box>
+      <BackButton />
       <FormHeader title={SCHOOL_FORM_SUBMISSION_TITLES[mode]} />
       <SchoolProfileForm mode={mode} data={cleanedData} />
     </Box>

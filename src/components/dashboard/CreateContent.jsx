@@ -4,6 +4,7 @@ import ContentForm from "../forms/ContentForm";
 import { useParams } from "react-router-dom";
 import { useGetSingleContentQuery } from "../../services/content";
 import { useEffect, useState } from "react";
+import BackButton from "../BackButton";
 
 const contentTypeOptions = {
   press_release: "Press Release",
@@ -44,6 +45,7 @@ const CreateContent = () => {
   }
   return (
     <Box>
+      <BackButton />
       <FormHeader title={contentId ? "Edit Content" : "SEND EMAIL"} />
       <ContentForm
         data={contentId ? editData : undefined}

@@ -33,7 +33,6 @@ function Calendar() {
           let end;
           let allDay = false;
 
-          console.log(item?.time_span);
           if (item.time_span >= 1438 && item.time_span <= 1440) {
             // Around 24h → treat as same-day all-day
             end = start.endOf("day");

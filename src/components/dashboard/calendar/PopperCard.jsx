@@ -10,7 +10,6 @@ const PopperCard = forwardRef(function PopperCard(
 ) {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  console.log(eventId);
 
   const handleNavigate = (path) => {
     onClose();

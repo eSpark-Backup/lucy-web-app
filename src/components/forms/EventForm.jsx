@@ -80,7 +80,7 @@ const EventForm = ({
                       name={name}
                       type={type}
                       placeholder={placeholder}
-                      value={formik?.values?.[name]}
+                      value={formik?.values?.[name] || ""}
                       onChange={formik?.handleChange}
                       onBlur={formik?.handleBlur}
                       multiline={name === "description"}
@@ -103,7 +103,7 @@ const EventForm = ({
                     <DatePicker
                       label="Basic date picker"
                       name={name}
-                      value={formik?.values?.[name]}
+                      value={formik?.values?.[name] || ""}
                       onChange={formik?.handleChange}
                       onBlur={formik?.handleBlur}
                       error={
