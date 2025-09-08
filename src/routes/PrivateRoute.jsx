@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../utils";
+import { isAuthenticated, isEmailVerified } from "../utils"; // 👈 add this
 import { useGetUserWithTokenQuery } from "../services/auth";
 import { logout, setRedirectToLogin } from "../store/slices/auth";
 import { logo } from "../assets";
@@ -23,13 +23,19 @@ const PrivateRoute = ({ children }) => {
   const { isLoading, isSuccess, isError, error } = useGetUserWithTokenQuery(
     isAuthenticated()
   );
+
   useEffect(() => {
     if (isError) {
       dispatch(logout());
       toast.error(error?.data?.message);
       navigate("/auth/login");
     }
-  }, [isError, error]);
+  }, [isError, error, dispatch, navigate]);
+
+  if (isAuthenticated() && !isEmailVerified()) {
+    return <Navigate to="/auth/login" replace />;
+  }
+
   return isLoading ? (
     <Box
       sx={{

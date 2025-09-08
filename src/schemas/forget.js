@@ -2,6 +2,8 @@ import * as Yup from "yup";
 
 export const forgetSchema = Yup.object({
   email: Yup.string()
-    .email("Invalid email address")
+    .trim()
+    .email("Enter a valid email")
+    .lowercase()
     .required("Email is required"),
 });

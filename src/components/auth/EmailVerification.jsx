@@ -9,11 +9,13 @@ import ProgressionStatus from "../progressionStatus";
 const EmailVerification = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const navigate = useNavigate();
   const [status, setStatus] = useState("loading");
+  const navigate = useNavigate();
+
   const { data, isSuccess, isError, error } = useVerifyEmailQuery(token, {
     skip: !token,
   });
+
   const { title, description, successMessage, failureMessage, buttonText } =
     EMAIL_VERIFICATION || {};
 
@@ -29,6 +31,10 @@ const EmailVerification = () => {
     if (isSuccess) {
       setStatus("success");
       localStorage.setItem("token", data?.accessToken);
+      localStorage.setItem(
+        "email-verify",
+        data?.accessToken ? "true" : "false"
+      );
     }
     if (isError) {
       setStatus("error");
@@ -58,7 +64,6 @@ const EmailVerification = () => {
         <Button
           disabled={status !== "success"}
           onClick={handleClick}
-          type="submit"
           fullWidth
           sx={authButtonStyle}
         >

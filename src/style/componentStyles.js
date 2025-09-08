@@ -94,6 +94,10 @@ export const componentStyles = {
     "&:hover": {
       backgroundColor: "#3a6edc",
     },
+    "&.Mui-disabled": {
+      color: "#fff",
+      backgroundColor: "#999",
+    },
   },
   authButtonTypoStyle: {
     fontWeight: 500,
@@ -161,8 +165,8 @@ export const componentStyles = {
     buttonStyle: {
       ml: "auto",
       color: "#fff",
-      maxWidth: "274px",
-      height: { xs: "46px", md: "56px" },
+      maxWidth: { xs: "100%", sm: "274px" },
+      height: { xs: "42px", md: "52px", lg: "56px" },
       borderRadius: "12px",
       backgroundColor: "#4880FF",
       opacity: "90%",
@@ -597,8 +601,7 @@ export const componentStyles = {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      px: { xs: 4, md: 5 },
-      py: { xs: 5, sm: 6, md: 8 },
+      p: { xs: 3.5, sm: 4.5 },
       my: { xs: 3, md: 5 },
       overflow: "auto",
     },
@@ -894,6 +897,364 @@ export const componentStyles = {
       color: "#4880FF",
       fontFamily: "Nunito Sans",
       fontWeight: 700,
+    },
+  },
+
+  // Global subscripiton Plan screen component styles
+  subscriptionPlanScreenStyles: {
+    containerBoxStyle: (bgImage) => ({
+      margin: 0,
+      padding: 0,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "100vh",
+      overflow: "hidden",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${bgImage})`,
+      backgroundColor: "#FFF",
+    }),
+    innerBoxStyle: {
+      mx: "auto",
+      width: "100%",
+      maxWidth: "1200px",
+      height: "100%",
+      p: 4,
+    },
+    titleStyle: {
+      fontFamily: "Nunito Sans",
+      fontWeight: 700,
+      color: "#5088FF",
+      fontSize: "clamp(35px, 4vw, 64px)",
+    },
+    descriptionStyle: {
+      fontFamily: "Nunito Sans",
+      fontWeight: 700,
+      color: "#5088FF",
+      maxWidth: { xs: "552px", lg: "632px" },
+      lineHeight: 1.3,
+    },
+    skipLinkStyle: {
+      fontFamily: "Nunito Sans",
+      fontWeight: 700,
+    },
+    cardBoxStyle: {
+      mt: 6,
+      display: "flex",
+      p: { xs: 2, sm: 4, md: 6 },
+      justifyContent: "space-evenly",
+      border: "1px solid #979797",
+      backgroundColor: "#E9EDFE",
+      borderRadius: { xs: "30px", md: "40px" },
+      flexDirection: { xs: "column", sm: "row" },
+      gap: { xs: 2.5, sm: 4 },
+    },
+    cardStyle: {
+      width: "100%",
+      mx: "auto",
+      maxWidth: "350px",
+      minHeight: "460px",
+      borderRadius: "24px",
+      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
+      textAlign: "center",
+      p: 2,
+      display: "flex",
+      flexDirection: "column",
+    },
+    cardContent: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      gap: 1.2,
+    },
+    title: {
+      fontWeight: 700,
+      mb: 1,
+      color: "#202224",
+      fontFamily: "Nunito Sans",
+    },
+    description: {
+      mb: 2,
+      color: "#212121",
+      fontFamily: "Nunito Sans",
+    },
+    price: {
+      fontWeight: 800,
+      color: "#4880FF",
+      mb: 1,
+      fontFamily: "Nunito Sans",
+    },
+    subText: {
+      color: "#212121",
+      fontFamily: "Nunito Sans",
+    },
+    buttonWrapper: {
+      textAlign: "center",
+      mb: 2,
+    },
+    buttonStyle: {
+      width: "180px",
+      height: "60px",
+      borderColor: "#4880FF",
+      color: "#4880FF",
+      fontWeight: "bold",
+      borderRadius: "30px",
+      margin: "auto",
+      "&:hover": {
+        backgroundColor: "#FFFFFF",
+        borderColor: "#4880FF",
+      },
+    },
+    buttonText: {
+      color: "#4880FF",
+      fontFamily: "Nunito Sans",
+      fontWeight: 700,
+    },
+  },
+
+  // School overview screen components styles
+  schoolOverviewScreenStyles: {
+    addButton: {
+      color: "#fff",
+      maxWidth: { xs: "100%", sm: "132px" },
+      height: { xs: "42px", md: "46px" },
+      borderRadius: "8px",
+      backgroundColor: "#4880FF",
+      "&:hover": {
+        backgroundColor: "#3a6edc",
+      },
+      "&.Mui-disabled": {
+        color: "#fff",
+        backgroundColor: "#999",
+      },
+    },
+    addButtonText: {
+      fontWeight: 500,
+      fontFamily: "Nunito Sans",
+    },
+  },
+
+  // Payment Method screen components styles
+  paymentMethodScreenStyles: {
+    mainBoxStyle: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: { xs: "column", sm: "row" },
+      gap: { xs: 2, sm: 0 },
+      p: 2,
+    },
+    paymentSectionStyle: {
+      containerBoxStyle: {
+        width: "100%",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F6F6F6",
+      },
+      paymentBoxStyle: {
+        mx: { xs: "auto", sm: 0 },
+        width: "100%",
+        minHeight: "100%",
+        maxWidth: { sm: "545px", md: "742px" },
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#FFFFFF",
+        borderRadius: { xs: "24px", sm: "24px 0px 0px 24px" },
+        p: { xs: 3, md: 4 },
+      },
+      billingBoxStyle: {
+        width: "100%",
+        borderRadius: "5px",
+        alignItems: "center",
+        p: { xs: 1, md: 1.5 },
+        justifyContent: "space-between",
+        border: "1px solid rgba(151, 151, 151, 0.5)",
+      },
+      billingTextStyle: {
+        fontWeight: 600,
+        fontSize: { xs: "16px", md: "20px" },
+        fontFamily: "Nunito Sans",
+      },
+      switchStyle: {
+        width: { xs: 64, lg: 74 },
+        height: { xs: 28, lg: 38 },
+        padding: 0,
+        "& .MuiSwitch-switchBase": {
+          padding: { xs: 0.4, lg: 0.5 },
+          "&.Mui-checked": {
+            transform: "translateX(34px)",
+            color: "#fff",
+            "& + .MuiSwitch-track": {
+              backgroundColor: "#5088FF",
+              opacity: 1,
+            },
+          },
+        },
+        "& .MuiSwitch-thumb": {
+          width: { xs: 22, lg: 30 },
+          height: { xs: 22, lg: 30 },
+        },
+        "& .MuiSwitch-track": {
+          borderRadius: 20,
+          backgroundColor: "#ccc",
+          opacity: 1,
+        },
+      },
+      paymentTextStyle: { fontWeight: 600, fontFamily: "Nunito Sans" },
+      paymentDescriptionStyle: {
+        fontWeight: 500,
+        color: "#979797",
+        fontFamily: "Nunito Sans",
+      },
+      paymentMethodBoxStyle: (method, item) => ({
+        p: { xs: 1 },
+        px: { xs: 2 },
+        borderRadius: "5px",
+        border:
+          method === item.value
+            ? "1.5px solid #5088FF"
+            : "1px solid rgba(151,151,151,0.5)",
+        backgroundColor:
+          method === item.value ? "rgba(80, 136, 255, 0.22)" : "transparent",
+        transition: "all 0.3s ease",
+      }),
+      radioStyle: {
+        color: "#979797",
+        "&.Mui-checked": { color: "#5088FF" },
+      },
+      radioLabelStyle: {
+        fontWeight: 500,
+        fontSize: { xs: "16px", md: "20px" },
+      },
+      inputStyle: {
+        "& .MuiInputBase-root": {
+          height: { xs: "46px", lg: "56px" },
+          border: "1px solid #D8D8D8",
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          px: "15px",
+        },
+        "& input": {
+          fontSize: "16px",
+          backgroundColor: "#fff",
+          color: "#000",
+          "&::placeholder": {
+            color: "#A6A6A6",
+            opacity: 1,
+          },
+          "&:-webkit-autofill": {
+            WebkitBoxShadow: `0 0 0 1000px #fff inset !important`,
+            transition: "background-color 5000s ease-in-out 0s",
+          },
+          // Chrome, Safari, Edge
+          "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+            {
+              display: "none",
+            },
+          "& input[type=number]": {
+            MozAppearance: "textfield", // Firefox
+          },
+        },
+      },
+    },
+    planSectionStyle: {
+      containerBoxStyle: {
+        mx: { xs: "auto", sm: 0 },
+        width: "100%",
+        minHeight: "100%",
+        maxWidth: { sm: "545px" },
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "#5088FF5C",
+        p: { xs: 3, md: 4 },
+        borderRadius: { xs: "24px", sm: "0px 24px 24px 0px" },
+      },
+      planBoxStyle: {
+        width: "100%",
+        borderRadius: "13px",
+        backgroundColor: "#FFFFFF",
+        maxWidth: { sm: "485px" },
+        maxHeight: { sm: "707px" },
+        p: 2.5,
+      },
+      qontoStepIconStyle: (active, completed) => ({
+        width: 25,
+        height: 25,
+        borderRadius: "50%",
+        border: `4px solid ${
+          active && completed
+            ? "rgba(80, 136, 255, 1)"
+            : "rgba(151, 151, 151, 1)"
+        }`,
+      }),
+      planSummaryStyle: {
+        justifyContent: "space-between",
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          gap: 1,
+        },
+      },
+      billingCycleStyle: {
+        justifyContent: "space-between",
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          gap: 1,
+        },
+      },
+      steperLableStyle: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        pr: 1,
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.5,
+        },
+      },
+      stepContentStyle: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        pl: 1.5,
+        pt: 1,
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.5,
+        },
+      },
+      accountSummaryStyle: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        pt: 1,
+        "@media(max-width: 424px)": {
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0.5,
+        },
+      },
+      buttonStyle: {
+        color: "#fff",
+        height: { xs: "46px", md: "56px" },
+        borderRadius: "8px",
+        backgroundColor: "#4880FF",
+        "&:hover": {
+          backgroundColor: "#3a6edc",
+        },
+        "&.Mui-disabled": {
+          color: "#fff",
+          backgroundColor: "#999",
+        },
+      },
+      buttonTypoStyle: {
+        fontWeight: 500,
+        fontFamily: "Nunito Sans",
+      },
     },
   },
 };

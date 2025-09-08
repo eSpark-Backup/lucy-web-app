@@ -10,6 +10,7 @@ import {
   useGetSingleContentQuery,
 } from "../../services/content";
 import dayjs from "dayjs";
+import BackButton from "../BackButton";
 
 const contentTypeOptions = {
   "Press Release": "press_release",
@@ -89,8 +90,8 @@ const EventContents = () => {
 
   return (
     <Box>
+      <BackButton />
       <FormHeader title={isPreview ? "Content Preview" : "Event Content"} />
-
       {isPreview ? (
         <ContentPreview
           title={previewData?.title}

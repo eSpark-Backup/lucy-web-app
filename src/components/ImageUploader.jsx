@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import UploadIcon from "../assets/icons/upload.svg";
 
-const ImageUploader = ({ image, setImage, ref, formik }) => {
+const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
@@ -16,7 +17,7 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
     const file = e.target.files?.[0];
     if (file) {
       setImage(URL.createObjectURL(file));
-      formik?.setFieldValue("image", file);
+      formik.setFieldValue("image", file);
     }
   };
 
@@ -26,10 +27,19 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
     if (ref?.current) ref.current.value = null;
   };
 
+  useEffect(() => {
+    if (typeof formik?.values?.image === "string") {
+      setImage(formik.values.image);
+    } else if (!formik?.values?.image) {
+      setImage(null);
+    }
+  }, [formik?.values?.image]);
+
   return (
     <Box
-      onDrop={handleDrop}
-      onDragOver={(e) => e.preventDefault()}
+      onDrop={disabled ? undefined : handleDrop}
+      onDragOver={disabled ? undefined : (e) => e.preventDefault()}
+      onClick={() => !disabled && !image && ref?.current?.click()}
       sx={{
         border: "1px solid #D5D5D5",
         backgroundColor: "#F5F6FA",
@@ -40,10 +50,10 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
         justifyContent: "center",
         position: "relative",
         flexDirection: "column",
-        cursor: "pointer",
+        cursor: disabled ? "not-allowed" : "pointer",
         overflow: "hidden",
+        opacity: disabled ? 0.6 : 1,
       }}
-      onClick={() => !image && ref?.current?.click()}
     >
       {image ? (
         <>
@@ -54,27 +64,29 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
             sx={{
               height: "100%",
               width: "100%",
-              objectFit: "cover", // full fill with crop
+              objectFit: "cover",
             }}
           />
-          <IconButton
-            size="small"
-            onClick={handleClear}
-            sx={{
-              width: 25,
-              height: 25,
-              position: "absolute",
-              top: 4,
-              right: 4,
-              backgroundColor: "white",
-              border: "1px solid #ccc",
-              "&:hover": {
-                backgroundColor: "#f5f5f5",
-              },
-            }}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
+          {!disabled && (
+            <IconButton
+              size="small"
+              onClick={handleClear}
+              sx={{
+                width: 25,
+                height: 25,
+                position: "absolute",
+                top: 4,
+                right: 4,
+                backgroundColor: "white",
+                border: "1px solid #ccc",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+              }}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          )}
         </>
       ) : (
         <Box component={"img"} src={UploadIcon} />
@@ -85,6 +97,7 @@ const ImageUploader = ({ image, setImage, ref, formik }) => {
         type="file"
         hidden
         accept="image/*"
+        disabled={disabled}
         onChange={handleFileChange}
       />
     </Box>

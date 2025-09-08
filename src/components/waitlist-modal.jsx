@@ -170,7 +170,7 @@ const Step2 = () => {
       navigate("/?open=true&step=3");
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 

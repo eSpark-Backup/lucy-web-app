@@ -24,6 +24,7 @@ import calendar from "../assets/images/sidebar/calendar.svg";
 import about from "../assets/images/sidebar/about.svg";
 import profile from "../assets/images/sidebar/profile.svg";
 import logout from "../assets/images/sidebar/logout.svg";
+import { loadStripe } from "@stripe/stripe-js";
 
 export const features = [
   {
@@ -408,7 +409,7 @@ export const LOGIN = {
   haveAnAccountText: "Don’t have an account?",
   signUpText: {
     text: "Create Account",
-    link: "/auth/signup",
+    link: "/sub-plan",
   },
 };
 
@@ -528,6 +529,150 @@ export const GOTLOST = {
   buttonText: "Back to Dashboard",
 };
 
+export const ACCOUNT_FOR_SCHOOL = {
+  title: "Create an Account For School",
+  description: "Create a account to continue",
+  fields: [
+    {
+      isRow: true,
+      fields: [
+        {
+          label: "First Name",
+          type: "text",
+          placeholder: "Enter first name",
+          key: "first_name",
+        },
+        {
+          label: "Last Name",
+          type: "text",
+          placeholder: "Enter last name",
+          key: "last_name",
+        },
+      ],
+    },
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      isRow: true,
+      fields: [
+        {
+          label: "Phone Number",
+          type: "text",
+          placeholder: "Phone number",
+          key: "phone",
+        },
+        {
+          label: "Location",
+          type: "text",
+          placeholder: "Location",
+          key: "address",
+        },
+      ],
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "confirm_password",
+    },
+  ],
+  checkboxText: "I accept terms and conditions",
+  buttonText: "Sign Up",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Login",
+    link: "/auth/login",
+  },
+};
+
+export const ACCOUNT_FOR_TRUST = {
+  title: "Create an Account For Trust",
+  description: "Create a account to continue",
+  fields: [
+    {
+      isRow: true,
+      fields: [
+        {
+          label: "First Name",
+          type: "text",
+          placeholder: "Enter first name",
+          key: "first_name",
+        },
+        {
+          label: "Last Name",
+          type: "text",
+          placeholder: "Enter last name",
+          key: "last_name",
+        },
+      ],
+    },
+    {
+      label: "Trust Name",
+      type: "text",
+      placeholder: "Trust name",
+      key: "name",
+    },
+    {
+      label: "Email address:",
+      type: "email",
+      placeholder: "example@gmail.com",
+      key: "email",
+    },
+    {
+      isRow: true,
+      fields: [
+        {
+          label: "Phone Number",
+          type: "text",
+          placeholder: "Phone number",
+          key: "phone",
+        },
+        {
+          label: "Location",
+          type: "text",
+          placeholder: "Location",
+          key: "address",
+        },
+      ],
+    },
+    {
+      label: "Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "password",
+    },
+    {
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "••••••",
+      key: "confirm_password",
+    },
+    {
+      label: "Add a school",
+      type: "select",
+      placeholder: "Add a school",
+      key: "selected_school_count",
+    },
+  ],
+  checkboxText: "I accept terms and conditions",
+  buttonText: "Sign Up",
+  haveAnAccountText: "Already have an account?",
+  signUpText: {
+    text: "Login",
+    link: "/auth/login",
+  },
+};
+
 export const SIDEBAR = {
   sidebarLink: [
     {
@@ -543,6 +688,11 @@ export const SIDEBAR = {
     {
       text: "About",
       link: "/dashboard/about",
+      icon: about,
+    },
+    {
+      text: "School Overview",
+      link: "/dashboard/school-overview",
       icon: about,
     },
   ],
@@ -599,6 +749,54 @@ export const EVENTFORM = {
             },
           ]
         : []),
+      {
+        label: "Upload Image/Avtar",
+        btnText: "Upload Image",
+        name: "image",
+        size: 12,
+      },
+      {
+        label: "Description",
+        placeholder: "Provide some small Description",
+        type: "text",
+        name: "description",
+        size: 12,
+      },
+    ];
+  },
+};
+
+export const SCHOOL_INFORMATION_FORM = {
+  fields: (date) => {
+    return [
+      {
+        label: "School name",
+        placeholder: "Enter your school  name ",
+        type: "text",
+        name: "name",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Location",
+        placeholder: "Enter your location",
+        type: "text",
+        name: "address",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "Phone Number",
+        placeholder: "Enter your phone number",
+        type: "text",
+        name: "phone",
+        size: { xs: 12, lg: 5.5 },
+      },
+      {
+        label: "E-mail address",
+        placeholder: "school@gmail.com",
+        type: "email",
+        name: "email",
+        size: { xs: 12, lg: 5.5 },
+      },
       {
         label: "Upload Image/Avtar",
         btnText: "Upload Image",
@@ -694,3 +892,154 @@ export const SUBSCRIPTION_PLAN_DATA = {
   subPrice: "Per School/Months",
   button: "Subscribe Now",
 };
+
+export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
+  title: "Choose your plans",
+  description:
+    "Sign-up in less then 30 seconds. Try out 7days free trials Upgrade at anytime, no question, no hustle",
+  skipText: "Skip",
+  monthText: "Monthly",
+  yearText: "Yearly",
+  cards: [
+    {
+      title: "Basic",
+      subtitle: "Single School Plan",
+      price: "$50",
+      per: "Per School/Months",
+      description:
+        "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
+      buttonText: "Choose plan",
+      buttonLink: "/auth/signup/user",
+    },
+    {
+      title: "Basic",
+      subtitle: "Multi Academy Trust Plan",
+      price: "$10",
+      per: "Per School/Months",
+      description:
+        "Every school within the trust gets one login. This discounted rate is available only if all schools in the trust sign up.",
+      buttonText: "Choose plan",
+      buttonLink: "/auth/signup/trust",
+    },
+  ],
+};
+
+export const SCHOOL_FORM_SUBMISSION_TITLES = {
+  edit: "Edit School Information",
+  preview: "School Information",
+  add: "Add School",
+};
+
+export const PAYMENT_METHOD_DATA = {
+  paymentSection: {
+    yearBillingText: "Save with yearly billing",
+    paymentText: "Payment Method",
+    paymentDescription: "Select your preferred payment method for ShopSwift",
+    paymentOptions: [
+      {
+        title: "Credit or debit card",
+        value: "card",
+        form: [
+          {
+            label: "Card holder name",
+            placeholder: "Card holder name",
+            name: "holder_name",
+            type: "text",
+          },
+          {
+            isRow: true,
+            fields: [
+              {
+                label: "Card number",
+                placeholder: "xxxx-xxxx-xxxxx",
+                name: "card_number",
+                type: "text",
+              },
+              {
+                label: "Expires",
+                placeholder: "mm/yy",
+                name: "expires",
+                type: "month",
+              },
+              { label: "CVV", placeholder: "xxx", name: "cvv", type: "number" },
+            ],
+          },
+          {
+            isRow: true,
+            fields: [
+              {
+                label: "Country/region",
+                placeholder: "Indonesia",
+                name: "country",
+                type: "text",
+              },
+              {
+                label: "ZIP Code",
+                placeholder: "Input ZIP Code",
+                name: "zip_code",
+                type: "text",
+              },
+            ],
+          },
+        ],
+      },
+      // {
+      //   title: "Paypal",
+      //   value: "paypal",
+      //   form: [
+      //     {
+      //       label: "Email",
+      //       placeholder: "Input email",
+      //       name: "email",
+      //       type: "email",
+      //     },
+      //     {
+      //       label: "Password",
+      //       placeholder: "Input password",
+      //       name: "password",
+      //       type: "password",
+      //     },
+      //   ],
+      // },
+    ],
+  },
+  planSection: {
+    planSummary: {
+      title: "Advanced plan",
+      price: "$299.00",
+      billingCycle: "Monthly",
+      offer: "$1 x 2 months",
+    },
+    stepperData: [
+      {
+        date: "Today",
+        title: "Trial",
+        price: "Free",
+      },
+      {
+        date: "March 1, 2024",
+        title: "$1 x 2 months",
+        price: "$1.00",
+        period: "Every 30 days",
+      },
+      {
+        date: "May 1, 2024",
+        title: "Advanced plan",
+        price: "$299.00",
+        period: "Every 30 days",
+      },
+    ],
+    amountSummary: {
+      title: "Amount due",
+      date: "March 1, 2024",
+      text: "Plus applicable taxes",
+      buttonText: "Subscribe",
+      buttonLink: "#",
+      subText: "Change or cancel your plan at any time",
+    },
+  },
+};
+
+export const stripePromise = loadStripe(
+  "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
+);

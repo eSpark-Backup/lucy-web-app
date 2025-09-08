@@ -7,11 +7,24 @@ export function useQuery() {
 
 export const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+// export const isAuthenticated = () => {
+//   const token = localStorage.getItem("token");
+//   const email_verification = localStorage.getItem("email-verify");
+
+//   return token && email_verification === "true";
+// };
+
 export const isAuthenticated = () => {
-  return localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  return !!token;
 };
 
-const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+export const isEmailVerified = () => {
+  return localStorage.getItem("email-verify") === "true";
+};
+
+const SECRET_KEY =
+  import.meta.env.VITE_SECRET_KEY || "29bd7390-6c1d-4989-98ed-4fddf59a224a";
 
 export const saveEncryptedCredentials = (email, password) => {
   const encryptedPassword = CryptoJS.AES.encrypt(
