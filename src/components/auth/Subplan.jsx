@@ -22,7 +22,6 @@ const Subplan = () => {
     containerBoxStyle,
     innerBoxStyle,
     titleStyle,
-    descriptionStyle,
     cardStyle,
     cardContent,
     cardBoxStyle,
@@ -54,15 +53,6 @@ const Subplan = () => {
           </Stack>
           <Stack spacing={2}>
             <Typography sx={titleStyle}>{title}</Typography>
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              justifyContent={{ xs: "center", sm: "space-between" }}
-              gap={4}
-            >
-              <Typography variant="h3" sx={descriptionStyle}>
-                {description}
-              </Typography>
-            </Stack>
           </Stack>
           <Box sx={cardBoxStyle}>
             {cards?.map((plan, index) => (

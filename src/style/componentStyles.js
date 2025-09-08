@@ -929,13 +929,6 @@ export const componentStyles = {
       color: "#5088FF",
       fontSize: "clamp(35px, 4vw, 64px)",
     },
-    descriptionStyle: {
-      fontFamily: "Nunito Sans",
-      fontWeight: 700,
-      color: "#5088FF",
-      maxWidth: { xs: "552px", lg: "632px" },
-      lineHeight: 1.3,
-    },
     skipLinkStyle: {
       fontFamily: "Nunito Sans",
       fontWeight: 700,
