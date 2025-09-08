@@ -17,19 +17,17 @@ export default function BackButton({
   fallback = "/",
   iconOnly = false,
   confirm,
+  buttonSx,
+  iconButtonSx,
 }) {
   const navigate = useNavigate();
 
-  // check if we can go back in history
-  const canGoBack =
-    typeof window !== "undefined" &&
-    window.history &&
-    window.history.state &&
-    typeof window.history.state.idx === "number" &&
-    window.history.state.idx > 0;
-
   const handleClick = () => {
     if (confirm && !window.confirm(confirm)) return;
+
+    const idx = window.history.state?.idx ?? 0;
+    const canGoBack = window.history.length > 1 && idx > 0;
+
     if (canGoBack) {
       navigate(-1);
     } else {
@@ -40,7 +38,7 @@ export default function BackButton({
   if (iconOnly) {
     return (
       <Tooltip title={label}>
-        <IconButton disableRipple onClick={handleClick}>
+        <IconButton disableRipple onClick={handleClick} sx={iconButtonSx}>
           <ArrowBackIcon />
         </IconButton>
       </Tooltip>
@@ -60,6 +58,7 @@ export default function BackButton({
         backgroundColor: "transparent",
         boxShadow: "none",
         opacity: "90%",
+        ...buttonSx,
       }}
     >
       <Typography variant="h5" fontWeight={500}>

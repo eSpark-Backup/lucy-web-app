@@ -28,7 +28,7 @@ const EventContents = () => {
 
   const isPreview = location.pathname.includes("/preview");
 
-  const { data, isLoading, isError, error, is } = useGetAllContentQuery(
+  const { data, isLoading, isError, error } = useGetAllContentQuery(
     { eventId },
     { skip: isPreview }
   );
@@ -90,7 +90,7 @@ const EventContents = () => {
 
   return (
     <Box>
-      <BackButton />
+      <BackButton fallback={"/dashboard/calendar"} />
       <FormHeader title={isPreview ? "Content Preview" : "Event Content"} />
       {isPreview ? (
         <ContentPreview

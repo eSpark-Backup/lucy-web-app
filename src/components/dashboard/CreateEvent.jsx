@@ -1,19 +1,21 @@
-import { Box, LinearProgress } from "@mui/material";
-import FormHeader from "../forms/FormHeader";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Box, LinearProgress } from "@mui/material";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+import FormHeader from "../forms/FormHeader";
 import EventForm from "../forms/EventForm";
+import ConfirmModal from "../ConfirmModal";
+import BackButton from "../BackButton";
+
 import {
   useCreateEventMutation,
   useDeleteEventMutation,
   useEditEventMutation,
   useGetEventByIdQuery,
 } from "../../services/event";
-import { toast } from "react-toastify";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { useEffect, useState } from "react";
-import ConfirmModal from "../ConfirmModal";
-import BackButton from "../BackButton";
 
 dayjs.extend(utc);
 
@@ -22,11 +24,12 @@ const CreateEvent = () => {
   const { id } = useParams();
 
   const [event, setEvent] = useState({});
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const { data, isLoading, isSuccess, isError, error } = useGetEventByIdQuery(
     id,
     {
-      skip: !id,
+      skip: !id || isDeleted,
     }
   );
 
@@ -39,8 +42,8 @@ const CreateEvent = () => {
           event_name: data?.name,
           event_type: data?.type,
           duration: data?.time_span,
-          date: localDateTime.format("YYYY-MM-DD"), // Local date
-          start_time: localDateTime.format("HH:mm"), // Local time
+          date: localDateTime.format("YYYY-MM-DD"),
+          start_time: localDateTime.format("HH:mm"),
           image: data?.image,
           description: data?.description,
         });
@@ -48,12 +51,14 @@ const CreateEvent = () => {
 
       if (isError) {
         toast.error(error?.data?.message || "Event not found");
-        navigate(-1);
+        navigate("/dashboard/calendar");
       }
     }
-  }, [data, isSuccess, isError, error]);
+  }, [data, isSuccess, isError, error, id, navigate]);
 
   const [createEvent, { isLoading: addLoading }] = useCreateEventMutation();
+  const [editEvent, { isLoading: editLoading }] = useEditEventMutation();
+  const [deleteEvent, { isLoading: deleteLoading }] = useDeleteEventMutation();
 
   const handleCreate = (formdata, resetForm) => {
     createEvent(formdata).then((res) => {
@@ -69,8 +74,6 @@ const CreateEvent = () => {
     });
   };
 
-  const [editEvent, { isLoading: editLoading }] = useEditEventMutation();
-
   const handleEdit = (formdata) => {
     editEvent({ id, credentials: formdata }).then((res) => {
       if (res?.error) {
@@ -85,10 +88,7 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = (values, resetForm) => {
-    // Combine date & time in local timezone
     const localDateTime = dayjs(`${values.date}T${values.start_time}`);
-
-    // Format with offset instead of "Z"
     const date_time = localDateTime.format("YYYY-MM-DDTHH:mm:ssZ");
 
     const formdata = new FormData();
@@ -110,16 +110,16 @@ const CreateEvent = () => {
   };
 
   const [openModal, setOpenModal] = useState(false);
-  const [deleteEvent, { isLoading: deleteLoading }] = useDeleteEventMutation();
 
   const handleDelete = () => {
-    deleteEvent(id).then((res) => {
+    deleteEvent(id)?.then((res) => {
       if (res?.error) {
         toast.error(res?.error?.data?.message || "Something went wrong");
         return;
       }
       if (res?.data) {
         toast.success(res?.data?.message || "Event was deleted successfully");
+        setIsDeleted(true);
         setOpenModal(false);
         navigate("/dashboard/calendar");
       }
@@ -128,7 +128,7 @@ const CreateEvent = () => {
 
   return (
     <Box>
-      <BackButton />
+      <BackButton fallback={"/dashboard/calendar"} />
       <FormHeader
         deleteLoading={deleteLoading}
         openModal={() => setOpenModal(true)}

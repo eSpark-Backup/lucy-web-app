@@ -228,7 +228,7 @@ const Sidebar = () => {
         handleCancel={() => setOpenLogoutModal(false)}
         handleAccept={() => {
           dispatch(logout());
-          navigate("/auth/login");
+          window.location.href = "/auth/login";
         }}
         heading="Logout"
         button2Text="Logout"

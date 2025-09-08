@@ -12,8 +12,7 @@ const slice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.clear(); // sab clear kar dega
-      window.location.href = "/auth/login"; // ya window.location.reload();
+      localStorage.clear();
     },
     setRedirectToLogin: (state, action) => {
       state.redirectToLogin = action.payload;

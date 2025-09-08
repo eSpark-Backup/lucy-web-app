@@ -77,51 +77,46 @@ const Login = () => {
       remember: false,
     },
     validationSchema: loginSchema,
-    onSubmit: (values, { resetForm }) => {
-      const objToSend = {
-        email: values?.email,
-        password: values?.password,
-      };
-      login(objToSend)
-        .then((res) => {
-          const { data, error } = res || {};
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const objToSend = {
+          email: values.email,
+          password: values.password,
+        };
 
-          // 🔴 Handle API error
-          if (error) {
-            toast.error(error?.data?.message || "Login failed");
-            return;
-          }
+        const res = await login(objToSend);
 
-          // 🔴 If no data received
-          if (!data) {
-            toast.error("Unexpected error. Please try again.");
-            return;
-          }
+        if (res.error) {
+          toast.error(res?.error?.data?.message || "Login failed");
+          return;
+        }
 
-          // 🔐 Remember credentials
-          if (values.remember) {
-            saveEncryptedCredentials(values.email, values.password);
-          } else {
-            clearSavedCredentials();
-          }
+        const { data } = res || {};
+        if (!data) {
+          toast.error("Unexpected error. Please try again.");
+          return;
+        }
 
-          // 🔑 Save token and email verify status
-          localStorage.setItem("token", data.accessToken || "");
-          localStorage.setItem("email-verify", String(data.email_verified));
+        // remember credentials
+        if (values.remember) {
+          saveEncryptedCredentials(values.email, values.password);
+        } else {
+          clearSavedCredentials();
+        }
 
-          // 🚀 Navigate according to verification
-          if (data.accessToken && data.email_verified) {
-            navigate("/dashboard");
-          } else {
-            navigate(`/auth/email-verification?email=${values.email}`);
-          }
+        localStorage.setItem("token", data.accessToken || "");
+        localStorage.setItem("email-verify", String(data.email_verified));
 
-          // ✅ Reset form after success
-          resetForm();
-        })
-        .catch(() => {
-          toast.error("Something went wrong. Please try again.");
-        });
+        if (data.accessToken && data.email_verified) {
+          navigate("/dashboard");
+        } else {
+          navigate(`/auth/email-verification?email=${values.email}`);
+        }
+
+        resetForm();
+      } catch (err) {
+        toast.error(err?.message || "Something went wrong!");
+      }
     },
   });
 

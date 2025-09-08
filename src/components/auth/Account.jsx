@@ -117,36 +117,46 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
           selected_school_count: Number(selected_school_count),
         }),
       };
-      signup(objToSend).then((res) => {
-        const { data } = res || {};
-        if (!data) return;
+      signup(objToSend)
+        .then((res) => {
+          const { data, error } = res || {};
 
-        const { message, token, email_verified } = data;
+          // error case
+          if (error) {
+            toast.error(error?.data?.message || "Something went wrong!");
+            return;
+          }
 
-        if (token) {
-          localStorage.setItem("token", token);
-          // email verification status
-          localStorage.setItem(
-            "email-verify",
-            email_verified ? "true" : "false"
-          );
-        }
+          if (!data) return;
 
-        if (
-          message ===
-            "Registration successful! Please check your email to verify your account." &&
-          token
-        ) {
-          toast.success(message || "User created successfully");
-          navigate(`/auth/email-verification?email=${email}`);
-          handleCreateOrganization(
-            obj_for_organization,
-            resetForm,
-            email,
-            is_trust
-          );
-        }
-      });
+          const { message, token, email_verified } = data;
+
+          if (token) {
+            localStorage.setItem("token", token);
+            localStorage.setItem(
+              "email-verify",
+              email_verified ? "true" : "false"
+            );
+          }
+
+          if (
+            message ===
+              "Registration successful! Please check your email to verify your account." &&
+            token
+          ) {
+            toast.success(message || "User created successfully");
+            navigate(`/auth/email-verification?email=${email}`);
+            handleCreateOrganization(
+              obj_for_organization,
+              resetForm,
+              email,
+              is_trust
+            );
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.message || "Something went wrong!");
+        });
     },
   });
 
