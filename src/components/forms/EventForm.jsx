@@ -160,7 +160,7 @@ const EventForm = ({
                   sx={{ ...buttonStyle, marginLeft: "0px", width: "191px" }}
                 >
                   <Typography variant="h5" sx={buttonTypoStyle}>
-                    Edit
+                    Save
                   </Typography>
                 </Button>
                 <Button

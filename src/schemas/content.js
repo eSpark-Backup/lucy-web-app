@@ -10,39 +10,22 @@ export const contentFormSchema = Yup.object({
       const isNewsletter = v.includes("newsletter");
 
       if (isNewsletter) {
-        return schema.test(
-          "newsletter-word-count",
-          "Newsletter must be at least 200 words",
-          (value) => {
-            if (!value) return false;
-            const words = value.trim().split(/\s+/).filter(Boolean).length;
-            return words >= 200;
-          }
-        );
+        // ✅ Newsletter: no word/paragraph limit
+        return schema;
       }
 
-      return schema
-        .test(
-          "pressrelease-word-count",
-          "Press release must be at least 600 words",
-          (value) => {
-            if (!value) return false;
-            const words = value.trim().split(/\s+/).filter(Boolean).length;
-            return words >= 600;
-          }
-        )
-        .test(
-          "pressrelease-paragraph-count",
-          "Press release must contain at least 3 paragraphs",
-          (value) => {
-            if (!value) return false;
-            const paragraphs = value
-              // blank line OR HTML <p> separators supported
-              .split(/\n\s*\n|<\/p>\s*<p>/i)
-              .filter((p) => p.trim()).length;
-            return paragraphs >= 3;
-          }
-        );
+      // ✅ Press Release: max 3 paragraphs allowed
+      return schema.test(
+        "pressrelease-paragraph-count",
+        "Press release must not exceed 3 paragraphs",
+        (value) => {
+          if (!value) return false;
+          const paragraphs = value
+            .split(/\n\s*\n|<\/p>\s*<p>/i) // blank line OR <p> tag
+            .filter((p) => p.trim()).length;
+          return paragraphs <= 3;
+        }
+      );
     }),
 
   image: Yup.string(),
