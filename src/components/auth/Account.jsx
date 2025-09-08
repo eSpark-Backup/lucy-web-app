@@ -76,9 +76,6 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         return;
       }
       if (res?.data) {
-        toast.success(
-          res?.data?.message || "Organization created successfully"
-        );
         resetForm();
         navigate(`/auth/email-verification?email=${email}`);
       }
@@ -112,7 +109,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         role: "User",
       };
       const obj_for_organization = {
-        name: name,
+        name: is_trust ? name : "individual",
         address,
         is_trust: false,
         ...(is_trust && {
@@ -140,6 +137,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
             "Registration successful! Please check your email to verify your account." &&
           token
         ) {
+          toast.success(message || "User created successfully");
           navigate(`/auth/email-verification?email=${email}`);
           handleCreateOrganization(
             obj_for_organization,

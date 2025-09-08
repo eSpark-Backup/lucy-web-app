@@ -551,12 +551,6 @@ export const ACCOUNT_FOR_SCHOOL = {
       ],
     },
     {
-      label: "School Name",
-      type: "text",
-      placeholder: "School name",
-      key: "name",
-    },
-    {
       label: "Email address:",
       type: "email",
       placeholder: "example@gmail.com",

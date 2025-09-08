@@ -25,15 +25,6 @@ export const accountForSchoolSchema = Yup.object({
     .lowercase()
     .required("Email is required"),
 
-  name: Yup.string()
-    .trim()
-    .required("School name is required")
-    .max(150, "School name can be up to 150 characters")
-    .matches(
-      /^[A-Za-z0-9\s'’-]+$/,
-      "School name can only contain letters, numbers, spaces, apostrophes, and hyphens"
-    ),
-
   phone: Yup.string()
     .matches(/^\d+$/, "Phone number must be digits only")
     .min(7, "Phone number is too short")
