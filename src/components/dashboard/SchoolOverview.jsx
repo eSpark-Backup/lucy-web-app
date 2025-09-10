@@ -69,9 +69,11 @@ const SchoolOverview = () => {
       toast.error(res?.error?.data?.message || "Something went wrong!");
       return;
     }
-    if (res?.data?.data?.id) {
+    if (res?.data?.data?.sessionId) {
       const stripe = await stripePromise;
-      await stripe.redirectToCheckout({ sessionId: res?.data?.data?.id });
+      await stripe.redirectToCheckout({
+        sessionId: res?.data?.data?.sessionId,
+      });
     }
   };
 

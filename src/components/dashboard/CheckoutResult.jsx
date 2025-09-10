@@ -82,7 +82,6 @@ const CheckoutResultPage = ({ resetForm }) => {
           <Typography variant="h4" color="error">
             ❌ Payment Failed or Cancelled!
           </Typography>
-          <Typography variant="body1">Please try again.</Typography>
         </>
       )}
       <Button
