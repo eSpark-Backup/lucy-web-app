@@ -3,7 +3,6 @@ import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
 import Forgot from "../components/auth/Forget";
 import DashboardLayout from "../components/Layouts/DashboardLayout";
-import LandingPage from "../components/Layouts/LandingPage";
 import Dashboard from "../components/dashboard/Dashboard";
 import PublicRoute from "./PublicRoute";
 import Calendar from "../components/dashboard/Calendar";
@@ -29,7 +28,7 @@ import TrustProtectedRoute from "./TrustProtectedRoute";
 const routes = [
   {
     path: "/",
-    element: <LandingPage />,
+    element: <Navigate to="/auth/login" replace />,
   },
   {
     path: "/sub-plan",
@@ -102,10 +101,7 @@ const routes = [
         ),
       },
       { path: "/dashboard/about", element: <About /> },
-      {
-        path: "/dashboard/school-overview",
-        element: <SchoolOverview />,
-      },
+      { path: "/dashboard/school-overview", element: <SchoolOverview /> },
       {
         path: "/dashboard/school-overview/:mode",
         element: <SchoolFormSubmission />,
