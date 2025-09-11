@@ -18,14 +18,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSignupMutation } from "../../services/auth";
 import { useCreateOrganizationMutation } from "../../services/organization";
+import AddSchoolField from "../AddSchoolField";
 
 const Account = ({ is_trust = false, data, styles, schema }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [options, setOptions] = useState([
-    { value: "2", label: "2" },
-    { value: "3", label: "3" },
-  ]);
 
   const {
     title,
@@ -85,7 +82,9 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
   const formik = useFormik({
     initialValues: {
       ...initialValues,
-      ...(is_trust && { selected_school_count: "2" }),
+      ...(is_trust && {
+        selected_school_count: initialValues?.selected_school_count,
+      }),
       terms_and_conditions: false,
     },
     validationSchema: schema,
@@ -160,11 +159,6 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
     },
   });
 
-  const handleAddSchool = () => {
-    const nextValue = String(options.length + 2);
-    setOptions([...options, { value: nextValue, label: nextValue }]);
-  };
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
@@ -230,79 +224,66 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
             <Typography variant="h5" sx={authLableStyle}>
               {label}
             </Typography>
-            <TextField
-              fullWidth
-              name={key}
-              select={type === "select"}
-              sx={authInputStyle}
-              placeholder={placeholder}
-              value={formik?.values?.[key]}
-              onChange={formik?.handleChange}
-              onBlur={formik?.handleBlur}
-              error={formik?.touched?.[key] && Boolean(formik?.errors?.[key])}
-              helperText={formik?.touched?.[key] && formik?.errors?.[key]}
-              type={
-                type === "password"
-                  ? key === "confirm_password"
-                    ? showConfirmPassword
+            {label !== "Add a school" ? (
+              <TextField
+                fullWidth
+                name={key}
+                sx={authInputStyle}
+                placeholder={placeholder}
+                value={formik?.values?.[key]}
+                onChange={formik?.handleChange}
+                onBlur={formik?.handleBlur}
+                error={formik?.touched?.[key] && Boolean(formik?.errors?.[key])}
+                helperText={formik?.touched?.[key] && formik?.errors?.[key]}
+                type={
+                  type === "password"
+                    ? key === "confirm_password"
+                      ? showConfirmPassword
+                        ? "text"
+                        : "password"
+                      : showPassword
                       ? "text"
                       : "password"
-                    : showPassword
-                    ? "text"
-                    : "password"
-                  : type
-              }
-              InputProps={
-                type === "password" && {
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={
-                          key === "confirm_password"
-                            ? handleClickShowConfirmPassword
-                            : handleClickShowPassword
-                        }
-                        edge="end"
-                      >
-                        {key === "confirm_password" ? (
-                          showConfirmPassword ? (
+                    : type
+                }
+                InputProps={
+                  type === "password" && {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={
+                            key === "confirm_password"
+                              ? handleClickShowConfirmPassword
+                              : handleClickShowPassword
+                          }
+                          edge="end"
+                        >
+                          {key === "confirm_password" ? (
+                            showConfirmPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )
+                          ) : showPassword ? (
                             <VisibilityOff />
                           ) : (
                             <Visibility />
-                          )
-                        ) : showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }
                 }
-              }
-            >
-              {type === "select" &&
-                (options || [])?.map((opt) => (
-                  <MenuItem key={opt?.value} value={opt?.value}>
-                    {opt?.label}
-                  </MenuItem>
-                ))}
-            </TextField>
-            {type === "select" && (
-              <Button
-                variant="outlined"
-                sx={{
-                  height: { xs: "46px", md: "54px", lg: "56px" },
-                  border: "1px solid #D8D8D8",
-                  backgroundColor: "#F1F4F9",
-                  borderRadius: "8px",
-                  fontSize: "18px",
-                  color: "#000",
-                }}
-                onClick={handleAddSchool}
-              >
-                + Add School
-              </Button>
+              />
+            ) : (
+              <AddSchoolField
+                inputStyle={authInputStyle}
+                formik={formik}
+                name="selected_school_count"
+                min={0}
+                max={10}
+                step={1}
+              />
             )}
           </Stack>
         );

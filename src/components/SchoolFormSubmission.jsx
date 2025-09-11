@@ -23,6 +23,7 @@ const SchoolFormSubmission = () => {
           phone: singleSchoolData?.data?.phone || "",
           description: singleSchoolData?.data?.description || "",
           email: singleSchoolData?.data?.email || "",
+          password: singleSchoolData?.data?.password || "",
           image: singleSchoolData?.data?.image || "",
           organization_id: singleSchoolData?.data?.organization_id || "",
         }

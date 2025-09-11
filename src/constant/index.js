@@ -659,7 +659,7 @@ export const ACCOUNT_FOR_TRUST = {
     },
     {
       label: "Add a school",
-      type: "select",
+      type: "number",
       placeholder: "Add a school",
       key: "selected_school_count",
     },
@@ -708,8 +708,19 @@ export const SIDEBAR = {
 };
 
 export const EVENTFORM = {
-  fields: (date) => {
+  fields: (date, is_trust) => {
     return [
+      ...(is_trust
+        ? [
+            {
+              label: "School Name",
+              placeholder: "Enter your School Name",
+              type: "select",
+              name: "school_id",
+              size: { xs: 12 },
+            },
+          ]
+        : []),
       {
         label: "Event Name",
         placeholder: "Enter your Event Name",
@@ -738,6 +749,7 @@ export const EVENTFORM = {
         name: "start_time",
         size: { xs: 12, lg: 5.5 },
       },
+
       ...(!date
         ? [
             {
@@ -767,8 +779,8 @@ export const EVENTFORM = {
 };
 
 export const SCHOOL_INFORMATION_FORM = {
-  fields: (date) => {
-    return [
+  fields: (is_trust = false) => {
+    const fields = [
       {
         label: "School name",
         placeholder: "Enter your school  name ",
@@ -811,6 +823,28 @@ export const SCHOOL_INFORMATION_FORM = {
         size: 12,
       },
     ];
+    if (is_trust) {
+      fields.splice(
+        4,
+        0,
+        {
+          label: "Password",
+          placeholder: "Enter password",
+          type: "password",
+          name: "password",
+          size: { xs: 12, lg: 5.5 },
+        },
+        {
+          label: "Confirm Password",
+          placeholder: "Re-enter password",
+          type: "password",
+          name: "confirm_password",
+          size: { xs: 12, lg: 5.5 },
+        }
+      );
+    }
+
+    return fields;
   },
 };
 

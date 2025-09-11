@@ -7,6 +7,7 @@ import {
   Typography,
   Paper,
   Stack,
+  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { eventValidationSchema } from "../../schemas/event";
@@ -24,6 +25,8 @@ const initialEventData = {
   description: "",
 };
 
+const is_trust = true;
+
 const EventForm = ({
   isEdit = false,
   data = initialEventData,
@@ -34,8 +37,12 @@ const EventForm = ({
   const [search] = useSearchParams();
   const date = search.get("date") || null;
   const inputRef = useRef(null);
-  const [image, setImage] = useState(data?.image);
   const { id } = useParams();
+  const [image, setImage] = useState(data?.image);
+  const [schools, setSchools] = useState([
+    { name: "Beaconhouse", id: "1" },
+    { name: "Iqra Academy", id: "2" },
+  ]);
   useEffect(() => {
     setImage(data?.image);
   }, [data]);
@@ -51,8 +58,14 @@ const EventForm = ({
   } = EventFormStyles || {};
 
   const formik = useFormik({
-    initialValues: date ? { ...data, date } : data,
-    validationSchema: eventValidationSchema,
+    initialValues: date
+      ? {
+          ...data,
+          date,
+          ...(is_trust && { school_id: data?.school_id || "1" }),
+        }
+      : { ...data, ...(is_trust && { school_id: data?.school_id || "1" }) },
+    validationSchema: eventValidationSchema(is_trust),
     enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       if (inputRef?.current) inputRef.current.value = null;
@@ -67,7 +80,7 @@ const EventForm = ({
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(date)?.map(
+          {fields(date, is_trust)?.map(
             ({ label, name, placeholder, type, size }, index) => (
               <Grid size={size} key={index}>
                 <Stack width="100%" spacing={1.2}>
@@ -80,6 +93,7 @@ const EventForm = ({
                       name={name}
                       type={type}
                       placeholder={placeholder}
+                      select={is_trust && type === "select"}
                       value={formik?.values?.[name] || ""}
                       onChange={formik?.handleChange}
                       onBlur={formik?.handleBlur}
@@ -98,7 +112,15 @@ const EventForm = ({
                       helperText={
                         formik?.touched?.[name] && formik?.errors?.[name]
                       }
-                    />
+                    >
+                      {is_trust &&
+                        type === "select" &&
+                        (schools || [])?.map((opt) => (
+                          <MenuItem key={opt?.id} value={opt?.id}>
+                            {opt?.name}
+                          </MenuItem>
+                        ))}
+                    </TextField>
                   ) : name === "date" ? (
                     <DatePicker
                       label="Basic date picker"

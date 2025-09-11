@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DatePicker } from "@mui/lab";
 import {
   Button,
@@ -35,8 +35,6 @@ const SchoolProfileForm = ({
   mode = "add", // "add" | "edit" | "preview"
   data = initialEventData,
 }) => {
-  const [search] = useSearchParams();
-  const date = search.get("date") || null;
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [image, setImage] = useState();
@@ -116,8 +114,23 @@ const SchoolProfileForm = ({
 
   const formik = useFormik({
     initialValues:
-      isEdit || isPreview ? { ...initialEventData, ...data } : initialEventData,
-    validationSchema: schoolProfileValidationSchema,
+      isEdit || isPreview
+        ? {
+            ...initialEventData,
+            ...data,
+            ...(organizationData?.is_trust && {
+              password: "",
+              confirm_password: "",
+            }),
+          }
+        : {
+            ...initialEventData,
+            ...(organizationData?.is_trust && {
+              password: "",
+              confirm_password: "",
+            }),
+          },
+    validationSchema: schoolProfileValidationSchema(organizationData?.is_trust),
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       const { id: organization_id } = organizationData || {};
@@ -168,7 +181,7 @@ const SchoolProfileForm = ({
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(date)?.map(
+          {fields(organizationData?.is_trust)?.map(
             ({ label, name, placeholder, type, size }, index) => (
               <Grid size={size} key={index}>
                 <Stack width="100%" spacing={1.2}>
@@ -188,11 +201,6 @@ const SchoolProfileForm = ({
                         disabled={isPreview}
                         multiline={name === "description"}
                         rows={name === "description" ? 4 : 0}
-                        id={
-                          name === "description"
-                            ? "outlined-multiline-static"
-                            : `${index}`
-                        }
                         sx={inputStyle(name)}
                         error={
                           formik?.touched?.[name] &&
@@ -204,7 +212,6 @@ const SchoolProfileForm = ({
                       />
                     ) : (
                       <DatePicker
-                        label="Basic date picker"
                         name={name}
                         value={formik?.values?.[name] || ""}
                         onChange={formik?.handleChange}
@@ -220,6 +227,7 @@ const SchoolProfileForm = ({
                       />
                     )
                   ) : (
+                    // image uploader block
                     <>
                       <ImageUploader
                         ref={inputRef}
@@ -252,6 +260,7 @@ const SchoolProfileForm = ({
               </Grid>
             )
           )}
+
           <Grid size={12} pt={2.5}>
             {isEdit && (
               <Stack

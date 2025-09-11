@@ -112,7 +112,10 @@ export const accountForTrustSchema = Yup.object({
     .required("Confirm password is required")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 
-  selected_school_count: Yup.string().required("School count is required"),
+  selected_school_count: Yup.number()
+    .typeError("School count must be a number")
+    .required("School count is required")
+    .min(1, "At least 1 school is required"),
 
   terms_and_conditions: Yup.boolean().required(
     "Terms and conditions is required"

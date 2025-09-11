@@ -1,8 +1,10 @@
 import {
+  Alert,
   Box,
   Button,
   Grid,
   LinearProgress,
+  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -22,12 +24,6 @@ import { toast } from "react-toastify";
 import { useCreateCheckoutSessionMutation } from "../../services/payment";
 import { stripePromise } from "../../constant";
 import { useGetMyOrganizationQuery } from "../../services/organization";
-
-const TEXT = {
-  title: "School Profiles",
-  addButton: "Add",
-  paymentButton: "Payment",
-};
 
 const SchoolOverview = () => {
   const [modalData, setModalDate] = useState({});
@@ -79,9 +75,40 @@ const SchoolOverview = () => {
 
   if (schoolsLoading) return <LinearProgress />;
 
+  const is_discount =
+    allSchools?.data &&
+    allSchools?.data?.length <= 5 &&
+    allSchools?.data?.every((school) => school?.is_paid === false);
+
+  const TEXT = {
+    title: "School Profiles",
+    addButton: "Add",
+    paymentButton: "Payment",
+    info: `During signup, you added ${
+      organizationData?.selected_school_count || ""
+    } schools. Once you make a single payment for these schools, you’ll unlock a special discount on adding more schools in the future! 🎉`,
+  };
+
   return (
     <Box>
-      <FormHeader title={TEXT?.title} />
+      {organizationData?.is_trust && is_discount && (
+        <Alert severity="info" sx={{ borderRadius: 2, mb: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{ color: "text.secondary" }}
+            fontWeight={500}
+          >
+            {TEXT?.info}
+          </Typography>
+        </Alert>
+      )}
+      <FormHeader
+        title={
+          <Stack direction={"column"} spacing={2}>
+            <span>{TEXT?.title}</span>
+          </Stack>
+        }
+      />
       <Stack
         pb={3}
         direction={
@@ -126,6 +153,7 @@ const SchoolOverview = () => {
           </Button>
         )}
       </Stack>
+
       <Grid container spacing={3}>
         {schoolsSuccess &&
           allSchools?.data?.map((school, index) => (
