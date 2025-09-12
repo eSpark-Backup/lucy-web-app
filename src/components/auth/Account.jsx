@@ -108,7 +108,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         role: "User",
       };
       const obj_for_organization = {
-        name: is_trust ? name : "individual",
+        name: is_trust ? name : "single",
         address,
         is_trust: false,
         ...(is_trust && {

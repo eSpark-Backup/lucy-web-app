@@ -15,6 +15,8 @@ import { EVENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import ImageUploader from "../ImageUploader";
 import { useEffect, useRef, useState } from "react";
+import { useGetAllSchoolsQuery } from "../../services/school";
+import { useSelector } from "react-redux";
 
 const initialEventData = {
   event_name: "",
@@ -24,8 +26,6 @@ const initialEventData = {
   image: null,
   description: "",
 };
-
-const is_trust = true;
 
 const EventForm = ({
   isEdit = false,
@@ -39,13 +39,26 @@ const EventForm = ({
   const inputRef = useRef(null);
   const { id } = useParams();
   const [image, setImage] = useState(data?.image);
-  const [schools, setSchools] = useState([
-    { name: "Beaconhouse", id: "1" },
-    { name: "Iqra Academy", id: "2" },
-  ]);
+  const { user } = useSelector((state) => state?.auth);
+  const isSchoolRole = user?.role === "school";
+  const isUserRole = user?.role === "User";
+  const is_trust = user?.profile?.organization?.is_trust;
+  const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
+    skip: isSchoolRole,
+  });
+  const [selectedSchoolEmail, setSelectedSchoolEmail] = useState(
+    allSchools?.data[0].email
+  );
+
+  console.log(is_trust, "trust");
+  console.log(isSchoolRole, "isSchoolRole");
+  console.log(isUserRole, "isUserRole");
+  console.log(selectedSchoolEmail, "selectedSchoolEmail");
+
   useEffect(() => {
     setImage(data?.image);
   }, [data]);
+
   const { fields } = EVENTFORM || {};
   const { EventFormStyles } = componentStyles || {};
   const {
@@ -62,14 +75,30 @@ const EventForm = ({
       ? {
           ...data,
           date,
-          ...(is_trust && { school_id: data?.school_id || "1" }),
+          ...(is_trust &&
+            !isSchoolRole && {
+              school_email: data?.school_email || selectedSchoolEmail,
+              show_email: data?.school_email || selectedSchoolEmail,
+            }),
         }
-      : { ...data, ...(is_trust && { school_id: data?.school_id || "1" }) },
+      : {
+          ...data,
+          ...(is_trust &&
+            !isSchoolRole && {
+              school_email: data?.school_email,
+              show_email: data?.school_email,
+            }),
+        },
     validationSchema: eventValidationSchema(is_trust),
     enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
-      if (inputRef?.current) inputRef.current.value = null;
-      onSubmit(values, () => {
+      const { show_email, ...filteredValues } = values;
+
+      if (inputRef?.current) {
+        inputRef.current.value = null;
+      }
+
+      onSubmit(filteredValues, () => {
         resetForm();
         setImage(null);
       });
@@ -80,8 +109,11 @@ const EventForm = ({
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(date, is_trust)?.map(
-            ({ label, name, placeholder, type, size }, index) => (
+          {fields(date, is_trust, isSchoolRole)?.map(
+            (
+              { label, name, placeholder, type, size, disabled, is_editable },
+              index
+            ) => (
               <Grid size={size} key={index}>
                 <Stack width="100%" spacing={1.2}>
                   <Typography variant="h6" sx={inputLabelStyle}>
@@ -92,10 +124,16 @@ const EventForm = ({
                       fullWidth
                       name={name}
                       type={type}
+                      disabled={(isEdit && !is_editable) || disabled}
                       placeholder={placeholder}
                       select={is_trust && type === "select"}
                       value={formik?.values?.[name] || ""}
-                      onChange={formik?.handleChange}
+                      onChange={(e) => {
+                        formik.handleChange(e);
+                        if (name === "school_email") {
+                          return setSelectedSchoolEmail(e.target.value);
+                        }
+                      }}
                       onBlur={formik?.handleBlur}
                       multiline={name === "description"}
                       rows={name === "description" ? 4 : 0}
@@ -115,8 +153,8 @@ const EventForm = ({
                     >
                       {is_trust &&
                         type === "select" &&
-                        (schools || [])?.map((opt) => (
-                          <MenuItem key={opt?.id} value={opt?.id}>
+                        (allSchools?.data || [])?.map((opt) => (
+                          <MenuItem key={opt?.email} value={opt?.email}>
                             {opt?.name}
                           </MenuItem>
                         ))}

@@ -12,7 +12,7 @@ export const eventValidationSchema = (is_trust) =>
       .max(30, "Maximum 30 characters allowed"),
 
     ...(is_trust && {
-      school_id: Yup.string().required("School Name is required"),
+      school_email: Yup.string().required("School email is required"),
     }),
 
     duration: Yup.number()

@@ -708,25 +708,45 @@ export const SIDEBAR = {
 };
 
 export const EVENTFORM = {
-  fields: (date, is_trust) => {
+  fields: (date, is_trust, isSchoolRole) => {
+    const trustFields = [
+      {
+        label: "School Name",
+        placeholder: "Enter your School Name",
+        type: "select",
+        name: "school_email",
+        size: { xs: 12 },
+        is_editable: false,
+      },
+      {
+        label: "School Email",
+        placeholder: "Enter your School Email",
+        type: "email",
+        name: "show_email",
+        disabled: true,
+        size: { xs: 12 },
+        is_editable: false,
+      },
+    ];
+
+    const dateField = {
+      label: "Select Date",
+      placeholder: "Enter your Event Date",
+      type: "date",
+      name: "date",
+      size: 12,
+      is_editable: true,
+    };
+
     return [
-      ...(is_trust
-        ? [
-            {
-              label: "School Name",
-              placeholder: "Enter your School Name",
-              type: "select",
-              name: "school_id",
-              size: { xs: 12 },
-            },
-          ]
-        : []),
+      ...(is_trust && !isSchoolRole ? trustFields : []),
       {
         label: "Event Name",
         placeholder: "Enter your Event Name",
         type: "text",
         name: "event_name",
         size: { xs: 12, lg: 5.5 },
+        is_editable: true,
       },
       {
         label: "Event Type",
@@ -734,13 +754,15 @@ export const EVENTFORM = {
         type: "text",
         name: "event_type",
         size: { xs: 12, lg: 5.5 },
+        is_editable: true,
       },
       {
-        label: "Duration (Minutes) ",
+        label: "Duration (Minutes)",
         placeholder: "Select Time",
         type: "number",
         name: "duration",
         size: { xs: 12, lg: 5.5 },
+        is_editable: true,
       },
       {
         label: "Select Start Time",
@@ -748,38 +770,30 @@ export const EVENTFORM = {
         type: "time",
         name: "start_time",
         size: { xs: 12, lg: 5.5 },
+        is_editable: true,
       },
-
-      ...(!date
-        ? [
-            {
-              label: "Select Date",
-              placeholder: "Enter your Event Date",
-              type: "date",
-              name: "date",
-              size: 12,
-            },
-          ]
-        : []),
+      ...(!date ? [dateField] : []),
       {
-        label: "Upload Image/Avtar",
+        label: "Upload Image/Avatar",
         btnText: "Upload Image",
         name: "image",
         size: 12,
+        is_editable: true,
       },
       {
         label: "Description",
-        placeholder: "Provide some small Description",
+        placeholder: "Provide a short description",
         type: "text",
         name: "description",
         size: 12,
+        is_editable: true,
       },
     ];
   },
 };
 
 export const SCHOOL_INFORMATION_FORM = {
-  fields: (is_trust = false) => {
+  fields: (is_trust = false, isEdit = false) => {
     const fields = [
       {
         label: "School name",
@@ -823,7 +837,7 @@ export const SCHOOL_INFORMATION_FORM = {
         size: 12,
       },
     ];
-    if (is_trust) {
+    if ((is_trust, !isEdit)) {
       fields.splice(
         4,
         0,

@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const schoolProfileValidationSchema = (is_trust) =>
+export const schoolProfileValidationSchema = (is_trust, isEdit) =>
   Yup.object().shape({
     name: Yup.string()
       .trim()
@@ -28,18 +28,19 @@ export const schoolProfileValidationSchema = (is_trust) =>
       .lowercase()
       .required("Email is required"),
 
-    ...(is_trust && {
-      password: Yup.string()
-        .trim()
-        .required("Password is required")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
-          "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces"
-        ),
-      confirm_password: Yup.string()
-        .required("Confirm Password is required")
-        .oneOf([Yup.ref("password")], "Passwords must match"),
-    }),
+    ...(!isEdit &&
+      is_trust && {
+        password: Yup.string()
+          .trim()
+          .required("Password is required")
+          .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
+            "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces"
+          ),
+        confirm_password: Yup.string()
+          .required("Confirm Password is required")
+          .oneOf([Yup.ref("password")], "Passwords must match"),
+      }),
 
     image: Yup.string().required("Image is required"),
 

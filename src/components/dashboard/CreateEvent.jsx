@@ -16,6 +16,7 @@ import {
   useEditEventMutation,
   useGetEventByIdQuery,
 } from "../../services/event";
+import { useSelector } from "react-redux";
 
 dayjs.extend(utc);
 
@@ -33,7 +34,10 @@ const CreateEvent = () => {
     }
   );
 
-  const is_trust = false;
+  const { user } = useSelector((state) => state?.auth);
+  const isSchoolRole = user?.role === "school";
+  const isUserRole = user?.role === "User";
+  const is_trust = user?.profile?.organization?.is_trust;
 
   useEffect(() => {
     if (id) {
@@ -43,7 +47,11 @@ const CreateEvent = () => {
         setEvent({
           event_name: data?.name,
           event_type: data?.type,
-          ...(is_trust && { school_id: data?.school_id || "1" }),
+          ...(is_trust &&
+            !isSchoolRole &&
+            !isUserRole && {
+              school_email: data?.school?.email,
+            }),
           duration: data?.time_span,
           date: localDateTime.format("YYYY-MM-DD"),
           start_time: localDateTime.format("HH:mm"),
@@ -101,8 +109,8 @@ const CreateEvent = () => {
     formdata.append("description", values?.description);
     formdata.append("date_time", date_time);
 
-    if (is_trust) {
-      formdata.append("school_id", values?.school_id || "1");
+    if (is_trust === true && isSchoolRole === false && !id) {
+      formdata.append("school_email", values?.school_email);
     }
     if (values?.image && typeof values?.image === "object") {
       formdata.append("image", values?.image);

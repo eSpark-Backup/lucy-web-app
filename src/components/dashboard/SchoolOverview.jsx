@@ -57,7 +57,7 @@ const SchoolOverview = () => {
   const handleCreateCheckoutsession = async () => {
     const { id, is_trust } = organizationData || {};
     const res = await createCheckoutSession({
-      plan: is_trust ? "trust" : "individual",
+      plan: is_trust ? "trust" : "single",
       organizationId: id,
     });
 
@@ -78,7 +78,7 @@ const SchoolOverview = () => {
   const is_discount =
     allSchools?.data &&
     allSchools?.data?.length <= 5 &&
-    allSchools?.data?.every((school) => school?.is_paid === false);
+    allSchools?.data?.some((school) => school?.is_paid);
 
   const TEXT = {
     title: "School Profiles",

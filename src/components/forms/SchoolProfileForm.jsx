@@ -130,7 +130,10 @@ const SchoolProfileForm = ({
               confirm_password: "",
             }),
           },
-    validationSchema: schoolProfileValidationSchema(organizationData?.is_trust),
+    validationSchema: schoolProfileValidationSchema(
+      organizationData?.is_trust,
+      isEdit
+    ),
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       const { id: organization_id } = organizationData || {};
@@ -156,8 +159,10 @@ const SchoolProfileForm = ({
         }
       }
 
+      const { confirm_password, ...rest } = values;
+
       const objToSend = {
-        ...values,
+        ...rest,
         image: finalImage,
         organization_id,
         id: data?.id,
@@ -181,7 +186,7 @@ const SchoolProfileForm = ({
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(organizationData?.is_trust)?.map(
+          {fields(organizationData?.is_trust, isEdit)?.map(
             ({ label, name, placeholder, type, size }, index) => (
               <Grid size={size} key={index}>
                 <Stack width="100%" spacing={1.2}>
@@ -237,7 +242,11 @@ const SchoolProfileForm = ({
                         disabled={isPreview}
                       />
                       {formik?.touched?.image && formik?.errors?.image && (
-                        <Typography color="error" fontSize={12} m={"3px 14px"}>
+                        <Typography
+                          color="error"
+                          fontSize={12}
+                          m={"3px 14px !important"}
+                        >
                           {formik?.errors?.image}
                         </Typography>
                       )}

@@ -23,6 +23,8 @@ import SchoolOverview from "../components/dashboard/SchoolOverview";
 import SchoolFormSubmission from "../components/SchoolFormSubmission";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutResult from "../components/dashboard/CheckoutResult";
+import CalendarProtectedRoute from "./CalendarProtectedRoute";
+import SchoolProtectedRoute from "./SchoolProtectedRoute";
 
 const routes = [
   {
@@ -69,47 +71,101 @@ const routes = [
       { path: "/dashboard", element: <Dashboard /> },
       {
         path: "/dashboard/calendar",
-        element: <Calendar />,
+        element: (
+          <CalendarProtectedRoute>
+            <Calendar />
+          </CalendarProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/add",
-        element: <CreateEvent />,
+        element: (
+          <CalendarProtectedRoute>
+            <CreateEvent />
+          </CalendarProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:id",
-        element: <CreateEvent />,
+        element: (
+          <CalendarProtectedRoute>
+            <CreateEvent />
+          </CalendarProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/event-list",
-        element: <EventList />,
+        element: (
+          <CalendarProtectedRoute>
+            <EventList />
+          </CalendarProtectedRoute>
+        ),
       },
       { path: "/dashboard/about", element: <About /> },
-      { path: "/dashboard/school-overview", element: <SchoolOverview /> },
+      {
+        path: "/dashboard/school-overview",
+        element: (
+          <SchoolProtectedRoute>
+            <SchoolOverview />
+          </SchoolProtectedRoute>
+        ),
+      },
       {
         path: "/dashboard/school-overview/:mode",
-        element: <SchoolFormSubmission />,
+        element: (
+          <SchoolProtectedRoute>
+            <SchoolFormSubmission />
+          </SchoolProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/school-overview/:mode/:schoolId",
-        element: <SchoolFormSubmission />,
+        element: (
+          <SchoolProtectedRoute>
+            <SchoolFormSubmission />
+          </SchoolProtectedRoute>
+        ),
       },
-      { path: "/dashboard/profile", element: <Profile /> },
+      {
+        path: "/dashboard/profile",
+        element: (
+          <SchoolProtectedRoute>
+            <Profile />
+          </SchoolProtectedRoute>
+        ),
+      },
       { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
       {
         path: "/dashboard/calendar/events/:eventId/contents",
-        element: <EventContents />,
+        element: (
+          <CalendarProtectedRoute>
+            <EventContents />
+          </CalendarProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:eventId/contents/:contentId/preview",
-        element: <EventContents />,
+        element: (
+          <CalendarProtectedRoute>
+            <EventContents />
+          </CalendarProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:eventId/contents/:contentId",
-        element: <CreateContent />,
+        element: (
+          <CalendarProtectedRoute>
+            <CreateContent />
+          </CalendarProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/calendar/events/:eventId/contents/add",
-        element: <CreateContent />,
+        element: (
+          <CalendarProtectedRoute>
+            <CreateContent />
+          </CalendarProtectedRoute>
+        ),
       },
     ],
   },

@@ -5,12 +5,14 @@ import { Link, useLocation } from "react-router-dom";
 import { SIDEBAR } from "../constant";
 import { logout } from "../store/slices/auth";
 import ConfirmModal from "./ConfirmModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
   const { sidebarLink, profileLink, LogoutButton } = SIDEBAR || {};
   const { pathname } = useLocation();
+  const { user } = useSelector((state) => state?.auth);
+  const role = user?.role === "school";
 
   const isActive =
     pathname === profileLink?.link ||
@@ -46,72 +48,74 @@ const Sidebar = () => {
             gap: 2,
           }}
         >
-          {sidebarLink?.map(({ text, link, icon }, index) => {
-            const isActive =
-              pathname === link ||
-              pathname === `${link}/` ||
-              (link !== "/dashboard" && pathname.startsWith(link));
+          {sidebarLink
+            ?.filter((item) => !(item?.text === "School Overview" && role))
+            ?.map(({ text, link, icon }, index) => {
+              const isActive =
+                pathname === link ||
+                pathname === `${link}/` ||
+                (link !== "/dashboard" && pathname.startsWith(link));
 
-            return (
-              <Link to={link} key={index} style={{ textDecoration: "none" }}>
-                <Box
-                  sx={{
-                    width: "100%",
-                    position: "relative",
-                    overflow: "hidden",
-                    "&::before": isActive
-                      ? {
-                          content: '""',
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "5px",
-                          height: "100%",
-                          backgroundColor: "#4880FF",
-                          borderTopRightRadius: "4px",
-                          borderBottomRightRadius: "4px",
-                        }
-                      : undefined,
-                  }}
-                >
+              return (
+                <Link to={link} key={index} style={{ textDecoration: "none" }}>
                   <Box
                     sx={{
-                      mx: "auto",
                       width: "100%",
-                      maxWidth: "192px",
-                      height: "50px",
-                      backgroundColor: isActive ? "#4880FF" : "transparent",
-                      borderRadius: "6px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2,
-                      px: 2.5,
+                      position: "relative",
+                      overflow: "hidden",
+                      "&::before": isActive
+                        ? {
+                            content: '""',
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "5px",
+                            height: "100%",
+                            backgroundColor: "#4880FF",
+                            borderTopRightRadius: "4px",
+                            borderBottomRightRadius: "4px",
+                          }
+                        : undefined,
                     }}
                   >
                     <Box
-                      component={"img"}
-                      src={icon}
                       sx={{
-                        filter: isActive
-                          ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                          : "none",
-                      }}
-                    />
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontWeight: 500,
-                        fontFamily: "Poppins",
-                        color: isActive ? "#fff" : "#000000",
+                        mx: "auto",
+                        width: "100%",
+                        maxWidth: "192px",
+                        height: "50px",
+                        backgroundColor: isActive ? "#4880FF" : "transparent",
+                        borderRadius: "6px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 2,
+                        px: 2.5,
                       }}
                     >
-                      {text}
-                    </Typography>
+                      <Box
+                        component={"img"}
+                        src={icon}
+                        sx={{
+                          filter: isActive
+                            ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                            : "none",
+                        }}
+                      />
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 500,
+                          fontFamily: "Poppins",
+                          color: isActive ? "#fff" : "#000000",
+                        }}
+                      >
+                        {text}
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
         </Box>
       </Box>
       <Box
@@ -121,66 +125,68 @@ const Sidebar = () => {
           flexDirection: "column",
           borderTop: "1px solid #E0E0E0",
           gap: 2,
-          py: 4,
+          py: !role ? 4 : 3,
         }}
       >
-        <Link to={profileLink?.link} style={{ textDecoration: "none" }}>
-          <Box
-            sx={{
-              width: "100%",
-              position: "relative",
-              overflow: "hidden",
-              "&::before": isActive
-                ? {
-                    content: '""',
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "5px",
-                    height: "100%",
-                    backgroundColor: "#4880FF",
-                    borderTopRightRadius: "4px",
-                    borderBottomRightRadius: "4px",
-                  }
-                : undefined,
-            }}
-          >
+        {!role && (
+          <Link to={profileLink?.link} style={{ textDecoration: "none" }}>
             <Box
               sx={{
-                mx: "auto",
                 width: "100%",
-                maxWidth: "192px",
-                height: "50px",
-                backgroundColor: isActive ? "#4880FF" : "transparent",
-                borderRadius: "6px",
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                px: 2.5,
+                position: "relative",
+                overflow: "hidden",
+                "&::before": isActive
+                  ? {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "5px",
+                      height: "100%",
+                      backgroundColor: "#4880FF",
+                      borderTopRightRadius: "4px",
+                      borderBottomRightRadius: "4px",
+                    }
+                  : undefined,
               }}
             >
               <Box
-                component={"img"}
-                src={profileLink?.icon}
                 sx={{
-                  filter: isActive
-                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                    : "none",
-                }}
-              />
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 500,
-                  fontFamily: "Poppins",
-                  color: isActive ? "#fff" : "#000000",
+                  mx: "auto",
+                  width: "100%",
+                  maxWidth: "192px",
+                  height: "50px",
+                  backgroundColor: isActive ? "#4880FF" : "transparent",
+                  borderRadius: "6px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  px: 2.5,
                 }}
               >
-                {profileLink?.text}
-              </Typography>
+                <Box
+                  component={"img"}
+                  src={profileLink?.icon}
+                  sx={{
+                    filter: isActive
+                      ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                      : "none",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 500,
+                    fontFamily: "Poppins",
+                    color: isActive ? "#fff" : "#000000",
+                  }}
+                >
+                  {profileLink?.text}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        </Link>
+          </Link>
+        )}
         <Box
           sx={{
             width: "100%",
