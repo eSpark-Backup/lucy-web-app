@@ -159,10 +159,11 @@ const SchoolProfileForm = ({
         }
       }
 
-      const { confirm_password, ...rest } = values;
+      const { password, confirm_password, ...rest } = values;
 
       const objToSend = {
         ...rest,
+        ...(organizationData?.is_trust ? { password } : {}),
         image: finalImage,
         organization_id,
         id: data?.id,

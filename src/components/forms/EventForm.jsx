@@ -41,19 +41,13 @@ const EventForm = ({
   const [image, setImage] = useState(data?.image);
   const { user } = useSelector((state) => state?.auth);
   const isSchoolRole = user?.role === "school";
-  const isUserRole = user?.role === "User";
   const is_trust = user?.profile?.organization?.is_trust;
   const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
     skip: isSchoolRole,
   });
   const [selectedSchoolEmail, setSelectedSchoolEmail] = useState(
-    allSchools?.data[0].email
+    allSchools?.data[0]?.email
   );
-
-  console.log(is_trust, "trust");
-  console.log(isSchoolRole, "isSchoolRole");
-  console.log(isUserRole, "isUserRole");
-  console.log(selectedSchoolEmail, "selectedSchoolEmail");
 
   useEffect(() => {
     setImage(data?.image);
@@ -153,11 +147,13 @@ const EventForm = ({
                     >
                       {is_trust &&
                         type === "select" &&
-                        (allSchools?.data || [])?.map((opt) => (
-                          <MenuItem key={opt?.email} value={opt?.email}>
-                            {opt?.name}
-                          </MenuItem>
-                        ))}
+                        (allSchools?.data || [])
+                          ?.filter((opt) => opt?.is_paid)
+                          ?.map((opt) => (
+                            <MenuItem key={opt?.email} value={opt?.email}>
+                              {opt?.name}
+                            </MenuItem>
+                          ))}
                     </TextField>
                   ) : name === "date" ? (
                     <DatePicker

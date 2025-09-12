@@ -36,7 +36,6 @@ const CreateEvent = () => {
 
   const { user } = useSelector((state) => state?.auth);
   const isSchoolRole = user?.role === "school";
-  const isUserRole = user?.role === "User";
   const is_trust = user?.profile?.organization?.is_trust;
 
   useEffect(() => {
@@ -48,8 +47,7 @@ const CreateEvent = () => {
           event_name: data?.name,
           event_type: data?.type,
           ...(is_trust &&
-            !isSchoolRole &&
-            !isUserRole && {
+            !isSchoolRole && {
               school_email: data?.school?.email,
             }),
           duration: data?.time_span,

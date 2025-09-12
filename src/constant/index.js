@@ -837,7 +837,7 @@ export const SCHOOL_INFORMATION_FORM = {
         size: 12,
       },
     ];
-    if ((is_trust, !isEdit)) {
+    if (is_trust && !isEdit) {
       fields.splice(
         4,
         0,

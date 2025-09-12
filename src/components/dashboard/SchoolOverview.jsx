@@ -4,7 +4,6 @@ import {
   Button,
   Grid,
   LinearProgress,
-  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -77,8 +76,8 @@ const SchoolOverview = () => {
 
   const is_discount =
     allSchools?.data &&
-    allSchools?.data?.length <= 5 &&
-    allSchools?.data?.some((school) => school?.is_paid);
+    allSchools?.data?.length <= organizationData?.selected_school_count &&
+    allSchools?.data?.every((s) => !s.is_paid);
 
   const TEXT = {
     title: "School Profiles",
