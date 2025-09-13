@@ -69,21 +69,19 @@ const EventForm = ({
       ? {
           ...data,
           date,
-          ...(is_trust &&
-            !isSchoolRole && {
-              school_email: data?.school_email || selectedSchoolEmail,
-              show_email: data?.school_email || selectedSchoolEmail,
-            }),
+          ...(!isSchoolRole && {
+            school_email: data?.name || selectedSchoolEmail,
+            show_email: data?.school_email || selectedSchoolEmail,
+          }),
         }
       : {
           ...data,
-          ...(is_trust &&
-            !isSchoolRole && {
-              school_email: data?.school_email,
-              show_email: data?.school_email,
-            }),
+          ...(!isSchoolRole && {
+            school_email: data?.school_email,
+            show_email: data?.school_email,
+          }),
         },
-    validationSchema: eventValidationSchema(is_trust),
+    validationSchema: eventValidationSchema(),
     enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       const { show_email, ...filteredValues } = values;
@@ -120,7 +118,7 @@ const EventForm = ({
                       type={type}
                       disabled={(isEdit && !is_editable) || disabled}
                       placeholder={placeholder}
-                      select={is_trust && type === "select"}
+                      select={type === "select"}
                       value={formik?.values?.[name] || ""}
                       onChange={(e) => {
                         formik.handleChange(e);
@@ -145,8 +143,7 @@ const EventForm = ({
                         formik?.touched?.[name] && formik?.errors?.[name]
                       }
                     >
-                      {is_trust &&
-                        type === "select" &&
+                      {type === "select" &&
                         (allSchools?.data || [])
                           ?.filter((opt) => opt?.is_paid)
                           ?.map((opt) => (

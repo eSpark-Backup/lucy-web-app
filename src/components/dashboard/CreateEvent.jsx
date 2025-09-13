@@ -46,10 +46,9 @@ const CreateEvent = () => {
         setEvent({
           event_name: data?.name,
           event_type: data?.type,
-          ...(is_trust &&
-            !isSchoolRole && {
-              school_email: data?.school?.email,
-            }),
+          ...(!isSchoolRole && {
+            school_email: data?.school?.email,
+          }),
           duration: data?.time_span,
           date: localDateTime.format("YYYY-MM-DD"),
           start_time: localDateTime.format("HH:mm"),
@@ -107,7 +106,7 @@ const CreateEvent = () => {
     formdata.append("description", values?.description);
     formdata.append("date_time", date_time);
 
-    if (is_trust === true && isSchoolRole === false && !id) {
+    if (isSchoolRole === false && !id) {
       formdata.append("school_email", values?.school_email);
     }
     if (values?.image && typeof values?.image === "object") {

@@ -717,6 +717,7 @@ export const EVENTFORM = {
         name: "school_email",
         size: { xs: 12 },
         is_editable: false,
+        disabled: !is_trust ? true : false,
       },
       {
         label: "School Email",
@@ -739,7 +740,7 @@ export const EVENTFORM = {
     };
 
     return [
-      ...(is_trust && !isSchoolRole ? trustFields : []),
+      ...(!isSchoolRole ? trustFields : []),
       {
         label: "Event Name",
         placeholder: "Enter your Event Name",
