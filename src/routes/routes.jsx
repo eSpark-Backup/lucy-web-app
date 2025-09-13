@@ -9,7 +9,6 @@ import Calendar from "../components/dashboard/Calendar";
 import About from "../components/dashboard/About";
 import NotFound from "../components/NotFound";
 import Profile from "../components/dashboard/Profile";
-import SubscriptionCard from "../components/dashboard/Subscription";
 import CreateContent from "../components/dashboard/CreateContent";
 import EventList from "../components/dashboard/EventList";
 import EventContents from "../components/dashboard/EventContents";
@@ -134,7 +133,6 @@ const routes = [
           </SchoolProtectedRoute>
         ),
       },
-      { path: "/dashboard/sub-plan", element: <SubscriptionCard /> },
       {
         path: "/dashboard/calendar/events/:eventId/contents",
         element: (

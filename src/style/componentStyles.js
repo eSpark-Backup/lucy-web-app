@@ -647,7 +647,7 @@ export const componentStyles = {
     },
     imageStyle: {
       mx: "auto",
-      maxWidth: "398px",
+      maxWidth: "298px",
       width: { xs: "50%", lg: "100%" },
     },
     textStyle: {
@@ -657,8 +657,8 @@ export const componentStyles = {
     },
     logoImageStyle: {
       mx: "auto",
-      maxWidth: "621px",
-      width: { xs: "60%", lg: "100%" },
+      maxWidth: "521px",
+      width: { xs: "60%", md: "75%", lg: "100%" },
     },
   },
 

@@ -952,7 +952,7 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
     {
       title: "Basic",
       subtitle: "Single School Plan",
-      price: "$50",
+      price: "£50",
       per: "Per School/Months",
       description:
         "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
@@ -962,7 +962,7 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
     {
       title: "Basic",
       subtitle: "Multi Academy Trust Plan",
-      price: "$10",
+      price: "£10",
       per: "Per School/Months",
       description:
         "Every school within the trust gets one login. This discounted rate is available only if all schools in the trust sign up.",
