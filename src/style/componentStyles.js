@@ -705,7 +705,6 @@ export const componentStyles = {
         letterSpacing: "-0.05px",
       },
       createEventTypoStyle: {
-        mt: 3,
         fontWeight: 700,
         color: "#202224",
         fontFamily: "Poppins",

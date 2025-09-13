@@ -1,12 +1,4 @@
-import {
-  Box,
-  Paper,
-  Typography,
-  Stack,
-  Divider,
-  Popper,
-  Modal,
-} from "@mui/material";
+import { Box, Paper, Typography, Stack, Divider, Modal } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 
@@ -41,7 +33,9 @@ const ModalCard = ({ openModal, setOpenModal }) => {
             spacing={2}
             alignItems="center"
             sx={{ cursor: "pointer" }}
-            onClick={() => handleNavigate(`/dashboard/calendar/events/add?date=${openModal}`)}
+            onClick={() =>
+              handleNavigate(`/dashboard/calendar/events/add?date=${openModal}`)
+            }
           >
             <CalendarMonthIcon sx={{ color: "#EA64D9" }} />
             <Box>

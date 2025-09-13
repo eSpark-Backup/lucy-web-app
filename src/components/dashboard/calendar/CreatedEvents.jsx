@@ -11,7 +11,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { componentStyles } from "../../../style/componentStyles.js";
 import { CALENDAR_DATA } from "../../../constant/index.js";
 
@@ -21,8 +21,6 @@ export default function CreatedEvents({ events }) {
   const {
     paperStyle,
     typoAndButtonBoxStyle,
-    buttonStyle,
-    newEventTypoStyle,
     createEventTypoStyle,
     dividerStyle,
     eventListBoxStyle,
@@ -33,10 +31,9 @@ export default function CreatedEvents({ events }) {
     showMoreButtonStyle,
   } = CreatedEventsStyle || {};
   const { CREATEDEVENTS_DATA } = CALENDAR_DATA || {};
-  const { addEventButtonText, createEventText, eventsLink, noEventsText } =
+  const { createEventText, eventsLink, noEventsText } =
     CREATEDEVENTS_DATA || {};
   const [showAll, setShowAll] = useState(false);
-  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme?.breakpoints?.down("sm"));
   const visibleEvents = showAll ? events : events?.slice(0, 4);
@@ -44,16 +41,6 @@ export default function CreatedEvents({ events }) {
   return (
     <Paper sx={paperStyle}>
       <Box sx={typoAndButtonBoxStyle(isMobile)}>
-        <Button
-          fullWidth
-          sx={buttonStyle}
-          variant="contained"
-          onClick={() => navigate(`/dashboard/calendar/events/add`)}
-        >
-          <Typography variant="h5" sx={newEventTypoStyle}>
-            {addEventButtonText}
-          </Typography>
-        </Button>
         <Typography variant="h5" sx={createEventTypoStyle}>
           {createEventText}
         </Typography>

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
 
@@ -26,7 +25,6 @@ const dateChunks = (date) => {
 const EventCalendar = ({ events }) => {
   const calendarRef = useRef(null);
   const popperRef = useRef(null);
-  const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [popupType, setPopupType] = useState(null);
@@ -74,7 +72,7 @@ const EventCalendar = ({ events }) => {
   const handleMonthTitleClick = () => {
     const titleElement = document.querySelector(".fc-toolbar-title");
     if (titleElement) {
-      setPopupAnchor(titleElement);
+      // setPopupAnchor(titleElement);
     }
   };
 
@@ -99,7 +97,7 @@ const EventCalendar = ({ events }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
+
   const COLORS_MAP = {
     "user-1": "#6C63FF", // purple
     "user-2": "#00BFA6", // teal
