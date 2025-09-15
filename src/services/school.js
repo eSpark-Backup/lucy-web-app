@@ -3,14 +3,15 @@ import { api } from "./rtk";
 export const schoolApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllSchools: builder.query({
-      query: (credentials) => ({
+      query: (params) => ({
         url: "/schools",
         method: "GET",
-        body: credentials,
+        params,
         credentials: "include",
       }),
-      providesTags: ["school"],
+      providesTags: ["schools"],
     }),
+
     createSchool: builder.mutation({
       query: (credentials) => ({
         url: "/schools/create",
@@ -18,15 +19,18 @@ export const schoolApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["school"],
+      invalidatesTags: ["schools"],
     }),
+
     getSchoolById: builder.query({
       query: (id) => ({
         url: `/schools/${id}`,
         method: "GET",
+        credentials: "include",
       }),
-      providesTags: ["school"],
+      providesTags: (result, error, id) => [{ type: "schools", id }],
     }),
+
     editSchool: builder.mutation({
       query: ({ id, credentials }) => ({
         url: `/schools/${id}`,
@@ -34,14 +38,19 @@ export const schoolApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["school"],
+      invalidatesTags: (result, error, { id }) => [
+        "schools",
+        { type: "schools", id },
+      ],
     }),
+
     deleteSchool: builder.mutation({
       query: (id) => ({
         url: `/schools/${id}`,
         method: "DELETE",
+        credentials: "include",
       }),
-      invalidatesTags: ["school"],
+      invalidatesTags: ["schools"],
     }),
   }),
 });

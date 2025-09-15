@@ -7,6 +7,8 @@ import FormHeader from "../forms/FormHeader";
 import { useGetMyEventsQuery } from "../../services/event";
 import { componentStyles } from "../../style/componentStyles";
 import dayjs from "dayjs";
+import { useGetAllSchoolsQuery } from "../../services/school";
+import { useSelector } from "react-redux";
 
 function Calendar() {
   const { CalendarScreenStyle } = componentStyles || {};
@@ -25,41 +27,78 @@ function Calendar() {
   };
   const [calendarEvents, setCalendarEvents] = useState([]);
   const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery();
+  const { user } = useSelector((state) => state?.auth);
+  const is_trust = user?.profile?.organization?.is_trust;
+  const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
+    skip: !is_trust,
+  });
+
   useEffect(() => {
-    if (isSuccess) {
-      setCalendarEvents(
-        data?.map((item) => {
-          const start = dayjs(item.date_time).local();
-          let end;
-          let allDay = false;
+    if (is_trust) {
+      if (allSchools?.data) {
+        const allEvents = allSchools.data.flatMap((school) =>
+          (school.events || []).map((item) => {
+            const start = dayjs(item.date_time).local();
+            let end;
+            let allDay = false;
 
-          if (item.time_span >= 1438 && item.time_span <= 1440) {
-            // Around 24h → treat as same-day all-day
-            end = start.endOf("day");
-            allDay = true;
-          } else {
-            end = start.add(item.time_span, "minute");
-          }
+            if (item.time_span >= 1438 && item.time_span <= 1440) {
+              end = start.endOf("day");
+              allDay = true;
+            } else {
+              end = start.add(item.time_span, "minute");
+            }
 
-          return {
-            id: item.id,
-            title: item.name,
-            start: start.toDate(),
-            end: end.toDate(),
-            allDay, // ✅ lets FC know if it should treat as all-day
-            duration: formatDuration(item.time_span),
-            attendees: [],
-            image: item.image,
-            date: start.format("DD/MM/YYYY"),
-          };
-        })
-      );
+            return {
+              id: item.id,
+              title: item.name,
+              start: start.toDate(),
+              end: end.toDate(),
+              allDay,
+              duration: formatDuration(item.time_span),
+              attendees: [],
+              image: item.image,
+              date: start.format("DD/MM/YYYY"),
+            };
+          })
+        );
+        setCalendarEvents(allEvents);
+      }
+    } else {
+      if (isSuccess) {
+        setCalendarEvents(
+          data?.map((item) => {
+            const start = dayjs(item.date_time).local();
+            let end;
+            let allDay = false;
+
+            if (item.time_span >= 1438 && item.time_span <= 1440) {
+              end = start.endOf("day");
+              allDay = true;
+            } else {
+              end = start.add(item.time_span, "minute");
+            }
+
+            return {
+              id: item.id,
+              title: item.name,
+              start: start.toDate(),
+              end: end.toDate(),
+              allDay,
+              duration: formatDuration(item.time_span),
+              attendees: [],
+              image: item.image,
+              date: start.format("DD/MM/YYYY"),
+            };
+          })
+        );
+      }
+
+      if (isError) {
+        toast.error(error?.data?.message || "Something went wrong");
+      }
     }
-
-    if (isError) {
-      toast.error(error?.data?.message || "Something went wrong");
-    }
-  }, [data, isSuccess, isError, error]);
+  }, [is_trust, allSchools, data, isSuccess, isError, error]);
 
   return (
     <>

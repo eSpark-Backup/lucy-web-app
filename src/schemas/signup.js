@@ -26,10 +26,13 @@ export const accountForSchoolSchema = Yup.object({
     .required("Email is required"),
 
   phone: Yup.string()
-    .matches(/^\d+$/, "Phone number must be digits only")
-    .min(7, "Phone number is too short")
-    .max(15, "Phone number is too long")
-    .required("Phone number is required"),
+    .required("Phone number is required")
+    .matches(
+      /^\+?[0-9]+$/,
+      "Must contain only digits (optionally starting with +)"
+    )
+    .min(7, "Must be at least 7 digits")
+    .max(15, "Must be at most 15 digits"),
 
   address: Yup.string()
     .trim()

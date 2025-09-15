@@ -794,7 +794,7 @@ export const EVENTFORM = {
 };
 
 export const SCHOOL_INFORMATION_FORM = {
-  fields: (is_trust = false, isEdit = false) => {
+  fields: (is_trust = false, isEdit = false, isPreview = false) => {
     const fields = [
       {
         label: "School name",
@@ -823,6 +823,7 @@ export const SCHOOL_INFORMATION_FORM = {
         type: "email",
         name: "email",
         size: { xs: 12, lg: 5.5 },
+        disabled: isEdit ? true : false,
       },
       {
         label: "Upload Image/Avtar",
@@ -838,7 +839,7 @@ export const SCHOOL_INFORMATION_FORM = {
         size: 12,
       },
     ];
-    if (is_trust && !isEdit) {
+    if (is_trust && !isEdit && !isPreview) {
       fields.splice(
         4,
         0,

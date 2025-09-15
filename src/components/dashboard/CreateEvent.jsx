@@ -16,7 +16,8 @@ import {
   useEditEventMutation,
   useGetEventByIdQuery,
 } from "../../services/event";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { api } from "../../services/rtk";
 
 dayjs.extend(utc);
 
@@ -37,6 +38,7 @@ const CreateEvent = () => {
   const { user } = useSelector((state) => state?.auth);
   const isSchoolRole = user?.role === "school";
   const is_trust = user?.profile?.organization?.is_trust;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
@@ -77,6 +79,7 @@ const CreateEvent = () => {
       if (res?.data) {
         toast.success(res?.data?.message || "Event created successfully");
         resetForm();
+        dispatch(api.util.invalidateTags(["schools"]));
         navigate(`/dashboard/calendar/events/${res?.data?.id}`);
       }
     });
@@ -90,6 +93,7 @@ const CreateEvent = () => {
       }
       if (res?.data) {
         toast.success(res?.data?.message || "Event edited successfully");
+        dispatch(api.util.invalidateTags(["schools"]));
         navigate("/dashboard/calendar");
       }
     });

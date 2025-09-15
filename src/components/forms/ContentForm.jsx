@@ -265,7 +265,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   }, [recipientsData, recipientsSuccess]);
 
   useEffect(() => {
-    console.log(emails);
+    formik.setFieldValue("recipients", emails);
   }, [emails]);
 
   if (eventLoading || recipientsLoading) {

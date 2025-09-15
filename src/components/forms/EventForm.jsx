@@ -45,9 +45,17 @@ const EventForm = ({
   const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
     skip: isSchoolRole,
   });
-  const [selectedSchoolEmail, setSelectedSchoolEmail] = useState(
-    allSchools?.data[0]?.email
-  );
+
+  const defaultSchoolEmail =
+    allSchools?.data?.find((opt) => opt?.is_paid)?.email || "";
+  const [selectedSchoolEmail, setSelectedSchoolEmail] =
+    useState(defaultSchoolEmail);
+
+  useEffect(() => {
+    if (!isSchoolRole && defaultSchoolEmail) {
+      setSelectedSchoolEmail(defaultSchoolEmail);
+    }
+  }, [allSchools, isSchoolRole]);
 
   useEffect(() => {
     setImage(data?.image);
@@ -81,7 +89,7 @@ const EventForm = ({
             show_email: data?.school_email,
           }),
         },
-    validationSchema: eventValidationSchema(),
+    validationSchema: eventValidationSchema(isSchoolRole),
     enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       const { show_email, ...filteredValues } = values;

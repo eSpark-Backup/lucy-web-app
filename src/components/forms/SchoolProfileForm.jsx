@@ -7,6 +7,8 @@ import {
   Typography,
   Paper,
   Stack,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
@@ -21,6 +23,8 @@ import {
 import { toast } from "react-toastify";
 import { useGetMyOrganizationQuery } from "../../services/organization";
 import { useAddImageMutation } from "../../services/image";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const initialEventData = {
   name: "",
@@ -49,6 +53,7 @@ const SchoolProfileForm = ({
   const [createSchool, { isLoading: addLoading }] = useCreateSchoolMutation();
   const [editSchool, { isLoading: updateLoading }] = useEditSchoolMutation();
   const [imageUpload] = useAddImageMutation();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleCreate = async (formdata, resetForm) => {
     try {
@@ -183,12 +188,14 @@ const SchoolProfileForm = ({
     },
   });
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(organizationData?.is_trust, isEdit)?.map(
-            ({ label, name, placeholder, type, size }, index) => (
+          {fields(organizationData?.is_trust, isEdit, isPreview)?.map(
+            ({ label, name, placeholder, type, size, disabled }, index) => (
               <Grid size={size} key={index}>
                 <Stack width="100%" spacing={1.2}>
                   <Typography variant="h6" sx={inputLabelStyle}>
@@ -199,12 +206,11 @@ const SchoolProfileForm = ({
                       <TextField
                         fullWidth
                         name={name}
-                        type={type}
                         placeholder={placeholder}
                         value={formik?.values?.[name] || ""}
                         onChange={formik?.handleChange}
                         onBlur={formik?.handleBlur}
-                        disabled={isPreview}
+                        disabled={isPreview || disabled}
                         multiline={name === "description"}
                         rows={name === "description" ? 4 : 0}
                         sx={inputStyle(name)}
@@ -214,6 +220,36 @@ const SchoolProfileForm = ({
                         }
                         helperText={
                           formik?.touched?.[name] && formik?.errors?.[name]
+                        }
+                        type={
+                          type === "password"
+                            ? showPassword
+                              ? "text"
+                              : "password"
+                            : type
+                        }
+                        InputProps={
+                          type === "password" && {
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label={
+                                    showPassword
+                                      ? "hide the password"
+                                      : "display the password"
+                                  }
+                                  onClick={handleClickShowPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }
                         }
                       />
                     ) : (
@@ -280,8 +316,8 @@ const SchoolProfileForm = ({
                 gap={2}
               >
                 <Button
-                  loading={addLoading || updateLoading}
-                  disabled={addLoading || updateLoading}
+                  loading={updateLoading}
+                  disabled={updateLoading}
                   type="submit"
                   variant="contained"
                   sx={{
@@ -304,8 +340,8 @@ const SchoolProfileForm = ({
             {isAdd && (
               <Button
                 fullWidth
-                loading={addLoading || updateLoading}
-                disabled={addLoading || updateLoading}
+                loading={addLoading}
+                disabled={addLoading}
                 type="submit"
                 variant="contained"
                 sx={buttonStyle}

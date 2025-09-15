@@ -18,7 +18,10 @@ export const schoolProfileValidationSchema = (is_trust, isEdit) =>
 
     phone: Yup.string()
       .required("Phone number is required")
-      .matches(/^[0-9]+$/, "Must contain only digits")
+      .matches(
+        /^\+?[0-9]+$/,
+        "Must contain only digits (optionally starting with +)"
+      )
       .min(7, "Must be at least 7 digits")
       .max(15, "Must be at most 15 digits"),
 
