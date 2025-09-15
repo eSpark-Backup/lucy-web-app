@@ -59,6 +59,7 @@ function Calendar() {
               attendees: [],
               image: item.image,
               date: start.format("DD/MM/YYYY"),
+              school_name: school?.name,
             };
           })
         );

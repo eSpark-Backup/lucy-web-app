@@ -75,6 +75,13 @@ export default function CreatedEvents({ events }) {
                     variant="caption"
                     color="text.secondary"
                   >
+                    {event?.school_name}
+                  </Typography>
+                  <Typography
+                    display="block"
+                    variant="caption"
+                    color="text.secondary"
+                  >
                     Date: {event?.date}
                   </Typography>
                   <Typography

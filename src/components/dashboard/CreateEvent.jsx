@@ -80,7 +80,7 @@ const CreateEvent = () => {
         toast.success(res?.data?.message || "Event created successfully");
         resetForm();
         dispatch(api.util.invalidateTags(["schools"]));
-        navigate(`/dashboard/calendar/events/${res?.data?.id}`);
+        navigate("/dashboard/calendar");
       }
     });
   };

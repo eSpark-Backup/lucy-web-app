@@ -70,7 +70,9 @@ const Navbar = ({ openMobileSidebar }) => {
                     maxWidth: "100px",
                   }}
                 >
-                  {user?.profile?.first_name?.split(" ")[0] || ""}
+                  {user?.role !== "school"
+                    ? user?.profile?.first_name?.split(" ")[0] || ""
+                    : user?.school?.name?.split(" ")[0] || ""}
                 </Typography>
                 <Typography
                   variant="body2"
