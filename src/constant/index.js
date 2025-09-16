@@ -479,7 +479,7 @@ export const FORGET = {
   haveAnAccountText: "Don’t have an account?",
   signUpText: {
     text: "Create Account",
-    link: "/auth/signup",
+    link: "/sub-plan",
   },
 };
 
