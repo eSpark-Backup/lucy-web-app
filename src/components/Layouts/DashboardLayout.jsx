@@ -5,6 +5,7 @@ import bgLogo from "../../assets/images/background-logo.svg";
 import { componentStyles } from "../../style/componentStyles";
 import SideNav from "../SideNav";
 import Navbar from "../Navbar";
+import { motion } from "framer-motion";
 
 export default function RootLayout() {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -12,6 +13,8 @@ export default function RootLayout() {
   const { mainWrapper, pageWrapper, childrenStyle } =
     DashboardLayoutStyle || {};
   const { pathname } = useLocation();
+
+  const MotionBox = motion(Box);
 
   return (
     <Box sx={mainWrapper} className="mainwrapper">
@@ -32,9 +35,14 @@ export default function RootLayout() {
         {/* ------------------------------------------- */}
         {/* Page Route */}
         {/* ------------------------------------------- */}
-        <Box sx={childrenStyle(pathname, bgLogo)}>
+        <MotionBox
+          sx={childrenStyle(pathname, bgLogo)}
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
           <Outlet />
-        </Box>
+        </MotionBox>
       </Box>
     </Box>
   );

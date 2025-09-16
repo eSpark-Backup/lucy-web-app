@@ -28,6 +28,7 @@
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.15",
     "formik": "^2.4.6",
+    "framer-motion": "^12.23.13",
     "react": "^19.1.0",
     "react-big-calendar": "^1.19.4",
     "react-dom": "^19.1.0",
