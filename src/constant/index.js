@@ -206,17 +206,7 @@ and analytics.</p>`,
     <p>They've built something wonderfully simple and distraction free with Typefully 😍</p>
     `,
   },
-]; 
-
-// export const q1Options = [
-//   { label: "Dedicated marketing staff", value: "Dedicated marketing staff" },
-//   { label: "Admin/teachers handle it", value: "Admin/teachers handle it" },
-//   { label: "We outsource to an agency", value: "We outsource to an agency" },
-//   {
-//     label: "We don’t do much marketing right now",
-//     value: "We don’t do much marketing right now",
-//   },
-// ];
+];
 
 export const q2Options = [
   { label: "Primary", value: "Primary" },
@@ -226,70 +216,6 @@ export const q2Options = [
   { label: "Academy Trust", value: "Academy Trust" },
   { label: "Other (please specify)", value: "Other (please specify)" },
 ];
-
-// export const q3Options = [
-//   {
-//     label: "Keeping up with regular content creation",
-//     value: "Keeping up with regular content creation",
-//   },
-//   {
-//     label: "Attracting more students/admissions",
-//     value: "Attracting more students/admissions",
-//   },
-//   {
-//     label: "Engaging parents & the community",
-//     value: "Engaging parents & the community",
-//   },
-//   {
-//     label: "Promoting school achievements",
-//     value: "Promoting school achievements",
-//   },
-//   {
-//     label: "Managing social media effectively",
-//     value: "Managing social media effectively",
-//   },
-//   {
-//     label: "Lack of time/resources",
-//     value: "Lack of time/resources",
-//   },
-//   {
-//     label: "Other (please specify)",
-//     value: "Other (please specify)",
-//   },
-// ];
-
-// export const q4Options = [
-//   {
-//     label: "Automated social media content",
-//     value: "Automated social media content",
-//   },
-//   {
-//     label: "Press release & newsletter generation",
-//     value: "Press release & newsletter generation",
-//   },
-//   {
-//     label: "Calendar-based marketing planning",
-//     value: "Calendar-based marketing planning",
-//   },
-//   {
-//     label: "Trust/governor report summaries",
-//     value: "Trust/governor report summaries",
-//   },
-//   {
-//     label: "Saving time on school marketing",
-//     value: "Saving time on school marketing",
-//   },
-//   {
-//     label: "Other (please specify)",
-//     value: "Other (please specify)",
-//   },
-// ];
-
-// export const q5Options = [
-//   { label: "Yes", value: "Yes" },
-//   { label: "No", value: "No" },
-//   { label: "Unsure", value: "Unsure" },
-// ];
 
 export const q6Options = [
   { label: "Dedicated marketing staff", value: "Dedicated marketing staff" },
@@ -983,24 +909,6 @@ export const PAYMENT_METHOD_DATA = {
           },
         ],
       },
-      // {
-      //   title: "Paypal",
-      //   value: "paypal",
-      //   form: [
-      //     {
-      //       label: "Email",
-      //       placeholder: "Input email",
-      //       name: "email",
-      //       type: "email",
-      //     },
-      //     {
-      //       label: "Password",
-      //       placeholder: "Input password",
-      //       name: "password",
-      //       type: "password",
-      //     },
-      //   ],
-      // },
     ],
   },
   planSection: {

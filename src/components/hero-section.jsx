@@ -13,23 +13,6 @@ const HeroSection = () => {
           "linear-gradient(180deg, rgba(255, 255, 255, 0) 6.25%, #FFFFFF 100%)",
       }}
     >
-      {/* Background dashed path */}
-      {/* <Box
-        component="img"
-        src={dashed}
-        alt="Dashed Path"
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      /> */}
-
       {/* Text Content */}
       <Box
         sx={{

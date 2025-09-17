@@ -9,7 +9,6 @@ const WaitList = () => {
       sx={{
         pl: { xs: "15px", md: "20px", lg: "35px" },
         background: "linear-gradient(90deg, #4976E7 0%, #294281 100%)",
-        // height: "550px",
         mt: { xs: "100px", lg: "180px" },
         display: "flex",
         alignItems: "center",
@@ -26,7 +25,6 @@ const WaitList = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          // width: "300px",
         }}
       >
         <Box
@@ -64,7 +62,6 @@ const WaitList = () => {
           display: "flex",
           rowGap: "25px",
           flexDirection: "column",
-          // maxWidth: "800px",
         }}
       >
         <Typography

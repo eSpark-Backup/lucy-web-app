@@ -6,10 +6,6 @@ const PublicRoute = ({ children }) => {
     return <Navigate to="/dashboard" replace />;
   }
 
-  // if (isAuthenticated() && !isEmailVerified()) {
-  //   return <Navigate to="/auth/email-verification" replace />;
-  // }
-
   return children;
 };
 

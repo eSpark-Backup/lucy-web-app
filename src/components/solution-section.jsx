@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { arrow,} from "../assets";
+import { arrow } from "../assets";
 import FeatureCard from "./feature-card";
 import { features } from "../constant";
 
@@ -7,22 +7,9 @@ const SolutionSection = () => {
   return (
     <Box
       sx={{
-        // px: { xs: "30px", md: "50px", lg: "90px" },
         position: "relative",
       }}
     >
-      {/* Background Image */}
-      {/* <Box
-        component="img"
-        src={woman}
-        alt="Image"
-        sx={{
-          width: "100%",
-          height: "auto",
-          objectFit: "cover",
-        }}
-      /> */}
-
       {/* Content Container (floating card) */}
       <Box
         sx={{
@@ -30,8 +17,6 @@ const SolutionSection = () => {
           justifyContent: "center",
           alignItems: "center",
           mt: "60px",
-          // mt: { xs: -12, md: "-305px", xl: "-380px" },
-          // mr: { xs: "0px", lg: "20px" },
         }}
       >
         <Box

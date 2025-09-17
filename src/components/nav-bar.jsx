@@ -146,24 +146,6 @@ const Navbar = () => {
                     About
                   </Link>
                 </Typography>
-                {/* <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color:
-                      activeItem === "testimonials" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="testimonials"
-                    smooth={true}
-                    onClick={() => setActiveItem("testimonials")}
-                  >
-                    Testimonials
-                  </Link>
-                </Typography> */}
               </Box>
             )}
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -267,21 +249,6 @@ const Navbar = () => {
                         About
                       </Link>
                     </MenuItem>
-                    {/* <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="testimonials"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("testimonials");
-                          handleMenuClose();
-                        }}
-                      >
-                        Testimonials
-                      </Link>
-                    </MenuItem> */}
                     <MenuItem
                       onClick={() => {
                         navigate("/?open=true&step=1");

@@ -170,7 +170,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
         formData.append("file", formik.values.image);
         imageUpload({ body: formData }).then((res) => {
           if (res?.data) {
-            // formik.setFieldValue("image", res?.data?.filePath);
             body = { ...body, attachment: res?.data?.filePath };
           } else if (res?.error) {
             console.error(res?.error);

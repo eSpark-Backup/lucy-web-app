@@ -41,14 +41,6 @@ const CustomSelect = ({
             fontWeight: 400,
           },
 
-          "& .MuiOutlinedInput-notchedOutline": {
-            // border: "1px solid #E2DBFA",
-          },
-
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            // border: "1px solid #E2DBFA",
-          },
-
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             border: "none",
           },

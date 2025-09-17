@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Logo from "../assets/images/lucy-logo.png";
-import { Link, useLocation, } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { SIDEBAR } from "../constant";
 import { logout } from "../store/slices/auth";
 import ConfirmModal from "./ConfirmModal";
@@ -196,7 +196,6 @@ const Sidebar = () => {
             onClick={() => setOpenLogoutModal(true)}
             sx={{
               mx: "auto",
-              // width: "fit-content",
               maxWidth: "192px",
               display: "flex",
               alignItems: "center",

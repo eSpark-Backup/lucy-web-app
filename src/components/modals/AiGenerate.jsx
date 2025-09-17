@@ -49,13 +49,6 @@ const AiGenerate = ({ open, onClose, enhancedContent, onKeep }) => {
         >
           Cancel
         </Button>
-        {/* <Button
-          onClick={() => onEdit(enhancedContent)}
-          variant="secondary"
-          sx={{ width: "fit-content", px: "10px", height: "50px" }}
-        >
-          Edit
-        </Button> */}
         <Button
           onClick={() => onKeep(enhancedContent)}
           variant="primary"

@@ -173,10 +173,6 @@ const EventCalendar = ({ events }) => {
           info.el.addEventListener("mouseleave", () => {
             info.el.style.opacity = "0.7";
           });
-          // info.el.addEventListener("contextmenu", (e) => {
-          //   e.preventDefault();
-          //   console.log("RIGHT BUTTON CLICKED");
-          // });
         }}
         datesSet={() => {
           const titleElement = document.querySelector(".fc-toolbar-title");

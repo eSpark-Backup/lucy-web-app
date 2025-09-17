@@ -198,37 +198,6 @@ let theme = createTheme({
         },
       },
     },
-    // MuiOutlinedInput: {
-    //   styleOverrides: {
-    //     input: {
-    //       "&::placeholder": {
-    //         color: "#1A4FFF",
-    //         fontWeight: "400",
-    //         opacity: 1,
-    //         fontSize: "14px",
-    //       },
-    //     },
-    //     root: {
-    //       opacity: 1,
-    //       border: "1px solid #E2DBFA",
-    //       width: "100%",
-    //       outline: "none",
-    //       padding: "0px 20px",
-    //       fontSize: "14px",
-    //       color: "#1A4FFF",
-    //       fontWeight: 400,
-    //       borderRadius: "10.66px",
-    //       backgroundColor: "#F4F1FD",
-    //       height: "50px",
-    //       ":focus": {
-    //         border: "none",
-    //       },
-    //       fieldset: {
-    //         border: 0,
-    //       },
-    //     },
-    //   },
-    // },
     MuiContainer: {
       styleOverrides: {
         maxWidthLg: {

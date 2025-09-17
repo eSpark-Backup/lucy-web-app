@@ -7,10 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import {
-  footerLogo,
-  email,
-} from "../assets";
+import { footerLogo, email } from "../assets";
 import { Link } from "react-scroll";
 
 export default function Footer() {
@@ -53,31 +50,6 @@ export default function Footer() {
                 your own risk. The developer is not liable for any consequences
                 arising from your use of the app.
               </Typography>
-              {/* <Stack direction="row" spacing={1}>
-                {[
-                  { icon: <img src={facebook} alt="facebook" />, href: "#" },
-                  { icon: <img src={instagram} alt="instagram" />, href: "#" },
-                  { icon: <img src={google} alt="google" />, href: "#" },
-                  { icon: <img src={twitter} alt="twitter" />, href: "#" },
-                  { icon: <img src={linkedin} alt="linkedin" />, href: "#" },
-                ].map(({ icon, href }, idx) => (
-                  <IconButton
-                    key={idx}
-                    href={href}
-                    target="_blank"
-                    sx={{
-                      p: 0.75,
-                      color: "#d0d0d0",
-                      "&:hover": {
-                        color: "#fff",
-                        bgcolor: "rgba(255,255,255,0.08)",
-                      },
-                    }}
-                  >
-                    {icon}
-                  </IconButton>
-                ))}
-              </Stack> */}
             </Stack>
           </Grid>
 
@@ -109,10 +81,6 @@ export default function Footer() {
             </Typography>
 
             <Stack spacing={1.5}>
-              {/* <ContactRow
-                icon={<img src={phone} alt="linkedin" />}
-                text="+123 456 7890"
-              /> */}
               <ContactRow
                 icon={<img src={email} alt="linkedin" />}
                 text="hello@edupulse.co.uk"
@@ -140,21 +108,6 @@ export default function Footer() {
           >
             © 2025 Edupulse. All rights reserved.
           </Typography>
-
-          {/* <Stack direction="row" flexWrap="wrap" spacing={3}>
-            {["Privacy Policy", "Terms of Use", "Legal", "Site Map"].map(
-              (label) => (
-                <Link
-                  key={label}
-                  href="#"
-                  underline="none"
-                  sx={{ color: "#EBEBEB", fontSize: "18px", fontWeight: 400 }}
-                >
-                  {label}
-                </Link>
-              )
-            )}
-          </Stack> */}
         </Stack>
       </Container>
     </Box>
@@ -168,12 +121,7 @@ function Section({ heading, links }) {
         {heading}
       </Typography>
       {links.map((item) => (
-        <Link
-          to={item?.route}
-          smooth={true}
-          style={{ cursor: "pointer" }}
-          // sx={{ color: "#EBEBEB", fontSize: "21px", fontWeight: 400 }}
-        >
+        <Link to={item?.route} smooth={true} style={{ cursor: "pointer" }}>
           {item?.label}
         </Link>
       ))}
