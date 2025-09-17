@@ -166,6 +166,7 @@ const Step2 = () => {
         "https://luccy-landing-be.stg.esparkconsultants.com/start-survey",
         data
       );
+      console.log("Survey response:", res.data);
       setIsLoading(false);
       navigate("/?open=true&step=3");
     } catch (error) {

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Typewriter } from "react-simple-typewriter";
 
-const AiGenerate = ({ open, onClose, enhancedContent, onEdit, onKeep }) => {
+const AiGenerate = ({ open, onClose, enhancedContent, onKeep }) => {
   return (
     <Dialog
       open={open}

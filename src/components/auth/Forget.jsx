@@ -36,7 +36,7 @@ const Forget = () => {
       email: "",
     },
     validationSchema: forgetSchema,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
       forgetData({ email: values?.email }).then((res) => {
         if (res?.data) {
           toast.success(res?.data?.message);

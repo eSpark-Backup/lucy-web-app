@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { arrow, woman } from "../assets";
+import { arrow,} from "../assets";
 import FeatureCard from "./feature-card";
 import { features } from "../constant";
 

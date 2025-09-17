@@ -156,7 +156,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   const formik = useFormik({
     initialValues: data,
     validationSchema: contentFormSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       const selectedContentType = contentTypeOptions[values?.content_type];
       let body = {
         content_type: selectedContentType,
@@ -203,7 +203,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
     },
   });
 
-  const [imageUpload, {}] = useAddImageMutation();
+  const [imageUpload] = useAddImageMutation();
 
   useEffect(() => {
     if (formik.values.image && typeof formik.values.image !== "string") {

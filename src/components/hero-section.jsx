@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ai, bannerVideo, dashed } from "../assets";
+import { bannerVideo } from "../assets";
 
 const HeroSection = () => {
   return (

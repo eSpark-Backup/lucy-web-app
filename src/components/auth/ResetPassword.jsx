@@ -45,7 +45,7 @@ const ResetPassword = () => {
       confirm_password: "",
     },
     validationSchema: resetPasswordSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       resetData({ newPassword: values.new_password, token }).then((res) => {
         if (res?.data) {
           toast.success(res?.data?.message);

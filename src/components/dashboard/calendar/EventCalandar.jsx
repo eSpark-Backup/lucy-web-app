@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
 
@@ -26,7 +25,6 @@ const dateChunks = (date) => {
 const EventCalendar = ({ events }) => {
   const calendarRef = useRef(null);
   const popperRef = useRef(null);
-  const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [popupType, setPopupType] = useState(null);
@@ -35,6 +33,7 @@ const EventCalendar = ({ events }) => {
   const [timeZone, setTimeZone] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [activeId, setActiveId] = useState("");
+  console.log(setSelectedDate, currentView);
 
   const calendarWrapperRef = useRef(null);
 

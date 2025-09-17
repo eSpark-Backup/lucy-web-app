@@ -203,10 +203,10 @@ and analytics.</p>`,
     name: "DHH",
     userName: "@dhh",
     content: `<p>This is my new go-to writing environment for Twitter threads.</p> 
-    <p>They've built something wonderfully simple and distraction free with Typefully 😍</p>
+    <p>They've built something wonderfully simple and distraction free with Typefully 😍</p>
     `,
   },
-];
+]; 
 
 // export const q1Options = [
 //   { label: "Dedicated marketing staff", value: "Dedicated marketing staff" },
@@ -767,7 +767,7 @@ export const EVENTFORM = {
 };
 
 export const SCHOOL_INFORMATION_FORM = {
-  fields: (date) => {
+  fields: () => {
     return [
       {
         label: "School name",

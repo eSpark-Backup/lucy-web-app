@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Logo from "../assets/images/lucy-logo.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, } from "react-router-dom";
 import { SIDEBAR } from "../constant";
 import { logout } from "../store/slices/auth";
 import ConfirmModal from "./ConfirmModal";
 import { useDispatch, useSelector } from "react-redux";
 const Sidebar = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
   const { sidebarLink, profileLink, LogoutButton } = SIDEBAR || {};

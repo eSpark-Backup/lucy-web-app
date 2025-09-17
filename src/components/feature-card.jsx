@@ -1,5 +1,4 @@
 import { Box, Divider, Typography } from "@mui/material";
-import { logo } from "../assets";
 
 const FeatureCard = ({ heading, description, img }) => {
   return (

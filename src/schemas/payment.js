@@ -18,34 +18,6 @@ const luhnCheck = (num) => {
   return sum % 10 === 0;
 };
 
-/** Expiry parser (MM/YY or MM/YYYY) */
-const parseExpiry = (value) => {
-  if (!value) return null;
-  const match = value.match(/^(\d{1,2})[\/\-](\d{2}|\d{4})$/);
-  if (!match) return null;
-  let month = parseInt(match[1], 10);
-  let year = parseInt(match[2], 10);
-  if (String(year).length === 2) year += 2000;
-  if (month < 1 || month > 12) return null;
-  return new Date(year, month, 0, 23, 59, 59, 999); // last day of month
-};
-
-/** Month name array for "May 2028" style */
-const monthNames = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];
-
 /** Hook to get schema */
 export const useValidationSchema = (method) => {
   return useMemo(() => {
