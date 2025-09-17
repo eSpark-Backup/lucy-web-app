@@ -20,9 +20,8 @@ const PrivateRoute = ({ children }) => {
     }
   }, [redirectToLogin, dispatch, navigate]);
 
-  const { isLoading, isSuccess, isError, error } = useGetUserWithTokenQuery(
-    isAuthenticated()
-  );
+  const { isLoading, isSuccess, isError, error } =
+    useGetUserWithTokenQuery(isAuthenticated());
 
   useEffect(() => {
     if (isError) {

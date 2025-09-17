@@ -248,8 +248,8 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
                       ? "text"
                       : "password"
                     : showPassword
-                    ? "text"
-                    : "password"
+                      ? "text"
+                      : "password"
                   : type
               }
               InputProps={

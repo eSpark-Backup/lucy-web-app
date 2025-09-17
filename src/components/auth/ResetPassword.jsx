@@ -140,8 +140,8 @@ const ResetPassword = () => {
                       ? "text"
                       : "password"
                     : showPassword
-                    ? "text"
-                    : "password"
+                      ? "text"
+                      : "password"
                   : type
               }
               InputProps={
@@ -155,8 +155,8 @@ const ResetPassword = () => {
                               ? "Hide confirm password"
                               : "Show confirm password"
                             : showPassword
-                            ? "Hide password"
-                            : "Show password"
+                              ? "Hide password"
+                              : "Show password"
                         }
                         onClick={
                           key === "confirm_password"

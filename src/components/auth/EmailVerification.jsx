@@ -55,8 +55,8 @@ const EmailVerification = () => {
           {status === "loading"
             ? description
             : status === "success"
-            ? successMessage
-            : failureMessage}
+              ? successMessage
+              : failureMessage}
         </Typography>
       </Stack>
       <ProgressionStatus status={status} />

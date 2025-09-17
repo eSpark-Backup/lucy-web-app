@@ -21,7 +21,7 @@ const Services = () => {
           display: "flex",
           flexDirection: "column",
           rowGap: "15px",
-          maxWidth: '1610px',
+          maxWidth: "1610px",
         }}
       >
         <Box
