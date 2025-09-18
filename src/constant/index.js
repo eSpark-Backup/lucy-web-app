@@ -1090,6 +1090,48 @@ export const PAYMENT_METHOD_DATA = {
   },
 };
 
+export const ABOUT_DATA = {
+  title: "About Edupulse",
+  highlightText:
+    "Every empty seat in a school represents lost money and funding",
+  description: `Edupulse acts as your school's dedicated marketing department, offering
+          a game-changing, inexpensive AI-based marketing app. With subscriptions
+          costing as little as £10 per month ( subject to full trust sign-up ), it
+          provides a vital solution for busy, cash-strapped schools to enhance
+          their visibility within the community. In an age where parents have more
+          choices than ever, actively promoting your school is essential to avoid
+          missing out. Edupulse was created to solve the challenge of busy school
+          staff and stretched finances by providing an AI-driven marketing tool to
+          help schools thrive.`,
+  services: [
+    {
+      icon: "Campaign",
+      color: "#1976d2",
+      title: "Press Releases",
+      desc: "Crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+    },
+    {
+      icon: "Facebook",
+      color: "#1877f2",
+      title: "Facebook Posts",
+      desc: "Engaging posts that highlight your school's success, news, and events to keep your community informed.",
+    },
+    {
+      icon: "Instagram",
+      color: "#e1306c",
+      title: "Instagram Content",
+      desc: "Eye-catching posts to showcase your school spirit and daily moments with your audience.",
+    },
+    {
+      icon: "Mail",
+      color: "#D93025",
+      title: "Newsletters & Reports",
+      desc: "Creates impactful newsletters for parents, staff, and governors—keeping everyone connected and informed.",
+    },
+  ],
+  founderText: "About the Founder",
+};
+
 export const stripePromise = loadStripe(
   "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
 );
