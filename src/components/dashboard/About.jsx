@@ -105,8 +105,15 @@ const About = () => {
                         mb: 2,
                         bgcolor: "white",
                         borderRadius: 2,
+                        gap: 1.5,
                         "&:hover": {
                           boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
+                        },
+                        "@media(max-width: 450px)": {
+                          py: 2,
+                          gap: 0.5,
+                          alignItems: "flex-start",
+                          flexDirection: "column",
                         },
                       }}
                     >
@@ -120,7 +127,9 @@ const About = () => {
                       >
                         <ListItemIcon>
                           {IconComponent && (
-                            <IconComponent sx={{ color: service.color }} />
+                            <IconComponent
+                              sx={{ color: service.color, mx: "auto" }}
+                            />
                           )}
                         </ListItemIcon>
                       </MotionBox>

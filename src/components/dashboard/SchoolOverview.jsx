@@ -77,7 +77,8 @@ const SchoolOverview = () => {
   const is_discount =
     allSchools?.data &&
     allSchools?.data?.length <= organizationData?.selected_school_count &&
-    allSchools?.data?.every((s) => !s.is_paid);
+    allSchools?.data?.every((s) => !s.is_paid) &&
+    allSchools?.data?.every((s) => !s.cost === 10);
 
   const TEXT = {
     title: "School Profiles",

@@ -30,6 +30,7 @@ const Navbar = ({ openMobileSidebar }) => {
         sx={{ justifyContent: { xs: "space-between", md: "flex-end" } }}
       >
         <IconButton
+          disableRipple
           onClick={() => openMobileSidebar(true)}
           edge="start"
           sx={{
@@ -44,7 +45,12 @@ const Navbar = ({ openMobileSidebar }) => {
           <Link to={"/dashboard/profile"} style={{ textDecoration: "none" }}>
             <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
               <Avatar
-                src={user?.profile?.profile_image || undefined || null}
+                src={
+                  user?.profile?.profile_image ||
+                  user?.school?.image ||
+                  undefined ||
+                  null
+                }
                 alt={user?.profile?.first_name}
                 sx={{
                   width: { sm: 37, md: 40 },
@@ -71,8 +77,8 @@ const Navbar = ({ openMobileSidebar }) => {
                   }}
                 >
                   {user?.role !== "school"
-                    ? user?.profile?.first_name?.split(" ")[0] || ""
-                    : user?.school?.name?.split(" ")[0] || ""}
+                    ? user?.profile?.first_name?.split(" ")[0] || "User"
+                    : user?.school?.name?.split(" ")[0] || "User"}
                 </Typography>
                 <Typography
                   variant="body2"
@@ -82,7 +88,7 @@ const Navbar = ({ openMobileSidebar }) => {
                     color: "#404040",
                   }}
                 >
-                  {user?.role}
+                  {user?.role || "role"}
                 </Typography>
               </Box>
               <IconButton
@@ -92,6 +98,7 @@ const Navbar = ({ openMobileSidebar }) => {
                   width: { xs: "23px", md: "25px" },
                   height: { xs: "23px", md: "25px" },
                   border: "0.2px solid #5C5C5C",
+                  display: { xs: "none", sm: "flex" },
                   opacity: "50%",
                 }}
               >

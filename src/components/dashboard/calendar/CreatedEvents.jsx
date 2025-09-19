@@ -66,16 +66,36 @@ export default function CreatedEvents({ events }) {
                     <Typography
                       fontWeight={600}
                       fontSize={isMobile ? "0.9rem" : "1rem"}
+                      sx={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        maxWidth: "150px",
+                      }}
                     >
-                      {event?.title}
+                      {event?.title &&
+                        (event.title.split(" ").length > 3
+                          ? event.title.split(" ").slice(0, 2).join(" ") +
+                            " ..."
+                          : event.title)}
                     </Typography>
                   </Link>
                   <Typography
                     display="block"
                     variant="caption"
                     color="text.secondary"
+                    sx={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      maxWidth: "120px",
+                    }}
                   >
-                    {event?.school_name}
+                    {event?.school_name &&
+                      (event.school_name.split(" ").length > 3
+                        ? event.school_name.split(" ").slice(0, 3).join(" ") +
+                          " ..."
+                        : event.school_name)}
                   </Typography>
                   <Typography
                     display="block"
