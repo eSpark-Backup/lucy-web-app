@@ -49,7 +49,7 @@ const contentTypeOptions = {
   "Instagram Post": "instagram_post",
   "Facebook Post": "facebook_post",
   "Newsletter Inclusion": "newsletter",
-  Summary: "summary",
+  "Governor Summary": "governor_summary",
 };
 
 const ContentForm = ({ data = initialEventData, contentId }) => {
@@ -342,6 +342,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                 ) : (
                   <EmailsInput
                     name={name}
+                    disabled={!formik?.values?.post_method}
                     emails={emails}
                     setEmails={setEmails}
                     placeholder={placeholder}
@@ -393,6 +394,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                         <Button
                           variant="contained"
                           sx={uploadButtonStyle}
+                          disabled={image}
                           onClick={() => !image && inputRef?.current?.click()}
                         >
                           <Typography variant="h6" sx={buttonTypoStyle}>

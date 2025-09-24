@@ -44,14 +44,17 @@ const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
         border: "1px solid #D5D5D5",
         backgroundColor: "#F5F6FA",
         borderRadius: "6px",
-        height: 100,
+        height: { xs: !image ? 100 : 120, sm: !image ? 100 : 200 },
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        ...(!image && {
+          alignItems: "center",
+          justifyContent: "center",
+        }),
         position: "relative",
         flexDirection: "column",
         cursor: disabled ? "not-allowed" : "pointer",
-        overflow: "hidden",
+        overflowY: "auto",
+        overflowX: "hidden",
         opacity: disabled ? 0.6 : 1,
       }}
     >
@@ -62,9 +65,8 @@ const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
             src={image}
             alt="preview"
             sx={{
-              height: "100%",
-              width: "100%",
               objectFit: "cover",
+              objectPosition: "top",
             }}
           />
           {!disabled && (

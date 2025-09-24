@@ -36,29 +36,6 @@ export const eventValidationSchema = (isSchoolRole) =>
         }
       ),
 
-    start_time: Yup.string()
-      .nullable()
-      .required("Start time is required")
-      .when("date", (date, schema) => {
-        if (!date) return schema;
-
-        const selectedDate = dayjs(date).startOf("day");
-        const today = dayjs().startOf("day");
-        if (selectedDate.isSame(today)) {
-          return schema.test(
-            "is-time-in-future",
-            "Start time must be in the future",
-            function (time) {
-              if (!time) return false;
-              const selectedTime = dayjs(`${date}T${time}`);
-              return selectedTime.isAfter(dayjs());
-            }
-          );
-        }
-
-        return schema;
-      }),
-
     image: Yup.string().required("Image is required"),
 
     description: Yup.string()

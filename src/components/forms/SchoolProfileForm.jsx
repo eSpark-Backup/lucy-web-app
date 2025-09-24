@@ -54,6 +54,7 @@ const SchoolProfileForm = ({
   const [editSchool, { isLoading: updateLoading }] = useEditSchoolMutation();
   const [imageUpload] = useAddImageMutation();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleCreate = async (formdata, resetForm) => {
     try {
@@ -190,6 +191,9 @@ const SchoolProfileForm = ({
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((prev) => !prev);
+
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
@@ -223,7 +227,11 @@ const SchoolProfileForm = ({
                         }
                         type={
                           type === "password"
-                            ? showPassword
+                            ? name === "confirm_password"
+                              ? showConfirmPassword
+                                ? "text"
+                                : "password"
+                              : showPassword
                               ? "text"
                               : "password"
                             : type
@@ -233,15 +241,20 @@ const SchoolProfileForm = ({
                             endAdornment: (
                               <InputAdornment position="end">
                                 <IconButton
-                                  aria-label={
-                                    showPassword
-                                      ? "hide the password"
-                                      : "display the password"
+                                  onClick={
+                                    name === "confirm_password"
+                                      ? handleClickShowConfirmPassword
+                                      : handleClickShowPassword
                                   }
-                                  onClick={handleClickShowPassword}
                                   edge="end"
                                 >
-                                  {showPassword ? (
+                                  {name === "confirm_password" ? (
+                                    showConfirmPassword ? (
+                                      <VisibilityOff />
+                                    ) : (
+                                      <Visibility />
+                                    )
+                                  ) : showPassword ? (
                                     <VisibilityOff />
                                   ) : (
                                     <Visibility />

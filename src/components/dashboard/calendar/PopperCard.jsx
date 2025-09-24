@@ -88,7 +88,7 @@ const PopperCard = forwardRef(function PopperCard(
               >
                 <SettingsIcon sx={{ color: "#4880FF" }} />
                 <Box>
-                  <Typography fontWeight="600">SEND EMAIL</Typography>
+                  <Typography fontWeight="600">Create Content</Typography>
                   <Typography fontSize={12} color="gray">
                     Add new content or update
                   </Typography>

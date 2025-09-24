@@ -11,7 +11,7 @@ const contentTypeOptions = {
   instagram_post: "Instagram Post",
   facebook_post: "Facebook Post",
   newsletter: "Newsletter Inclusion",
-  summary: "Summary",
+  governor_summary: "Governor Summary",
 };
 
 const CreateContent = () => {
@@ -46,7 +46,7 @@ const CreateContent = () => {
   return (
     <Box>
       <BackButton />
-      <FormHeader title={contentId ? "Edit Content" : "SEND EMAIL"} />
+      <FormHeader title={contentId ? "Edit Content" : "Create Content"} />
       <ContentForm
         data={contentId ? editData : undefined}
         contentId={contentId}

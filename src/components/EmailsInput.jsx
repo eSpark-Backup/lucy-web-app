@@ -5,6 +5,7 @@ export default function EmailsInput({
   emails,
   setEmails,
   placeholder,
+  disabled,
   formik,
   data,
 }) {
@@ -25,6 +26,7 @@ export default function EmailsInput({
       freeSolo
       options={data}
       value={emails}
+      disabled={disabled}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
@@ -90,6 +92,12 @@ export default function EmailsInput({
           onKeyDown={(e) => {
             if ((e.key === "Enter" || e.key === "Tab") && inputValue) {
               e.preventDefault();
+              handleAddEmail(inputValue);
+              setInputValue("");
+            }
+          }}
+          onBlur={() => {
+            if (inputValue) {
               handleAddEmail(inputValue);
               setInputValue("");
             }

@@ -53,7 +53,7 @@ const CreateEvent = () => {
           }),
           duration: data?.time_span,
           date: localDateTime.format("YYYY-MM-DD"),
-          start_time: localDateTime.format("HH:mm"),
+          // start_time: localDateTime.format("HH:mm"),
           image: data?.image,
           description: data?.description,
         });
@@ -100,8 +100,8 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = (values, resetForm) => {
-    const localDateTime = dayjs(`${values.date}T${values.start_time}`);
-    const date_time = localDateTime.format("YYYY-MM-DDTHH:mm:ssZ");
+    // Send local time with timezone
+    const date_time = dayjs(`${values.date}`).format("YYYY-MM-DDTHH:mm:ssZ");
 
     const formdata = new FormData();
     formdata.append("name", values?.event_name);

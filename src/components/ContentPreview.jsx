@@ -80,7 +80,7 @@ const ContentPreview = ({
         sx={{
           width: "100%",
           maxHeight: "400px",
-          objectFit: "cover",
+          objectFit: "contain",
           borderRadius: "12px",
           boxShadow: 2,
         }}

@@ -22,7 +22,6 @@ const initialEventData = {
   event_name: "",
   event_type: "",
   duration: "",
-  start_time: "",
   image: null,
   description: "",
 };
