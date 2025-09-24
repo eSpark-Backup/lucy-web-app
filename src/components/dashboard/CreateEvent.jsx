@@ -37,7 +37,6 @@ const CreateEvent = () => {
 
   const { user } = useSelector((state) => state?.auth);
   const isSchoolRole = user?.role === "school";
-  const is_trust = user?.profile?.organization?.is_trust;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,9 +50,7 @@ const CreateEvent = () => {
           ...(!isSchoolRole && {
             school_email: data?.school?.email,
           }),
-          duration: data?.time_span,
           date: localDateTime.format("YYYY-MM-DD"),
-          // start_time: localDateTime.format("HH:mm"),
           image: data?.image,
           description: data?.description,
         });
@@ -100,13 +97,14 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = (values, resetForm) => {
-    // Send local time with timezone
-    const date_time = dayjs(`${values.date}`).format("YYYY-MM-DDTHH:mm:ssZ");
+    const date_time = dayjs()
+      .add(2, "minute")
+      .utc()
+      .format("YYYY-MM-DDTHH:mm:ss[Z]");
 
     const formdata = new FormData();
     formdata.append("name", values?.event_name);
     formdata.append("type", values?.event_type);
-    formdata.append("time_span", Number(values?.duration));
     formdata.append("description", values?.description);
     formdata.append("date_time", date_time);
 
@@ -136,6 +134,7 @@ const CreateEvent = () => {
         toast.success(res?.data?.message || "Event was deleted successfully");
         setIsDeleted(true);
         setOpenModal(false);
+        dispatch(api.util.invalidateTags(["schools"]));
         navigate("/dashboard/calendar");
       }
     });

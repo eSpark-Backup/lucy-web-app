@@ -3,7 +3,14 @@ import { Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import UploadIcon from "../assets/icons/upload.svg";
 
-const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
+const ImageUploader = ({
+  image,
+  setImage,
+  ref,
+  formik,
+  disabled,
+  uploading,
+}) => {
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
@@ -41,35 +48,42 @@ const ImageUploader = ({ image, setImage, ref, formik, disabled }) => {
       onDragOver={disabled ? undefined : (e) => e.preventDefault()}
       onClick={() => !disabled && !image && ref?.current?.click()}
       sx={{
-        border: "1px solid #D5D5D5",
-        backgroundColor: "#F5F6FA",
-        borderRadius: "6px",
-        height: { xs: !image ? 100 : 120, sm: !image ? 100 : 200 },
+        width: "100%",
+        height: 200,
+        borderRadius: "12px",
+        overflow: "hidden",
         display: "flex",
-        ...(!image && {
-          alignItems: "center",
-          justifyContent: "center",
-        }),
+        alignItems: !image ? "center" : "stretch",
+        justifyContent: !image ? "center" : "flex-start",
+        border: "1px dashed #c4c4c4ff",
         position: "relative",
-        flexDirection: "column",
-        cursor: disabled ? "not-allowed" : "pointer",
-        overflowY: "auto",
-        overflowX: "hidden",
         opacity: disabled ? 0.6 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
+        "&:hover .delete-btn": { opacity: 1 },
       }}
     >
       {image ? (
         <>
           <Box
-            component="img"
-            src={image}
-            alt="preview"
             sx={{
-              objectFit: "cover",
-              objectPosition: "top",
+              width: "fit-content",
+              height: 200,
+              mx: "auto",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
             }}
-          />
-          {!disabled && (
+          >
+            <Box
+              component="img"
+              src={image}
+              alt="preview"
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "Contain",
+              }}
+            />
+          </Box>
+          {!disabled && !uploading && (
             <IconButton
               size="small"
               onClick={handleClear}

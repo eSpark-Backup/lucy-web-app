@@ -1,5 +1,5 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
-import cardImage from "../assets/images/choose-your-path.svg";
+import thumbnail from "../assets/images/thumbnail.jpg";
 import { useResendRecipientEmailMutation } from "../services/content";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -75,7 +75,7 @@ const ContentPreview = ({
       {/* Image */}
       <Box
         component="img"
-        src={image || cardImage}
+        src={image || thumbnail}
         alt={title}
         sx={{
           width: "100%",

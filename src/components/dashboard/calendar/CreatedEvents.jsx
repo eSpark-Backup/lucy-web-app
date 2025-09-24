@@ -104,13 +104,6 @@ export default function CreatedEvents({ events }) {
                   >
                     Date: {event?.date}
                   </Typography>
-                  <Typography
-                    display="block"
-                    variant="caption"
-                    color="text.secondary"
-                  >
-                    Duration: {event?.duration}
-                  </Typography>
                   <Stack
                     mt={1}
                     spacing={0.5}

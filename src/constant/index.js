@@ -746,7 +746,7 @@ export const EVENTFORM = {
         placeholder: "Enter your Event Name",
         type: "text",
         name: "event_name",
-        size: { xs: 12 },
+        size: { xs: 12, lg: 5.5 },
         is_editable: true,
       },
       {
@@ -754,14 +754,6 @@ export const EVENTFORM = {
         placeholder: "Enter your Event Type",
         type: "text",
         name: "event_type",
-        size: { xs: 12, lg: 5.5 },
-        is_editable: true,
-      },
-      {
-        label: "Duration (Minutes)",
-        placeholder: "Select Time",
-        type: "number",
-        name: "duration",
         size: { xs: 12, lg: 5.5 },
         is_editable: true,
       },
@@ -858,13 +850,40 @@ export const SCHOOL_INFORMATION_FORM = {
 
 export const CONTENTFORM = {
   radioButtonsLable: "Content Type",
-  radioButtons: [
-    "Press Release",
-    "Instagram Post",
-    "Facebook Post",
-    "Newsletter Inclusion",
-    "Governor Summary",
+  contentTypeOptions: [
+    {
+      label: "Press Release",
+      name: "press_release",
+      placeholder: "press release",
+    },
+    {
+      label: "Instagram Post",
+      name: "instagram_post",
+      placeholder: "instagram post",
+    },
+    {
+      label: "Facebook Post",
+      name: "facebook_post",
+      placeholder: "facebook post",
+    },
+    {
+      label: "Newsletter Inclusion",
+      name: "newsletter",
+      placeholder: "newsletter inclusion",
+    },
+    {
+      label: "Governor Summary",
+      name: "governor_summary",
+      placeholder: "governor summary",
+    },
   ],
+  // radioButtons: [
+  //   "Press Release",
+  //   "Instagram Post",
+  //   "Facebook Post",
+  //   "Newsletter Inclusion",
+  //   "Governor Summary",
+  // ],
   aiButtonText: "Enhance with AI",
   uploadButtonText: "Upload Image",
   buttonText: "Add",

@@ -17,7 +17,7 @@ const contentTypeOptions = {
   "Instagram Post": "instagram_post",
   "Facebook Post": "facebook_post",
   "Newsletter Inclusion": "newsletter",
-  Summary: "summary",
+  "Governor Summary": "governor_summary",
 };
 
 const EventContents = () => {

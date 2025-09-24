@@ -1,9 +1,12 @@
 import * as Yup from "yup";
 
 export const contentFormSchema = Yup.object({
-  content_type: Yup.string().required("Please select content type"),
+  content_type: Yup.array()
+    .min(1, "Please select content type")
+    .required("Please select content type"),
 
   description: Yup.string().required("Description is required"),
+
   // .when("content_type", (ct, schema) => {
   //   const v = String(ct || "").toLowerCase();
   //   const isNewsletter = v.includes("newsletter");

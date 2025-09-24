@@ -206,7 +206,12 @@ export const componentStyles = {
     },
     inputStyle: (name) => ({
       "& .MuiInputBase-root":
-        name !== "description"
+        name !== "description" &&
+        name !== "press_release" &&
+        name !== "instagram_post" &&
+        name !== "facebook_post" &&
+        name !== "newsletter" &&
+        name !== "governor_summary"
           ? {
               minHeight: { xs: "42px", md: "52px" },
               border: "1px solid #D5D5D5",
@@ -382,6 +387,7 @@ export const componentStyles = {
       gap: "8px",
       marginRight: "16px",
       alignItems: "center",
+      width: "fit-content",
       px: 1.2,
       py: 2.5,
     },

@@ -15,12 +15,6 @@ export const eventValidationSchema = (isSchoolRole) =>
       school_email: Yup.string().required("School email is required"),
     }),
 
-    duration: Yup.number()
-      .required("Duration is required")
-      .typeError("Must be a number")
-      .positive("Must be greater than zero")
-      .integer("Must be a whole number"),
-
     date: Yup.string()
       .nullable()
       .typeError("Date is invalid")

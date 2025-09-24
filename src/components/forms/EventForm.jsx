@@ -21,7 +21,6 @@ import { useSelector } from "react-redux";
 const initialEventData = {
   event_name: "",
   event_type: "",
-  duration: "",
   image: null,
   description: "",
 };
