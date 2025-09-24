@@ -37,7 +37,7 @@ import { useAiContentMutation } from "../../services/ai";
 import AiGenerate from "../modals/AiGenerate";
 
 const initialEventData = {
-  content_type: "Press Release",
+  content_type: [],
   description: "",
   image: null,
   post_method: "",
