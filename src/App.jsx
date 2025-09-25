@@ -31,9 +31,7 @@ const AppRoutes = () => {
 
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        {renderRoutes(routes)}
-      </Routes>
+      <Routes location={location}>{renderRoutes(routes)}</Routes>
     </AnimatePresence>
   );
 };

@@ -46,13 +46,15 @@ const EventContents = () => {
   useEffect(() => {
     if (data) {
       const myEvents = data?.map((item) => {
-        const title = item?.content_type;
-        const key = Object.keys(contentTypeOptions).find(
-          (k) => contentTypeOptions[k] === title
+        const titles = item?.content_types?.map((ct) =>
+          Object.keys(contentTypeOptions).find(
+            (k) => contentTypeOptions[k] === ct
+          )
         );
+
         return {
-          title: key,
-          description: item?.text_content,
+          title: titles, // array of titles
+          description: item?.text_content, // array of texts
           image: item?.attachment,
           id: item?.id,
         };
@@ -64,14 +66,18 @@ const EventContents = () => {
   useEffect(() => {
     if (viewContentData && viewContentSuccess) {
       const body = {
-        title: viewContentData?.content_type,
+        title: viewContentData?.content_types?.map((ct) =>
+          Object.keys(contentTypeOptions).find(
+            (k) => contentTypeOptions[k] === ct
+          )
+        ),
         date: dayjs(viewContentData?.updated_at).format("YYYY-MM-DD"),
         image: viewContentData?.attachment,
         description: viewContentData?.text_content,
         recipients: viewContentData?.content_recipients?.map(
           (item) => item?.recipient
         ),
-        contentType: viewContentData?.content_type,
+        contentType: viewContentData?.content_types,
       };
       setPreviewData(body);
     }

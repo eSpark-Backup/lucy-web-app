@@ -10,13 +10,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import React, { memo } from "react";
 
 const Navbar = ({ openMobileSidebar }) => {
   const { user } = useSelector((state) => state?.auth);
 
+  const profileImg = user?.profile?.profile_image || user?.school?.image || "";
+
   return (
     <AppBar
-      position="fixed" // static -> fixed
+      position="fixed"
       elevation={0}
       sx={{
         backgroundColor: "#fff",
@@ -31,7 +34,7 @@ const Navbar = ({ openMobileSidebar }) => {
       >
         <IconButton
           disableRipple
-          onClick={() => openMobileSidebar(true)}
+          onClick={() => openMobileSidebar?.(true)}
           edge="start"
           sx={{
             display: { xs: "flex", md: "none" },
@@ -42,15 +45,10 @@ const Navbar = ({ openMobileSidebar }) => {
           <MenuOpenIcon style={{ fontSize: "35px" }} />
         </IconButton>
         <Box display="flex" alignItems="center" gap={2}>
-          <Link to={"/dashboard/profile"} style={{ textDecoration: "none" }}>
+          <Link to="/dashboard/profile" style={{ textDecoration: "none" }}>
             <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
               <Avatar
-                src={
-                  user?.profile?.profile_image ||
-                  user?.school?.image ||
-                  undefined ||
-                  null
-                }
+                src={profileImg}
                 alt={user?.profile?.first_name}
                 sx={{
                   width: { sm: 37, md: 40 },
@@ -112,4 +110,4 @@ const Navbar = ({ openMobileSidebar }) => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

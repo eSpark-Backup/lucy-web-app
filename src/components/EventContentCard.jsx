@@ -83,7 +83,7 @@ const EventContentCard = ({ title, description, image, id }) => {
             variant="h4"
             sx={{ fontWeight: 600, fontFamily: "Poppins", color: "#202224" }}
           >
-            {title}
+            {Array.isArray(title) ? title.join(", ") : null}
           </Typography>
           <Typography
             variant="body1"
@@ -98,7 +98,7 @@ const EventContentCard = ({ title, description, image, id }) => {
               textOverflow: "ellipsis",
             }}
           >
-            {description}
+            {Array.isArray(description) ? description.join(", ") : null}
           </Typography>
         </Stack>
 

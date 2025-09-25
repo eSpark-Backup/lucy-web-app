@@ -35,23 +35,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAddImageMutation } from "../../services/image";
 import { useGetEventByIdQuery } from "../../services/event";
 import { useAiContentMutation } from "../../services/ai";
-import AiGenerate from "../modals/AiGenerate";
 
 const initialEventData = {
-  content_type: [],
+  content_types: [],
+  text_content: [],
   description: "",
   image: null,
   post_method: "",
   recipients: [],
 };
-
-// const contentTypeOptions = {
-//   "Press Release": "press_release",
-//   "Instagram Post": "instagram_post",
-//   "Facebook Post": "facebook_post",
-//   "Newsletter Inclusion": "newsletter",
-//   "Governor Summary": "governor_summary",
-// };
 
 const ContentForm = ({ data = initialEventData, contentId }) => {
   const {
@@ -64,7 +56,12 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
     radioButtonsLable,
   } = CONTENTFORM;
 
-  const { ContentFormStyles } = componentStyles;
+  const {
+    ContentFormStyles,
+    authCheckBoxStyle,
+    authCheckBoxIconStyle,
+    authCheckBoxSpanStyle,
+  } = componentStyles;
   const {
     radioStyle,
     paperStyle,
@@ -91,7 +88,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   const inputRef = useRef(null);
   const [image, setImage] = useState(data?.image);
   const [emails, setEmails] = useState(data?.recipients);
-  const [aiModalOpen, setAiModalOpen] = useState(false);
   const [suggestedEmails, setSuggestedEmails] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -158,12 +154,20 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
     initialValues: data,
     validationSchema: contentFormSchema,
     onSubmit: (values, { resetForm }) => {
-      const selectedContentType = values?.content_type;
+      const selectedContentType = values?.content_types;
+
+      const textArray = selectedContentType?.map((type) => {
+        const found = values?.text_content?.find(
+          (item) => item?.content_types === type
+        );
+        return found?.text || "";
+      });
+
       let body = {
-        content_type: selectedContentType,
+        content_types: selectedContentType,
         content_recipients: emails,
         post_method: values?.post_method,
-        text_content: values?.description,
+        text_content: textArray,
         attachment: values?.image,
       };
       if (formik.values.image && typeof formik.values.image !== "string") {
@@ -228,20 +232,17 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   const handleAiGenerate = async () => {
     try {
       const obj = {
-        content_type: formik.values.content_type,
+        content_types: formik.values.content_types,
         event_name: eventName,
         prompt_text: formik.values.description,
       };
 
-      // Call the RTK mutation
       const res = await aiPayload({ body: obj });
 
       if (res?.data) {
-        // console.log("✅ JSON Response:", res.data);
         setAiContent(res.data);
       } else if (res?.error) {
         if (typeof res.error.data === "string") {
-          // console.log("✅ Text Response:", res.error.data);
           setAiContent(res?.error?.data);
         } else {
           console.error("❌ API Error:", res.error);
@@ -253,18 +254,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   };
 
   useEffect(() => {
-    if (aiContent) {
-      setAiModalOpen(true);
-    }
-  }, [aiContent]);
-
-  const handleKeep = (content) => {
-    formik.setFieldValue("description", content);
-    setAiContent("");
-    setAiModalOpen(false);
-  };
-
-  useEffect(() => {
     if (recipientsData && recipientsSuccess) {
       setSuggestedEmails(recipientsData);
     }
@@ -273,6 +262,16 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   useEffect(() => {
     formik.setFieldValue("recipients", emails);
   }, [emails]);
+
+  useEffect(() => {
+    if (aiContent && Array.isArray(aiContent)) {
+      formik.setFieldValue("text_content", aiContent);
+      formik.setFieldValue(
+        "content_types",
+        aiContent.map((item) => item.content_types)
+      );
+    }
+  }, [aiContent]);
 
   if (eventLoading || recipientsLoading) {
     return <LinearProgress />;
@@ -288,63 +287,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
-        <Typography variant="h6" sx={radioButtonsLableStyle}>
-          {radioButtonsLable}
-        </Typography>
-        <Stack spacing={1} my={2}>
-          {contentTypeOptions.map((opt, index) => (
-            <Box key={index}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    sx={radioStyle}
-                    checked={formik.values.content_type.includes(opt.name)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        formik.setFieldValue("content_type", [
-                          ...formik.values.content_type,
-                          opt.name,
-                        ]);
-                      } else {
-                        formik.setFieldValue(
-                          "content_type",
-                          formik.values.content_type.filter(
-                            (v) => v !== opt.name
-                          )
-                        );
-                      }
-                    }}
-                  />
-                }
-                label={opt.label}
-                sx={{ gap: "8px", marginRight: "16px", alignItems: "center" }}
-              />
-              {formik.values.content_type.includes(opt.name) && (
-                <TextField
-                  name={opt.name}
-                  placeholder={opt.placeholder}
-                  value={formik.values[opt.name] || "aiContent"}
-                  onChange={formik.handleChange}
-                  multiline
-                  rows={3}
-                  fullWidth
-                  sx={{ ...inputStyle(opt.name), p: 1.5, pl: 2.5, pr: 0 }}
-                  error={
-                    formik.touched[opt.name] && Boolean(formik.errors[opt.name])
-                  }
-                  helperText={
-                    formik.touched[opt.name] && formik.errors[opt.name]
-                  }
-                />
-              )}
-            </Box>
-          ))}
-        </Stack>
-        {formik.touched.content_type && formik?.errors?.content_type && (
-          <Typography color="error" fontSize={12} m={"-5px 14px 20px 14px"}>
-            {formik.errors.content_type}
-          </Typography>
-        )}
         <Grid container columnGap={8} rowGap={2}>
           {fields?.map(({ label, name, placeholder, type, size }, index) => (
             <Grid size={size} key={index}>
@@ -362,7 +304,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                     onChange={formik?.handleChange}
                     onBlur={formik?.handleBlur}
                     multiline={name === "description"}
-                    rows={name === "description" ? 4 : 0}
+                    rows={name === "description" ? 5 : 0}
                     id={
                       name === "description"
                         ? "outlined-multiline-static"
@@ -396,13 +338,133 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                         sx={aiButtonStyle}
                         onClick={handleAiGenerate}
                         loading={aiLoading}
-                        disabled={aiLoading}
+                        disabled={
+                          aiLoading ||
+                          formik?.values?.content_types?.length === 0
+                        }
                       >
                         <Typography variant="h6" sx={buttonTypoStyle}>
                           {aiButtonText}
                         </Typography>
                       </Button>
                     </Grid>
+
+                    <Grid size={12} pb={1.5}>
+                      <Typography variant="h6" sx={radioButtonsLableStyle}>
+                        {radioButtonsLable}
+                      </Typography>
+                      <Stack spacing={1} mt={1.5}>
+                        {contentTypeOptions?.map((opt) => {
+                          const current = formik?.values?.text_content?.find(
+                            (c) => c?.content_types === opt?.name
+                          );
+
+                          return (
+                            <Box key={opt.name}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    icon={<Box sx={authCheckBoxStyle} />}
+                                    checkedIcon={
+                                      <Box sx={authCheckBoxIconStyle}>
+                                        <Box
+                                          component="span"
+                                          sx={authCheckBoxSpanStyle}
+                                        />
+                                      </Box>
+                                    }
+                                    disableRipple
+                                    sx={{ padding: 0 }}
+                                    checked={formik?.values?.content_types?.includes(
+                                      opt?.name
+                                    )}
+                                    onChange={(e) => {
+                                      if (e.target.checked) {
+                                        formik.setFieldValue("content_types", [
+                                          ...formik.values.content_types,
+                                          opt.name,
+                                        ]);
+                                        formik.setFieldValue("text_content", [
+                                          ...formik.values.text_content,
+                                          { content_types: opt.name, text: "" },
+                                        ]);
+                                      } else {
+                                        formik.setFieldValue(
+                                          "content_types",
+                                          formik.values.content_types.filter(
+                                            (v) => v !== opt.name
+                                          )
+                                        );
+                                        formik.setFieldValue(
+                                          "text_content",
+                                          formik.values.text_content.filter(
+                                            (v) => v.content_types !== opt.name
+                                          )
+                                        );
+                                      }
+                                    }}
+                                  />
+                                }
+                                label={
+                                  <Typography variant="h6" sx={inputLabelStyle}>
+                                    {opt.label}
+                                  </Typography>
+                                }
+                                sx={{
+                                  gap: "8px",
+                                  marginRight: "16px",
+                                  alignItems: "center",
+                                }}
+                              />
+
+                              {formik?.values?.content_types?.includes(
+                                opt?.name
+                              ) && (
+                                <TextField
+                                  multiline
+                                  rows={5}
+                                  fullWidth
+                                  sx={{
+                                    ...inputStyle(opt.name),
+                                    p: 1.5,
+                                    pl: 2.5,
+                                    pr: 0,
+                                  }}
+                                  placeholder={opt?.placeholder}
+                                  value={current?.text || ""}
+                                  onChange={(e) => {
+                                    const newTexts =
+                                      formik?.values?.content_text?.map((c) =>
+                                        c?.content_types === opt?.name
+                                          ? { ...c, text: e.target.value }
+                                          : c
+                                      );
+                                    formik.setFieldValue(
+                                      "content_text",
+                                      newTexts
+                                    );
+                                  }}
+                                  InputProps={{
+                                    readOnly: true,
+                                  }}
+                                />
+                              )}
+                            </Box>
+                          );
+                        })}
+                      </Stack>
+                      {formik.touched.content_types &&
+                        formik.errors.content_types && (
+                          <Typography
+                            variant="caption"
+                            color="error"
+                            m={"3px 14px"}
+                          >
+                            {formik.errors.content_types}
+                          </Typography>
+                        )}
+                    </Grid>
+
                     <Grid size={12} pt={1.5}>
                       <ImageUploader
                         image={image}
@@ -545,8 +607,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                         {formik?.touched?.post_method &&
                           formik?.errors?.post_method && (
                             <Typography
-                              mb={2}
-                              mt={-0.5}
+                              m={"3px 14px"}
                               color="error"
                               fontSize={12}
                             >
@@ -567,6 +628,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
             sx={buttonStyle}
             variant="contained"
             loading={isLoading || editLoading}
+            disabled={formik?.values?.content_types?.length === 0}
           >
             <Typography variant="h6" sx={buttonTypoStyle}>
               {contentId ? "Save" : "Add"}
@@ -574,12 +636,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
           </Button>
         </Grid>
       </form>
-      {/* <AiGenerate
-        open={aiModalOpen}
-        onClose={() => setAiModalOpen(false)}
-        enhancedContent={aiContent}
-        onKeep={handleKeep}
-      /> */}
     </Paper>
   );
 };

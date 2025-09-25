@@ -1,21 +1,19 @@
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import thumbnail from "../assets/images/thumbnail.jpg";
 import { useResendRecipientEmailMutation } from "../services/content";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
-const ContentPreview = ({
-  title,
-  date,
-  image,
-  description,
-  recipients,
-  contentType,
-}) => {
+const ContentPreview = ({ title, description, date, image, recipients }) => {
   const [emailData, { isLoading }] = useResendRecipientEmailMutation();
   const { eventId } = useParams();
 
-  const handleResendEmail = async () => {
+  const contentData = title?.map((text, index) => ({
+    text,
+    description: description[index],
+  }));
+
+  const handleResendEmail = async (contentType, description) => {
     const body = {
       content_type: contentType,
       text_content: description,
@@ -27,10 +25,8 @@ const ContentPreview = ({
       const res = await emailData({ body, eventId });
       if (res?.data) {
         toast.success("Email resent successfully");
-        return;
       } else if (res?.error) {
         toast.error(res?.error?.data?.message);
-        return;
       }
     } catch (error) {
       toast.error(error?.data?.message);
@@ -47,21 +43,22 @@ const ContentPreview = ({
         backgroundColor: "rgba(255, 255, 255, 0.48)",
         boxShadow: "5px 5px 45px 0px rgba(0, 0, 0, 0.05)",
         borderRadius: "11.88px",
-        gap: 3,
+        gap: 4,
       }}
     >
-      {/* Title */}
-      <Typography
-        variant="h3"
+      {/* Image */}
+      <Box
+        component="img"
+        src={image || thumbnail}
+        alt="event-image"
         sx={{
-          fontWeight: 600,
-          fontFamily: "Poppins",
-          lineHeight: 1.3,
-          textTransform: "capitalize",
+          width: "100%",
+          maxHeight: "400px",
+          objectFit: "contain",
+          borderRadius: "12px",
+          boxShadow: 2,
         }}
-      >
-        {title?.replace(/_/g, " ")}
-      </Typography>
+      />
 
       {/* Date */}
       <Typography variant="body2" sx={{ color: "#6b7280", fontSize: "14px" }}>
@@ -72,34 +69,38 @@ const ContentPreview = ({
         })}
       </Typography>
 
-      {/* Image */}
-      <Box
-        component="img"
-        src={image || thumbnail}
-        alt={title}
-        sx={{
-          width: "100%",
-          maxHeight: "400px",
-          objectFit: "contain",
-          borderRadius: "12px",
-          boxShadow: 2,
-        }}
-      />
+      {/* Render all content blocks */}
+      {contentData?.map((item, index) => (
+        <Box key={index} sx={{ mb: 3 }}>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 600,
+              fontFamily: "Poppins",
+              lineHeight: 1.3,
+              textTransform: "capitalize",
+              mb: 1,
+            }}
+          >
+            {item.text}
+          </Typography>
 
-      {/* Description */}
-      <Typography
-        variant="body1"
-        sx={{
-          fontSize: "16px",
-          lineHeight: 1.7,
-          color: "#202224",
-          opacity: 0.9,
-          fontWeight: 400,
-          fontFamily: "Nunito Sans",
-        }}
-      >
-        {description}
-      </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: "16px",
+              lineHeight: 1.7,
+              color: "#202224",
+              opacity: 0.9,
+              fontWeight: 400,
+              fontFamily: "Nunito Sans",
+              whiteSpace: "pre-line",
+            }}
+          >
+            {item.description}
+          </Typography>
+        </Box>
+      ))}
       <Button
         sx={{ width: "fit-content", px: "15px" }}
         variant="primary"

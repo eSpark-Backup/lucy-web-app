@@ -389,7 +389,7 @@ export const componentStyles = {
       alignItems: "center",
       width: "fit-content",
       px: 1.2,
-      py: 2.5,
+      pt: 2.5,
     },
   },
   EventDetailsFormStyles: {
