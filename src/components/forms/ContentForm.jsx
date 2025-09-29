@@ -384,21 +384,24 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                                           ...formik.values.content_types,
                                           opt.name,
                                         ]);
-                                        formik.setFieldValue("text_content", [
-                                          ...formik.values.text_content,
-                                          { content_types: opt.name, text: "" },
-                                        ]);
+                                        const exists =
+                                          formik.values.text_content.some(
+                                            (c) => c.content_types === opt.name
+                                          );
+                                        if (!exists) {
+                                          formik.setFieldValue("text_content", [
+                                            ...formik.values.text_content,
+                                            {
+                                              content_types: opt.name,
+                                              text: "",
+                                            },
+                                          ]);
+                                        }
                                       } else {
                                         formik.setFieldValue(
                                           "content_types",
                                           formik.values.content_types.filter(
                                             (v) => v !== opt.name
-                                          )
-                                        );
-                                        formik.setFieldValue(
-                                          "text_content",
-                                          formik.values.text_content.filter(
-                                            (v) => v.content_types !== opt.name
                                           )
                                         );
                                       }
@@ -434,13 +437,13 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                                   value={current?.text || ""}
                                   onChange={(e) => {
                                     const newTexts =
-                                      formik?.values?.content_text?.map((c) =>
-                                        c?.content_types === opt?.name
+                                      formik.values.text_content.map((c) =>
+                                        c.content_types === opt.name
                                           ? { ...c, text: e.target.value }
                                           : c
                                       );
                                     formik.setFieldValue(
-                                      "content_text",
+                                      "text_content",
                                       newTexts
                                     );
                                   }}

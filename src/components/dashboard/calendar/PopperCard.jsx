@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { Box, Paper, Typography, Stack, Divider, Popper } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsIcon from "@mui/icons-material/Settings";
+import EditDocumentIcon from "@mui/icons-material/EditDocument";
 import { useNavigate } from "react-router-dom";
 
 const PopperCard = forwardRef(function PopperCard(
@@ -90,7 +91,27 @@ const PopperCard = forwardRef(function PopperCard(
                 <Box>
                   <Typography fontWeight="600">Create Content</Typography>
                   <Typography fontSize={12} color="gray">
-                    Add new content or update
+                    Add new content
+                  </Typography>
+                </Box>
+              </Stack>
+
+              <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
+                sx={{ cursor: "pointer" }}
+                onClick={() =>
+                  handleNavigate(
+                    `/dashboard/calendar/events/${eventId}/contents`
+                  )
+                }
+              >
+                <EditDocumentIcon sx={{ color: "#EA64D9" }} />
+                <Box>
+                  <Typography fontWeight="600">Edit Contents</Typography>
+                  <Typography fontSize={12} color="gray">
+                    Update content
                   </Typography>
                 </Box>
               </Stack>
