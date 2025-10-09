@@ -1,8 +1,16 @@
 import { useSelector } from "react-redux";
 import { useGetAllSchoolsQuery } from "../services/school";
-import { LinearProgress, Paper, Stack, Typography } from "@mui/material";
+import {
+  LinearProgress,
+  Paper,
+  Stack,
+  Typography,
+  Button,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom"; 
 
 const CalendarProtectedRoute = ({ children }) => {
+  const navigate = useNavigate(); 
   const { user } = useSelector((state) => state?.auth);
 
   const isSchoolRole = user?.role === "school";
@@ -22,6 +30,7 @@ const CalendarProtectedRoute = ({ children }) => {
 
   let title = "";
   let description = "";
+  let showOverviewButton = false;
 
   // ---- School role ----
   if (isSchoolRole) {
@@ -41,7 +50,8 @@ const CalendarProtectedRoute = ({ children }) => {
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Follow the steps below. Once you add at least one school and complete a payment, the Calendar will be unlocked and visible in the calendar page.";
+      "Open the School Overview to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
+    showOverviewButton = true;
   }
 
   // ---- Non-trust role ----
@@ -51,7 +61,8 @@ const CalendarProtectedRoute = ({ children }) => {
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Follow the steps below. Once you add at least one school and complete a payment, the Calendar will be unlocked and visible in the calendar page.";
+      "Open the School Overview to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
+    showOverviewButton = true;
   }
 
   return (
@@ -70,7 +81,7 @@ const CalendarProtectedRoute = ({ children }) => {
         minHeight="100%"
         p={2}
       >
-        <Stack spacing={2} maxWidth="450px">
+        <Stack spacing={2} maxWidth="450px" sx={{ alignItems: "center" }}>
           <Typography variant="h3" sx={{ fontWeight: 700 }}>
             {title}
           </Typography>
@@ -78,6 +89,38 @@ const CalendarProtectedRoute = ({ children }) => {
           <Typography variant="h6" sx={{ color: "text.secondary" }}>
             {description}
           </Typography>
+
+          {showOverviewButton && (
+            <Button
+              variant="contained"
+              disableElevation
+              sx={{
+                color: "#fff",
+                maxWidth: { xs: "100%", sm: "165px" },
+                height: { xs: "42px", md: "46px" },
+                borderRadius: "8px",
+                backgroundColor: "#4880FF",
+                "&:hover": {
+                  backgroundColor: "#3a6edc",
+                },
+                "&.Mui-disabled": {
+                  color: "#fff",
+                  backgroundColor: "#999",
+                },
+              }}
+              onClick={() => navigate("/school-overview")}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontFamily: "Nunito Sans",
+                  textTransform: "none",
+                }}
+              >
+                School Overview
+              </Typography>
+            </Button>
+          )}
         </Stack>
       </Stack>
     </Paper>

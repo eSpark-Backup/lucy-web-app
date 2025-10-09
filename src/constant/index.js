@@ -872,9 +872,9 @@ export const CONTENTFORM = {
       placeholder: "newsletter inclusion",
     },
     {
-      label: "Governor Summary",
+      label: "Governor Report Summary",
       name: "governor_summary",
-      placeholder: "governor summary",
+      placeholder: "governor report summary",
     },
   ],
   // radioButtons: [
