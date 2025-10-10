@@ -108,7 +108,7 @@ const CalendarProtectedRoute = ({ children }) => {
                   backgroundColor: "#999",
                 },
               }}
-              onClick={() => navigate("/school-overview")}
+              onClick={() => navigate("/dashboard/school-overview")}
             >
               <Typography
                 sx={{
