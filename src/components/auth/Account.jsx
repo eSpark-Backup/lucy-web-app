@@ -4,11 +4,8 @@ import {
   Typography,
   TextField,
   Button,
-  Checkbox,
-  FormControlLabel,
   InputAdornment,
   IconButton,
-  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -28,7 +25,6 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
     title,
     description,
     fields,
-    checkboxText,
     buttonText,
     haveAnAccountText,
     signUpText,
@@ -40,10 +36,6 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
     authTitleStyle,
     authLableStyle,
     authDescriptionStyle,
-    authCheckBoxStyle,
-    authCheckBoxIconStyle,
-    authCheckBoxSpanStyle,
-    authCheckBoxLableStyle,
     authButtonStyle,
     authButtonTypoStyle,
     authHaveAnAccountTextStyle,
@@ -85,7 +77,6 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
       ...(is_trust && {
         selected_school_count: initialValues?.selected_school_count,
       }),
-      terms_and_conditions: false,
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
@@ -128,7 +119,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
 
           if (!data) return;
 
-          const { message, token, email_verified } = data;
+          const { message, token, email_verified, user } = data;
 
           if (token) {
             localStorage.setItem("token", token);
@@ -136,6 +127,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
               "email-verify",
               email_verified ? "true" : "false"
             );
+            localStorage.setItem("terms", String(user?.termsAccepted));
           }
 
           if (
@@ -289,47 +281,13 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         );
       })}
 
-      <Stack
-        width="100%"
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        maxWidth={516}
-        sx={{ mt: 0.5 }}
-      >
-        <FormControlLabel
-          control={
-            <Checkbox
-              name="terms_and_conditions"
-              checked={formik?.values?.terms_and_conditions}
-              onChange={formik?.handleChange}
-              icon={<Box sx={authCheckBoxStyle} />}
-              checkedIcon={
-                <Box sx={authCheckBoxIconStyle}>
-                  <Box component="span" sx={authCheckBoxSpanStyle} />
-                </Box>
-              }
-              disableRipple
-              sx={{ padding: 0 }}
-            />
-          }
-          label={
-            <Typography variant="h5" sx={authCheckBoxLableStyle}>
-              {checkboxText}
-            </Typography>
-          }
-        />
-      </Stack>
-
       <Stack width="100%" maxWidth={418} pt={1} spacing={2}>
         <Button
           loading={isLoading || createLoading}
-          disabled={
-            isLoading || createLoading || !formik?.values?.terms_and_conditions
-          }
+          disabled={isLoading || createLoading}
+          sx={authButtonStyle}
           type="submit"
           fullWidth
-          sx={authButtonStyle}
         >
           <Typography variant="h5" sx={authButtonTypoStyle}>
             {buttonText}

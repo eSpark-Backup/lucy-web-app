@@ -1255,4 +1255,36 @@ export const componentStyles = {
       },
     },
   },
+
+  // Terms screen components styles
+  termsScreenStyles: {
+    paper: {
+      maxWidth: "1000px",
+      borderRadius: "14px",
+      backgroundColor: "rgba(255, 255, 255, 0.48)",
+      boxShadow: "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
+      position: "relative",
+    },
+    container: { py: 6 },
+    title: {
+      variant: "h4",
+      fontWeight: 700,
+      textAlign: "center",
+      mb: 1,
+    },
+    date: {
+      variant: "body2",
+      color: "text.secondary",
+      textAlign: "center",
+      mb: 4,
+    },
+    sectionTitle: {
+      variant: "h6",
+      sx: { fontWeight: 600, letterSpacing: 0.5 },
+    },
+    sectionText: {
+      variant: "h6",
+      sx: { color: "text.secondary" },
+    },
+  },
 };

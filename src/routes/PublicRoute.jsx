@@ -1,14 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { isAuthenticated, isEmailVerified } from "../utils";
-
+import { isAuthenticated, isEmailVerified, isTermsAccepted } from "../utils";
 const PublicRoute = ({ children }) => {
-  if (isAuthenticated() && isEmailVerified()) {
+  if (isAuthenticated() && isEmailVerified() && isTermsAccepted()) {
     return <Navigate to="/dashboard" replace />;
   }
-
-  // if (isAuthenticated() && !isEmailVerified()) {
-  //   return <Navigate to="/auth/email-verification" replace />;
-  // }
 
   return children;
 };

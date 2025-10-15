@@ -7,6 +7,7 @@ import { logout } from "../store/slices/auth";
 import ConfirmModal from "./ConfirmModal";
 import { useDispatch, useSelector } from "react-redux";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -102,28 +103,47 @@ const Sidebar = () => {
                           px: 2.5,
                         }}
                       >
-                        {text === "School Overview" && (
-                          <AutoStoriesIcon
-                            sx={{
-                              width: "20px",
-                              color: "rgb(66, 70, 74)",
-                              filter: isActive
-                                ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                                : "none",
-                            }}
-                          />
-                        )}
-                        {text !== "School Overview" && (
-                          <Box
-                            component={"img"}
-                            src={icon}
-                            sx={{
-                              filter: isActive
-                                ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                                : "none",
-                            }}
-                          />
-                        )}
+                        {(() => {
+                          if (text === "Terms") {
+                            return (
+                              <DescriptionIcon
+                                sx={{
+                                  width: 20,
+                                  color: "rgb(66, 70, 74)",
+                                  filter: isActive
+                                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                                    : "none",
+                                }}
+                              />
+                            );
+                          } else if (text === "School Overview") {
+                            return (
+                              <AutoStoriesIcon
+                                sx={{
+                                  width: 20,
+                                  color: "rgb(66, 70, 74)",
+                                  filter: isActive
+                                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                                    : "none",
+                                }}
+                              />
+                            );
+                          } else {
+                            return (
+                              <Box
+                                component="img"
+                                src={icon}
+                                sx={{
+                                  width: 20,
+                                  filter: isActive
+                                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
+                                    : "none",
+                                }}
+                              />
+                            );
+                          }
+                        })()}
+
                         <Typography
                           variant="h6"
                           sx={{

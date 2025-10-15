@@ -24,6 +24,14 @@ const customBaseQuery = async (args, api, extraOptions) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: customBaseQuery,
-  tagTypes: ["auth", "content", "event", "organizations", "schools", "payment"],
+  tagTypes: [
+    "auth",
+    "content",
+    "event",
+    "organizations",
+    "schools",
+    "payment",
+    "terms",
+  ],
   endpoints: () => ({}),
 });

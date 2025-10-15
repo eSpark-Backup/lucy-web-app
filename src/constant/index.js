@@ -695,6 +695,11 @@ export const SIDEBAR = {
       link: "/dashboard/school-overview",
       icon: about,
     },
+    {
+      text: "Terms",
+      link: "/dashboard/terms",
+      icon: about,
+    },
   ],
   profileLink: {
     text: "Profile",
@@ -1146,3 +1151,5 @@ export const ABOUT_DATA = {
 export const stripePromise = loadStripe(
   "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
 );
+
+

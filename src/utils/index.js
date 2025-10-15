@@ -7,13 +7,6 @@ export function useQuery() {
 
 export const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-// export const isAuthenticated = () => {
-//   const token = localStorage.getItem("token");
-//   const email_verification = localStorage.getItem("email-verify");
-
-//   return token && email_verification === "true";
-// };
-
 export const isAuthenticated = () => {
   const token = localStorage.getItem("token");
   return !!token;
@@ -21,6 +14,10 @@ export const isAuthenticated = () => {
 
 export const isEmailVerified = () => {
   return localStorage.getItem("email-verify") === "true";
+};
+
+export const isTermsAccepted = () => {
+  return localStorage.getItem("terms") === "true";
 };
 
 const SECRET_KEY =

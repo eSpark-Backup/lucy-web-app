@@ -24,6 +24,7 @@ import PrivateRoute from "./PrivateRoute";
 import CheckoutResult from "../components/dashboard/CheckoutResult";
 import CalendarProtectedRoute from "./CalendarProtectedRoute";
 import SchoolProtectedRoute from "./SchoolProtectedRoute";
+import TermsAndConditions from "../components/auth/TermsAndConditions";
 
 const routes = [
   {
@@ -41,6 +42,14 @@ const routes = [
   {
     path: "/cancel",
     element: <CheckoutResult status="cancel" />,
+  },
+  {
+    path: "/terms",
+    element: (
+      <PublicRoute>
+        <TermsAndConditions />
+      </PublicRoute>
+    ),
   },
   {
     path: "/auth",
@@ -165,6 +174,7 @@ const routes = [
           </CalendarProtectedRoute>
         ),
       },
+      { path: "/dashboard/terms", element: <TermsAndConditions /> },
     ],
   },
   {

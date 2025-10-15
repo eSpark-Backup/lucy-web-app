@@ -92,7 +92,10 @@ const Login = () => {
         }
 
         const { data } = res || {};
-        if (!data) {
+        const { data: finalData } = data || {};
+        const { access_token, email_verified, user } = finalData || {};
+
+        if (!res.data) {
           toast.error("Unexpected error. Please try again.");
           return;
         }
@@ -103,14 +106,18 @@ const Login = () => {
         } else {
           clearSavedCredentials();
         }
+        localStorage.setItem("token", access_token);
+        localStorage.setItem("email-verify", String(email_verified));
+        localStorage.setItem("terms", String(user?.termsAccepted));
 
-        localStorage.setItem("token", data.accessToken || "");
-        localStorage.setItem("email-verify", String(data.email_verified));
-
-        if (data.accessToken && data.email_verified) {
+        if (access_token && email_verified && user?.termsAccepted) {
           navigate("/dashboard");
-        } else {
+        } else if (access_token && !email_verified) {
           navigate(`/auth/email-verification?email=${values.email}`);
+        } else if (access_token && !user?.termsAccepted) {
+          navigate(`/terms`);
+        } else {
+          navigate(`/auth/login`);
         }
 
         resetForm();
