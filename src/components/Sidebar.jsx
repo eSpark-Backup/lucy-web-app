@@ -6,8 +6,6 @@ import { SIDEBAR } from "../constant";
 import { logout } from "../store/slices/auth";
 import ConfirmModal from "./ConfirmModal";
 import { useDispatch, useSelector } from "react-redux";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import DescriptionIcon from "@mui/icons-material/Description";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -55,7 +53,7 @@ const Sidebar = () => {
             sidebarLink
               ?.filter(
                 (item) =>
-                  !(item?.text === "School Overview" && role === "school")
+                  !(item?.text === "Schools" && role === "school")
               )
               ?.map(({ text, link, icon }, index) => {
                 const isActive =
@@ -103,46 +101,14 @@ const Sidebar = () => {
                           px: 2.5,
                         }}
                       >
-                        {(() => {
-                          if (text === "Terms") {
-                            return (
-                              <DescriptionIcon
-                                sx={{
-                                  width: 20,
-                                  color: "rgb(66, 70, 74)",
-                                  filter: isActive
-                                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                                    : "none",
-                                }}
-                              />
-                            );
-                          } else if (text === "School Overview") {
-                            return (
-                              <AutoStoriesIcon
-                                sx={{
-                                  width: 20,
-                                  color: "rgb(66, 70, 74)",
-                                  filter: isActive
-                                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                                    : "none",
-                                }}
-                              />
-                            );
-                          } else {
-                            return (
-                              <Box
-                                component="img"
-                                src={icon}
-                                sx={{
-                                  width: 20,
-                                  filter: isActive
-                                    ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                                    : "none",
-                                }}
-                              />
-                            );
-                          }
-                        })()}
+                        <Box
+                          component="img"
+                          src={icon}
+                          sx={{
+                            width: "fit-content",
+                            height: 25,
+                          }}
+                        />
 
                         <Typography
                           variant="h6"
@@ -168,10 +134,10 @@ const Sidebar = () => {
           flexDirection: "column",
           borderTop: "1px solid #E0E0E0",
           gap: 2,
-          py: role === "User" && role !== false ? 4 : 3,
+          py: role === "user" && role !== false ? 4 : 3,
         }}
       >
-        {role === "User" && role !== undefined && role !== "" && (
+        {role === "user" && role !== undefined && role !== "" && (
           <Link to={profileLink?.link} style={{ textDecoration: "none" }}>
             <Box
               sx={{
@@ -211,9 +177,8 @@ const Sidebar = () => {
                   component={"img"}
                   src={profileLink?.icon}
                   sx={{
-                    filter: isActive
-                      ? "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(86deg) brightness(103%) contrast(101%)"
-                      : "none",
+                    width: "fit-content",
+                    height: 25,
                   }}
                 />
                 <Typography
@@ -241,7 +206,6 @@ const Sidebar = () => {
             onClick={() => setOpenLogoutModal(true)}
             sx={{
               mx: "auto",
-              // width: "fit-content",
               maxWidth: "192px",
               display: "flex",
               alignItems: "center",
@@ -251,7 +215,14 @@ const Sidebar = () => {
               mt: 1,
             }}
           >
-            <Box src={LogoutButton?.icon} component={"img"} />
+            <Box
+              src={LogoutButton?.icon}
+              component={"img"}
+              sx={{
+                width: "fit-content",
+                height: 25,
+              }}
+            />
             <Typography
               variant="h6"
               sx={{

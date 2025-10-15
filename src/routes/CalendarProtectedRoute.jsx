@@ -50,7 +50,7 @@ const CalendarProtectedRoute = ({ children }) => {
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Open the School Overview to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
+      "Open the Schools to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
     showOverviewButton = true;
   }
 
@@ -61,7 +61,7 @@ const CalendarProtectedRoute = ({ children }) => {
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Open the School Overview to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
+      "Open the Schools to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
     showOverviewButton = true;
   }
 
@@ -117,7 +117,7 @@ const CalendarProtectedRoute = ({ children }) => {
                   textTransform: "none",
                 }}
               >
-                School Overview
+                Schools
               </Typography>
             </Button>
           )}

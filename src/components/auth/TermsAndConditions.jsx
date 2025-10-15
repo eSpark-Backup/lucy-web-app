@@ -12,7 +12,6 @@ import bgLogo from "../../assets/images/background-logo.svg";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
 import {
   useAcceptTermsMutation,
   useGetAllTermsQuery,
@@ -21,6 +20,7 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { isAuthenticated } from "../../utils";
 import { componentStyles } from "../../style/componentStyles";
+import halfClip from "../../assets/images/sidebar/half-clip.png";
 
 const TermsHeader = ({ title, description, titleStyle, dateStyle }) => {
   return (
@@ -39,8 +39,6 @@ const TermsAndConditions = () => {
   const navigate = useNavigate();
   const MotionBox = motion(Box);
   const MotionButton = motion(Button);
-  const currentDate = dayjs().format("DD/MM/YYYY");
-
   const { termsScreenStyles } = componentStyles || {};
   const { paper, container, title, date, sectionTitle, sectionText } =
     termsScreenStyles || {};
@@ -54,6 +52,9 @@ const TermsAndConditions = () => {
     skip: !isAuthenticated(),
     refetchOnMountOrArgChange: false,
   });
+
+  const effectiveDate = dayjs(termsData?.createdAt).format("DD/MM/YYYY");
+  const lastUpdated = dayjs(termsData?.updatedAt).format("DD/MM/YYYY");
 
   const listVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -120,14 +121,16 @@ const TermsAndConditions = () => {
           ...(pathname?.includes("dashboard") ? {} : { mx: "auto" }),
         }}
       >
-        <AttachFileIcon
+        <Box
+          component="img"
+          src={halfClip}
+          alt="clip"
           sx={{
             position: "absolute",
-            top: "-20px",
+            top: "-10px",
             left: "89%",
-            transform: "translateX(-50%) rotate(30deg)",
-            color: "#888",
-            fontSize: { xs: 42, md: 50 },
+            transform: "translateX(-50%) rotate(2deg)",
+            width: { xs: 42, md: 50 },
             zIndex: 2,
           }}
         />
@@ -135,7 +138,7 @@ const TermsAndConditions = () => {
           <Container sx={container}>
             <TermsHeader
               title={"Edupulse – Terms & Conditions"}
-              description={`Effective Date: ${currentDate} | Last Updated: ${currentDate}`}
+              description={`Effective Date: ${effectiveDate} | Last Updated: ${lastUpdated}`}
               titleStyle={title}
               dateStyle={date}
             />

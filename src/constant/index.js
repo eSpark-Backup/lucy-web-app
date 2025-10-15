@@ -19,11 +19,13 @@ import {
   service5,
   service6,
 } from "../assets";
-import dashboard from "../assets/images/sidebar/dashboard.svg";
-import calendar from "../assets/images/sidebar/calendar.svg";
-import about from "../assets/images/sidebar/about.svg";
-import profile from "../assets/images/sidebar/profile.svg";
-import logout from "../assets/images/sidebar/logout.svg";
+import dashboard from "../assets/images/sidebar/dashboard.png";
+import calendar from "../assets/images/sidebar/calendar.png";
+import terms from "../assets/images/sidebar/terms.png";
+import book from "../assets/images/sidebar/book.png";
+import about from "../assets/images/sidebar/about.png";
+import profile from "../assets/images/sidebar/profile.png";
+import logout from "../assets/images/sidebar/logout.png";
 import { loadStripe } from "@stripe/stripe-js";
 
 export const features = [
@@ -691,14 +693,14 @@ export const SIDEBAR = {
       icon: about,
     },
     {
-      text: "School Overview",
+      text: "Schools",
       link: "/dashboard/school-overview",
-      icon: about,
+      icon: book,
     },
     {
       text: "Terms",
       link: "/dashboard/terms",
-      icon: about,
+      icon: terms,
     },
   ],
   profileLink: {
@@ -1151,5 +1153,3 @@ export const ABOUT_DATA = {
 export const stripePromise = loadStripe(
   "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
 );
-
-
