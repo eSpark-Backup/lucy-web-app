@@ -45,7 +45,9 @@ const EventContents = () => {
   );
 
   const handleClick = () => {
-    navigate("/dashboard/calendar/events/67/contents/add");
+    if (eventId) {
+      navigate(`/dashboard/calendar/events/${eventId}/contents/add`);
+    }
   };
 
   useEffect(() => {
@@ -110,32 +112,34 @@ const EventContents = () => {
         mb={2}
       >
         <FormHeader title={isPreview ? "Content Preview" : "Event Content"} />
-        <Button
-          loading={isLoading}
-          disabled={isLoading}
-          onClick={handleClick}
-          variant="contained"
-          sx={{
-            color: "#fff",
-            maxWidth: { xs: "100%", sm: "120px" },
-            height: { xs: "42px", md: "46px" },
-            borderRadius: "12px",
-            backgroundColor: "#4880FF",
-            opacity: "90%",
-            "&:hover": {
+        {!isPreview && (
+          <Button
+            loading={isLoading}
+            disabled={isLoading}
+            onClick={handleClick}
+            variant="contained"
+            sx={{
+              color: "#fff",
+              maxWidth: { xs: "100%", sm: "120px" },
+              height: { xs: "42px", md: "46px" },
+              borderRadius: "12px",
               backgroundColor: "#4880FF",
-            },
-            marginLeft: "0px",
-            width: "121px",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: 500, fontFamily: "Nunito Sans" }}
+              opacity: "90%",
+              "&:hover": {
+                backgroundColor: "#4880FF",
+              },
+              marginLeft: "0px",
+              width: "121px",
+            }}
           >
-            {events?.length > 0 ? "Add" : "Create"}
-          </Typography>
-        </Button>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 500, fontFamily: "Nunito Sans" }}
+            >
+              {events?.length > 0 ? "Add" : "Create"}
+            </Typography>
+          </Button>
+        )}
       </Stack>
       {isPreview ? (
         <ContentPreview

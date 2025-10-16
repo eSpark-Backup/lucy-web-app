@@ -630,7 +630,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
             type="submit"
             sx={buttonStyle}
             variant="contained"
-            loading={isLoading || editLoading}
+            loading={isLoading || editLoading || aiLoading}
             disabled={formik?.values?.content_types?.length === 0}
           >
             <Typography variant="h6" sx={buttonTypoStyle}>

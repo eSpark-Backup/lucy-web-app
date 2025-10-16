@@ -3,7 +3,7 @@ import EventContentCard from "./EventContentCard";
 
 const AllEventsCard = ({ data, isLoading }) => {
   if (data?.length === 0 && !isLoading) {
-    return <Typography>No Contents Found</Typography>;
+    return <Typography>📭 No Contents Found</Typography>;
   }
   return (
     <Grid container columnGap={3} rowGap={4}>
