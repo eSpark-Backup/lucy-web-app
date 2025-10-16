@@ -24,17 +24,6 @@ export const termsApi = api.injectEndpoints({
       ],
     }),
 
-    // This is for the future.
-    // createTerms: builder.mutation({
-    //   query: (body) => ({
-    //     url: "/terms-and-conditions",
-    //     method: "POST",
-    //     body,
-    //     credentials: "include",
-    //   }),
-    //   invalidatesTags: ["terms"],
-    // }),
-
     acceptTerms: builder.mutation({
       query: () => ({
         url: `/users/accept-terms`,

@@ -1153,3 +1153,14 @@ export const ABOUT_DATA = {
 export const stripePromise = loadStripe(
   "pk_test_51S0I0jF6ux8ejGM2zH6FYbjegxCyrxk2ymwvifb2BdTDO1sWtXC47i6eQ2EZJFO9c9z6Gyu5w9R5gbTDcxSgg6Ch006MSAkTeo"
 );
+
+export const CONTACT_DATA_FOR_TERMS = {
+  text: "Contact Information",
+  content:
+    "If you have any questions regarding these Terms and Conditions, please contact:",
+  heading: "Edupulse Support Team",
+  info: {
+    email: "support@edupulse.co.uk",
+    website: "https://app.edupulse.co.uk",
+  },
+};

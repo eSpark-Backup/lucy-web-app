@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 
 const ConfirmModal = ({
   open,
@@ -37,7 +37,7 @@ const ConfirmModal = ({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          maxWidth: "640px",
+          maxWidth: "420px",
           "&:focus-visible": { border: "none", outline: "none" },
           ...sx,
         }}
@@ -58,69 +58,57 @@ const ConfirmModal = ({
             alignItems: "flex-start",
           }}
         >
-          <Typography
-            sx={{
-              fontSize: "24px",
-              fontWeight: "600",
-              textAlign: "left",
-            }}
-          >
-            {heading}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              textAlign: "left",
-              color: "#ADADAD",
-            }}
-          >
-            {description}
-          </Typography>
+          <Stack spacing={1}>
+            <Typography
+              sx={{
+                fontSize: "24px",
+                fontWeight: "600",
+                textAlign: "left",
+              }}
+            >
+              {heading}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontWeight: "400",
+                textAlign: "left",
+                color: "#ADADAD",
+              }}
+            >
+              {description}
+            </Typography>
+          </Stack>
           {children}
         </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            columnGap: "15px",
-            mt: "30px",
-            flexDirection: { xs: "column", md: "row" },
-            rowGap: "10px",
-          }}
-        >
-          <Box sx={{ width: { xs: "100%", md: "47%" }, height: "44px" }}>
-            <Button
-              sx={{
-                backgroundColor: "#ffffff",
-                borderRadius: "12px",
-                height: "44px",
-                color: "#454545",
-                border: "1px solid #373838",
-                fontSize: "16px",
-                my: "0px",
-                textTransform: "none",
-              }}
-              disableRipple
-              onClick={handleCancel}
-            >
-              {"Cancel"}
-            </Button>
-          </Box>
-          <Box sx={{ width: { xs: "100%", md: "47%" }, height: "44px" }}>
-            <Button
-              loading={loading}
-              disabled={loading}
-              variant="delete"
-              disableRipple
-              onClick={handleAccept}
-            >
-              {button2Text}
-            </Button>
-          </Box>
-        </Box>
+        <Stack direction={"row"} spacing={{ xs: 1.5, sm: 2.5 }} mt={2}>
+          <Button
+            sx={{
+              backgroundColor: "#ffffff",
+              borderRadius: "12px",
+              height: "44px",
+              color: "#454545",
+              border: "1px solid #373838",
+              fontSize: "16px",
+              my: "0px",
+              textTransform: "none",
+            }}
+            disableRipple
+            onClick={handleCancel}
+          >
+            {"Cancel"}
+          </Button>
+          <Button
+            loading={loading}
+            disabled={loading}
+            variant="delete"
+            disableRipple
+            onClick={handleAccept}
+          >
+            {button2Text}
+          </Button>
+        </Stack>
       </Box>
     </Modal>
   );
