@@ -296,7 +296,7 @@ const Step2 = () => {
     },
     {
       name: "q9",
-      label: "What EduPulse features are most appealing to you?",
+      label: "What Edupulsegpt features are most appealing to you?",
       options: q9Options,
     },
   ];

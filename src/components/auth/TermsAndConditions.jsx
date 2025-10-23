@@ -266,7 +266,7 @@ const TermsAndConditions = () => {
         {isAuthenticated() ? (
           <Container sx={container}>
             <TermsHeader
-              title={"Edupulse – Terms & Conditions"}
+              title={"Edupulsegpt– Terms & Conditions"}
               description={`Effective Date: ${effectiveDate} | Last Updated: ${lastUpdated}`}
               titleStyle={title}
               dateStyle={date}
@@ -357,7 +357,7 @@ const TermsAndConditions = () => {
         ) : (
           <Container sx={container}>
             <TermsHeader
-              title={"Edupulse – Terms & Conditions"}
+              title={"Edupulsegpt – Terms & Conditions"}
               description={`To review and accept our terms & conditions, please log in to your account first`}
               titleStyle={title}
               dateStyle={date}

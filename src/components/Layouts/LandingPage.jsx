@@ -13,7 +13,7 @@ import { useEffect } from "react";
 
 const LandingPage = () => {
   useEffect(() => {
-    document.title = "Join the Waitlist | Edupulse";
+    document.title = "Join the Waitlist | Edupulsegpt";
   }, []);
 
   return (
