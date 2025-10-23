@@ -125,7 +125,7 @@ const Step2 = () => {
     try {
       // const res = await axios.post("https://eduplusemail.esparkconsultants.com/start-survey", data);
       const res = await axios.post(
-        "https://api.edupulse.co.uk/start-survey",
+        "https://api.edupulsegpt.com/start-survey",
         data
       );
       setIsLoading(false);
@@ -258,7 +258,7 @@ const Step2 = () => {
     },
     {
       name: "q9",
-      label: "What EduPulse features are most appealing to you?",
+      label: "What Edupulsegpt features are most appealing to you?",
       options: q9Options,
     },
   ];
