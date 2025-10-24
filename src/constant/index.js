@@ -49,63 +49,63 @@ export const features = [
 
 export const slides = [
   {
-    heading: "Edupulse creates your press releases",
+    heading: "Edupulsegpt creates your press releases",
     description:
-      "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "Edupulsegpt crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service1,
   },
   {
-    heading: "Edupulse creates your Facebook posts",
+    heading: "Edupulsegpt creates your Facebook posts",
     description:
-      "Edupulse designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "Edupulsegpt designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service2,
   },
   {
-    heading: "Edupulse creates your Instagram posts",
+    heading: "Edupulsegpt creates your Instagram posts",
     description:
-      "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "Edupulsegpt delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Edupulse creates your newsletter content",
+    heading: "Edupulsegpt creates your newsletter content",
     description:
-      "Edupulse curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
+      "Edupulsegpt curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Edupulse writes your Trust & governor report summaries",
+    heading: "Edupulsegpt writes your Trust & governor report summaries",
     description:
-      "Edupulse crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+      "Edupulsegpt crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service5,
   },
   {
-    heading: "Edupulse creates your press releases",
+    heading: "Edupulsegpt creates your press releases",
     description:
-      "Edupulse crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "Edupulsegpt crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service6,
   },
   {
-    heading: "Edupulse creates your Facebook posts",
+    heading: "Edupulsegpt creates your Facebook posts",
     description:
-      "Edupulse designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "Edupulsegpt designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service1,
   },
   {
-    heading: "Edupulse creates your Instagram posts",
+    heading: "Edupulsegpt creates your Instagram posts",
     description:
-      "Edupulse delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "Edupulsegpt delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Edupulse creates your newsletter content",
+    heading: "Edupulsegpt creates your newsletter content",
     description:
-      "Edupulse curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
+      "Edupulsegpt curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Edupulse writes your Trust & governor report summaries",
+    heading: "Edupulsegpt writes your Trust & governor report summaries",
     description:
-      "Edupulse crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+      "Edupulsegpt crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service5,
   },
 ];
