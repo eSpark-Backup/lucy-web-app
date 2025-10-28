@@ -1,4 +1,4 @@
-import logo from "./icons/logo.svg";
+import logo from "./icons/new_logo.svg";
 import grad from "./icons/grad.svg";
 import certified from "./icons/certify.svg";
 import magic from "./icons/magic.svg";
