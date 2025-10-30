@@ -51,7 +51,7 @@ const Navbar = () => {
           }}
         >
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <img src={logo} alt="Logo" />
+            <img style={{ width: "213px", height: "41px" }} src={logo} alt="Logo" />
             {!isMobile && (
               <Box
                 sx={{
