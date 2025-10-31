@@ -100,14 +100,14 @@ const ContactInfoSection = ({
             </Typography>
 
             <Link
-              to={`mailto:${info?.email || "support@edupulse.co.uk"}`}
+              to={`mailto:${info?.email || "info@edupulsegpt.com"}`}
               style={{
                 color: "#4880FF",
                 textDecoration: "none",
                 overflowWrap: "anywhere",
               }}
             >
-              {info?.email || "support@edupulse.co.uk"}
+              {info?.email || "info@edupulsegpt.com"}
             </Link>
           </Typography>
 

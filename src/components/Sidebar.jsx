@@ -38,7 +38,7 @@ const Sidebar = () => {
             px: 4,
           }}
         >
-          <Box component={"img"} src={Logo} sx={{ width: "auto" }} />
+          <Box component={"img"} src={Logo} sx={{ width: "170px" }} />
         </Box>
         <Box
           sx={{

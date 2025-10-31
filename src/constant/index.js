@@ -1160,7 +1160,7 @@ export const CONTACT_DATA_FOR_TERMS = {
     "If you have any questions regarding these Terms and Conditions, please contact:",
   heading: "Edupulsegpt Support Team",
   info: {
-    email: "support@edupulse.co.uk",
-    website: "https://app.edupulse.co.uk",
+    email: "info@edupulsegpt.com",
+    website: "https://edupulsegpt.com/",
   },
 };

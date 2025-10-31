@@ -121,7 +121,7 @@ export default function Footer() {
               /> */}
               <ContactRow
                 icon={<img src={email} alt="linkedin" />}
-                text="hello@edupulse.co.uk"
+                text="info@edupulsegpt.com"
               />
             </Stack>
           </Grid>
