@@ -91,7 +91,7 @@ const Navbar = () => {
                     smooth={true}
                     onClick={() => setActiveItem("edu")}
                   >
-                    Edupulse GPT
+                    EduPulse GPT
                   </Link>
                 </Typography>
                 <Typography
@@ -218,7 +218,7 @@ const Navbar = () => {
                           handleMenuClose();
                         }}
                       >
-                        Edupulse GPT
+                        EduPulse GPT
                       </Link>
                     </MenuItem>
                     <MenuItem
