@@ -60,7 +60,7 @@ const PrivateRoute = ({ children }) => {
         }}
       >
         <Box>
-          <img src={logo} alt="logo" />
+          <img style={{ width: "300px" }} src={logo} alt="logo" />
         </Box>
         <Box sx={{ width: "213px" }}>
           <LinearProgress sx={{ width: "100%" }} />

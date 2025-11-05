@@ -57,63 +57,63 @@ export const features = [
 
 export const slides = [
   {
-    heading: "Edupulsegpt creates your press releases",
+    heading: "EduPulse GPT creates your press releases",
     description:
-      "Edupulsegpt crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "EduPulse GPT crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service1,
   },
   {
-    heading: "Edupulsegpt creates your Facebook posts",
+    heading: "EduPulse GPT creates your Facebook posts",
     description:
-      "Edupulsegpt designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "EduPulse GPT designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service2,
   },
   {
-    heading: "Edupulsegpt creates your Instagram posts",
+    heading: "EduPulse GPT creates your Instagram posts",
     description:
-      "Edupulsegpt delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "EduPulse GPT delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Edupulsegpt creates your newsletter content",
+    heading: "EduPulse GPT creates your newsletter content",
     description:
-      "Edupulsegpt curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
+      "EduPulse GPT curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Edupulsegpt writes your Trust & governor report summaries",
+    heading: "EduPulse GPT writes your Trust & governor report summaries",
     description:
-      "Edupulsegpt crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+      "EduPulse GPT crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service5,
   },
   {
-    heading: "Edupulsegpt creates your press releases",
+    heading: "EduPulse GPT creates your press releases",
     description:
-      "Edupulsegpt crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "EduPulse GPT crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service6,
   },
   {
-    heading: "Edupulsegpt creates your Facebook posts",
+    heading: "EduPulse GPT creates your Facebook posts",
     description:
-      "Edupulsegpt designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "EduPulse GPT designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service1,
   },
   {
-    heading: "Edupulsegpt creates your Instagram posts",
+    heading: "EduPulse GPT creates your Instagram posts",
     description:
-      "Edupulsegpt delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "EduPulse GPT delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Edupulsegpt creates your newsletter content",
+    heading: "EduPulse GPT creates your newsletter content",
     description:
-      "Edupulsegpt curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
+      "EduPulse GPT curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Edupulsegpt writes your Trust & governor report summaries",
+    heading: "EduPulse GPT writes your Trust & governor report summaries",
     description:
-      "Edupulsegpt crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+      "EduPulse GPT crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service5,
   },
 ];
@@ -1109,16 +1109,16 @@ export const PAYMENT_METHOD_DATA = {
 };
 
 export const ABOUT_DATA = {
-  title: "About Edupulsegpt",
+  title: "About EduPulse GPT",
   highlightText:
     "Every empty seat in a school represents lost money and funding",
-  description: `Edupulsegpt acts as your school's dedicated marketing department, offering
+  description: `EduPulse GPT acts as your school's dedicated marketing department, offering
           a game-changing, inexpensive AI-based marketing app. With subscriptions
           costing as little as £10 per month ( subject to full trust sign-up ), it
           provides a vital solution for busy, cash-strapped schools to enhance
           their visibility within the community. In an age where parents have more
           choices than ever, actively promoting your school is essential to avoid
-          missing out. Edupulsegpt was created to solve the challenge of busy school
+          missing out. EduPulse GPT was created to solve the challenge of busy school
           staff and stretched finances by providing an AI-driven marketing tool to
           help schools thrive.`,
   services: [
@@ -1158,7 +1158,7 @@ export const CONTACT_DATA_FOR_TERMS = {
   text: "Contact Information",
   content:
     "If you have any questions regarding these Terms and Conditions, please contact:",
-  heading: "Edupulsegpt Support Team",
+  heading: "EduPulse GPT Support Team",
   info: {
     email: "info@edupulsegpt.com",
     website: "https://edupulsegpt.com/",

@@ -64,7 +64,7 @@ const SolutionSection = () => {
                 fontFamily: '"Aoboshi One", serif',
               }}
             >
-              Edupulsegpt Difference
+              EduPulse GPT Difference
             </Typography>
             <Typography sx={{ mb: 2 }}>
               Expert Guidance. Custom Solutions. <br /> Efficient Setup. Ongoing

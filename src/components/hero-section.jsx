@@ -51,7 +51,7 @@ const HeroSection = () => {
           Attract More Students <br />
           Just £10* per month <br />
           Boost Your School’s Visibility <br />
-          Edupulsegpt App
+          EduPulse GPT App
         </Typography>
 
         <Typography
@@ -64,7 +64,7 @@ const HeroSection = () => {
           }}
         >
           Schools That Market Themselves Win. Don’t Get Left Behind! <br /> Let
-          the Edupulsegpt App create your marketing content.
+          the EduPulse GPT App create your marketing content.
         </Typography>
       </Box>
 
