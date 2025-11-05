@@ -49,63 +49,63 @@ export const features = [
 
 export const slides = [
   {
-    heading: "Edupulse GPT creates your press releases",
+    heading: "EduPulse GPT creates your press releases",
     description:
-      "Edupulse GPT crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "EduPulse GPT crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service1,
   },
   {
-    heading: "Edupulse GPT creates your Facebook posts",
+    heading: "EduPulse GPT creates your Facebook posts",
     description:
-      "Edupulse GPT designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "EduPulse GPT designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service2,
   },
   {
-    heading: "Edupulse GPT creates your Instagram posts",
+    heading: "EduPulse GPT creates your Instagram posts",
     description:
-      "Edupulse GPT delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "EduPulse GPT delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Edupulse GPT creates your newsletter content",
+    heading: "EduPulse GPT creates your newsletter content",
     description:
-      "Edupulse GPT curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
+      "EduPulse GPT curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Edupulse GPT writes your Trust & governor report summaries",
+    heading: "EduPulse GPT writes your Trust & governor report summaries",
     description:
-      "Edupulse GPT crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+      "EduPulse GPT crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service5,
   },
   {
-    heading: "Edupulse GPT creates your press releases",
+    heading: "EduPulse GPT creates your press releases",
     description:
-      "Edupulse GPT crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
+      "EduPulse GPT crafts compelling press releases to showcase your school’s achievements, events, and milestones to the wider community.",
     image: service6,
   },
   {
-    heading: "Edupulse GPT creates your Facebook posts",
+    heading: "EduPulse GPT creates your Facebook posts",
     description:
-      "Edupulse GPT designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
+      "EduPulse GPT designs engaging Facebook posts that highlight your school’s success, news, and events—keeping your community informed.",
     image: service1,
   },
   {
-    heading: "Edupulse GPT creates your Instagram posts",
+    heading: "EduPulse GPT creates your Instagram posts",
     description:
-      "Edupulse GPT delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
+      "EduPulse GPT delivers eye-catching Instagram posts to showcase your school’s spirit, achievements, and daily moments with your audience.",
     image: service3,
   },
   {
-    heading: "Edupulse GPT creates your newsletter content",
+    heading: "EduPulse GPT creates your newsletter content",
     description:
-      "Edupulse GPT curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
+      "EduPulse GPT curates impactful newsletter content to keep parents, staff, and the wider community informed, engaged, and connected.",
     image: service4,
   },
   {
-    heading: "Edupulse GPT writes your Trust & governor report summaries",
+    heading: "EduPulse GPT writes your Trust & governor report summaries",
     description:
-      "Edupulse GPT crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
+      "EduPulse GPT crafts clear, concise summaries for Trust and governor reports, making key insights easy to share with stakeholders.",
     image: service5,
   },
 ];
