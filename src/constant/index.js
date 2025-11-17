@@ -688,14 +688,14 @@ export const SIDEBAR = {
       icon: calendar,
     },
     {
-      text: "About",
-      link: "/dashboard/about",
-      icon: about,
-    },
-    {
       text: "Schools",
       link: "/dashboard/school-overview",
       icon: book,
+    },
+    {
+      text: "About",
+      link: "/dashboard/about",
+      icon: about,
     },
     {
       text: "Terms",
