@@ -97,9 +97,9 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = (values, resetForm) => {
-    const date_time = dayjs()
-      .add(2, "minute")
-      .utc()
+    const date_time = dayjs(values?.date)
+      // .add(2, "minute")
+      // .utc()
       .format("YYYY-MM-DDTHH:mm:ss[Z]");
 
     const formdata = new FormData();
