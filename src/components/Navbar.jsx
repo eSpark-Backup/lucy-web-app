@@ -45,7 +45,7 @@ const Navbar = ({ openMobileSidebar }) => {
           <MenuOpenIcon style={{ fontSize: "35px" }} />
         </IconButton>
         <Box display="flex" alignItems="center" gap={2}>
-          <Link to="/dashboard/profile" style={{ textDecoration: "none" }}>
+          {/* <Link to="/dashboard/profile" style={{ textDecoration: "none" }}> */}
             <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
               <Avatar
                 src={profileImg}
@@ -89,7 +89,7 @@ const Navbar = ({ openMobileSidebar }) => {
                   {user?.role || "role"}
                 </Typography>
               </Box>
-              <IconButton
+              {/* <IconButton
                 disableRipple
                 size="small"
                 sx={{
@@ -101,9 +101,9 @@ const Navbar = ({ openMobileSidebar }) => {
                 }}
               >
                 <ExpandMoreIcon />
-              </IconButton>
+              </IconButton> */}
             </Box>
-          </Link>
+          {/* </Link> */}
         </Box>
       </Toolbar>
     </AppBar>
