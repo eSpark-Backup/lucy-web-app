@@ -52,8 +52,7 @@ const Sidebar = () => {
             role !== "" &&
             sidebarLink
               ?.filter(
-                (item) =>
-                  !(item?.text === "Schools" && role === "school")
+                (item) => !(item?.text === "Schools" && role === "school")
               )
               ?.map(({ text, link, icon }, index) => {
                 const isActive =
@@ -105,7 +104,7 @@ const Sidebar = () => {
                           component="img"
                           src={icon}
                           sx={{
-                            width: "fit-content",
+                            width: 25,
                             height: 25,
                           }}
                         />
@@ -177,7 +176,7 @@ const Sidebar = () => {
                   component={"img"}
                   src={profileLink?.icon}
                   sx={{
-                    width: "fit-content",
+                    width: 25,
                     height: 25,
                   }}
                 />
@@ -219,7 +218,7 @@ const Sidebar = () => {
               src={LogoutButton?.icon}
               component={"img"}
               sx={{
-                width: "fit-content",
+                width: 25,
                 height: 25,
               }}
             />
