@@ -53,6 +53,7 @@ const ConformationModal = ({
               py: "14px",
               fontSize: "16px",
               color: "#000",
+              textTransform: "capitalize",
             }}
           >
             cancel
@@ -72,6 +73,7 @@ const ConformationModal = ({
               fontSize: "16px",
               color: "#fff",
               backgroundColor: "#FF0000",
+              textTransform: "capitalize",
             }}
           >
             Delete

@@ -116,6 +116,13 @@ const EventCalendar = ({ events }) => {
           borderTopLeftRadius: "12px",
           borderTopRightRadius: "12px",
         },
+        "& .fc-toolbar-title": {
+          cursor: "default",
+          pointerEvents: "none",
+        },
+        "& .fc-scrollgrid-sync-inner": {
+          cursor: "pointer",
+        },
         "@media(max-width: 1439px)": {
           "& .fc .fc-scrollgrid": {
             mt: 1,
@@ -187,7 +194,6 @@ const EventCalendar = ({ events }) => {
           }
 
           if (titleElement) {
-            titleElement.style.cursor = "pointer";
             titleElement.addEventListener("click", handleMonthTitleClick);
           }
         }}

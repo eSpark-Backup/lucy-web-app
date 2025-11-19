@@ -92,7 +92,7 @@ const ConfirmModal = ({
               border: "1px solid #373838",
               fontSize: "16px",
               my: "0px",
-              textTransform: "none",
+              textTransform: "capitalize",
             }}
             disableRipple
             onClick={handleCancel}
