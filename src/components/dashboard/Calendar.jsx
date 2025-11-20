@@ -26,11 +26,16 @@ function Calendar() {
     }
   };
   const [calendarEvents, setCalendarEvents] = useState([]);
-  const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery();
+  const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery(
+    undefined,
+    { refetchOnFocus: true, refetchOnMountOrArgChange: true }
+  );
   const { user } = useSelector((state) => state?.auth);
   const is_trust = user?.profile?.organization?.is_trust;
   const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
     skip: !is_trust,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
   });
 
   useEffect(() => {

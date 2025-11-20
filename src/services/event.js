@@ -9,7 +9,7 @@ export const authApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      providesTags: ["event"],
+      providesTags: ["events", "event"],
     }),
     createEvent: builder.mutation({
       query: (credentials) => ({
@@ -41,7 +41,7 @@ export const authApi = api.injectEndpoints({
         url: `/events/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["event"],
+      invalidatesTags: ["events"],
     }),
   }),
 });

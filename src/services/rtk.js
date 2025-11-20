@@ -32,6 +32,7 @@ export const api = createApi({
     "schools",
     "payment",
     "terms",
+    "events",
   ],
   endpoints: () => ({}),
 });

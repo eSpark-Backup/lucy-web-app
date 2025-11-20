@@ -320,15 +320,22 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                     }
                   />
                 ) : (
-                  <EmailsInput
-                    name={name}
-                    disabled={!formik?.values?.post_method}
-                    emails={emails}
-                    setEmails={setEmails}
-                    placeholder={placeholder}
-                    formik={formik}
-                    data={suggestedEmails}
-                  />
+                  <>
+                    <EmailsInput
+                      name={name}
+                      disabled={!formik?.values?.post_method}
+                      emails={emails}
+                      setEmails={setEmails}
+                      placeholder={placeholder}
+                      formik={formik}
+                      data={suggestedEmails}
+                    />
+                    {formik.touched.recipients && formik.errors.recipients && (
+                      <Typography color="error" fontSize={12} m={"3px 14px"}>
+                        {formik.errors.recipients}
+                      </Typography>
+                    )}
+                  </>
                 )}
                 {name === "description" && (
                   <>

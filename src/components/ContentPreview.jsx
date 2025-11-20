@@ -13,7 +13,18 @@ const ContentPreview = ({ title, description, date, image, recipients }) => {
     description: description[index],
   }));
 
-  const handleResendEmail = async (contentType, description) => {
+  const contentTypeOptions = {
+    "Press Release": "press_release",
+    "Instagram Post": "instagram_post",
+    "Facebook Post": "facebook_post",
+    "Newsletter Inclusion": "newsletter",
+    "Governor Report Summary": "governor_summary",
+  };
+
+  const handleResendEmail = async () => {
+    let contentType = title[0];
+    contentType = contentTypeOptions[contentType];
+
     const body = {
       content_type: contentType,
       text_content: description,

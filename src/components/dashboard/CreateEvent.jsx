@@ -131,11 +131,11 @@ const CreateEvent = () => {
         return;
       }
       if (res?.data) {
-        toast.success(res?.data?.message || "Event was deleted successfully");
-        setIsDeleted(true);
         setOpenModal(false);
-        dispatch(api.util.invalidateTags(["schools"]));
+        toast.success(res?.data?.message || "Event was deleted successfully");
         navigate("/dashboard/calendar");
+        setIsDeleted(true);
+        // dispatch(api.util.invalidateTags(["schools"]));
       }
     });
   };
