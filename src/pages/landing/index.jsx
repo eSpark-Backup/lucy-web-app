@@ -26,9 +26,9 @@ const LandingPage = () => {
           <SolutionSection />
         </Element>
       </Container>
-      <Element name="wait">
+      {/* <Element name="wait">
         <WaitList />
-      </Element>
+      </Element> */}
       <Element name="services">
         <Services />
       </Element>
