@@ -94,7 +94,7 @@ const Navbar = () => {
                     EduPulse GPT
                   </Link>
                 </Typography>
-                <Typography
+                {/* <Typography
                   sx={{
                     fontSize: "16px",
                     fontWeight: "400",
@@ -111,7 +111,7 @@ const Navbar = () => {
                   >
                     Waitlist
                   </Link>
-                </Typography>
+                </Typography> */}
                 <Typography
                   sx={{
                     fontSize: "16px",
@@ -221,7 +221,7 @@ const Navbar = () => {
                         EduPulse GPT
                       </Link>
                     </MenuItem>
-                    <MenuItem
+                    {/* <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
@@ -236,7 +236,7 @@ const Navbar = () => {
                       >
                         Waitlist
                       </Link>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem
                       onClick={handleMenuClose}
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
@@ -284,7 +284,7 @@ const Navbar = () => {
                     </MenuItem> */}
                     <MenuItem
                       onClick={() => {
-                        navigate("/?open=true&step=1");
+                        window.open("https://app.edupulsegpt.com/sub-plan");
                         handleMenuClose();
                       }}
                     >
@@ -297,14 +297,14 @@ const Navbar = () => {
                           fontFamily: '"Aoboshi One", serif',
                         }}
                       >
-                        Join Wait List
+                        Signup
                       </Button>
                     </MenuItem>
                   </Menu>
                 </>
               ) : (
                 <Button
-                  onClick={() => navigate("/?open=true&step=1")}
+                  onClick={() => window.open("https://app.edupulsegpt.com/sub-plan")}
                   variant="primary"
                   disableRipple
                   sx={{
@@ -313,7 +313,7 @@ const Navbar = () => {
                     fontFamily: '"Aoboshi One", serif',
                   }}
                 >
-                  Join Wait List
+                  Signup
                 </Button>
               )}
             </Box>
