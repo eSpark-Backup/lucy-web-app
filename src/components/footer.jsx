@@ -101,7 +101,7 @@ export default function Footer() {
             <Section
               heading="Platform"
               links={[
-                { label: "Wait list", route: "wait" },
+                // { label: "Wait list", route: "wait" },
                 { label: "Solutions", route: "edu" },
               ]}
             />
