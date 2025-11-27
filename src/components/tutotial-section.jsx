@@ -5,6 +5,7 @@ const TutotialSection = () => {
   return (
     <Box
       sx={{
+        paddingTop: { xs: "30px", lg: "50px" },
         pb: 3,
         position: "relative",
       }}
@@ -14,7 +15,6 @@ const TutotialSection = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          my: "60px",
         }}
       >
         <Box

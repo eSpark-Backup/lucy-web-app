@@ -51,7 +51,11 @@ const Navbar = () => {
           }}
         >
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <img style={{ width: "213px", height: "41px" }} src={logo} alt="Logo" />
+            <img
+              style={{ width: "213px", height: "41px" }}
+              src={logo}
+              alt="Logo"
+            />
             {!isMobile && (
               <Box
                 sx={{
@@ -75,6 +79,23 @@ const Navbar = () => {
                     onClick={() => setActiveItem("home")}
                   >
                     Home
+                  </Link>
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    color: activeItem === "tutorial" ? "#3A3535" : "#94969E",
+                    cursor: "pointer",
+                    fontFamily: '"Aoboshi One", serif',
+                  }}
+                >
+                  <Link
+                    to="tutorial"
+                    smooth={true}
+                    onClick={() => setActiveItem("tutorial")}
+                  >
+                    Tutorial
                   </Link>
                 </Typography>
                 <Typography
@@ -211,6 +232,21 @@ const Navbar = () => {
                       sx={{ fontFamily: '"Aoboshi One", serif' }}
                     >
                       <Link
+                        to="tutorial"
+                        smooth={true}
+                        onClick={() => {
+                          setActiveItem("tutorial");
+                          handleMenuClose();
+                        }}
+                      >
+                        Tutorial
+                      </Link>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleMenuClose}
+                      sx={{ fontFamily: '"Aoboshi One", serif' }}
+                    >
+                      <Link
                         to="edu"
                         smooth={true}
                         onClick={() => {
@@ -304,7 +340,9 @@ const Navbar = () => {
                 </>
               ) : (
                 <Button
-                  onClick={() => window.open("https://app.edupulsegpt.com/sub-plan")}
+                  onClick={() =>
+                    window.open("https://app.edupulsegpt.com/sub-plan")
+                  }
                   variant="primary"
                   disableRipple
                   sx={{
