@@ -49,11 +49,11 @@ export default function Footer() {
                   color: "#FFF",
                 }}
               >
-                EduPulse GPT is a cost-effective marketing app that enables schools
-                to boost their visibility, attract more students and funding,
-                and strengthen their reputation in the local community. It is
-                the brainchild of former BBC journalist and marketing expert
-                Lucy Hood.
+                EduPulse GPT is a cost-effective marketing app that enables
+                schools to boost their visibility, attract more students and
+                funding, and strengthen their reputation in the local community.
+                It is the brainchild of former BBC journalist and marketing
+                expert Lucy Hood.
                 <br />
                 By using this app, you acknowledge and agree that you do so at
                 your own risk. The developer is not liable for any consequences
@@ -173,12 +173,12 @@ function Section({ heading, links }) {
       <Typography sx={{ color: "#FFF", fontSize: "21px", fontWeight: 600 }}>
         {heading}
       </Typography>
-      {links.map((item) => (
+      {links?.map((item, index) => (
         <Link
+          key={index}
           to={item?.route}
           smooth={true}
-          style={{ cursor: "pointer" }}
-          // sx={{ color: "#EBEBEB", fontSize: "21px", fontWeight: 400 }}
+          style={{ cursor: "pointer", width: "fit-content" }}
         >
           {item?.label}
         </Link>

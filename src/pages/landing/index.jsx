@@ -10,6 +10,7 @@ import {
   Reviews,
   About,
   WaitlistModal,
+  TutotialSection,
 } from "../../components";
 import { Element } from "react-scroll";
 
@@ -22,6 +23,9 @@ const LandingPage = () => {
       </Element>
       <Container maxWidth="xl">
         <LogoSlider />
+        <Element name="tutorial">
+          <TutotialSection />
+        </Element>
         <Element name="edu">
           <SolutionSection />
         </Element>
