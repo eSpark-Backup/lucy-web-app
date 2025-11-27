@@ -24,13 +24,12 @@ const SolutionSection = () => {
         }}
       /> */}
 
-      {/* Content Container (floating card) */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          mt: "60px",
+          mb: "60px",
           // mt: { xs: -12, md: "-305px", xl: "-380px" },
           // mr: { xs: "0px", lg: "20px" },
         }}

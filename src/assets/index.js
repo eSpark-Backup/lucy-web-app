@@ -44,8 +44,11 @@ import service5 from "./images/service5.png";
 import service6 from "./images/service6.png";
 import about from "./images/about.png";
 import modalBg from "./images/modal-bg-image.png";
+import tutorialThumbnail from "./images/tutorial-thumbnail.png";
 
 import bannerVideo from "./video/bannerVideo.mp4";
+import tutorialVideo from "./video/tutorial.mp4";
+
 
 export {
   logo,
@@ -92,6 +95,8 @@ export {
   formIcon,
   tick,
   bannerVideo,
+  tutorialVideo,
+  tutorialThumbnail,
   service5,
   service6,
 };
