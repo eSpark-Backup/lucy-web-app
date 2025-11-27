@@ -20,7 +20,7 @@ import { Link } from "react-scroll";
 const Navbar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [activeItem, setActiveItem] = useState("home");
