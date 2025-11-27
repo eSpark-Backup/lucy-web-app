@@ -7,7 +7,7 @@ const SolutionSection = () => {
   return (
     <Box
       sx={{
-        // px: { xs: "30px", md: "50px", lg: "90px" },
+        paddingTop: { xs: "40px", md: "60px" },
         pb: 3,
         position: "relative",
       }}
