@@ -25,6 +25,7 @@ import { useGetMyOrganizationQuery } from "../../services/organization";
 import { useAddImageMutation } from "../../services/image";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useSelector } from "react-redux";
 
 const initialEventData = {
   name: "",
@@ -103,6 +104,7 @@ const SchoolProfileForm = ({
     }
   };
 
+  const { user } = useSelector((state) => state?.auth);
   const { fields } = SCHOOL_INFORMATION_FORM || {};
   const { EventFormStyles } = componentStyles || {};
   const {
@@ -134,6 +136,9 @@ const SchoolProfileForm = ({
             ...(organizationData?.is_trust && {
               password: "",
               confirm_password: "",
+            }),
+            ...(!organizationData?.is_trust && {
+              email: user?.email || "",
             }),
           },
     validationSchema: schoolProfileValidationSchema(

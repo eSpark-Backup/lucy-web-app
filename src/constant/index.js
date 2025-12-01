@@ -814,7 +814,7 @@ export const SCHOOL_INFORMATION_FORM = {
         type: "email",
         name: "email",
         size: { xs: 12, lg: 5.5 },
-        disabled: isEdit ? true : false,
+        disabled: !is_trust || isEdit ? true : false,
       },
       {
         label: "Upload Image/Avtar",

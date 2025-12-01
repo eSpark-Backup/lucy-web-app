@@ -811,6 +811,7 @@ export const componentStyles = {
       height: 80,
       margin: "auto",
       cursor: isEditing ? "pointer" : "default",
+      backgroundColor: isEditing ? "#4880FF" : "",
     }),
     editPhotoText: (isEditing) => ({
       mt: 1,

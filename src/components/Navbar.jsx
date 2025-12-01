@@ -46,50 +46,48 @@ const Navbar = ({ openMobileSidebar }) => {
         </IconButton>
         <Box display="flex" alignItems="center" gap={2}>
           {/* <Link to="/dashboard/profile" style={{ textDecoration: "none" }}> */}
-            <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
-              <Avatar
-                src={profileImg}
-                alt={user?.profile?.first_name}
+          <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
+            <Avatar
+              src={profileImg}
+              alt={user?.profile?.first_name}
+              sx={{
+                width: { sm: 37, md: 40 },
+                height: { sm: 37, md: 40 },
+                textTransform: "capitalize",
+                backgroundColor: "#4880FF",
+              }}
+            >
+              {user?.profile?.first_name?.[0] || ""}
+            </Avatar>
+            <Box textAlign="left" sx={{ display: { xs: "none", sm: "block" } }}>
+              <Typography
+                variant="body1"
                 sx={{
-                  width: { sm: 37, md: 40 },
-                  height: { sm: 37, md: 40 },
-                  textTransform: "capitalize",
+                  fontFamily: "Poppins",
+                  fontWeight: 700,
+                  color: "#404040",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "100px",
                 }}
               >
-                {user?.profile?.first_name?.[0] || ""}
-              </Avatar>
-              <Box
-                textAlign="left"
-                sx={{ display: { xs: "none", sm: "block" } }}
+                {user?.role !== "school"
+                  ? user?.profile?.first_name?.split(" ")[0] || "User"
+                  : user?.school?.name?.split(" ")[0] || "User"}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 400,
+                  color: "#404040",
+                }}
               >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 700,
-                    color: "#404040",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    maxWidth: "100px",
-                  }}
-                >
-                  {user?.role !== "school"
-                    ? user?.profile?.first_name?.split(" ")[0] || "User"
-                    : user?.school?.name?.split(" ")[0] || "User"}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 400,
-                    color: "#404040",
-                  }}
-                >
-                  {user?.role || "role"}
-                </Typography>
-              </Box>
-              {/* <IconButton
+                {user?.role || "role"}
+              </Typography>
+            </Box>
+            {/* <IconButton
                 disableRipple
                 size="small"
                 sx={{
@@ -102,7 +100,7 @@ const Navbar = ({ openMobileSidebar }) => {
               >
                 <ExpandMoreIcon />
               </IconButton> */}
-            </Box>
+          </Box>
           {/* </Link> */}
         </Box>
       </Toolbar>
