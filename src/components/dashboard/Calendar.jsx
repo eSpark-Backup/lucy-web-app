@@ -72,32 +72,36 @@ function Calendar() {
       }
     } else {
       if (isSuccess) {
-        setCalendarEvents(
-          data?.map((item) => {
-            const start = dayjs(item.date_time).local();
-            let end;
-            let allDay = false;
+        if (Array?.isArray(data) && data?.length > 0) {
+          setCalendarEvents(
+            data.map((item) => {
+              const start = dayjs(item.date_time).local();
+              let end;
+              let allDay = false;
 
-            if (item.time_span >= 1438 && item.time_span <= 1440) {
-              end = start.endOf("day");
-              allDay = true;
-            } else {
-              end = start.add(item.time_span, "minute");
-            }
+              if (item.time_span >= 1438 && item.time_span <= 1440) {
+                end = start.endOf("day");
+                allDay = true;
+              } else {
+                end = start.add(item.time_span, "minute");
+              }
 
-            return {
-              id: item.id,
-              title: item.name,
-              start: start.toDate(),
-              end: end.toDate(),
-              allDay,
-              duration: formatDuration(item.time_span),
-              attendees: [],
-              image: item.image,
-              date: start.format("DD/MM/YYYY"),
-            };
-          })
-        );
+              return {
+                id: item.id,
+                title: item.name,
+                start: start.toDate(),
+                end: end.toDate(),
+                allDay,
+                duration: formatDuration(item.time_span),
+                attendees: [],
+                image: item.image,
+                date: start.format("DD/MM/YYYY"),
+              };
+            })
+          );
+        } else {
+          setCalendarEvents([]);
+        }
       }
 
       if (isError) {
