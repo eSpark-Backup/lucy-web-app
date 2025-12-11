@@ -9,6 +9,13 @@ import {
   Stack,
   InputAdornment,
   IconButton,
+  useTheme,
+  useMediaQuery,
+  Box,
+  Popper,
+  ClickAwayListener,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
@@ -26,6 +33,7 @@ import { useAddImageMutation } from "../../services/image";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector } from "react-redux";
+import { useSearchPhotosMutation } from "../../services/content";
 
 const initialEventData = {
   name: "",
@@ -56,6 +64,17 @@ const SchoolProfileForm = ({
   const [imageUpload] = useAddImageMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPopper, setShowPopper] = useState(false);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [searchPhotos] = useSearchPhotosMutation();
+
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const cols = isXs ? 2 : 3;
 
   const handleCreate = async (formdata, resetForm) => {
     try {
@@ -119,6 +138,29 @@ const SchoolProfileForm = ({
   const isPreview = mode === "preview";
   const isEdit = mode === "edit";
   const isAdd = mode === "add";
+
+  const searchImages = async () => {
+    if (!query) return;
+
+    setHasSearched(true);
+    setLoading(true);
+
+    try {
+      const data = await searchPhotos({ query }).unwrap();
+
+      if (!data?.photos || data.photos.length === 0) {
+        setResults([]);
+        return;
+      }
+
+      setResults(data.photos);
+    } catch (err) {
+      console.error("RTK Query Error:", err);
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formik = useFormik({
     initialValues:
@@ -198,6 +240,13 @@ const SchoolProfileForm = ({
 
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
+
+  const handleClosePopper = () => {
+    setShowPopper(false);
+    setQuery("");
+    setResults([]);
+    setHasSearched(false);
+  };
 
   return (
     <Paper elevation={0} sx={paperStyle}>
@@ -306,8 +355,196 @@ const SchoolProfileForm = ({
                         </Typography>
                       )}
                       {!isPreview && (
-                        <Stack pt={1}>
-                          <Button
+                        <Stack pt={1.5}>
+                          <Box display="flex" justifyContent={"end"} gap={2}>
+                            <Button
+                              variant="contained"
+                              sx={{
+                                color: "#fff",
+                                maxWidth: "148px",
+                                backgroundColor: "#9C27B0",
+                                opacity: "90%",
+                                textWrap: "nowrap",
+                                "&:hover": {
+                                  backgroundColor: "#9C27B0",
+                                },
+                              }}
+                              onClick={() => {
+                                setShowPopper((prev) => !prev);
+                              }}
+                            >
+                              <Typography variant="h6" sx={buttonTypoStyle}>
+                                {"Search Images"}
+                              </Typography>
+                            </Button>
+                            <Button
+                              variant="contained"
+                              sx={uploadButtonStyle}
+                              disabled={image}
+                              onClick={() =>
+                                !image && inputRef?.current?.click()
+                              }
+                            >
+                              <Typography variant="h6" sx={buttonTypoStyle}>
+                                {"Upload Image"}
+                              </Typography>
+                            </Button>
+                          </Box>
+                          {showPopper && (
+                            <Box
+                              sx={{
+                                position: "fixed",
+                                top: 0,
+                                left: 0,
+                                width: "100vw",
+                                height: "100vh",
+                                backgroundColor: "rgba(0,0,0,0.05)",
+                                backdropFilter: "blur(1px)",
+                                zIndex: 1199,
+                              }}
+                              onClick={handleClosePopper}
+                            />
+                          )}
+                          <Popper
+                            anchorEl={null}
+                            open={showPopper}
+                            style={{
+                              zIndex: 1200,
+                              top: "50%",
+                              left: "50%",
+                              position: "fixed",
+                              transform: "translate(-50%, -50%)",
+                            }}
+                          >
+                            <ClickAwayListener onClickAway={handleClosePopper}>
+                              <Paper
+                                sx={{
+                                  p: 2,
+                                  width: { xs: "280px", sm: "400px" },
+                                  backgroundColor: "rgba(255, 255, 255)",
+                                  boxShadow:
+                                    "6px 6px 45px 0px rgba(0, 0, 0, 0.05)",
+                                }}
+                              >
+                                <Stack spacing={2}>
+                                  <Box
+                                    display="flex"
+                                    flexDirection={{ xs: "column", sm: "row" }}
+                                    alignItems={{ xs: "stretch", sm: "center" }}
+                                    justifyContent={"center"}
+                                    width="100%"
+                                    gap={1}
+                                  >
+                                    <TextField
+                                      fullWidth
+                                      value={query}
+                                      sx={{
+                                        "& .MuiInputBase-root": {
+                                          height: { xs: "40px", md: "40px" },
+                                          border: "1px solid #D8D8D8",
+                                          backgroundColor: "#F1F4F9",
+                                          borderRadius: "4px",
+                                          paddingLeft: "15px",
+                                          paddingRight: "15px",
+                                        },
+                                        "& input": {
+                                          fontSize: "18px",
+                                          backgroundColor: "#F1F4F9",
+                                          color: "#000",
+                                          "&::placeholder": {
+                                            color: "#A6A6A6",
+                                            opacity: 1,
+                                          },
+                                        },
+                                      }}
+                                      placeholder="Search images..."
+                                      onChange={(e) =>
+                                        setQuery(e?.target?.value)
+                                      }
+                                      onKeyDown={(e) =>
+                                        e.key === "Enter" && searchImages()
+                                      }
+                                    />
+                                    <Button
+                                      disabled={loading}
+                                      variant="contained"
+                                      onClick={searchImages}
+                                      sx={{
+                                        maxWidth: { xs: "100%", sm: "100px" },
+                                        height: "40px",
+                                        borderRadius: "8px",
+                                        backgroundColor: "#9C27B0",
+                                        color: "#fff",
+                                        opacity: 0.9,
+                                        fontWeight: 500,
+                                        textTransform: "none",
+                                        "&:hover": {
+                                          backgroundColor: "#8e24aa",
+                                        },
+                                      }}
+                                    >
+                                      {"Search"}
+                                    </Button>
+                                  </Box>
+
+                                  {/* Image results */}
+                                  {loading ? (
+                                    <Typography align="center">
+                                      Searching...
+                                    </Typography>
+                                  ) : hasSearched && results?.length === 0 ? (
+                                    <Typography
+                                      align="center"
+                                      sx={{
+                                        color: "#A6A6A6",
+                                        fontSize: 14,
+                                        mt: 2,
+                                      }}
+                                    >
+                                      No images found
+                                    </Typography>
+                                  ) : results?.length > 0 ? (
+                                    <ImageList
+                                      sx={{
+                                        width: "100%",
+                                        maxHeight: 250,
+                                        overflowY: "auto",
+                                      }}
+                                      cols={cols}
+                                      rowHeight={164}
+                                    >
+                                      {results?.map((img) => (
+                                        <ImageListItem key={img?.id}>
+                                          <img
+                                            srcSet={`${img.src.small}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${img.src.small}?w=164&h=164&fit=crop&auto=format`}
+                                            alt={img.alt}
+                                            loading="lazy"
+                                            style={{
+                                              cursor: "pointer",
+                                              borderRadius: "6px",
+                                            }}
+                                            onClick={() => {
+                                              const selectedImage =
+                                                img.src.medium;
+                                              setImage(selectedImage);
+                                              formik.setFieldValue(
+                                                "image",
+                                                selectedImage,
+                                                true
+                                              );
+                                              handleClosePopper();
+                                            }}
+                                          />
+                                        </ImageListItem>
+                                      ))}
+                                    </ImageList>
+                                  ) : null}
+                                </Stack>
+                              </Paper>
+                            </ClickAwayListener>
+                          </Popper>
+                          {/* <Button
                             onClick={() => inputRef?.current?.click()}
                             variant="contained"
                             sx={uploadButtonStyle}
@@ -315,7 +552,7 @@ const SchoolProfileForm = ({
                             <Typography variant="h6" sx={buttonTypoStyle}>
                               {"Upload Image"}
                             </Typography>
-                          </Button>
+                          </Button> */}
                         </Stack>
                       )}
                     </>

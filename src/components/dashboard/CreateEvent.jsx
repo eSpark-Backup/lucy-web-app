@@ -111,7 +111,8 @@ const CreateEvent = () => {
     if (isSchoolRole === false && !id) {
       formdata.append("school_email", values?.school_email);
     }
-    if (values?.image && typeof values?.image === "object") {
+
+    if (values?.image) {
       formdata.append("image", values?.image);
     }
 

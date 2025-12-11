@@ -28,6 +28,7 @@ import EmailsInput from "../EmailsInput";
 import {
   useAddContentMutation,
   useGetAllRecipientsQuery,
+  useSearchPhotosMutation,
   useUpdateContentMutation,
 } from "../../services/content";
 import { toast } from "react-toastify";
@@ -112,6 +113,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   });
 
   const [aiPayload, { isLoading: aiLoading }] = useAiContentMutation();
+  const [searchPhotos] = useSearchPhotosMutation();
   const {
     data: recipientsData,
     isLoading: recipientsLoading,
@@ -130,24 +132,25 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
 
   const searchImages = async () => {
     if (!query) return;
+
     setHasSearched(true);
     setLoading(true);
+
     try {
-      const res = await fetch(
-        `https://api.pexels.com/v1/search?query=${query}`,
-        {
-          headers: {
-            Authorization:
-              "E4AB8hPKj3zShBgIuY1U3ZsNz7JFIeYyqmdOeJoYAENQLBhyBaPjnjUD",
-          },
-        }
-      );
-      const data = await res.json();
-      setResults(data.photos || []);
+      const data = await searchPhotos({ query }).unwrap();
+
+      if (!data?.photos || data.photos.length === 0) {
+        setResults([]);
+        return;
+      }
+
+      setResults(data.photos);
     } catch (err) {
-      console.error("Pexels fetch error:", err);
+      console.error("RTK Query Error:", err);
+      setResults([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const formik = useFormik({
@@ -207,7 +210,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
     },
   });
 
-  const [imageUpload, {}] = useAddImageMutation();
+  const [imageUpload, { isLoading: imageLoading }] = useAddImageMutation();
 
   useEffect(() => {
     if (formik.values.image && typeof formik.values.image !== "string") {
@@ -493,6 +496,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                       <Box display="flex" justifyContent={"end"} gap={2}>
                         <Button
                           variant="contained"
+                           disabled={imageLoading}
                           sx={searchButtonStyle}
                           onClick={() => {
                             setShowPopper((prev) => !prev);
@@ -506,6 +510,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                           variant="contained"
                           sx={uploadButtonStyle}
                           disabled={image}
+                          loading={imageLoading}
                           onClick={() => !image && inputRef?.current?.click()}
                         >
                           <Typography variant="h6" sx={buttonTypoStyle}>
@@ -638,7 +643,9 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
             sx={buttonStyle}
             variant="contained"
             loading={isLoading || editLoading || aiLoading}
-            disabled={formik?.values?.content_types?.length === 0}
+            disabled={
+              formik?.values?.content_types?.length === 0 || imageLoading
+            }
           >
             <Typography variant="h6" sx={buttonTypoStyle}>
               {contentId ? "Save" : "Add"}

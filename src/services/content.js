@@ -34,6 +34,17 @@ export const contentApi = api.injectEndpoints({
       }),
       providesTags: ["content"],
     }),
+    searchPhotos: builder.mutation({
+      query: ({ query = "", per_page = 40 }) => ({
+        url: `/events/images/search`,
+        method: "GET",
+        params: {
+          query,
+          per_page,
+        },
+        credentials: "include",
+      }),
+    }),
     updateContent: builder.mutation({
       query: ({ eventId, contentId, body }) => ({
         url: `/events/${eventId}/contents/${contentId}`,
@@ -70,4 +81,5 @@ export const {
   useUpdateContentMutation,
   useDeleteContentMutation,
   useResendRecipientEmailMutation,
+  useSearchPhotosMutation,
 } = contentApi;

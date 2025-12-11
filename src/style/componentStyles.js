@@ -175,13 +175,11 @@ export const componentStyles = {
       },
     },
     uploadButtonStyle: {
-      ml: "auto",
       color: "#fff",
-      maxWidth: { xs: "100%", sm: "148px" },
-      height: { xs: "42px", md: "46px" },
-      borderRadius: "9px",
+      maxWidth: "148px",
       backgroundColor: "#4880FF",
       opacity: "90%",
+      textWrap: "nowrap",
       "&:hover": {
         backgroundColor: "#4880FF",
       },

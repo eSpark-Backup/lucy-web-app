@@ -107,9 +107,11 @@ export default function RecipeReviewCard({
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton disableRipple onClick={handleOpenDeleteModal}>
-          <Box component="img" src={bin} sx={{ width: "60%" }} />
-        </IconButton>
+        {school?.email !== "lucyhood79@gmail.com" && (
+          <IconButton disableRipple onClick={handleOpenDeleteModal}>
+            <Box component="img" src={bin} sx={{ width: "60%" }} />
+          </IconButton>
+        )}
         <IconButton
           disableRipple
           onClick={() =>
