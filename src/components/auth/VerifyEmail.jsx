@@ -25,7 +25,7 @@ const VerifyEmail = () => {
   const handleResend = () => {
     resendEmail({ email }).then((res) => {
       if (res?.data) {
-        toast.success("Email sent successfuly");
+        toast.success("Email send successfuly");
       }
       if (res?.error) {
         toast.error(res?.error?.data?.message);
