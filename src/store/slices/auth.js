@@ -12,7 +12,11 @@ const slice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.clear();
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("email-verify");
+      localStorage.removeItem("terms");
+      localStorage.removeItem("edupluse_user");
     },
     setRedirectToLogin: (state, action) => {
       state.redirectToLogin = action.payload;

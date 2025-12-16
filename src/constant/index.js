@@ -900,7 +900,7 @@ export const CONTENTFORM = {
     {
       label: "Description",
       placeholder:
-        "Write a 3 paragraph  600 Words press release on (Event Name)",
+        "Write a description",
       type: "text",
       name: "description",
       size: 12,
