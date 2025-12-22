@@ -19,6 +19,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useCancelSubscriptionMutation } from "../services/payment";
 import { toast } from "react-toastify";
@@ -51,12 +52,14 @@ export default function RecipeReviewCard({
     statusText = "Cancelling";
     statusColor = "#4880ff";
     dateLabel = "cancelling on:";
+    StatusIcon = CancelIcon;
   }
 
   if (subscriptionStatus === "canceling" && !school?.is_paid) {
     statusText = "Pending";
     statusColor = "#9e9e9e";
     dateLabel = "cancelling on:";
+    StatusIcon = PendingIcon;
   }
 
   if (isExpired) {
