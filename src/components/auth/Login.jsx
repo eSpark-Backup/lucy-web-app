@@ -80,8 +80,8 @@ const Login = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const objToSend = {
-          email: values.email,
-          password: values.password,
+          email: values?.email,
+          password: values?.password,
         };
 
         const res = await login(objToSend);
@@ -101,8 +101,8 @@ const Login = () => {
         }
 
         // remember credentials
-        if (values.remember) {
-          saveEncryptedCredentials(values.email, values.password);
+        if (values?.remember) {
+          saveEncryptedCredentials(values?.email, values?.password);
         } else {
           clearSavedCredentials();
         }
@@ -111,9 +111,9 @@ const Login = () => {
         localStorage.setItem("terms", String(user?.termsAccepted));
 
         if (access_token && email_verified && user?.termsAccepted) {
-          navigate("/dashboard");
+          window.location.href = "/dashboard";
         } else if (access_token && !email_verified) {
-          navigate(`/auth/email-verification?email=${values.email}`);
+          navigate(`/auth/email-verification?email=${values?.email}`);
         } else if (access_token && !user?.termsAccepted) {
           navigate(`/terms`);
         } else {

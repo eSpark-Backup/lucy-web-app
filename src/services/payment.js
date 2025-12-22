@@ -20,8 +20,20 @@ export const paymentApi = api.injectEndpoints({
       }),
       invalidatesTags: ["payment"],
     }),
+    cancelSubscription: builder.mutation({
+      query: ({ body }) => ({
+        url: "/payment/cancel-subscription",
+        method: "POST",
+        body: body,
+        credentials: "include",
+      }),
+      invalidatesTags: ["schools"],
+    }),
   }),
 });
 
-export const { useCreateCheckoutSessionMutation, useCreatePaymentMutation } =
-  paymentApi;
+export const {
+  useCreateCheckoutSessionMutation,
+  useCreatePaymentMutation,
+  useCancelSubscriptionMutation,
+} = paymentApi;
