@@ -61,6 +61,13 @@ export default function RecipeReviewCard({
     StatusIcon = PendingIcon;
   }
 
+  if (subscriptionStatus === "active" && !school?.is_paid) {
+    statusText = "Pending";
+    statusColor = "#9e9e9e";
+    dateLabel = "cancelling on:";
+    StatusIcon = PendingIcon;
+  }
+
   if (subscriptionStatus === "canceling" && !school?.is_paid) {
     statusText = "Pending";
     statusColor = "#9e9e9e";
@@ -191,7 +198,7 @@ export default function RecipeReviewCard({
           </Typography>
         </Typography>
 
-        {subscriptionStatus === "active" && !isExpired && (
+        {subscriptionStatus === "active" && !isExpired && school?.is_paid && (
           <Stack py={1}>
             <Button
               color="primary"

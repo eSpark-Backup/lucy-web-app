@@ -9,7 +9,7 @@ export const paymentApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["payment"],
+      invalidatesTags: ["payment", "schools"],
     }),
     createPayment: builder.mutation({
       query: (credentials) => ({
@@ -18,7 +18,7 @@ export const paymentApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["payment"],
+      invalidatesTags: ["payment", "schools"],
     }),
     cancelSubscription: builder.mutation({
       query: ({ body }) => ({
