@@ -1,6 +1,7 @@
 import { Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import UploadIcon from "../assets/icons/upload.svg";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const ImageUploader = ({
   images = [],
@@ -48,6 +49,26 @@ const ImageUploader = ({
       formik.setFieldValue("images", updated, true);
       return updated;
     });
+  };
+
+  const handleDownload = async (url) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = blobUrl;
+      link.download = "preview-image.jpg";
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
   };
 
   return (
@@ -104,28 +125,115 @@ const ImageUploader = ({
             >
               {img?.file && (
                 <Box
-                  component="img"
-                  src={img?.preview}
-                  // src={URL?.createObjectURL(img?.file)}
-                  alt="preview"
                   sx={{
+                    position: "relative",
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
+                    overflow: "hidden",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+
+                    "&:hover .overlay": {
+                      opacity: 1,
+                    },
                   }}
-                />
+                >
+                  <Box
+                    component="img"
+                    src={img?.preview}
+                    alt="preview"
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundColor: "rgba(72, 128, 255, 0.6)",
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <DownloadIcon
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDownload(img?.preview);
+                      }}
+                      sx={{
+                        color: "#fff",
+                        fontSize: 40,
+                        cursor: "pointer",
+                        transition: "transform 0.2s ease",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                        },
+                      }}
+                    />
+                  </Box>
+                </Box>
               )}
               {img && (
                 <Box
-                  component="img"
-                  src={img}
-                  alt="preview"
                   sx={{
+                    position: "relative",
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
+                    overflow: "hidden",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+
+                    "&:hover .overlay": {
+                      opacity: 1,
+                    },
                   }}
-                />
+                >
+                  <Box
+                    component="img"
+                    src={img}
+                    alt="preview"
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+
+                  <Box
+                    className="overlay"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDownload(img);
+                    }}
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundColor: "rgba(72, 128, 255, 0.6)",
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <DownloadIcon
+                      sx={{
+                        color: "#fff",
+                        fontSize: 40,
+                        cursor: "pointer",
+                      }}
+                    />
+                  </Box>
+                </Box>
               )}
 
               {!disabled && !uploading && (
@@ -134,8 +242,9 @@ const ImageUploader = ({
                   disabled={mode === "preview"}
                   onClick={() => handleRemove(index)}
                   sx={{
-                    width: 20,
-                    height: 20,
+                    display: mode === "preview" ? "none" : "flex",
+                    width: 25,
+                    height: 25,
                     position: "absolute",
                     top: 2,
                     right: 2,
@@ -149,7 +258,7 @@ const ImageUploader = ({
                     },
                   }}
                 >
-                  <CloseIcon sx={{ fontSize: 14 }} />
+                  <CloseIcon sx={{ fontSize: 16 }} />
                 </IconButton>
               )}
             </Box>

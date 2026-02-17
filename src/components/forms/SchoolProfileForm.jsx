@@ -369,11 +369,19 @@ const SchoolProfileForm = ({
                             flexWrap={"wrap"}
                             gap={2}
                           >
+                            <ImageZipButton
+                              images={images || []}
+                              zipName="school-images.zip"
+                            />
                             <Button
                               variant="contained"
                               sx={{
                                 color: "#fff",
-                                maxWidth: { xs: "100%", sm: "148px" },
+                                maxWidth: {
+                                  xs: "100%",
+                                  sm: "48%",
+                                  md: "148px",
+                                },
                                 backgroundColor: "#9C27B0",
                                 opacity: "90%",
                                 textWrap: "nowrap",
@@ -393,7 +401,11 @@ const SchoolProfileForm = ({
                               variant="contained"
                               sx={{
                                 ...uploadButtonStyle,
-                                maxWidth: { xs: "100%", sm: "148px" },
+                                maxWidth: {
+                                  xs: "100%",
+                                  sm: "48%",
+                                  md: "148px",
+                                },
                               }}
                               onClick={() => inputRef?.current?.click()}
                             >
@@ -581,15 +593,6 @@ const SchoolProfileForm = ({
                               </Paper>
                             </ClickAwayListener>
                           </Popper>
-                          {/* <Button
-                            onClick={() => inputRef?.current?.click()}
-                            variant="contained"
-                            sx={uploadButtonStyle}
-                          >
-                            <Typography variant="h6" sx={buttonTypoStyle}>
-                              {"Upload Image"}
-                            </Typography>
-                          </Button> */}
                         </Stack>
                       )}
                     </>
