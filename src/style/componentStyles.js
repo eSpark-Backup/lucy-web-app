@@ -578,6 +578,7 @@ export const componentStyles = {
       color: "#202224",
       fontFamily: "Poppins",
       fontStyle: "bold",
+      textTransform: "capitalize",
     },
   },
 
@@ -744,7 +745,7 @@ export const componentStyles = {
         alignItems: "center",
       },
       showMoreButtonStyle: {
-        width: 126,
+        width: "fit-content",
         height: 38,
         borderRadius: "12px",
         border: "2px solid #E2EAF8",
@@ -804,12 +805,12 @@ export const componentStyles = {
       color: "#ADADAD",
       fontSize: "14px",
     },
-    avatar: (isEditing) => ({
+    avatar: (isEditing, hasImage) => ({
       width: 80,
       height: 80,
       margin: "auto",
       cursor: isEditing ? "pointer" : "default",
-      backgroundColor: isEditing ? "#4880FF" : "",
+      backgroundColor: hasImage ? "transparent" : "#4880FF",
     }),
     editPhotoText: (isEditing) => ({
       mt: 1,

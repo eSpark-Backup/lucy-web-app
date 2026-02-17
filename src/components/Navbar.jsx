@@ -6,9 +6,7 @@ import {
   Avatar,
   IconButton,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React, { memo } from "react";
 
@@ -48,16 +46,16 @@ const Navbar = ({ openMobileSidebar }) => {
           {/* <Link to="/dashboard/profile" style={{ textDecoration: "none" }}> */}
           <Box display="flex" alignItems="center" gap={{ xs: 1, md: 2 }}>
             <Avatar
-              src={profileImg}
+              src={profileImg || undefined}
               alt={user?.profile?.first_name}
               sx={{
                 width: { sm: 37, md: 40 },
                 height: { sm: 37, md: 40 },
                 textTransform: "capitalize",
-                backgroundColor: "#4880FF",
+                backgroundColor: profileImg ? "transparent" : "#4880FF",
               }}
             >
-              {user?.profile?.first_name?.[0] || ""}
+              {!profileImg && user?.profile?.first_name?.[0]}
             </Avatar>
             <Box textAlign="left" sx={{ display: { xs: "none", sm: "block" } }}>
               <Typography

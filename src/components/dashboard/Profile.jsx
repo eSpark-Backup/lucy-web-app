@@ -83,11 +83,19 @@ const Profile = () => {
         <Box sx={formArea}>
           <Box sx={{ textAlign: "center", mb: "5px" }}>
             <Avatar
-              src={image ? URL.createObjectURL(image) : user?.profile?.profile_image}
+              src={
+                image
+                  ? URL.createObjectURL(image)
+                  : user?.profile?.profile_image || undefined
+              }
               alt={user?.profile?.first_name}
-              sx={avatar(isEditing)}
+              sx={avatar(isEditing, image || user?.profile?.profile_image)}
               onClick={handlePhotoClick}
-            />
+            >
+              {!image &&
+                !user?.profile?.profile_image &&
+                user?.profile?.first_name?.[0]}
+            </Avatar>
             <Typography
               variant="body2"
               onClick={handlePhotoClick}
@@ -150,4 +158,3 @@ const Profile = () => {
 };
 
 export default Profile;
-

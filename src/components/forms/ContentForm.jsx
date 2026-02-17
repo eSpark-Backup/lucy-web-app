@@ -8,12 +8,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Popper,
-  ClickAwayListener,
   Box,
   LinearProgress,
-  ImageListItem,
-  ImageList,
   useTheme,
   useMediaQuery,
   Checkbox,
@@ -22,18 +18,15 @@ import { useFormik } from "formik";
 import { CONTENTFORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import { contentFormSchema } from "../../schemas/content";
-import ImageUploader from "../ImageUploader";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import EmailsInput from "../EmailsInput";
 import {
   useAddContentMutation,
   useGetAllRecipientsQuery,
-  useSearchPhotosMutation,
   useUpdateContentMutation,
 } from "../../services/content";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAddImageMutation } from "../../services/image";
 import { useGetEventByIdQuery } from "../../services/event";
 import { useAiContentMutation } from "../../services/ai";
 
@@ -41,17 +34,20 @@ const initialEventData = {
   content_types: [],
   text_content: [],
   description: "",
-  image: null,
   post_method: "",
   recipients: [],
 };
 
-const ContentForm = ({ data = initialEventData, contentId }) => {
+const ContentForm = ({
+  data = initialEventData,
+  contentId,
+  eventName = "",
+  setEventName = () => {},
+}) => {
   const {
     fields,
     contentTypeOptions,
     aiButtonText,
-    uploadButtonText,
     methodText,
     methodRadioButton,
     radioButtonsLable,
@@ -73,32 +69,15 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
     aiButtonStyle,
     radioButtonsLableStyle,
     recipientsFielStyle,
-    searchButtonStyle,
-    uploadButtonStyle,
-    poperBackgroundStyle,
-    popperStyle,
-    searchPaperStyle,
-    searchTextFieldStyle,
-    imageSearchButtonStyle,
-    imageListStyle,
-    lazyImageStyle,
     methodTypoStyle,
     formControlStyle,
   } = ContentFormStyles;
 
-  const inputRef = useRef(null);
-  const [image, setImage] = useState(data?.image);
   const [emails, setEmails] = useState(data?.recipients);
   const [suggestedEmails, setSuggestedEmails] = useState([]);
-  const [uploading, setUploading] = useState(false);
 
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [showPopper, setShowPopper] = useState(false);
   const [contentData, { isLoading }] = useAddContentMutation();
   const [editContent, { isLoading: editLoading }] = useUpdateContentMutation();
-  const [eventName, setEventName] = useState("");
   const [aiContent, setAiContent] = useState("");
   const navigate = useNavigate();
   const { eventId } = useParams();
@@ -113,7 +92,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   });
 
   const [aiPayload, { isLoading: aiLoading }] = useAiContentMutation();
-  const [searchPhotos] = useSearchPhotosMutation();
   const {
     data: recipientsData,
     isLoading: recipientsLoading,
@@ -125,33 +103,9 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
       setEventName(eventData?.name);
     }
   }, [eventData, isSuccess]);
-  const [hasSearched, setHasSearched] = useState(false);
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const cols = isXs ? 2 : 3;
-
-  const searchImages = async () => {
-    if (!query) return;
-
-    setHasSearched(true);
-    setLoading(true);
-
-    try {
-      const data = await searchPhotos({ query }).unwrap();
-
-      if (!data?.photos || data.photos.length === 0) {
-        setResults([]);
-        return;
-      }
-
-      setResults(data.photos);
-    } catch (err) {
-      console.error("RTK Query Error:", err);
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const formik = useFormik({
     initialValues: data,
@@ -161,7 +115,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
 
       const textArray = selectedContentType?.map((type) => {
         const found = values?.text_content?.find(
-          (item) => item?.content_types === type
+          (item) => item?.content_types === type,
         );
         return found?.text || "";
       });
@@ -171,19 +125,8 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
         content_recipients: emails,
         post_method: values?.post_method,
         text_content: textArray,
-        attachment: values?.image,
       };
-      if (formik.values.image && typeof formik.values.image !== "string") {
-        const formData = new FormData();
-        formData.append("file", formik.values.image);
-        imageUpload({ body: formData }).then((res) => {
-          if (res?.data) {
-            body = { ...body, attachment: res?.data?.filePath };
-          } else if (res?.error) {
-            console.error(res?.error);
-          }
-        });
-      }
+
       if (!contentId) {
         contentData({ body, eventId }).then((res) => {
           if (res?.data) {
@@ -209,28 +152,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
       }
     },
   });
-
-  const [imageUpload, { isLoading: imageLoading }] = useAddImageMutation();
-
-  useEffect(() => {
-    if (formik.values.image && typeof formik.values.image !== "string") {
-      const formData = new FormData();
-      formData.append("file", formik.values.image);
-
-      setUploading(true);
-      imageUpload({ body: formData })
-        .then((res) => {
-          if (res?.data) {
-            formik.setFieldValue("image", res?.data?.filePath);
-          } else if (res?.error) {
-            console.error(res?.error);
-          }
-        })
-        .finally(() => {
-          setUploading(false);
-        });
-    }
-  }, [formik.values.image]);
 
   const handleAiGenerate = async () => {
     try {
@@ -271,7 +192,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
       formik.setFieldValue("text_content", aiContent);
       formik.setFieldValue(
         "content_types",
-        aiContent.map((item) => item.content_types)
+        aiContent.map((item) => item.content_types),
       );
     }
   }, [aiContent]);
@@ -279,13 +200,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
   if (eventLoading || recipientsLoading) {
     return <LinearProgress />;
   }
-
-  const handleClosePopper = () => {
-    setShowPopper(false);
-    setQuery("");
-    setResults([]);
-    setHasSearched(false);
-  };
 
   return (
     <Paper elevation={0} sx={paperStyle}>
@@ -366,7 +280,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                       <Stack spacing={1} mt={1.5}>
                         {contentTypeOptions?.map((opt) => {
                           const current = formik?.values?.text_content?.find(
-                            (c) => c?.content_types === opt?.name
+                            (c) => c?.content_types === opt?.name,
                           );
 
                           return (
@@ -386,7 +300,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                                     disableRipple
                                     sx={{ padding: 0 }}
                                     checked={formik?.values?.content_types?.includes(
-                                      opt?.name
+                                      opt?.name,
                                     )}
                                     onChange={(e) => {
                                       if (e.target.checked) {
@@ -396,7 +310,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                                         ]);
                                         const exists =
                                           formik.values.text_content.some(
-                                            (c) => c.content_types === opt.name
+                                            (c) => c.content_types === opt.name,
                                           );
                                         if (!exists) {
                                           formik.setFieldValue("text_content", [
@@ -411,8 +325,8 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                                         formik.setFieldValue(
                                           "content_types",
                                           formik.values.content_types.filter(
-                                            (v) => v !== opt.name
-                                          )
+                                            (v) => v !== opt.name,
+                                          ),
                                         );
                                       }
                                     }}
@@ -431,7 +345,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                               />
 
                               {formik?.values?.content_types?.includes(
-                                opt?.name
+                                opt?.name,
                               ) && (
                                 <TextField
                                   multiline
@@ -450,11 +364,11 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                                       formik.values.text_content.map((c) =>
                                         c.content_types === opt.name
                                           ? { ...c, text: e.target.value }
-                                          : c
+                                          : c,
                                       );
                                     formik.setFieldValue(
                                       "text_content",
-                                      newTexts
+                                      newTexts,
                                     );
                                   }}
                                   InputProps={{
@@ -478,132 +392,6 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
                         )}
                     </Grid>
 
-                    <Grid size={12} pt={1.5}>
-                      <ImageUploader
-                        image={image}
-                        ref={inputRef}
-                        formik={formik}
-                        setImage={setImage}
-                        uploading={uploading}
-                      />
-                      {formik?.touched?.image && formik?.errors?.image && (
-                        <Typography color="error" fontSize={12} m={"3px 14px"}>
-                          {formik?.errors?.image}
-                        </Typography>
-                      )}
-                    </Grid>
-                    <Grid size={12} pt={1.5}>
-                      <Box display="flex" justifyContent={"end"} gap={2}>
-                        <Button
-                          variant="contained"
-                           disabled={imageLoading}
-                          sx={searchButtonStyle}
-                          onClick={() => {
-                            setShowPopper((prev) => !prev);
-                          }}
-                        >
-                          <Typography variant="h6" sx={buttonTypoStyle}>
-                            {"Search Images"}
-                          </Typography>
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={uploadButtonStyle}
-                          disabled={image}
-                          loading={imageLoading}
-                          onClick={() => !image && inputRef?.current?.click()}
-                        >
-                          <Typography variant="h6" sx={buttonTypoStyle}>
-                            {uploadButtonText}
-                          </Typography>
-                        </Button>
-                      </Box>
-                      {showPopper && (
-                        <Box
-                          sx={poperBackgroundStyle}
-                          onClick={handleClosePopper}
-                        />
-                      )}
-                      <Popper
-                        anchorEl={null}
-                        open={showPopper}
-                        style={popperStyle}
-                      >
-                        <ClickAwayListener onClickAway={handleClosePopper}>
-                          <Paper sx={searchPaperStyle}>
-                            <Stack spacing={2}>
-                              <Box
-                                display="flex"
-                                flexDirection={{ xs: "column", sm: "row" }}
-                                alignItems={{ xs: "stretch", sm: "center" }}
-                                justifyContent={"center"}
-                                width="100%"
-                                gap={1}
-                              >
-                                <TextField
-                                  fullWidth
-                                  value={query}
-                                  sx={searchTextFieldStyle}
-                                  placeholder="Search images..."
-                                  onChange={(e) => setQuery(e?.target?.value)}
-                                  onKeyDown={(e) =>
-                                    e.key === "Enter" && searchImages()
-                                  }
-                                />
-                                <Button
-                                  disabled={loading}
-                                  variant="contained"
-                                  onClick={searchImages}
-                                  sx={imageSearchButtonStyle}
-                                >
-                                  {"Search"}
-                                </Button>
-                              </Box>
-
-                              {/* Image results */}
-                              {loading ? (
-                                <Typography align="center">
-                                  Searching...
-                                </Typography>
-                              ) : hasSearched && results?.length === 0 ? (
-                                <Typography
-                                  align="center"
-                                  sx={{ color: "#A6A6A6", fontSize: 14, mt: 2 }}
-                                >
-                                  No images found
-                                </Typography>
-                              ) : results?.length > 0 ? (
-                                <ImageList
-                                  sx={imageListStyle}
-                                  cols={cols}
-                                  rowHeight={164}
-                                >
-                                  {results?.map((img) => (
-                                    <ImageListItem key={img?.id}>
-                                      <img
-                                        srcSet={`${img.src.small}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                        src={`${img.src.small}?w=164&h=164&fit=crop&auto=format`}
-                                        alt={img.alt}
-                                        loading="lazy"
-                                        style={lazyImageStyle}
-                                        onClick={() => {
-                                          setImage(img.src.medium);
-                                          formik.setFieldValue(
-                                            "image",
-                                            img.src.medium
-                                          );
-                                          handleClosePopper();
-                                        }}
-                                      />
-                                    </ImageListItem>
-                                  ))}
-                                </ImageList>
-                              ) : null}
-                            </Stack>
-                          </Paper>
-                        </ClickAwayListener>
-                      </Popper>
-                    </Grid>
                     <Grid size={12} pt={1.5}>
                       <Typography variant="h6" sx={methodTypoStyle}>
                         {methodText}
@@ -643,9 +431,7 @@ const ContentForm = ({ data = initialEventData, contentId }) => {
             sx={buttonStyle}
             variant="contained"
             loading={isLoading || editLoading || aiLoading}
-            disabled={
-              formik?.values?.content_types?.length === 0 || imageLoading
-            }
+            disabled={formik?.values?.content_types?.length === 0}
           >
             <Typography variant="h6" sx={buttonTypoStyle}>
               {contentId ? "Save" : "Add"}

@@ -764,11 +764,27 @@ export const EVENTFORM = {
         size: { xs: 12, lg: 5.5 },
         is_editable: true,
       },
-      ...(!date ? [dateField] : []),
+      // ...(!date ? [dateField] : []),
       {
-        label: "Upload Image/Avatar",
+        label: "Start Date",
+        placeholder: "Enter your start date",
+        type: "date",
+        name: "start_date",
+        size: 12,
+        is_editable: true,
+      },
+      {
+        label: "End Date",
+        placeholder: "Enter your end date",
+        type: "date",
+        name: "end_date",
+        size: 12,
+        is_editable: true,
+      },
+      {
+        label: "Upload Images",
         btnText: "Upload Image",
-        name: "image",
+        name: "images",
         size: 12,
         is_editable: true,
       },
@@ -817,9 +833,9 @@ export const SCHOOL_INFORMATION_FORM = {
         disabled: !is_trust || isEdit ? true : false,
       },
       {
-        label: "Upload Image/Avtar",
+        label: "Upload Images",
         btnText: "Upload Image",
-        name: "image",
+        name: "images",
         size: 12,
       },
       {
@@ -847,7 +863,7 @@ export const SCHOOL_INFORMATION_FORM = {
           type: "password",
           name: "confirm_password",
           size: { xs: 12, lg: 5.5 },
-        }
+        },
       );
     }
 
@@ -938,7 +954,7 @@ export const DASHBOARD_DATA = {
 export const CALENDAR_DATA = {
   CREATEDEVENTS_DATA: {
     addEventButtonText: "+ Add New Event",
-    createEventText: "Created Events",
+    createEventText: "Events",
     eventsLink: "/dashboard/calendar/events/",
     noEventsText: "No Events Available",
   },
@@ -1150,7 +1166,7 @@ export const ABOUT_DATA = {
 };
 
 export const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
 );
 
 export const CONTACT_DATA_FOR_TERMS = {

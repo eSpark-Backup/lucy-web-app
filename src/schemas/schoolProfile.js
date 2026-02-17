@@ -8,7 +8,7 @@ export const schoolProfileValidationSchema = (is_trust, isEdit) =>
       .max(150, "School name can be up to 150 characters")
       .matches(
         /^[A-Za-z0-9\s'’-]+$/,
-        "School name can only contain letters, numbers, spaces, apostrophes, and hyphens"
+        "School name can only contain letters, numbers, spaces, apostrophes, and hyphens",
       ),
 
     address: Yup.string()
@@ -20,7 +20,7 @@ export const schoolProfileValidationSchema = (is_trust, isEdit) =>
       .required("Phone number is required")
       .matches(
         /^\+?[0-9]+$/,
-        "Must contain only digits (optionally starting with +)"
+        "Must contain only digits (optionally starting with +)",
       )
       .min(7, "Must be at least 7 digits")
       .max(15, "Must be at most 15 digits"),
@@ -38,14 +38,16 @@ export const schoolProfileValidationSchema = (is_trust, isEdit) =>
           .required("Password is required")
           .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
-            "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces"
+            "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces",
           ),
         confirm_password: Yup.string()
           .required("Confirm Password is required")
           .oneOf([Yup.ref("password")], "Passwords must match"),
       }),
 
-    image: Yup.string().required("Image is required"),
+    images: Yup.array()
+      .min(1, "Please upload at least one image")
+      .required("At least one image is required"),
 
     description: Yup.string()
       .trim()

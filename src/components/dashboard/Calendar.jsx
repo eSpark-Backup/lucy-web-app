@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import CreatedEvents from "./calendar/CreatedEvents";
 import EventCalandar from "./calendar/EventCalandar";
 import FormHeader from "../forms/FormHeader";
-import { useGetMyEventsQuery } from "../../services/event";
+import {
+  useGetMyEventsQuery,
+  useGetPublicEventsQuery,
+} from "../../services/event";
 import { componentStyles } from "../../style/componentStyles";
 import dayjs from "dayjs";
 import { useGetAllSchoolsQuery } from "../../services/school";
@@ -26,9 +29,15 @@ function Calendar() {
     }
   };
   const [calendarEvents, setCalendarEvents] = useState([]);
+
+  const { data: publicEvents } = useGetPublicEventsQuery(undefined, {
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
+
   const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery(
     undefined,
-    { refetchOnFocus: true, refetchOnMountOrArgChange: true }
+    { refetchOnFocus: true, refetchOnMountOrArgChange: true },
   );
   const { user } = useSelector((state) => state?.auth);
   const is_trust = user?.profile?.organization?.is_trust;
@@ -38,71 +47,58 @@ function Calendar() {
     refetchOnMountOrArgChange: true,
   });
 
+  const mapEventsToCalendar = (events = [], schoolName) =>
+    events.map((item) => {
+      const start = dayjs(item.start_date).local();
+      let end;
+      let allDay = false;
+
+      if (item.time_span >= 1438 && item.time_span <= 1440) {
+        end = start.endOf("day");
+        allDay = true;
+      } else {
+        end = start.add(item.time_span, "minute");
+      }
+
+      return {
+        id: item.id,
+        title: item.name,
+        start_date: start.toDate(),
+        date: start.toDate(),
+        end_date: end.toDate(),
+        allDay,
+        duration: formatDuration(item.time_span),
+        attendees: [],
+        image: item?.images[0],
+        school_name: schoolName,
+        is_public: item?.is_public,
+      };
+    });
+
   useEffect(() => {
     if (is_trust) {
-      if (allSchools?.data) {
-        const allEvents = allSchools.data.flatMap((school) =>
-          (school.events || []).map((item) => {
-            const start = dayjs(item.date_time).local();
-            let end;
-            let allDay = false;
+      let mergedEvents = [];
 
-            if (item.time_span >= 1438 && item.time_span <= 1440) {
-              end = start.endOf("day");
-              allDay = true;
-            } else {
-              end = start.add(item.time_span, "minute");
-            }
-
-            return {
-              id: item.id,
-              title: item.name,
-              start: start.toDate(),
-              end: end.toDate(),
-              allDay,
-              duration: formatDuration(item.time_span),
-              attendees: [],
-              image: item.image,
-              date: start.format("DD/MM/YYYY"),
-              school_name: school?.name,
-            };
-          })
+      if (allSchools?.data?.length) {
+        mergedEvents = allSchools.data.flatMap((school) =>
+          mapEventsToCalendar(school.events || [], school?.name),
         );
-        setCalendarEvents(allEvents);
       }
+
+      // ✅ always add dummy
+      const dummyMapped = mapEventsToCalendar(publicEvents, "Dummy School");
+
+      setCalendarEvents([...mergedEvents, ...dummyMapped]);
     } else {
-      if (isSuccess) {
-        if (Array?.isArray(data) && data?.length > 0) {
-          setCalendarEvents(
-            data.map((item) => {
-              const start = dayjs(item.date_time).local();
-              let end;
-              let allDay = false;
+      let realEvents = [];
 
-              if (item.time_span >= 1438 && item.time_span <= 1440) {
-                end = start.endOf("day");
-                allDay = true;
-              } else {
-                end = start.add(item.time_span, "minute");
-              }
-
-              return {
-                id: item.id,
-                title: item.name,
-                start: start.toDate(),
-                end: end.toDate(),
-                allDay,
-                duration: formatDuration(item.time_span),
-                attendees: [],
-                image: item.image,
-                date: start.format("DD/MM/YYYY"),
-              };
-            })
-          );
-        } else {
-          setCalendarEvents([]);
-        }
+      if (isSuccess && Array.isArray(data)) {
+        realEvents = mapEventsToCalendar(data);
       }
+
+      const dummyMapped = mapEventsToCalendar(publicEvents);
+
+      setCalendarEvents([...realEvents, ...dummyMapped]);
 
       if (isError) {
         toast.error(error?.data?.message || "Something went wrong");

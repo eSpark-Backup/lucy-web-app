@@ -1,5 +1,4 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { DatePicker } from "@mui/lab";
 import {
   Button,
   Grid,
@@ -25,13 +24,16 @@ import { useEffect, useRef, useState } from "react";
 import { useGetAllSchoolsQuery } from "../../services/school";
 import { useSelector } from "react-redux";
 import { useSearchPhotosMutation } from "../../services/content";
-import { useAddImageMutation } from "../../services/image";
+import dayjs from "dayjs";
+import ImageZipButton from "../ImageZipButton";
 
 const initialEventData = {
   event_name: "",
   event_type: "",
-  image: null,
   description: "",
+  start_date: "",
+  end_date: "",
+  images: [],
 };
 
 const EventForm = ({
@@ -47,11 +49,10 @@ const EventForm = ({
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const date = search.get("date") || null;
   const inputRef = useRef(null);
   const { id } = useParams();
-  const [image, setImage] = useState(data?.image);
+  const [images, setImages] = useState(data?.images || []);
   const { user } = useSelector((state) => state?.auth);
   const isSchoolRole = user?.role === "school";
   const is_trust = user?.profile?.organization?.is_trust;
@@ -76,7 +77,7 @@ const EventForm = ({
   }, [allSchools, isSchoolRole]);
 
   useEffect(() => {
-    setImage(data?.image);
+    setImages(data?.images || []);
   }, [data]);
 
   const { fields } = EVENTFORM || {};
@@ -116,15 +117,23 @@ const EventForm = ({
   const formik = useFormik({
     initialValues: date
       ? {
-          ...data,
-          date,
+          ...initialEventData,
+          start_date: date
+            ? date
+            : data?.start_date
+              ? dayjs(data.start_date).format("YYYY-MM-DD")
+              : "",
+
+          end_date: data?.end_date
+            ? dayjs(data.end_date).format("YYYY-MM-DD")
+            : "",
           ...(!isSchoolRole && {
             school_email: data?.name || selectedSchoolEmail,
             show_email: data?.school_email || selectedSchoolEmail,
           }),
         }
       : {
-          ...data,
+          ...(data || initialEventData),
           ...(!isSchoolRole && {
             school_email: data?.school_email,
             show_email: data?.school_email,
@@ -141,7 +150,7 @@ const EventForm = ({
 
       onSubmit(filteredValues, () => {
         resetForm();
-        setImage(null);
+        setImages(null);
       });
     },
   });
@@ -160,14 +169,14 @@ const EventForm = ({
           {fields(date, is_trust, isSchoolRole)?.map(
             (
               { label, name, placeholder, type, size, disabled, is_editable },
-              index
+              index,
             ) => (
               <Grid size={size} key={index}>
                 <Stack width="100%" spacing={1.2}>
                   <Typography variant="h6" sx={inputLabelStyle}>
                     {label}
                   </Typography>
-                  {name !== "image" ? (
+                  {name !== "images" ? (
                     <TextField
                       fullWidth
                       name={name}
@@ -198,6 +207,9 @@ const EventForm = ({
                       helperText={
                         formik?.touched?.[name] && formik?.errors?.[name]
                       }
+                      InputLabelProps={{
+                        shrink: true, 
+                      }}
                     >
                       {type === "select" &&
                         (allSchools?.data || [])
@@ -208,42 +220,39 @@ const EventForm = ({
                             </MenuItem>
                           ))}
                     </TextField>
-                  ) : name === "date" ? (
-                    <DatePicker
-                      label="Basic date picker"
-                      name={name}
-                      value={formik?.values?.[name] || ""}
-                      onChange={formik?.handleChange}
-                      onBlur={formik?.handleBlur}
-                      error={
-                        formik?.touched?.[name] &&
-                        Boolean(formik?.errors?.[name])
-                      }
-                      helperText={
-                        formik?.touched?.[name] && formik?.errors?.[name]
-                      }
-                    />
                   ) : (
                     <>
                       <ImageUploader
-                        image={image}
-                        ref={inputRef}
+                        images={images}
+                        setImages={setImages}
+                        inputRef={inputRef}
                         formik={formik}
-                        setImage={setImage}
-                        // uploading={uploading}
                       />
-                      {formik?.touched?.image && formik?.errors?.image && (
-                        <Typography color="error" fontSize={12} m={"3px 14px"}>
-                          {formik?.errors?.image}
+                      {formik?.touched?.images && formik?.errors?.images && (
+                        <Typography
+                          color="error"
+                          fontSize={12}
+                          m={"3px 14px !important"}
+                        >
+                          {formik?.errors?.images}
                         </Typography>
                       )}
                       <Stack width={"100%"} pt={1.5}>
-                        <Box display="flex" justifyContent={"end"} gap={2}>
+                        <Box
+                          display="flex"
+                          justifyContent={"end"}
+                          flexWrap={"wrap"}
+                          gap={2}
+                        >
+                          <ImageZipButton
+                            images={images || []}
+                            zipName="event-images.zip"
+                          />
                           <Button
                             variant="contained"
                             sx={{
                               color: "#fff",
-                              maxWidth: "148px",
+                              maxWidth: { xs: "100%", sm: "48%", md: "148px" },
                               backgroundColor: "#9C27B0",
                               opacity: "90%",
                               textWrap: "nowrap",
@@ -261,9 +270,11 @@ const EventForm = ({
                           </Button>
                           <Button
                             variant="contained"
-                            sx={uploadButtonStyle}
-                            disabled={image}
-                            onClick={() => !image && inputRef?.current?.click()}
+                            sx={{
+                              ...uploadButtonStyle,
+                              maxWidth: { xs: "100%", sm: "48%", md: "148px" },
+                            }}
+                            onClick={() => inputRef?.current?.click()}
                           >
                             <Typography variant="h6" sx={buttonTypoStyle}>
                               {"Upload Image"}
@@ -389,7 +400,7 @@ const EventForm = ({
                                       overflowY: "auto",
                                     }}
                                     cols={cols}
-                                    rowHeight={164}
+                                    rowHeight={160}
                                   >
                                     {results?.map((img) => (
                                       <ImageListItem key={img?.id}>
@@ -399,19 +410,44 @@ const EventForm = ({
                                           alt={img.alt}
                                           loading="lazy"
                                           style={{
+                                            width: "100%",
+                                            height: "100%",
                                             cursor: "pointer",
                                             borderRadius: "6px",
+                                            opacity: images?.includes(
+                                              img?.src?.medium,
+                                            )
+                                              ? 0.8
+                                              : 1,
+                                            border: images?.includes(
+                                              img?.src?.medium,
+                                            )
+                                              ? "2px solid #4880FF"
+                                              : "2px solid transparent",
                                           }}
                                           onClick={() => {
                                             const selectedImage =
-                                              img.src.medium;
-                                            setImage(selectedImage); // Update local state
+                                              img?.src?.medium;
+                                            let updatedImages;
+                                            if (
+                                              images?.includes(selectedImage)
+                                            ) {
+                                              updatedImages = images?.filter(
+                                                (image) =>
+                                                  image !== selectedImage,
+                                              );
+                                            } else {
+                                              updatedImages = [
+                                                ...images,
+                                                selectedImage,
+                                              ];
+                                            }
+                                            setImages(updatedImages);
                                             formik.setFieldValue(
-                                              "image",
-                                              selectedImage,
-                                              true
-                                            ); // Update Formik with validation
-                                            handleClosePopper();
+                                              "images",
+                                              updatedImages,
+                                              true,
+                                            );
                                           }}
                                         />
                                       </ImageListItem>
@@ -427,7 +463,7 @@ const EventForm = ({
                   )}
                 </Stack>
               </Grid>
-            )
+            ),
           )}
           <Grid size={12} pt={2.5}>
             {isEdit ? (
@@ -469,8 +505,8 @@ const EventForm = ({
               <Button
                 loading={isLoading}
                 disabled={isLoading}
-                type="submit"
                 variant="contained"
+                type="submit"
                 sx={buttonStyle}
               >
                 <Typography variant="h5" sx={buttonTypoStyle}>

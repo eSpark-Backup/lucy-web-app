@@ -18,7 +18,7 @@ import {
   ImageListItem,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SCHOOL_INFORMATION_FORM } from "../../constant";
 import { componentStyles } from "../../style/componentStyles";
 import ImageUploader from "../ImageUploader";
@@ -34,6 +34,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector } from "react-redux";
 import { useSearchPhotosMutation } from "../../services/content";
+import ImageZipButton from "../ImageZipButton";
 
 const initialEventData = {
   name: "",
@@ -41,7 +42,7 @@ const initialEventData = {
   phone: "",
   description: "",
   email: "",
-  image: "",
+  images: [],
 };
 
 const SchoolProfileForm = ({
@@ -50,8 +51,7 @@ const SchoolProfileForm = ({
 }) => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const [image, setImage] = useState();
-
+  const [images, setImages] = useState(data?.images || []);
   const {
     data: organizationData,
     isLoading: organizationLoading,
@@ -69,7 +69,6 @@ const SchoolProfileForm = ({
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [searchPhotos] = useSearchPhotosMutation();
 
   const theme = useTheme();
@@ -88,7 +87,7 @@ const SchoolProfileForm = ({
       if (res?.data) {
         toast.success(res?.data?.message || "School created successfully");
         if (inputRef?.current) inputRef.current.value = null;
-        setImage(null);
+        setImages([]);
         resetForm();
         navigate(`/dashboard/school-overview`);
       }
@@ -98,10 +97,10 @@ const SchoolProfileForm = ({
     }
   };
 
-  const handleUpdate = async (formdata, resetForm) => {
+  const handleUpdate = async (formdata, resetForm, id) => {
     try {
       const res = await editSchool({
-        id: formdata.id,
+        id: id,
         credentials: formdata,
       });
 
@@ -113,7 +112,7 @@ const SchoolProfileForm = ({
       if (res?.data) {
         toast.success(res?.data?.message || "School updated successfully");
         if (inputRef?.current) inputRef.current.value = null;
-        setImage(null);
+        setImages([]);
         resetForm();
         navigate(`/dashboard/school-overview`);
       }
@@ -185,53 +184,80 @@ const SchoolProfileForm = ({
           },
     validationSchema: schoolProfileValidationSchema(
       organizationData?.is_trust,
-      isEdit
+      isEdit,
     ),
     enableReinitialize: true,
+    // onSubmit: async (values, { resetForm }) => {
+    //   const { id: organization_id } = organizationData || {};
+
+    //   let finalImage = (values?.images || []).filter(
+    //     (img) => img instanceof File || typeof img === "string",
+    //   );
+
+    //   console.log(finalImage, "finalImage kkk");
+
+    //   const { password, confirm_password, ...rest } = values;
+
+    //   const objToSend = {
+    //     ...rest,
+    //     ...(organizationData?.is_trust ? { password } : {}),
+    //     images: finalImage,
+    //     organization_id,
+    //     id: data?.id,
+    //   };
+
+    //   if (!organizationLoading) {
+    //     if (organizationError) {
+    //       toast.error("Organization fetching is failed!");
+    //     } else if (organizationSuccess) {
+    //       if (isEdit) {
+    //         await handleUpdate(objToSend, resetForm);
+    //       } else {
+    //         await handleCreate(objToSend, resetForm);
+    //       }
+    //     }
+    //   }
+    // },
     onSubmit: async (values, { resetForm }) => {
-      const { id: organization_id } = organizationData || {};
+      const { id: orgIdFromData } = organizationData || {};
 
-      let finalImage = values?.image;
+      const formdata = new FormData();
 
-      if (values.image && typeof values.image !== "string") {
-        const formData = new FormData();
-        formData.append("file", values.image);
-
-        try {
-          const res = await imageUpload({ body: formData });
-          if (res?.data) {
-            finalImage = res.data.filePath;
-          } else {
-            toast.error("Image upload failed!");
-            return;
-          }
-        } catch (err) {
-          toast.error("Image upload failed!");
-          console.error(err);
-          return;
+      // Append all simple fields except images, confirm_password, password, and organization_id
+      Object.entries(values).forEach(([key, value]) => {
+        if (
+          key !== "images" &&
+          key !== "confirm_password" &&
+          key !== "password" &&
+          key !== "organization_id"
+        ) {
+          formdata.append(key, value);
         }
+      });
+
+      // Append organization_id (prefer values.organization_id, fallback to organizationData)
+      const organization_id = values.organization_id || orgIdFromData;
+      if (organization_id) {
+        formdata.append("organization_id", organization_id);
       }
 
-      const { password, confirm_password, ...rest } = values;
+      // Append password only if organization is a trust
+      if (organizationData?.is_trust && values?.password) {
+        formdata.append("password", values.password);
+      }
 
-      const objToSend = {
-        ...rest,
-        ...(organizationData?.is_trust ? { password } : {}),
-        image: finalImage,
-        organization_id,
-        id: data?.id,
-      };
+      // Append images (can be URLs or Files)
+      if (values?.images?.length > 0) {
+        values.images.forEach((item) => {
+          formdata.append("images", item);
+        });
+      }
 
-      if (!organizationLoading) {
-        if (organizationError) {
-          toast.error("Organization fetching is failed!");
-        } else if (organizationSuccess) {
-          if (isEdit) {
-            await handleUpdate(objToSend, resetForm);
-          } else {
-            await handleCreate(objToSend, resetForm);
-          }
-        }
+      // Call create or update
+      if (data?.id) {
+        handleUpdate(formdata, resetForm, data?.id);
+      } else {
+        handleCreate(formdata, resetForm);
       }
     },
   });
@@ -248,6 +274,10 @@ const SchoolProfileForm = ({
     setHasSearched(false);
   };
 
+  useEffect(() => {
+    setImages(data?.images);
+  }, [data?.images]);
+
   return (
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
@@ -259,7 +289,7 @@ const SchoolProfileForm = ({
                   <Typography variant="h6" sx={inputLabelStyle}>
                     {label}
                   </Typography>
-                  {name !== "image" ? (
+                  {name !== "images" ? (
                     name !== "date" ? (
                       <TextField
                         fullWidth
@@ -286,8 +316,8 @@ const SchoolProfileForm = ({
                                 ? "text"
                                 : "password"
                               : showPassword
-                              ? "text"
-                              : "password"
+                                ? "text"
+                                : "password"
                             : type
                         }
                         InputProps={
@@ -339,29 +369,48 @@ const SchoolProfileForm = ({
                     // image uploader block
                     <>
                       <ImageUploader
-                        ref={inputRef}
-                        image={image}
-                        setImage={setImage}
+                        images={images}
+                        setImages={setImages}
+                        inputRef={inputRef}
                         formik={formik}
-                        disabled={isPreview}
+                        mode={mode}
                       />
-                      {formik?.touched?.image && formik?.errors?.image && (
+                      {formik?.touched?.images && formik?.errors?.images && (
                         <Typography
                           color="error"
                           fontSize={12}
                           m={"3px 14px !important"}
                         >
-                          {formik?.errors?.image}
+                          {formik?.errors?.images}
                         </Typography>
+                      )}
+                      {mode === "preview" && (
+                        <Stack pt={1.5}>
+                          <Box
+                            display="flex"
+                            justifyContent={"end"}
+                            flexWrap={"wrap"}
+                          >
+                            <ImageZipButton
+                              images={images || []}
+                              zipName="school-images.zip"
+                            />
+                          </Box>
+                        </Stack>
                       )}
                       {!isPreview && (
                         <Stack pt={1.5}>
-                          <Box display="flex" justifyContent={"end"} gap={2}>
+                          <Box
+                            display="flex"
+                            justifyContent={"end"}
+                            flexWrap={"wrap"}
+                            gap={2}
+                          >
                             <Button
                               variant="contained"
                               sx={{
                                 color: "#fff",
-                                maxWidth: "148px",
+                                maxWidth: { xs: "100%", sm: "148px" },
                                 backgroundColor: "#9C27B0",
                                 opacity: "90%",
                                 textWrap: "nowrap",
@@ -379,11 +428,11 @@ const SchoolProfileForm = ({
                             </Button>
                             <Button
                               variant="contained"
-                              sx={uploadButtonStyle}
-                              disabled={image}
-                              onClick={() =>
-                                !image && inputRef?.current?.click()
-                              }
+                              sx={{
+                                ...uploadButtonStyle,
+                                maxWidth: { xs: "100%", sm: "148px" },
+                              }}
+                              onClick={() => inputRef?.current?.click()}
                             >
                               <Typography variant="h6" sx={buttonTypoStyle}>
                                 {"Upload Image"}
@@ -521,19 +570,44 @@ const SchoolProfileForm = ({
                                             alt={img.alt}
                                             loading="lazy"
                                             style={{
+                                              width: "100%",
+                                              height: "100%",
                                               cursor: "pointer",
                                               borderRadius: "6px",
+                                              opacity: images?.includes(
+                                                img?.src?.medium,
+                                              )
+                                                ? 0.8
+                                                : 1,
+                                              border: images?.includes(
+                                                img?.src?.medium,
+                                              )
+                                                ? "2px solid #4880FF"
+                                                : "2px solid transparent",
                                             }}
                                             onClick={() => {
                                               const selectedImage =
-                                                img.src.medium;
-                                              setImage(selectedImage);
+                                                img?.src?.medium;
+                                              let updatedImages;
+                                              if (
+                                                images?.includes(selectedImage)
+                                              ) {
+                                                updatedImages = images?.filter(
+                                                  (image) =>
+                                                    image !== selectedImage,
+                                                );
+                                              } else {
+                                                updatedImages = [
+                                                  ...images,
+                                                  selectedImage,
+                                                ];
+                                              }
+                                              setImages(updatedImages);
                                               formik.setFieldValue(
-                                                "image",
-                                                selectedImage,
-                                                true
+                                                "images",
+                                                updatedImages,
+                                                true,
                                               );
-                                              handleClosePopper();
                                             }}
                                           />
                                         </ImageListItem>
@@ -559,7 +633,7 @@ const SchoolProfileForm = ({
                   )}
                 </Stack>
               </Grid>
-            )
+            ),
           )}
 
           <Grid size={12} pt={2.5}>

@@ -43,11 +43,21 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["events"],
     }),
+    getPublicEvents: builder.query({
+      query: (credentials) => ({
+        url: "/events/public",
+        method: "GET",
+        body: credentials,
+        credentials: "include",
+      }),
+      providesTags: ["public-events"],
+    }),
   }),
 });
 
 export const {
   useGetMyEventsQuery,
+  useGetPublicEventsQuery,
   useCreateEventMutation,
   useGetEventByIdQuery,
   useEditEventMutation,

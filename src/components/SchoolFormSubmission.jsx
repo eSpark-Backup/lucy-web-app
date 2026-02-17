@@ -24,7 +24,7 @@ const SchoolFormSubmission = () => {
           description: singleSchoolData?.data?.description || "",
           email: singleSchoolData?.data?.email || "",
           password: singleSchoolData?.data?.password || "",
-          image: singleSchoolData?.data?.image || "",
+          images: singleSchoolData?.data?.images || "",
           organization_id: singleSchoolData?.data?.organization_id || "",
         }
       : null;

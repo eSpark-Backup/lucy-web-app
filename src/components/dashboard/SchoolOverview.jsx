@@ -140,7 +140,7 @@ const SchoolOverview = () => {
         {(organizationData?.is_trust || !organizationData?.is_trust) && (
           <Button
             disabled={allSchools?.data?.every(
-              (school) => school?.is_paid === true
+              (school) => school?.is_paid === true,
             )}
             onClick={() => handleCreateCheckoutsession()}
             endIcon={<PaymentsIcon />}

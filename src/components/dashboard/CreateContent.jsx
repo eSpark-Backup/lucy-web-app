@@ -7,20 +7,21 @@ import { useEffect, useState } from "react";
 import BackButton from "../BackButton";
 
 const CreateContent = () => {
+  const [eventName, setEventName] = useState("");
   const { eventId, contentId } = useParams();
   const { data, isLoading, isSuccess } = useGetSingleContentQuery(
     {
       eventId,
       contentId,
     },
-    { skip: !contentId, refetchOnMountOrArgChange: true }
+    { skip: !contentId, refetchOnMountOrArgChange: true },
   );
   const [editData, setEditData] = useState({});
 
   useEffect(() => {
     if (isSuccess && data) {
       const myRecipeints = data?.content_recipients?.map(
-        (item) => item?.recipient
+        (item) => item?.recipient,
       );
 
       const mappedContent = data?.content_types.map((type, index) => ({
@@ -32,7 +33,7 @@ const CreateContent = () => {
         content_types: data?.content_types,
         text_content: mappedContent,
         description: "",
-        image: data?.attachment,
+        // image: data?.attachment,
         post_method: "Email",
         recipients: myRecipeints,
       };
@@ -47,10 +48,18 @@ const CreateContent = () => {
   return (
     <Box>
       <BackButton />
-      <FormHeader title={contentId ? "Edit Content" : "Create Content"} />
+      <FormHeader
+        title={
+          contentId
+            ? `Edit ${data?.event?.name || ""} Content`
+            : `Create ${eventName || ""} Content`
+        }
+      />
       <ContentForm
         data={contentId ? editData : undefined}
         contentId={contentId}
+        eventName={eventName}
+        setEventName={setEventName}
       />
     </Box>
   );

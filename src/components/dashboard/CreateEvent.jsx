@@ -24,7 +24,6 @@ dayjs.extend(utc);
 const CreateEvent = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [event, setEvent] = useState({});
   const [isDeleted, setIsDeleted] = useState(false);
 
@@ -32,7 +31,7 @@ const CreateEvent = () => {
     id,
     {
       skip: !id || isDeleted,
-    }
+    },
   );
 
   const { user } = useSelector((state) => state?.auth);
@@ -42,7 +41,8 @@ const CreateEvent = () => {
   useEffect(() => {
     if (id) {
       if (isSuccess && data) {
-        const localDateTime = dayjs.utc(data?.date_time).local();
+        const start_date = dayjs?.utc(data?.start_date)?.local();
+        const end_date = dayjs?.utc(data?.end_date)?.local();
 
         setEvent({
           event_name: data?.name,
@@ -50,8 +50,9 @@ const CreateEvent = () => {
           ...(!isSchoolRole && {
             school_email: data?.school?.email,
           }),
-          date: localDateTime.format("YYYY-MM-DD"),
-          image: data?.image,
+          start_date: start_date?.format("YYYY-MM-DD"),
+          end_date: end_date?.format("YYYY-MM-DD"),
+          images: data?.images,
           description: data?.description,
         });
       }
@@ -97,23 +98,25 @@ const CreateEvent = () => {
   };
 
   const handleSubmit = (values, resetForm) => {
-    const date_time = dayjs(values?.date)
-      // .add(2, "minute")
-      // .utc()
-      .format("YYYY-MM-DDTHH:mm:ss[Z]");
-
     const formdata = new FormData();
     formdata.append("name", values?.event_name);
     formdata.append("type", values?.event_type);
     formdata.append("description", values?.description);
-    formdata.append("date_time", date_time);
+    formdata.append("start_date", values?.start_date);
+    formdata.append("end_date", values?.end_date);
 
     if (isSchoolRole === false && !id) {
       formdata.append("school_email", values?.school_email);
     }
 
-    if (values?.image) {
-      formdata.append("image", values?.image);
+    if (values?.images?.length > 0) {
+      values?.images?.forEach((item) => {
+        if (item instanceof File) {
+          formdata.append("images", item);
+        } else {
+          formdata.append("images", item);
+        }
+      });
     }
 
     if (id) {
@@ -140,7 +143,6 @@ const CreateEvent = () => {
       }
     });
   };
-
   return (
     <Box>
       <BackButton fallback={"/dashboard/calendar"} />

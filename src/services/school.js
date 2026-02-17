@@ -35,8 +35,9 @@ export const schoolApi = api.injectEndpoints({
       query: ({ id, credentials }) => ({
         url: `/schools/${id}`,
         method: "PATCH",
-        body: credentials,
+        body: credentials, // FormData is passed directly
         credentials: "include",
+        // Do NOT set 'Content-Type': browser will set multipart/form-data automatically
       }),
       invalidatesTags: (result, error, { id }) => [
         "schools",

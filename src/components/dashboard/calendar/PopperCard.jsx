@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const PopperCard = forwardRef(function PopperCard(
   { type, anchorEl, onClose, eventId },
-  ref
+  ref,
 ) {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ const PopperCard = forwardRef(function PopperCard(
                 sx={{ cursor: "pointer" }}
                 onClick={() =>
                   handleNavigate(
-                    `/dashboard/calendar/events/${eventId}/contents/add`
+                    `/dashboard/calendar/events/${eventId}/contents/add`,
                   )
                 }
               >
@@ -103,7 +103,7 @@ const PopperCard = forwardRef(function PopperCard(
                 sx={{ cursor: "pointer" }}
                 onClick={() =>
                   handleNavigate(
-                    `/dashboard/calendar/events/${eventId}/contents`
+                    `/dashboard/calendar/events/${eventId}/contents`,
                   )
                 }
               >

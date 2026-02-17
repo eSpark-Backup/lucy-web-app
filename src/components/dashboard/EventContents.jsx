@@ -31,7 +31,7 @@ const EventContents = () => {
 
   const { data, isLoading, isError, error } = useGetAllContentQuery(
     { eventId },
-    { skip: isPreview }
+    { skip: isPreview },
   );
 
   const {
@@ -41,7 +41,7 @@ const EventContents = () => {
     isFetching,
   } = useGetSingleContentQuery(
     { eventId, contentId },
-    { skip: !isPreview, refetchOnMountOrArgChange: true }
+    { skip: !isPreview, refetchOnMountOrArgChange: true },
   );
 
   const handleClick = () => {
@@ -55,8 +55,8 @@ const EventContents = () => {
       const myEvents = data?.map((item) => {
         const titles = item?.content_types?.map((ct) =>
           Object.keys(contentTypeOptions).find(
-            (k) => contentTypeOptions[k] === ct
-          )
+            (k) => contentTypeOptions[k] === ct,
+          ),
         );
 
         return {
@@ -75,16 +75,17 @@ const EventContents = () => {
       const body = {
         title: viewContentData?.content_types?.map((ct) =>
           Object.keys(contentTypeOptions).find(
-            (k) => contentTypeOptions[k] === ct
-          )
+            (k) => contentTypeOptions[k] === ct,
+          ),
         ),
         date: dayjs(viewContentData?.updated_at).format("YYYY-MM-DD"),
         image: viewContentData?.attachment,
         description: viewContentData?.text_content,
         recipients: viewContentData?.content_recipients?.map(
-          (item) => item?.recipient
+          (item) => item?.recipient,
         ),
         contentType: viewContentData?.content_types,
+        event_name: viewContentData?.event?.name,
       };
       setPreviewData(body);
     }
@@ -111,7 +112,15 @@ const EventContents = () => {
         gap={0.5}
         mb={2}
       >
-        <FormHeader title={isPreview ? "Content Preview" : "Event Content"} />
+        <FormHeader
+          title={
+            isPreview
+              ? previewData?.event_name
+                ? `${previewData?.event_name} - Content`
+                : "Content"
+              : "Event Contents"
+          }
+        />
         {!isPreview && (
           <Button
             loading={isLoading}
