@@ -10,9 +10,10 @@ const AllEventsCard = ({ data, isLoading }) => {
       {data?.map((item, index) => (
         <Grid size={{ xs: 12 }} key={index}>
           <EventContentCard
+            name={item?.name}
             title={item?.title}
             description={item?.description}
-            image={item?.image}
+            images={item?.images}
             id={item?.id}
           />
         </Grid>

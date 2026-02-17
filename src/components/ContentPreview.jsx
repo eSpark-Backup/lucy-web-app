@@ -3,8 +3,12 @@ import thumbnail from "../assets/images/thumbnail.jpg";
 import { useResendRecipientEmailMutation } from "../services/content";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules"; 
+import "swiper/css";
+import "swiper/css/pagination";
 
-const ContentPreview = ({ title, description, date, image, recipients }) => {
+const ContentPreview = ({ title, description, date, images, recipients }) => {
   const [emailData, { isLoading }] = useResendRecipientEmailMutation();
   const { eventId } = useParams();
 
@@ -28,7 +32,7 @@ const ContentPreview = ({ title, description, date, image, recipients }) => {
     const body = {
       content_type: contentType,
       text_content: description,
-      attachment: image,
+      attachment: images,
       content_recipients: recipients,
       post_method: "Email",
     };
@@ -57,19 +61,50 @@ const ContentPreview = ({ title, description, date, image, recipients }) => {
         gap: 4,
       }}
     >
-      {/* Image */}
-      <Box
-        component="img"
-        src={image || thumbnail}
-        alt="event-image"
-        sx={{
-          width: "100%",
-          maxHeight: "400px",
-          objectFit: "contain",
-          borderRadius: "12px",
-          boxShadow: 2,
-        }}
-      />
+      {images?.length > 0 ? (
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          spaceBetween={10}
+          slidesPerView={1}
+          style={{
+            width: "100%",
+            maxHeight: "400px",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0px 3px 6px rgba(0,0,0,0.2)",
+          }}
+        >
+          {images.map((img, index) => (
+            <SwiperSlide key={index}>
+              <img
+                src={img}
+                alt={`event-${index}`}
+                style={{
+                  width: "100%",
+                  maxHeight: "400px",
+                  objectFit: "contain",
+                  borderRadius: "12px",
+                }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <Box
+          component="img"
+          src={thumbnail}
+          alt="event-image"
+          sx={{
+            width: "100%",
+            maxHeight: "400px",
+            objectFit: "contain",
+            borderRadius: "12px",
+            boxShadow: 2,
+          }}
+        />
+      )}
 
       {/* Date */}
       <Typography variant="body2" sx={{ color: "#6b7280", fontSize: "14px" }}>

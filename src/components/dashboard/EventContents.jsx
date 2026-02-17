@@ -60,9 +60,10 @@ const EventContents = () => {
         );
 
         return {
+          name: item?.event?.name,
           title: titles, // array of titles
           description: item?.text_content, // array of texts
-          image: item?.attachment,
+          images: item?.attachments,
           id: item?.id,
         };
       });
@@ -79,7 +80,7 @@ const EventContents = () => {
           ),
         ),
         date: dayjs(viewContentData?.updated_at).format("YYYY-MM-DD"),
-        image: viewContentData?.attachment,
+        images: viewContentData?.attachments,
         description: viewContentData?.text_content,
         recipients: viewContentData?.content_recipients?.map(
           (item) => item?.recipient,
@@ -102,6 +103,7 @@ const EventContents = () => {
     return <LinearProgress />;
   }
 
+  console.log(events, "events");
   return (
     <Box>
       <BackButton fallback={"/dashboard/calendar"} />
@@ -155,7 +157,7 @@ const EventContents = () => {
           title={previewData?.title}
           date={previewData?.date}
           description={previewData?.description}
-          image={previewData?.image}
+          images={previewData?.images}
           recipients={previewData?.recipients}
           contentType={previewData?.contentType}
         />

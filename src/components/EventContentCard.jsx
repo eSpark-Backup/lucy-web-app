@@ -13,7 +13,7 @@ import ConfirmModal from "./ConfirmModal";
 import { useDeleteContentMutation } from "../services/content";
 import { toast } from "react-toastify";
 
-const EventContentCard = ({ title, description, image, id }) => {
+const EventContentCard = ({ name, title, description, images, id }) => {
   const navigate = useNavigate();
   const { eventId } = useParams();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -55,18 +55,49 @@ const EventContentCard = ({ title, description, image, id }) => {
         gap: 2,
       }}
     >
-      <CardMedia
-        component="img"
-        image={image || cardImage}
-        alt="card-img"
+      <Box
         sx={{
-          objectFit: "cover",
+          position: "relative",
           width: { xs: "100%", sm: "300px" },
-          height: { xs: "170px", sm: "146px" },
-          borderRadius: "11.88px",
         }}
-      />
+      >
+        <CardMedia
+          component="img"
+          image={images[0] || cardImage}
+          alt="card-img"
+          sx={{
+            objectFit: "cover",
+            width: { xs: "100%", sm: "300px" },
+            height: { xs: "170px", sm: "146px" },
+            borderRadius: "11.88px",
+            filter: "blur(1px)",
+            opacity: 0.8,
+          }}
+        />
 
+        {/* Overlay Label */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 10,
+            left: 10,
+            backgroundColor: "rgba(0,0,0,0.6)",
+            color: "#fff",
+            px: 1.5,
+            py: 0.5,
+            borderRadius: "6px",
+            fontSize: "15px",
+            fontWeight: 500,
+            maxWidth: "85%",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            letterSpacing: 0.5,
+          }}
+        >
+          {name}
+        </Box>
+      </Box>
       <CardContent
         sx={{
           width: "100%",
