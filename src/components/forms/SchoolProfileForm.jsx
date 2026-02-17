@@ -29,7 +29,6 @@ import {
 } from "../../services/school";
 import { toast } from "react-toastify";
 import { useGetMyOrganizationQuery } from "../../services/organization";
-import { useAddImageMutation } from "../../services/image";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector } from "react-redux";
@@ -52,16 +51,10 @@ const SchoolProfileForm = ({
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [images, setImages] = useState(data?.images || []);
-  const {
-    data: organizationData,
-    isLoading: organizationLoading,
-    isSuccess: organizationSuccess,
-    isError: organizationError,
-  } = useGetMyOrganizationQuery();
+  const { data: organizationData } = useGetMyOrganizationQuery();
 
   const [createSchool, { isLoading: addLoading }] = useCreateSchoolMutation();
   const [editSchool, { isLoading: updateLoading }] = useEditSchoolMutation();
-  const [imageUpload] = useAddImageMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPopper, setShowPopper] = useState(false);
@@ -187,73 +180,43 @@ const SchoolProfileForm = ({
       isEdit,
     ),
     enableReinitialize: true,
-    // onSubmit: async (values, { resetForm }) => {
-    //   const { id: organization_id } = organizationData || {};
 
-    //   let finalImage = (values?.images || []).filter(
-    //     (img) => img instanceof File || typeof img === "string",
-    //   );
-
-    //   console.log(finalImage, "finalImage kkk");
-
-    //   const { password, confirm_password, ...rest } = values;
-
-    //   const objToSend = {
-    //     ...rest,
-    //     ...(organizationData?.is_trust ? { password } : {}),
-    //     images: finalImage,
-    //     organization_id,
-    //     id: data?.id,
-    //   };
-
-    //   if (!organizationLoading) {
-    //     if (organizationError) {
-    //       toast.error("Organization fetching is failed!");
-    //     } else if (organizationSuccess) {
-    //       if (isEdit) {
-    //         await handleUpdate(objToSend, resetForm);
-    //       } else {
-    //         await handleCreate(objToSend, resetForm);
-    //       }
-    //     }
-    //   }
-    // },
     onSubmit: async (values, { resetForm }) => {
       const { id: orgIdFromData } = organizationData || {};
 
       const formdata = new FormData();
 
-      // Append all simple fields except images, confirm_password, password, and organization_id
       Object.entries(values).forEach(([key, value]) => {
         if (
           key !== "images" &&
           key !== "confirm_password" &&
           key !== "password" &&
-          key !== "organization_id"
+          key !== "organization_id" &&
+          key !== "id"
         ) {
           formdata.append(key, value);
         }
       });
 
-      // Append organization_id (prefer values.organization_id, fallback to organizationData)
       const organization_id = values.organization_id || orgIdFromData;
       if (organization_id) {
         formdata.append("organization_id", organization_id);
       }
 
-      // Append password only if organization is a trust
       if (organizationData?.is_trust && values?.password) {
         formdata.append("password", values.password);
       }
 
-      // Append images (can be URLs or Files)
       if (values?.images?.length > 0) {
         values.images.forEach((item) => {
-          formdata.append("images", item);
+          if (typeof item === "string") {
+            formdata.append("images_urls", item);
+          } else if (item?.file instanceof File) {
+            formdata.append("images_files", item.file);
+          }
         });
       }
 
-      // Call create or update
       if (data?.id) {
         handleUpdate(formdata, resetForm, data?.id);
       } else {
@@ -275,8 +238,8 @@ const SchoolProfileForm = ({
   };
 
   useEffect(() => {
-    setImages(data?.images);
-  }, [data?.images]);
+    setImages(data?.images || []);
+  }, [data]);
 
   return (
     <Paper elevation={0} sx={paperStyle}>

@@ -71,12 +71,27 @@ export default function CreatedEvents({ events = [] }) {
         {/* PUBLIC EVENTS */}
         {publicEvents?.length > 0 && (
           <>
-            <Typography variant="h6" sx={{ ...createEventTypoStyle, pl: 0.8 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                ...createEventTypoStyle,
+                bgcolor: "#e9e9ff",
+                pl: 2,
+                pr: 1,
+                py: 0.6,
+                borderLeft: "5px solid #918bff",
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                fontSize: { xs: "14px", md: "16px" },
+                fontFamily: "Nunito Sans, sans-serif",
+                display: "inline-block",
+              }}
+            >
               Public Events
             </Typography>
 
             {publicEvents
-              ?.slice(0, showAll ? publicEvents?.length : 5)
+              ?.slice(0, showAll ? publicEvents?.length : 4)
               .map((event) => (
                 <EventItem
                   key={`public-${event?.id}`}
@@ -94,12 +109,26 @@ export default function CreatedEvents({ events = [] }) {
         {/* CREATED EVENTS */}
         {privateEvents?.length > 0 && (
           <>
-            <Typography variant="h6" sx={{ ...createEventTypoStyle, pl: 0.8 }}>
+            <Typography
+              sx={{
+                ...createEventTypoStyle,
+                bgcolor: "#e9e9ff",
+                pl: 2,
+                pr: 1,
+                py: 0.6,
+                borderLeft: "5px solid #918bff",
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                fontSize: { xs: "14px", md: "16px" },
+                fontFamily: "Nunito Sans, sans-serif",
+                display: "inline-block",
+              }}
+            >
               Created Events
             </Typography>
 
             {privateEvents
-              ?.slice(0, showAll ? privateEvents?.length : 2)
+              ?.slice(0, showAll ? privateEvents?.length : 4)
               ?.map((event) => (
                 <EventItem
                   key={`private-${event?.id}`}
@@ -126,7 +155,7 @@ export default function CreatedEvents({ events = [] }) {
       {events?.length > 4 && (
         <Box my={3} textAlign="center" sx={showMoreButtonBoxStyle}>
           <Button onClick={() => setShowAll(!showAll)} sx={showMoreButtonStyle}>
-            <Typography fontWeight="bold">
+            <Typography fontSize={{ xs: "14px", md: "16px" }}>
               {showAll ? "Show Less" : `Show More (${events?.length})`}
             </Typography>
           </Button>

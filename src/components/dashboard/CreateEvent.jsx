@@ -110,11 +110,11 @@ const CreateEvent = () => {
     }
 
     if (values?.images?.length > 0) {
-      values?.images?.forEach((item) => {
-        if (item instanceof File) {
-          formdata.append("images", item);
-        } else {
-          formdata.append("images", item);
+      values.images.forEach((item) => {
+        if (typeof item === "string") {
+          formdata.append("images_urls", item);
+        } else if (item?.file instanceof File) {
+          formdata.append("images_files", item.file);
         }
       });
     }
@@ -139,7 +139,6 @@ const CreateEvent = () => {
         toast.success(res?.data?.message || "Event was deleted successfully");
         navigate("/dashboard/calendar");
         setIsDeleted(true);
-        // dispatch(api.util.invalidateTags(["schools"]));
       }
     });
   };

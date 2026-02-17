@@ -1,6 +1,5 @@
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
@@ -23,6 +22,10 @@ import PendingIcon from "@mui/icons-material/Pending";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useCancelSubscriptionMutation } from "../services/payment";
 import { toast } from "react-toastify";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules"; // v10+ modules
+import "swiper/css";
+import "swiper/css/pagination";
 
 dayjs.extend(localizedFormat);
 dayjs.extend(utc);
@@ -164,13 +167,44 @@ export default function RecipeReviewCard({
       />
 
       {/* ---------------- Image ---------------- */}
-      <CardMedia
-        component="img"
-        height="194"
-        image={school?.image || cardImage}
-        alt={school?.name}
-      />
 
+      {school?.images?.length ? (
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          pagination={{
+            clickable: true,
+            el: ".custom-pagination",
+          }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          spaceBetween={10}
+          slidesPerView={1}
+          style={{ height: 194, overflow: "hidden" }}
+        >
+          {school.images.map((img, index) => (
+            <SwiperSlide key={index}>
+              <img
+                src={img}
+                alt={`Slide ${index}`}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </SwiperSlide>
+          ))}
+
+          <div
+            className="custom-pagination"
+            style={{
+              display: "none",
+            }}
+          />
+        </Swiper>
+      ) : (
+        <Box
+          component="img"
+          src={cardImage}
+          alt={school.name}
+          sx={{ width: "100%", height: "194px", objectFit: "cover" }}
+        />
+      )}
       {/* ---------------- Subscription Section ---------------- */}
       <Stack spacing={1} p={2} pb={0}>
         <Stack direction="row" alignItems="center" spacing={0.8}>

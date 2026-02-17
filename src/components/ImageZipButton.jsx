@@ -3,12 +3,13 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { Button } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
+import { toast } from "react-toastify";
 
 const ImageZipButton = ({ images = [], zipName = "images.zip" }) => {
   const [loading, setLoading] = useState(false);
 
   const downloadZip = async () => {
-    if (!images.length) return alert("No images to download!");
+    if (!images.length) return toast.info("No images to download!");
 
     try {
       setLoading(true);
@@ -35,7 +36,7 @@ const ImageZipButton = ({ images = [], zipName = "images.zip" }) => {
       saveAs(content, zipName);
     } catch (error) {
       console.error("Zip error:", error);
-      alert("Something went wrong while creating zip.");
+      toast.info("Something went wrong while creating zip");
     } finally {
       setLoading(false);
     }

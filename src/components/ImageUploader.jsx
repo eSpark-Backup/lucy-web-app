@@ -14,7 +14,6 @@ const ImageUploader = ({
   const addFiles = (files) => {
     const newFiles = Array.from(files);
 
-    // Filter out duplicates by file name
     const filteredFiles = newFiles.filter(
       (file) => !images.some((img) => img.file?.name === file.name),
     );
@@ -27,10 +26,7 @@ const ImageUploader = ({
     const updatedImages = [...images, ...previews];
 
     setImages(updatedImages);
-    formik.setFieldValue(
-      "images",
-      updatedImages.map((img) => img.file || img.preview),
-    );
+    formik.setFieldValue("images", updatedImages);
   };
 
   const handleDrop = (e) => {

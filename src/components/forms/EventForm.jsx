@@ -208,7 +208,7 @@ const EventForm = ({
                         formik?.touched?.[name] && formik?.errors?.[name]
                       }
                       InputLabelProps={{
-                        shrink: true, 
+                        shrink: true,
                       }}
                     >
                       {type === "select" &&

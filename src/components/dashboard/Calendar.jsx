@@ -31,6 +31,7 @@ function Calendar() {
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   const { data: publicEvents } = useGetPublicEventsQuery(undefined, {
+    skip: true,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
