@@ -103,7 +103,6 @@ const EventContents = () => {
     return <LinearProgress />;
   }
 
-  console.log(events, "events");
   return (
     <Box>
       <BackButton fallback={"/dashboard/calendar"} />

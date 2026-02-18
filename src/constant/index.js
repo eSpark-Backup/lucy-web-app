@@ -715,7 +715,7 @@ export const SIDEBAR = {
 };
 
 export const EVENTFORM = {
-  fields: (date, is_trust, isSchoolRole) => {
+  fields: (is_trust, isSchoolRole) => {
     const trustFields = [
       {
         label: "School Name",
@@ -736,15 +736,6 @@ export const EVENTFORM = {
         is_editable: false,
       },
     ];
-
-    const dateField = {
-      label: "Select Date",
-      placeholder: "Enter your Event Date",
-      type: "date",
-      name: "date",
-      size: 12,
-      is_editable: true,
-    };
 
     return [
       ...(!isSchoolRole ? trustFields : []),

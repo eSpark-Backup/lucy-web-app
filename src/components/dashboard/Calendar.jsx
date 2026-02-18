@@ -54,23 +54,34 @@ function Calendar() {
       let end;
       let allDay = false;
 
-      if (item.time_span >= 1438 && item.time_span <= 1440) {
-        end = start.endOf("day");
-        allDay = true;
+      if (item.end_date) {
+        end = dayjs(item.end_date).local();
+
+        if (item.time_span >= 1438 && item.time_span <= 1440) {
+          end = end.add(1, "day");
+          allDay = true;
+        }
       } else {
-        end = start.add(item.time_span, "minute");
+        if (item.time_span >= 1438 && item.time_span <= 1440) {
+          end = start.add(1, "day");
+          allDay = true;
+        } else {
+          end = start.add(item.time_span, "minute");
+        }
       }
 
       return {
         id: item.id,
         title: item.name,
-        start_date: start.toDate(),
-        date: start.toDate(),
-        end_date: end.toDate(),
+
+        start: start.toDate(),
+        end: end.toDate(),
+
         allDay,
+
         duration: formatDuration(item.time_span),
         attendees: [],
-        image: item?.images[0],
+        image: item?.images?.[0],
         school_name: schoolName,
         is_public: item?.is_public,
       };
@@ -86,7 +97,6 @@ function Calendar() {
         );
       }
 
-      // ✅ always add dummy
       const dummyMapped = mapEventsToCalendar(publicEvents, "Dummy School");
 
       setCalendarEvents([...mergedEvents, ...dummyMapped]);

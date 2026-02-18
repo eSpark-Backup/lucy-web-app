@@ -34,7 +34,7 @@ export const authApi = api.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
-      invalidatesTags: ["event"],
+      invalidatesTags: ["event", "content"],
     }),
     deleteEvent: builder.mutation({
       query: (id) => ({

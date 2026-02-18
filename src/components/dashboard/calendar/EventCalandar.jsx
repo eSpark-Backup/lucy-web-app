@@ -29,7 +29,6 @@ const EventCalendar = ({ events }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [popupType, setPopupType] = useState(null);
   const [popupAnchor, setPopupAnchor] = useState(null);
-  const [currentView, setCurrentView] = useState("dayGridMonth");
   const [timeZone, setTimeZone] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [activeId, setActiveId] = useState("");
@@ -56,24 +55,6 @@ const EventCalendar = ({ events }) => {
         <Box sx={{ fontSize: "24px" }}>{day}</Box>
       </Box>
     );
-  };
-
-  const handleViewDidMount = () => {
-    if (calendarRef.current) {
-      const axisFrame = calendarRef.current.elRef.current.querySelector(
-        ".fc-timegrid-axis-frame"
-      );
-      if (axisFrame && timeZone) {
-        axisFrame.innerHTML = `<span class="timegrid-gmt">${timeZone}</span>`;
-      }
-    }
-  };
-
-  const handleMonthTitleClick = () => {
-    const titleElement = document.querySelector(".fc-toolbar-title");
-    if (titleElement) {
-      // setPopupAnchor(titleElement);
-    }
   };
 
   useEffect(() => {
@@ -141,60 +122,66 @@ const EventCalendar = ({ events }) => {
       }}
     >
       <FullCalendar
+        ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         initialDate={selectedDate.toDate()}
-        ref={calendarRef}
-        height="100%" // Important: make calendar fill parent height
+        height="100%"
         contentHeight="auto"
-        expandRows={true} // Helps with dynamic sizing
+        expandRows={true}
+        selectable={true}
+        selectMirror={true}
+        editable={false}
+        events={events}
+        firstDay={1}
+        dayMaxEvents={3}
+        slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
+        eventTimeFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
         headerToolbar={{
           start: "today prev,next",
           center: "title",
           end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
+        select={(info) => {
+          const today = dayjs().startOf("day");
+          const startDate = dayjs(info.startStr);
+
+          if (startDate.isBefore(today)) return;
+
+          setPopupType("date");
+          setPopupAnchor(null);
+
+          setOpenModal({
+            start: info.startStr,
+            end: dayjs(info.endStr).subtract(1, "day").format("YYYY-MM-DD"),
+          });
+        }}
+        eventClick={(info) => {
+          setPopupType("event");
+          setPopupAnchor(info.jsEvent.target);
+          setActiveId(info.event.id);
+        }}
+        eventClassNames={(arg) => getEventClassNames(arg.event)}
         eventDidMount={(info) => {
           const { userId } = info.event.extendedProps;
-          const color = COLORS_MAP[userId] || "#6C63FF"; // fallback
+          const color = COLORS_MAP[userId] || "#6C63FF";
 
           info.el.style.backgroundColor = `${color}35`;
           info.el.style.borderLeft = `4px solid ${color}`;
-          info.el.style.opacity = "0.5";
+          info.el.style.opacity = "0.7";
           info.el.style.color = color;
           info.el.style.fontWeight = "700";
           info.el.style.padding = "6px 12px";
           info.el.style.fontSize = "10px";
-          info.el.style.borderRadius = "0px";
-          info.el.style.cursor = "pointer";
           info.el.style.whiteSpace = "nowrap";
           info.el.style.overflow = "hidden";
           info.el.style.textOverflow = "ellipsis";
-          info.el.style.boxShadow = "none";
-          info.el.style.fontFamily = "'Nunito Sans', sans-serif";
 
-          info.el.addEventListener("mouseenter", () => {
-            info.el.style.opacity = "0.5";
-          });
-
-          info.el.addEventListener("mouseleave", () => {
-            info.el.style.opacity = "0.7";
-          });
-          // info.el.addEventListener("contextmenu", (e) => {
-          //   e.preventDefault();
-          //   console.log("RIGHT BUTTON CLICKED");
-          // });
-        }}
-        datesSet={() => {
-          const titleElement = document.querySelector(".fc-toolbar-title");
-          const btnType = document.querySelector(".fc-button-active");
-
-          if (btnType) {
-            const type = btnType.classList.value.split("-")[1];
-            setCurrentView(type);
-          }
-
-          if (titleElement) {
-            titleElement.addEventListener("click", handleMonthTitleClick);
+          const titleEl = info.el.querySelector(".fc-event-title");
+          if (titleEl) {
+            titleEl.style.color = color;
+            info.el.style.border = "0";
+            info.el.style.borderLeft = `4px solid ${color}`;
           }
         }}
         views={{
@@ -207,30 +194,6 @@ const EventCalendar = ({ events }) => {
             dayHeaderContent: dayHeaderContent,
           },
         }}
-        events={events}
-        editable={false}
-        selectable={false}
-        dateClick={(info) => {
-          const today = dayjs().startOf("day");
-          const clickedDate = dayjs(info.dateStr);
-          if (clickedDate.isBefore(today)) {
-            return;
-          }
-          setPopupType("date");
-          setPopupAnchor(null);
-          setOpenModal(info.dateStr);
-        }}
-        eventClick={(info) => {
-          setPopupType("event");
-          setPopupAnchor(info.jsEvent.target);
-          setActiveId(info.event.id);
-        }}
-        eventClassNames={(arg) => getEventClassNames(arg.event)}
-        viewDidMount={handleViewDidMount}
-        slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
-        eventTimeFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
-        dayMaxEvents={3}
-        firstDay={1}
       />
       <PopperCard
         ref={popperRef}

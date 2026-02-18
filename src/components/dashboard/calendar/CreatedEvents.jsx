@@ -226,7 +226,8 @@ const EventItem = ({
           </Typography>
 
           <Typography display="block" variant="caption" color="text.secondary">
-            Date: {dayjs(event?.date)?.format("MMM D, YYYY")}
+            {dayjs(event?.start)?.format("MMM D, YYYY")} -{" "}
+            {dayjs(event?.end)?.format("MMM D, YYYY")}
           </Typography>
 
           <Stack mt={1} spacing={0.5} direction="row" alignItems="center">

@@ -49,7 +49,8 @@ const EventForm = ({
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const date = search.get("date") || null;
+  const start = search.get("start") || null;
+  const end = search.get("end") || null;
   const inputRef = useRef(null);
   const { id } = useParams();
   const [images, setImages] = useState(data?.images || []);
@@ -79,7 +80,6 @@ const EventForm = ({
   useEffect(() => {
     setImages(data?.images || []);
   }, [data]);
-
   const { fields } = EVENTFORM || {};
   const { EventFormStyles } = componentStyles || {};
   const {
@@ -115,18 +115,20 @@ const EventForm = ({
   };
 
   const formik = useFormik({
-    initialValues: date
+    initialValues: start
       ? {
           ...initialEventData,
-          start_date: date
-            ? date
+          start_date: start
+            ? start
             : data?.start_date
               ? dayjs(data.start_date).format("YYYY-MM-DD")
               : "",
 
-          end_date: data?.end_date
-            ? dayjs(data.end_date).format("YYYY-MM-DD")
-            : "",
+          end_date: end
+            ? end
+            : data?.end_date
+              ? dayjs(data.end_date).format("YYYY-MM-DD")
+              : "",
           ...(!isSchoolRole && {
             school_email: data?.name || selectedSchoolEmail,
             show_email: data?.school_email || selectedSchoolEmail,
@@ -166,7 +168,7 @@ const EventForm = ({
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(date, is_trust, isSchoolRole)?.map(
+          {fields(is_trust, isSchoolRole)?.map(
             (
               { label, name, placeholder, type, size, disabled, is_editable },
               index,
