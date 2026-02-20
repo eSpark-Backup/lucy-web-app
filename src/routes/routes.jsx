@@ -62,7 +62,7 @@ const routes = [
       { index: true, element: <Navigate to="/auth/login" replace /> },
       { path: "login", element: <Login /> },
       { path: "signup/:role", element: <Signup /> },
-      { path: "forget", element: <Forgot /> },
+      { path: "forgot", element: <Forgot /> },
       { path: "reset-password", element: <ResetPassword /> },
       { path: "verify-email", element: <EmailVerification /> },
       { path: "email-verification", element: <VerifyEmail /> },

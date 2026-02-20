@@ -67,7 +67,7 @@ export default function CreatedEvents({ events = [] }) {
 
       <Divider sx={dividerStyle} />
 
-      <Stack spacing={3} sx={eventListBoxStyle}>
+      <Stack spacing={{ xs: 2.5, md: 3 }} sx={eventListBoxStyle}>
         {/* PUBLIC EVENTS */}
         {publicEvents?.length > 0 && (
           <>
@@ -181,15 +181,20 @@ const EventItem = ({
     <Box>
       <Stack
         spacing={1}
+        mt={0}
         alignItems="start"
-        direction={isMobile ? "column" : "row"}
+        direction={isMobile ? "row" : "row"}
       >
         <Avatar src={event?.image} sx={avatarStyle(isMobile)} />
 
         <Box>
           <Link
             to={`${eventsLink}${event?.id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              display: "inline-block",
+            }}
           >
             <Typography
               fontWeight={600}

@@ -17,26 +17,6 @@ export const imageApi = api.injectEndpoints({
         method: "GET",
         responseHandler: (response) => response.blob(),
       }),
-
-      async onQueryStarted({ fileUrl }, { queryFulfilled }) {
-        try {
-          const { data: blob } = await queryFulfilled;
-
-          const downloadUrl = window.URL.createObjectURL(blob);
-
-          const link = document.createElement("a");
-          link.href = downloadUrl;
-          link.download = fileUrl.split("/").pop() || "image.jpg";
-
-          document.body.appendChild(link);
-          link.click();
-
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(downloadUrl);
-        } catch (err) {
-          console.error("Download failed:", err);
-        }
-      },
     }),
 
     multipleImagesDownload: builder.mutation({

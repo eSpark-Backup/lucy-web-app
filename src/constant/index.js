@@ -404,8 +404,8 @@ export const LOGIN = {
   ],
   checkboxText: "Remember Password",
   forgot: {
-    text: "Forget Password?",
-    link: "/auth/forget",
+    text: "Forgot Password?",
+    link: "/auth/forgot",
   },
   buttonText: "Sign in",
   haveAnAccountText: "Don’t have an account?",
@@ -457,8 +457,8 @@ export const SIGNIN = {
   ],
   checkboxText: "Remember Password",
   forgot: {
-    text: "Forget Password?",
-    link: "/auth/forget",
+    text: "Forgot Password?",
+    link: "/auth/forgot",
   },
   buttonText: "Sign Up",
   haveAnAccountText: "Already have an account?",
@@ -469,7 +469,7 @@ export const SIGNIN = {
 };
 
 export const FORGET = {
-  title: "Forget Password",
+  title: "Forgot Password",
   description: "Please enter your email and receive a password",
   fields: {
     label: "Email address:",

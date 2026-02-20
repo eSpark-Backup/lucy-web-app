@@ -74,8 +74,25 @@ const ImageUploader = ({
     }
   };
 
-  const handleSingleDownload = (img) => {
-    downloadSingle({ fileUrl: img });
+  const handleSingleDownload = async (img) => {
+    try {
+      const blob = await downloadSingle({ fileUrl: img }).unwrap();
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+
+      const cleanName = img.split("/").pop().split("?")[0];
+      link.download = cleanName || "image.jpg";
+
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed", err);
+    }
   };
 
   return (
