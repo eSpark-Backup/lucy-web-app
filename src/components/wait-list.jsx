@@ -9,7 +9,6 @@ const WaitList = () => {
       sx={{
         pl: { xs: "15px", md: "20px", lg: "35px" },
         background: "linear-gradient(90deg, #4976E7 0%, #294281 100%)",
-        // height: "550px",
         mt: { xs: "100px", lg: "180px" },
         display: "flex",
         alignItems: "center",
@@ -26,7 +25,6 @@ const WaitList = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          // width: "300px",
         }}
       >
         <Box
@@ -64,12 +62,11 @@ const WaitList = () => {
           display: "flex",
           rowGap: "25px",
           flexDirection: "column",
-          // maxWidth: "800px",
         }}
       >
         <Typography
           sx={{
-            fontSize: { xs: "24px", md: "40px", lg: "50px" }, // fallback breakpoints
+            fontSize: { xs: "24px", md: "40px", lg: "50px" },
             lineHeight: { xs: "30px", md: "50px", lg: "60px" },
             color: "#ffffff",
             wordBreak: "break-word",
@@ -80,7 +77,6 @@ const WaitList = () => {
             fontFamily: '"Aoboshi One", serif',
           }}
         >
-          {/* Join our wait List to get Earlier <br /> Access in our AI platform */}
           Exclusive Waitlist Offer
         </Typography>
 
@@ -101,16 +97,12 @@ const WaitList = () => {
             fontFamily: '"Plus Jakarta Sans", sans-serif',
           }}
         >
-          {/* Stay ahead with the latest updates, insights, and events from Macat{" "}
-          <br /> Megatrons. */}
           Be part of our community! Join the waitlist today and get 10% off your
           subscription at app launch.
           <br />
-          Just £10* per school per month if the whole Trust signs up, or just
-          £50 per month for a standalone school subscription.
+          Just £15* per school per month if the whole Trust signs up, or just
+          £15 per month for a standalone school subscription.
           <br />
-          {/* Your competition is already marketing—are you? Join the waitlist now
-          and take control of your school’s success. */}
         </Typography>
       </Box>
     </Box>

@@ -1,13 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { about } from "../assets";
-import { Link } from "react-router-dom";
 
 const About = () => {
   return (
     <Box
       sx={{
-        // pl: { xs: "30px", md: "50px", lg: "90px" },
-        // pr: { xs: "15px", md: "25px", lg: "45px" },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",
@@ -53,19 +50,20 @@ const About = () => {
           Built by Experts Who Understand Schools
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "15px", fontWeight: "400" }}>
-          Every empty seat in your school means lost money and funding. EduPulse GPT
-          is your very own school marketing department. It is a game-changing,
-          inexpensive AI-based marketing app. This subscription-based app could
-          cost your school as little as just £10* per month. It means busy,
-          cash-strapped schools will be visible in their community. Parents have
-          more choices than ever, and if you’re not actively promoting your
-          school, you’re missing out. But we know how busy school staff are and
-          how finances are stretched, that’s why we’ve built EduPulse GPT an
-          AI-driven marketing tool to help your school.
+          Every empty seat in your school means lost money and funding. EduPulse
+          GPT is your very own school marketing department. It is a
+          game-changing, inexpensive AI-based marketing app. This
+          subscription-based app could cost your school as little as just £15*
+          per month. It means busy, cash-strapped schools will be visible in
+          their community. Parents have more choices than ever, and if you’re
+          not actively promoting your school, you’re missing out. But we know
+          how busy school staff are and how finances are stretched, that’s why
+          we’ve built EduPulse GPT an AI-driven marketing tool to help your
+          school.
         </Typography>
         <Typography sx={{ fontSize: "22px", mt: "20px", fontWeight: "400" }}>
-          EduPulse GPT was created by a school governor, former BBC journalist, and
-          director of{" "}
+          EduPulse GPT was created by a school governor, former BBC journalist,
+          and director of{" "}
           <a
             href="https://www.exposure-pr.co.uk"
             target="_blank"

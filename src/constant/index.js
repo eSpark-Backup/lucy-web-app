@@ -978,7 +978,7 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
     {
       title: "Basic",
       subtitle: "Single School Plan",
-      price: "£50",
+      price: "£15",
       per: "Per School/Months",
       description:
         "One login that can be used only within a single school. Ideal for independent schools or schools not part of a trust-wide subscription.",
@@ -988,7 +988,7 @@ export const GLOBAL_SUBSCRIPTION_PLAN_DATA = {
     {
       title: "Basic",
       subtitle: "Multi Academy Trust Plan",
-      price: "£10",
+      price: "£15",
       per: "Per School/Months",
       description:
         "Every school within the trust gets one login. This discounted rate is available only if all schools in the trust sign up.",
@@ -1120,7 +1120,7 @@ export const ABOUT_DATA = {
     "Every empty seat in a school represents lost money and funding",
   description: `EduPulse GPT acts as your school's dedicated marketing department, offering
           a game-changing, inexpensive AI-based marketing app. With subscriptions
-          costing as little as £10 per month ( subject to full trust sign-up ), it
+          costing as little as £15 per month ( subject to full trust sign-up ), it
           provides a vital solution for busy, cash-strapped schools to enhance
           their visibility within the community. In an age where parents have more
           choices than ever, actively promoting your school is essential to avoid
