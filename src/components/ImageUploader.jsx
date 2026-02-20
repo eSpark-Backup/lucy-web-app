@@ -2,6 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import UploadIcon from "../assets/icons/upload.svg";
 import DownloadIcon from "@mui/icons-material/Download";
+import { useSingleImageDownloadMutation } from "../services/image";
 
 const ImageUploader = ({
   images = [],
@@ -12,6 +13,8 @@ const ImageUploader = ({
   uploading = false,
   mode = "add",
 }) => {
+  const [downloadSingle] = useSingleImageDownloadMutation();
+
   const addFiles = (files) => {
     const newFiles = Array.from(files);
 
@@ -71,6 +74,10 @@ const ImageUploader = ({
     }
   };
 
+  const handleSingleDownload = (img) => {
+    downloadSingle({ fileUrl: img });
+  };
+
   return (
     <Box
       onDrop={handleDrop}
@@ -93,7 +100,7 @@ const ImageUploader = ({
         opacity: disabled ? 0.6 : 1,
       }}
     >
-      {images.length === 0 ? (
+      {images?.length === 0 ? (
         <Box
           component="img"
           src={UploadIcon}
@@ -212,7 +219,7 @@ const ImageUploader = ({
                     className="overlay"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDownload(img);
+                      handleSingleDownload(img);
                     }}
                     sx={{
                       position: "absolute",
