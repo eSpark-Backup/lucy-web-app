@@ -49,7 +49,7 @@ const HeroSection = () => {
           }}
         >
           Attract More Students <br />
-          Just £10* per month <br />
+          Just £15* per month <br />
           Boost Your School’s Visibility <br />
           EduPulse GPT App
         </Typography>

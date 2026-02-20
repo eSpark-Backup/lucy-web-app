@@ -56,7 +56,7 @@ const About = () => {
           Every empty seat in your school means lost money and funding. EduPulse GPT
           is your very own school marketing department. It is a game-changing,
           inexpensive AI-based marketing app. This subscription-based app could
-          cost your school as little as just £10* per month. It means busy,
+          cost your school as little as just £15* per month. It means busy,
           cash-strapped schools will be visible in their community. Parents have
           more choices than ever, and if you’re not actively promoting your
           school, you’re missing out. But we know how busy school staff are and
