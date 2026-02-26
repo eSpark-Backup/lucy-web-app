@@ -4,10 +4,7 @@ import { toast } from "react-toastify";
 import CreatedEvents from "./calendar/CreatedEvents";
 import EventCalandar from "./calendar/EventCalandar";
 import FormHeader from "../forms/FormHeader";
-import {
-  useGetMyEventsQuery,
-  useGetPublicEventsQuery,
-} from "../../services/event";
+import { useGetMyEventsQuery } from "../../services/event";
 import { componentStyles } from "../../style/componentStyles";
 import dayjs from "dayjs";
 import { useGetAllSchoolsQuery } from "../../services/school";
@@ -30,16 +27,14 @@ function Calendar() {
   };
   const [calendarEvents, setCalendarEvents] = useState([]);
 
-  const { data: publicEvents } = useGetPublicEventsQuery(undefined, {
-    skip: true,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  });
-
   const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery(
     undefined,
-    { refetchOnFocus: true, refetchOnMountOrArgChange: true },
+    {
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+    },
   );
+
   const { user } = useSelector((state) => state?.auth);
   const is_trust = user?.profile?.organization?.is_trust;
   const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
@@ -93,21 +88,21 @@ function Calendar() {
 
       if (allSchools?.data?.length) {
         mergedEvents = allSchools.data.flatMap((school) =>
-          mapEventsToCalendar(school.events || [], school?.name),
+          mapEventsToCalendar(school?.events || [], school?.name),
         );
       }
 
-      const dummyMapped = mapEventsToCalendar(publicEvents, "Dummy School");
+      const dummyMapped = mapEventsToCalendar(data?.public_events);
 
       setCalendarEvents([...mergedEvents, ...dummyMapped]);
     } else {
       let realEvents = [];
 
-      if (isSuccess && Array.isArray(data)) {
-        realEvents = mapEventsToCalendar(data);
+      if (isSuccess && Array.isArray(data?.user_events)) {
+        realEvents = mapEventsToCalendar(data?.user_events);
       }
 
-      const dummyMapped = mapEventsToCalendar(publicEvents);
+      const dummyMapped = mapEventsToCalendar(data?.public_events);
 
       setCalendarEvents([...realEvents, ...dummyMapped]);
 

@@ -4,7 +4,7 @@ import edit from "../assets/icons/edit.svg";
 import view from "../assets/icons/view.svg";
 import { componentStyles } from "../style/componentStyles";
 
-const EventCard = ({ title, todayTime, duration, id }) => {
+const EventCard = ({ title, duration, id, is_public = false }) => {
   const { EventListStyles } = componentStyles || {};
   const {
     cardStyle,
@@ -12,8 +12,6 @@ const EventCard = ({ title, todayTime, duration, id }) => {
     titleStyle,
     editIconStyle,
     viewIconStyle,
-    todayTimeBoxStyle,
-    todayTimeTypoStyle,
     durationBoxStyle,
     durationTypoStyle,
   } = EventListStyles || {};
@@ -29,13 +27,33 @@ const EventCard = ({ title, todayTime, duration, id }) => {
 
   return (
     <Box sx={cardStyle}>
+      {is_public && (
+        <Box
+          component="span"
+          sx={{
+            px: 1,
+            py: 0.3,
+            fontSize: "0.7rem",
+            fontWeight: 600,
+            backgroundColor: "error.main",
+            color: "#fff",
+            borderRadius: "4px",
+            position: "absolute",
+            left: 0,
+            top: 0,
+          }}
+        >
+          PUBLIC
+        </Box>
+      )}
       <Box sx={titleAndButtonBoxStyle}>
-        <Typography variant="h4" sx={titleStyle}>
+        <Typography variant="h5" sx={titleStyle}>
           {title}
         </Typography>
         <Box display={"flex"}>
           <IconButton
             size="small"
+            disabled={is_public}
             onClick={() => handleClick(id, "edit")}
             sx={editIconStyle}
           >
@@ -61,11 +79,6 @@ const EventCard = ({ title, todayTime, duration, id }) => {
         }}
         mt={1}
       >
-        <Box sx={todayTimeBoxStyle}>
-          <Typography variant="h6" sx={todayTimeTypoStyle}>
-            {todayTime}
-          </Typography>
-        </Box>
         <Box sx={durationBoxStyle}>
           <Typography variant="h6" sx={durationTypoStyle}>
             {duration}

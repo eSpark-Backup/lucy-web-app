@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import {
   Paper,
   Button,
@@ -11,7 +11,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { componentStyles } from "../../../style/componentStyles.js";
 import { CALENDAR_DATA } from "../../../constant/index.js";
 import dayjs from "dayjs";
@@ -33,28 +33,14 @@ export default function CreatedEvents({ events = [] }) {
   } = CreatedEventsStyle || {};
 
   const { CREATEDEVENTS_DATA } = CALENDAR_DATA || {};
-  const { createEventText, eventsLink, noEventsText } =
-    CREATEDEVENTS_DATA || {};
+  const { createEventText, eventsLink } = CREATEDEVENTS_DATA || {};
 
-  const [showAll, setShowAll] = useState(false);
-
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme?.breakpoints?.down("sm"));
 
-  // Show only 4 initially
-  // const visibleEvents = useMemo(() => {
-  //   return showAll ? events : events?.slice(6);
-  // }, [events, showAll]);
-
-  // Separate events
   const publicEvents = useMemo(() => {
     return events?.filter((event) => event?.is_public === true);
-  }, [events]);
-
-  const privateEvents = useMemo(() => {
-    return events?.filter(
-      (event) => event?.is_public === false || event?.is_public === undefined,
-    );
   }, [events]);
 
   return (
@@ -68,7 +54,6 @@ export default function CreatedEvents({ events = [] }) {
       <Divider sx={dividerStyle} />
 
       <Stack spacing={{ xs: 2.5, md: 3 }} sx={eventListBoxStyle}>
-        {/* PUBLIC EVENTS */}
         {publicEvents?.length > 0 && (
           <>
             <Typography
@@ -90,73 +75,40 @@ export default function CreatedEvents({ events = [] }) {
               Public Events
             </Typography>
 
-            {publicEvents
-              ?.slice(0, showAll ? publicEvents?.length : 4)
-              .map((event) => (
-                <EventItem
-                  key={`public-${event?.id}`}
-                  event={event}
-                  isMobile={isMobile}
-                  avatarStyle={avatarStyle}
-                  avatarGroupStyle={avatarGroupStyle}
-                  moreAvatarStyle={moreAvatarStyle}
-                  eventsLink={eventsLink}
-                />
-              ))}
+            {publicEvents?.map((event) => (
+              <EventItem
+                key={`public-${event?.id}`}
+                event={event}
+                isMobile={isMobile}
+                avatarStyle={avatarStyle}
+                avatarGroupStyle={avatarGroupStyle}
+                moreAvatarStyle={moreAvatarStyle}
+                eventsLink={eventsLink}
+              />
+            ))}
           </>
         )}
 
-        {/* CREATED EVENTS */}
-        {privateEvents?.length > 0 && (
-          <>
-            <Typography
-              sx={{
-                ...createEventTypoStyle,
-                bgcolor: "#e9e9ff",
-                pl: 2,
-                pr: 1,
-                py: 0.6,
-                borderLeft: "5px solid #918bff",
-                fontWeight: 700,
-                letterSpacing: 0.5,
-                fontSize: { xs: "14px", md: "16px" },
-                fontFamily: "Nunito Sans, sans-serif",
-                display: "inline-block",
-              }}
-            >
-              Created Events
-            </Typography>
-
-            {privateEvents
-              ?.slice(0, showAll ? privateEvents?.length : 4)
-              ?.map((event) => (
-                <EventItem
-                  key={`private-${event?.id}`}
-                  event={event}
-                  isMobile={isMobile}
-                  avatarStyle={avatarStyle}
-                  avatarGroupStyle={avatarGroupStyle}
-                  moreAvatarStyle={moreAvatarStyle}
-                  eventsLink={eventsLink}
-                />
-              ))}
-          </>
-        )}
-
-        {/* NO EVENTS */}
-        {publicEvents?.length === 0 && privateEvents?.length === 0 && (
+        {publicEvents?.length === 0 && (
           <Typography variant="body1" textAlign="center">
-            {noEventsText}
+            {"No Public Events Yet!"}
           </Typography>
         )}
       </Stack>
 
-      {/* SHOW MORE BUTTON */}
       {events?.length > 4 && (
-        <Box my={3} textAlign="center" sx={showMoreButtonBoxStyle}>
-          <Button onClick={() => setShowAll(!showAll)} sx={showMoreButtonStyle}>
+        <Box
+          mt={publicEvents?.length > 0 ? 3 : 0}
+          mb={3}
+          textAlign="center"
+          sx={showMoreButtonBoxStyle}
+        >
+          <Button
+            onClick={() => navigate("/dashboard/calendar/event-list")}
+            sx={showMoreButtonStyle}
+          >
             <Typography fontSize={{ xs: "14px", md: "16px" }}>
-              {showAll ? "Show Less" : `Show More (${events?.length})`}
+              {"Show All Events"}
             </Typography>
           </Button>
         </Box>

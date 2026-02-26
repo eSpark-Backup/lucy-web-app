@@ -496,24 +496,29 @@ export const componentStyles = {
     cardStyle: {
       backgroundColor: "#F9FAFB",
       borderRadius: "16px",
-      padding: 2,
+      padding: 3,
       display: "flex",
       flexDirection: "column",
       gap: 1,
       boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-      width: "95%",
-      maxWidth: 423,
+      width: { xs: "100%", sm: "95%", md: "95%" },
+      maxWidth: { xs: "100%", md: 423 },
       minHeight: 115,
+      position: "relative",
     },
     titleAndButtonBoxStyle: {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
+      gap: 1.5,
     },
     titleStyle: {
       fontWeight: 500,
       color: "#111827",
       fontFamily: "Poppins",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
     editIconStyle: {
       width: "48px",
@@ -524,6 +529,14 @@ export const componentStyles = {
       borderTopRightRadius: "0px",
       borderBottomRightRadius: "0px",
       padding: "4px",
+
+      // 🔹 Disabled styles
+      "&.Mui-disabled": {
+        backgroundColor: "#F3F4F6",
+        border: "1px solid #E5E7EB",
+        color: "#9CA3AF",
+        opacity: 1, // default opacity remove karne ke liye
+      },
     },
     viewIconStyle: {
       width: "48px",
@@ -721,7 +734,7 @@ export const componentStyles = {
       },
       eventListBoxStyle: (isMobile) => ({
         my: 1,
-        maxHeight: 452,
+        maxHeight: 500,
         overflow: "auto",
         p: isMobile ? 2 : 3,
         minWidth: { xs: 200, md: 286 },

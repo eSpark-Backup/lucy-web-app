@@ -148,7 +148,7 @@ const CreateEvent = () => {
       <FormHeader
         deleteLoading={deleteLoading}
         openModal={() => setOpenModal(true)}
-        id={id}
+        id={!data?.is_public && id}
         title={id ? "Event Details" : "Create Event"}
       />
       {isLoading ? (

@@ -1,8 +1,6 @@
-import { Box, Button, Grid, LinearProgress, Typography } from "@mui/material";
+import { Box, Grid, LinearProgress } from "@mui/material";
 import FormHeader from "../forms/FormHeader";
 import EventCard from "../EventCard";
-import { componentStyles } from "../../style/componentStyles";
-import { useNavigate } from "react-router-dom";
 import { useGetMyEventsQuery } from "../../services/event";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -22,37 +20,30 @@ dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 const EventList = () => {
-  const { EventListStyles } = componentStyles || {};
-  const { addMoreEventsButtonStyle, addMoreEventsButtonTypoStyle } =
-    EventListStyles || {};
-  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery();
 
   useEffect(() => {
     if (isSuccess) {
-      const res = data?.map((item) => {
-        // process each item
-        const localDate = dayjs(item?.date_time)?.local();
-        let label = "";
-        if (localDate.isToday()) {
-          label = "Today";
-        } else if (localDate.isTomorrow()) {
-          label = "Tomorrow";
-        } else {
-          label = localDate.format("MMM DD, YYYY");
-        }
-        const display = `${label} ${localDate.format("hh:mm A")}`;
+      const public_events = data?.public_events || [];
+      const user_events = data?.user_events || [];
+
+      const allEvents = [...public_events, ...user_events];
+
+      const res = allEvents?.map((item) => {
+        const start = dayjs(item?.start_date);
+        const end = dayjs(item?.end_date);
+
+        const formattedRange = `${start.format("MMM DD, YYYY")} - ${end.format("MMM DD, YYYY")}`;
 
         return {
           title: item?.name,
-          todayTime: display,
-          duration: `Duration: ${dayjs
-            .duration(item?.time_span, "minutes")
-            .humanize()}`,
+          is_public: item?.is_public,
+          duration: `Duration: ${formattedRange}`,
           id: item?.id,
         };
       });
+
       setEvents(res);
     }
 
@@ -62,33 +53,20 @@ const EventList = () => {
   }, [data, isSuccess, isError, error]);
 
   if (isLoading) return <LinearProgress />;
-
   return (
     <Box>
-      <FormHeader title={"Event Details"} />
+      <FormHeader title={"Events"} />
       <Grid container maxWidth={920} rowGap={4} pt={0.5}>
         {events?.map((item, index) => (
           <Grid size={{ xs: 12, sm: 6 }} key={index}>
             <EventCard
+              is_public={item?.is_public}
               title={item?.title}
-              todayTime={item?.todayTime}
               duration={item?.duration}
               id={item?.id}
             />
           </Grid>
         ))}
-      </Grid>
-      <Grid size={12} pt={3.5}>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={addMoreEventsButtonStyle}
-          onClick={() => navigate("/dashboard/calendar/events/add")}
-        >
-          <Typography variant="h5" sx={addMoreEventsButtonTypoStyle}>
-            {"Add More Events"}
-          </Typography>
-        </Button>
       </Grid>
     </Box>
   );
