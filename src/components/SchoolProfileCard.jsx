@@ -185,7 +185,7 @@ export default function RecipeReviewCard({
               <img
                 src={img}
                 alt={`Slide ${index}`}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             </SwiperSlide>
           ))}
