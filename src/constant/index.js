@@ -715,7 +715,7 @@ export const SIDEBAR = {
 };
 
 export const EVENTFORM = {
-  fields: (is_trust, isSchoolRole) => {
+  fields: (is_trust, isSchoolRole, is_public = false) => {
     const trustFields = [
       {
         label: "School Name",
@@ -738,24 +738,32 @@ export const EVENTFORM = {
     ];
 
     return [
-      ...(!isSchoolRole ? trustFields : []),
+      // School fields only when NOT public
+      ...(!isSchoolRole && !is_public ? trustFields : []),
+
       {
         label: "Event Name",
         placeholder: "Enter your Event Name",
         type: "text",
         name: "event_name",
-        size: { xs: 12, lg: 5.5 },
+        size: { xs: 12, lg: is_public ? 12 : 5.5 },
         is_editable: true,
       },
-      {
-        label: "Event Type",
-        placeholder: "Enter your Event Type",
-        type: "text",
-        name: "event_type",
-        size: { xs: 12, lg: 5.5 },
-        is_editable: true,
-      },
-      // ...(!date ? [dateField] : []),
+
+      // Event Type hide when public
+      ...(!is_public
+        ? [
+            {
+              label: "Event Type",
+              placeholder: "Enter your Event Type",
+              type: "text",
+              name: "event_type",
+              size: { xs: 12, lg: 5.5 },
+              is_editable: true,
+            },
+          ]
+        : []),
+
       {
         label: "Start Date",
         placeholder: "Enter your start date",

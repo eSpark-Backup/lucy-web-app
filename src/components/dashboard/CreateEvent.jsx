@@ -159,6 +159,7 @@ const CreateEvent = () => {
           data={event}
           isLoading={addLoading || editLoading}
           onSubmit={handleSubmit}
+          is_public={data?.is_public}
         />
       )}
       <ConfirmModal

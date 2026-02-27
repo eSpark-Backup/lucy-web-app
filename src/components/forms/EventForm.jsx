@@ -40,6 +40,7 @@ const EventForm = ({
   isEdit = false,
   data = initialEventData,
   isLoading,
+  is_public = false,
   onSubmit = () => {},
 }) => {
   const navigate = useNavigate();
@@ -168,7 +169,7 @@ const EventForm = ({
     <Paper elevation={0} sx={paperStyle}>
       <form onSubmit={formik?.handleSubmit}>
         <Grid container columnGap={8} rowGap={2}>
-          {fields(is_trust, isSchoolRole)?.map(
+          {fields(is_trust, isSchoolRole, is_public)?.map(
             (
               { label, name, placeholder, type, size, disabled, is_editable },
               index,
@@ -475,17 +476,19 @@ const EventForm = ({
                 alignItems="center"
                 gap={2}
               >
-                <Button
-                  loading={isLoading}
-                  disabled={isLoading}
-                  type="submit"
-                  variant="contained"
-                  sx={{ ...buttonStyle, marginLeft: "0px", width: "191px" }}
-                >
-                  <Typography variant="h5" sx={buttonTypoStyle}>
-                    Save
-                  </Typography>
-                </Button>
+                {!is_public && (
+                  <Button
+                    loading={isLoading}
+                    disabled={isLoading}
+                    type="submit"
+                    variant="contained"
+                    sx={{ ...buttonStyle, marginLeft: "0px", width: "191px" }}
+                  >
+                    <Typography variant="h5" sx={buttonTypoStyle}>
+                      Save
+                    </Typography>
+                  </Button>
+                )}
                 <Button
                   onClick={() =>
                     navigate(`/dashboard/calendar/events/${id}/contents`)
