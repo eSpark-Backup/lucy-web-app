@@ -140,7 +140,29 @@ const EventCalendar = ({ events }) => {
         headerToolbar={{
           start: "today prev,next",
           center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay",
+          end: "",
+        }}
+        eventContent={(arg) => {
+          const { school_name } = arg.event.extendedProps;
+
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 0.5,
+              }}
+            >
+              <span style={{ color: "#6C63FF" }}>{arg.event.title}</span>
+              {school_name && (
+                <span
+                  style={{ color: "black", fontStyle: "italic", opacity: 0.8 }}
+                >
+                  {school_name}
+                </span>
+              )}
+            </Box>
+          );
         }}
         select={(info) => {
           const today = dayjs().startOf("day");
@@ -167,6 +189,7 @@ const EventCalendar = ({ events }) => {
           const color = COLORS_MAP[userId] || "#6C63FF";
 
           info.el.style.backgroundColor = `${color}35`;
+          info.el.style.border = `0px`;
           info.el.style.borderLeft = `4px solid ${color}`;
           info.el.style.opacity = "0.7";
           info.el.style.color = color;

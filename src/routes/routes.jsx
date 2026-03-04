@@ -25,6 +25,7 @@ import CheckoutResult from "../components/dashboard/CheckoutResult";
 import CalendarProtectedRoute from "./CalendarProtectedRoute";
 import SchoolProtectedRoute from "./SchoolProtectedRoute";
 import TermsAndConditions from "../components/auth/TermsAndConditions";
+import SchoolEventList from "../components/dashboard/SchoolEventList";
 
 const routes = [
   {
@@ -106,6 +107,14 @@ const routes = [
         element: (
           <CalendarProtectedRoute>
             <EventList />
+          </CalendarProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/calendar/event-list/:id",
+        element: (
+          <CalendarProtectedRoute>
+            <SchoolEventList />
           </CalendarProtectedRoute>
         ),
       },

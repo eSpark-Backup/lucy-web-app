@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Box, LinearProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
@@ -26,7 +26,9 @@ const CreateEvent = () => {
   const { id } = useParams();
   const [event, setEvent] = useState({});
   const [isDeleted, setIsDeleted] = useState(false);
-
+  const [search] = useSearchParams();
+  const mode = search.get("mode");
+  const isPreview = mode === "preview";
   const { data, isLoading, isSuccess, isError, error } = useGetEventByIdQuery(
     id,
     {
@@ -148,7 +150,7 @@ const CreateEvent = () => {
       <FormHeader
         deleteLoading={deleteLoading}
         openModal={() => setOpenModal(true)}
-        id={!data?.is_public && id}
+        id={!data?.is_public && id && !isPreview}
         title={id ? "Event Details" : "Create Event"}
       />
       {isLoading ? (
@@ -160,6 +162,7 @@ const CreateEvent = () => {
           isLoading={addLoading || editLoading}
           onSubmit={handleSubmit}
           is_public={data?.is_public}
+          isPreview={isPreview}
         />
       )}
       <ConfirmModal

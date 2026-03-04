@@ -41,6 +41,7 @@ const EventForm = ({
   data = initialEventData,
   isLoading,
   is_public = false,
+  isPreview = false,
   onSubmit = () => {},
 }) => {
   const navigate = useNavigate();
@@ -142,7 +143,7 @@ const EventForm = ({
             show_email: data?.school_email,
           }),
         },
-    validationSchema: eventValidationSchema(isSchoolRole),
+    validationSchema: eventValidationSchema(isSchoolRole, is_public),
     enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       const { show_email, ...filteredValues } = values;
@@ -184,7 +185,10 @@ const EventForm = ({
                       fullWidth
                       name={name}
                       type={type}
-                      disabled={(isEdit && !is_editable) || disabled}
+                      disabled={
+                        (isEdit && !is_editable) || isPreview || disabled
+                      }
+                      // disabled={isPreview}
                       placeholder={placeholder}
                       select={type === "select"}
                       value={formik?.values?.[name] || ""}
@@ -230,6 +234,7 @@ const EventForm = ({
                         setImages={setImages}
                         inputRef={inputRef}
                         formik={formik}
+                        disabled={isPreview}
                       />
                       {formik?.touched?.images && formik?.errors?.images && (
                         <Typography
@@ -251,38 +256,50 @@ const EventForm = ({
                             images={images || []}
                             zipName="event-images.zip"
                           />
-                          <Button
-                            variant="contained"
-                            sx={{
-                              color: "#fff",
-                              maxWidth: { xs: "100%", sm: "48%", md: "148px" },
-                              backgroundColor: "#9C27B0",
-                              opacity: "90%",
-                              textWrap: "nowrap",
-                              "&:hover": {
+                          {!isPreview && (
+                            <Button
+                              variant="contained"
+                              sx={{
+                                color: "#fff",
+                                maxWidth: {
+                                  xs: "100%",
+                                  sm: "48%",
+                                  md: "148px",
+                                },
                                 backgroundColor: "#9C27B0",
-                              },
-                            }}
-                            onClick={() => {
-                              setShowPopper((prev) => !prev);
-                            }}
-                          >
-                            <Typography variant="h6" sx={buttonTypoStyle}>
-                              {"Search Images"}
-                            </Typography>
-                          </Button>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              ...uploadButtonStyle,
-                              maxWidth: { xs: "100%", sm: "48%", md: "148px" },
-                            }}
-                            onClick={() => inputRef?.current?.click()}
-                          >
-                            <Typography variant="h6" sx={buttonTypoStyle}>
-                              {"Upload Image"}
-                            </Typography>
-                          </Button>
+                                opacity: "90%",
+                                textWrap: "nowrap",
+                                "&:hover": {
+                                  backgroundColor: "#9C27B0",
+                                },
+                              }}
+                              onClick={() => {
+                                setShowPopper((prev) => !prev);
+                              }}
+                            >
+                              <Typography variant="h6" sx={buttonTypoStyle}>
+                                {"Search Images"}
+                              </Typography>
+                            </Button>
+                          )}
+                          {!isPreview && (
+                            <Button
+                              variant="contained"
+                              sx={{
+                                ...uploadButtonStyle,
+                                maxWidth: {
+                                  xs: "100%",
+                                  sm: "48%",
+                                  md: "148px",
+                                },
+                              }}
+                              onClick={() => inputRef?.current?.click()}
+                            >
+                              <Typography variant="h6" sx={buttonTypoStyle}>
+                                {"Upload Image"}
+                              </Typography>
+                            </Button>
+                          )}
                         </Box>
                         {showPopper && (
                           <Box
@@ -476,7 +493,7 @@ const EventForm = ({
                 alignItems="center"
                 gap={2}
               >
-                {!is_public && (
+                {!isPreview && (
                   <Button
                     loading={isLoading}
                     disabled={isLoading}

@@ -1,15 +1,17 @@
 import * as Yup from "yup";
 import dayjs from "dayjs";
 
-export const eventValidationSchema = (isSchoolRole) =>
+export const eventValidationSchema = (isSchoolRole, is_public) =>
   Yup.object().shape({
     event_name: Yup.string()
       .required("Event Name is required")
       .max(50, "Maximum 50 characters allowed"),
 
-    event_type: Yup.string()
-      .required("Event Type is required")
-      .max(30, "Maximum 30 characters allowed"),
+    ...(!is_public && {
+      event_type: Yup.string()
+        .required("Event Type is required")
+        .max(30, "Maximum 30 characters allowed"),
+    }),
 
     ...(!isSchoolRole && {
       school_email: Yup.string().required("School email is required"),

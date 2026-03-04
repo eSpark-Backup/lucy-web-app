@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Box, CircularProgress, Paper, Stack } from "@mui/material";
-import { toast } from "react-toastify";
 import CreatedEvents from "./calendar/CreatedEvents";
 import EventCalandar from "./calendar/EventCalandar";
 import FormHeader from "../forms/FormHeader";
@@ -13,6 +12,12 @@ import { useSelector } from "react-redux";
 function Calendar() {
   const { CalendarScreenStyle } = componentStyles || {};
   const { mainBoxStyle, paperStyle } = CalendarScreenStyle || {};
+  const { user } = useSelector((state) => state?.auth);
+  const is_trust = user?.profile?.organization?.is_trust;
+  const is_trust_school = user?.school?.organization?.is_trust;
+
+  const role = user?.role;
+
   const formatDuration = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
@@ -27,18 +32,17 @@ function Calendar() {
   };
   const [calendarEvents, setCalendarEvents] = useState([]);
 
-  const { data, isLoading, isSuccess, isError, error } = useGetMyEventsQuery(
+  const { data: eventsData, isLoading: eventsLoading } = useGetMyEventsQuery(
     undefined,
     {
+      skip: role !== "school",
       refetchOnFocus: true,
       refetchOnMountOrArgChange: true,
     },
   );
 
-  const { user } = useSelector((state) => state?.auth);
-  const is_trust = user?.profile?.organization?.is_trust;
-  const { data: allSchools } = useGetAllSchoolsQuery(undefined, {
-    skip: !is_trust,
+  const { data: allSchools, isLoading } = useGetAllSchoolsQuery(undefined, {
+    skip: role === "school",
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
@@ -77,45 +81,45 @@ function Calendar() {
         duration: formatDuration(item.time_span),
         attendees: [],
         image: item?.images?.[0],
-        school_name: schoolName,
+        school_name: item?.school?.name || schoolName,
         is_public: item?.is_public,
       };
     });
 
   useEffect(() => {
-    if (is_trust) {
+    if (role !== "school") {
       let mergedEvents = [];
 
       if (allSchools?.data?.length) {
-        mergedEvents = allSchools.data.flatMap((school) =>
+        mergedEvents = allSchools?.data?.flatMap((school) =>
           mapEventsToCalendar(school?.events || [], school?.name),
         );
       }
-
-      const dummyMapped = mapEventsToCalendar(data?.public_events);
-
-      setCalendarEvents([...mergedEvents, ...dummyMapped]);
+      setCalendarEvents([...mergedEvents]);
     } else {
-      let realEvents = [];
-
-      if (isSuccess && Array.isArray(data?.user_events)) {
-        realEvents = mapEventsToCalendar(data?.user_events);
+      let mergedEvents = [];
+      const combined = [
+        ...(eventsData?.public_events || []),
+        ...(eventsData?.user_events || []),
+      ];
+      if (combined.length) {
+        mergedEvents = mapEventsToCalendar(combined);
       }
-
-      const dummyMapped = mapEventsToCalendar(data?.public_events);
-
-      setCalendarEvents([...realEvents, ...dummyMapped]);
-
-      if (isError) {
-        toast.error(error?.data?.message || "Something went wrong");
-      }
+      setCalendarEvents([...mergedEvents]);
     }
-  }, [is_trust, allSchools, data, isSuccess, isError, error]);
+  }, [
+    is_trust,
+    is_trust_school,
+    allSchools,
+    role,
+    eventsData?.public_events,
+    eventsData?.user_events,
+  ]);
 
   return (
     <>
       <FormHeader title={"Calendar"} />
-      {isLoading ? (
+      {isLoading || eventsLoading ? (
         <Stack justifyContent="center" alignItems="center" minHeight={"100px"}>
           <CircularProgress sx={{ color: "#194FFF" }} />
         </Stack>
@@ -123,9 +127,12 @@ function Calendar() {
         <>
           <Box className="calendar-grid" sx={mainBoxStyle}>
             {/* Created Events Section */}
-            <Box flex={{ xs: "0 0 auto" }}>
-              <CreatedEvents events={calendarEvents} />
-            </Box>
+            {((is_trust_school === true && role === "school") ||
+              (is_trust === false && role === "user")) && (
+              <Box flex={{ xs: "0 0 auto" }}>
+                <CreatedEvents events={calendarEvents} />
+              </Box>
+            )}
 
             {/* Calendar Section */}
             <Box flex={1} width="100%">

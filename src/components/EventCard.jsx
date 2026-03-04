@@ -21,7 +21,10 @@ const EventCard = ({ title, duration, id, is_public = false }) => {
     if (click === "edit") {
       navigate(`/dashboard/calendar/events/${id}`);
     } else {
-      navigate(`/dashboard/calendar/events/${id}`);
+      navigate({
+        pathname: `/dashboard/calendar/events/${id}`,
+        search: "?mode=preview",
+      });
     }
   };
 
@@ -53,7 +56,6 @@ const EventCard = ({ title, duration, id, is_public = false }) => {
         <Box display={"flex"}>
           <IconButton
             size="small"
-            disabled={is_public}
             onClick={() => handleClick(id, "edit")}
             sx={editIconStyle}
           >

@@ -95,8 +95,7 @@ export default function CreatedEvents({ events = [] }) {
           </Typography>
         )}
       </Stack>
-
-      {events?.length > 4 && (
+      {events?.length > 0 && (
         <Box
           mt={publicEvents?.length > 0 ? 3 : 0}
           mb={3}
