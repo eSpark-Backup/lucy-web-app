@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import {
   Navbar,
   HeroSection,
@@ -11,42 +11,36 @@ import {
   About,
   WaitlistModal,
   TutotialSection,
+  WhoIsThisFor,
+  TestimonialSection,
+  BuiltByExperts,
+  FlexiblePlans,
 } from "../../components";
 import { Element } from "react-scroll";
 
 const LandingPage = () => {
   return (
-    <>
+    <Box>
       <Navbar />
-      <Element name="home">
-        <HeroSection />
+      <HeroSection />
+      <WhoIsThisFor />
+      <Element name="howItWorks">
+        <TutotialSection />
       </Element>
-      <Container maxWidth="xl">
-        <LogoSlider />
-        <Element name="tutorial">
-          <TutotialSection />
-        </Element>
-        <Element name="edu">
-          <SolutionSection />
-        </Element>
-      </Container>
-      {/* <Element name="wait">
-        <WaitList />
-      </Element> */}
-      <Element name="services">
-        <Services />
+      <Element name="features">
+        <Box sx={{ boxShadow: "0 0 8px rgba(0,0,0,0.06)" }}>
+          <LogoSlider />
+        </Box>
       </Element>
-      <Container maxWidth="xl">
-        <Element name="about">
-          <About />
-        </Element>
-        {/* <Element name="testimonials">
-          <Reviews />
-        </Element> */}
-      </Container>
+      <Element name="testimonials">
+        <TestimonialSection />
+      </Element>
+      <Element name="pricing">
+        <FlexiblePlans />
+      </Element>
+      <BuiltByExperts />
       <Footer />
-      <WaitlistModal />
-    </>
+    </Box>
   );
 };
 

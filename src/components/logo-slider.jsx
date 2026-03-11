@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -41,9 +41,24 @@ const LogoSlider = () => {
     guardian,
   ];
   return (
-    <Box sx={{ mb: "30px", mt: "20px" }}>
+    <Box
+      sx={{
+        py: { xs: 3, lg: 2 },
+        width: "85%",
+        mx: "auto",
+        maxWidth: { xs: "820px", lg: "930px" },
+      }}
+    >
       <Typography
-        sx={{ color: "#2B2C2C", fontSize: "25px", textAlign: "center" }}
+        variant="h4"
+        sx={{
+          fontSize: { xs: "18px", lg: "23px" },
+          wordBreak: "break-word",
+          color: "#2a4483",
+          fontWeight: "bold",
+          textAlign: "center",
+          mb: 5,
+        }}
       >
         Get your school featured in top publications.
       </Typography>
@@ -52,22 +67,24 @@ const LogoSlider = () => {
         loop={true}
         slidesPerView={"auto"}
         spaceBetween={30}
+        speed={1500} 
         autoplay={{
-          delay: 2500,
+          delay: 0, 
           disableOnInteraction: false,
         }}
         style={{
-          marginTop: "30px",
+          marginTop: "50px",
           paddingLeft: "5vw",
           paddingRight: "5vw",
           boxSizing: "border-box",
+          cursor: "pointer",
         }}
       >
         {slides.map((src, index) => (
           <SwiperSlide
             key={index}
             style={{
-              width: "120px", // fixed width to allow peeking
+              width: "120px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

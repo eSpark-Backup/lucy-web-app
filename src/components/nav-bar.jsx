@@ -1,365 +1,261 @@
-import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Container,
-} from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { logo } from "../assets";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-scroll";
+import { logo, menu } from "../assets";
+import { Button, Container, Drawer } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
-const Navbar = () => {
-  const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const [anchorEl, setAnchorEl] = useState(null);
+export default function MenuAppBar() {
+  const [open, setOpen] = useState(false);
+  const MotionIconButton = motion(IconButton);
 
-  const [activeItem, setActiveItem] = useState("home");
+  const navLinks = [
+    { label: "Features", section: "features" },
+    { label: "How it Works", section: "howItWorks" },
+    { label: "Testimonials", section: "testimonials" },
+    { label: "Pricing", section: "pricing" },
+    { label: "Login", path: "/auth/login" },
+  ];
+  const toggleDrawer = () => setOpen(!open);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const lineStyle = {
+    width: "24px",
+    height: "2px",
+    background: "#2a4483",
+    borderRadius: "2px",
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
   return (
-    <Box
-      sx={{
-        borderBottom: "0.3px solid #726E6E",
-        backgroundColor: "#FFF",
-      }}
-    >
-      <Container maxWidth="xl">
-        <AppBar
-          position="static"
-          sx={{
-            color: "black",
-            boxShadow: "none",
+    <Box sx={{ flexGrow: 1 }}>
+      <Box
+        sx={{
+          backgroundColor: "#2a4483",
+          minHeight: "20px",
+        }}
+      />
 
-            backgroundColor: "inherit",
-            py: "10px",
-          }}
-        >
-          <Toolbar sx={{ justifyContent: "space-between" }}>
-            <img
-              style={{ width: "213px", height: "41px" }}
-              src={logo}
-              alt="Logo"
-            />
-            {!isMobile && (
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{
+          width: "100%",
+          backgroundColor: "transparent",
+          border: "1px solid #d1d1d1",
+          padding: { xs: "6px 0", md: "8px 0" },
+        }}
+      >
+        <Container sx={{ maxWidth: { xs: "920px", lg: "1170px" } }}>
+          <Toolbar sx={{ padding: "0 !important" }}>
+            {/* LOGO */}
+            <Box sx={{ flexGrow: 1 }}>
               <Box
                 sx={{
+                  width: "auto",
+                  height: { xs: "24px", sm: "26px", lg: "32px" },
+                }}
+                component={"img"}
+                src={logo}
+                alt="Logo"
+              />
+            </Box>
+
+            {/* NAV LINKS */}
+            <Box
+              display={{ xs: "none", md: "flex" }}
+              alignItems="center"
+              gap={{ xs: 2.8, sm: 2.5, lg: 6 }}
+            >
+              {navLinks?.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.15 }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "12px", md: "13.5px", lg: "16px" },
+                      textWrap: "nowrap",
+                      fontWeight: "500",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "#2a4483",
+                      },
+                    }}
+                  >
+                    {item.path ? (
+                      <RouterLink
+                        to={item.path}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {item.label}
+                      </RouterLink>
+                    ) : (
+                      <ScrollLink
+                        to={item.section}
+                        smooth
+                        duration={800}
+                        offset={-80}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {item.label}
+                      </ScrollLink>
+                    )}
+                  </Typography>
+                </motion.div>
+              ))}
+
+              {/* BOOK DEMO BUTTON */}
+              <motion.div
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  variant="contained"
+                  disableElevation
+                  sx={{
+                    backgroundColor: "#2a4483",
+                    color: "#fff",
+                    fontSize: { xs: "14px", lg: "16px" },
+                    fontWeight: "700",
+                    borderRadius: "8px",
+                    px: 2,
+                    py: 1.8,
+                  }}
+                >
+                  Book a Demo
+                </Button>
+              </motion.div>
+            </Box>
+
+            {/* MOBILE MENU */}
+            <IconButton
+              onClick={toggleDrawer}
+              disableRipple
+              sx={{ display: { xs: "flex", md: "none" } }}
+            >
+              <Box
+                sx={{
+                  width: 26,
+                  height: 16,
                   display: "flex",
-                  justifyContent: "center",
-                  gap: "21px",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
                 }}
               >
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "home" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="home"
-                    smooth={true}
-                    onClick={() => setActiveItem("home")}
-                  >
-                    Home
-                  </Link>
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "tutorial" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="tutorial"
-                    smooth={true}
-                    onClick={() => setActiveItem("tutorial")}
-                  >
-                    Tutorial
-                  </Link>
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "edu" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="edu"
-                    smooth={true}
-                    onClick={() => setActiveItem("edu")}
-                  >
-                    EduPulse GPT
-                  </Link>
-                </Typography>
-                {/* <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "wait" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="wait"
-                    smooth={true}
-                    offset={-70}
-                    onClick={() => setActiveItem("wait")}
-                  >
-                    Waitlist
-                  </Link>
-                </Typography> */}
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "services" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="services"
-                    smooth={true}
-                    onClick={() => setActiveItem("services")}
-                  >
-                    Services
-                  </Link>
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color: activeItem === "about" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="about"
-                    smooth={true}
-                    onClick={() => setActiveItem("about")}
-                  >
-                    About
-                  </Link>
-                </Typography>
-                {/* <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    color:
-                      activeItem === "testimonials" ? "#3A3535" : "#94969E",
-                    cursor: "pointer",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  <Link
-                    to="testimonials"
-                    smooth={true}
-                    onClick={() => setActiveItem("testimonials")}
-                  >
-                    Testimonials
-                  </Link>
-                </Typography> */}
+                <motion.span
+                  style={lineStyle}
+                  animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+
+                <motion.span
+                  style={lineStyle}
+                  animate={open ? { opacity: 0 } : { opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+
+                <motion.span
+                  style={lineStyle}
+                  animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
               </Box>
-            )}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              {isMobile ? (
-                <>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    color="inherit"
-                    aria-label="menu"
-                    onClick={handleMenuOpen}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                  >
-                    <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="home"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("home");
-                          handleMenuClose();
-                        }}
-                      >
-                        Home
-                      </Link>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="tutorial"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("tutorial");
-                          handleMenuClose();
-                        }}
-                      >
-                        Tutorial
-                      </Link>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="edu"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("edu");
-                          handleMenuClose();
-                        }}
-                      >
-                        EduPulse GPT
-                      </Link>
-                    </MenuItem>
-                    {/* <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="wait"
-                        smooth={true}
-                        offset={-70}
-                        onClick={() => {
-                          setActiveItem("wait");
-                          handleMenuClose();
-                        }}
-                      >
-                        Waitlist
-                      </Link>
-                    </MenuItem> */}
-                    <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="services"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("services");
-                          handleMenuClose();
-                        }}
-                      >
-                        Services
-                      </Link>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="about"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("about");
-                          handleMenuClose();
-                        }}
-                      >
-                        About
-                      </Link>
-                    </MenuItem>
-                    {/* <MenuItem
-                      onClick={handleMenuClose}
-                      sx={{ fontFamily: '"Aoboshi One", serif' }}
-                    >
-                      <Link
-                        to="testimonials"
-                        smooth={true}
-                        onClick={() => {
-                          setActiveItem("testimonials");
-                          handleMenuClose();
-                        }}
-                      >
-                        Testimonials
-                      </Link>
-                    </MenuItem> */}
-                    <MenuItem
-                      onClick={() => {
-                        window.open("https://app.edupulsegpt.com/sub-plan");
-                        handleMenuClose();
-                      }}
-                    >
-                      <Button
-                        variant="primary"
-                        disableRipple
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: "400",
-                          fontFamily: '"Aoboshi One", serif',
-                        }}
-                      >
-                        Signup
-                      </Button>
-                    </MenuItem>
-                  </Menu>
-                </>
-              ) : (
-                <Button
-                  onClick={() =>
-                    window.open("https://app.edupulsegpt.com/sub-plan")
-                  }
-                  variant="primary"
-                  disableRipple
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    fontFamily: '"Aoboshi One", serif',
-                  }}
-                >
-                  Signup
-                </Button>
-              )}
-            </Box>
+            </IconButton>
           </Toolbar>
-        </AppBar>
-      </Container>
+        </Container>
+      </AppBar>
+
+      <Drawer
+        elevation={0}
+        anchor="left"
+        open={open}
+        onClose={toggleDrawer}
+        BackdropProps={{
+          sx: {
+            backdropFilter: "blur(0)",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            width: 260,
+            p: 3,
+          }}
+        >
+          {navLinks?.map((item, index) => (
+            <motion.div
+              key={item.label}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.15 }}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Typography
+                sx={{
+                  py: 1.5,
+                  width: "fit-content",
+                  fontSize: "16px",
+                  fontWeight: 500,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "#2a4483",
+                  },
+                }}
+              >
+                {item?.path ? (
+                  <RouterLink
+                    to={item.path}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    onClick={toggleDrawer}
+                  >
+                    {item.label}
+                  </RouterLink>
+                ) : (
+                  <ScrollLink
+                    to={item.section}
+                    smooth
+                    duration={800}
+                    offset={-80}
+                    onClick={toggleDrawer}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {item.label}
+                  </ScrollLink>
+                )}
+              </Typography>
+            </motion.div>
+          ))}
+
+          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              variant="contained"
+              disableElevation
+              sx={{
+                mt: 2,
+                backgroundColor: "#2a4483",
+                color: "#fff",
+                fontSize: { xs: "14px", lg: "16px" },
+                fontWeight: "700",
+                borderRadius: "8px",
+                px: 2,
+                py: 1.8,
+              }}
+            >
+              Book a Demo
+            </Button>
+          </motion.div>
+        </Box>
+      </Drawer>
     </Box>
   );
-};
-
-export default Navbar;
+}
