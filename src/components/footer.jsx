@@ -3,20 +3,10 @@ import {
   Container,
   Divider,
   Grid,
-  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
-import {
-  footerLogo,
-  facebook,
-  instagram,
-  google,
-  twitter,
-  linkedin,
-  phone,
-  email,
-} from "../assets";
+import { footerLogo } from "../assets";
 import { Link } from "react-scroll";
 
 export default function Footer() {
@@ -27,10 +17,10 @@ export default function Footer() {
         bgcolor: "#282828",
         boxShadow: "0px 26.6px 53.2px 0px #0000001A",
         color: "#b5b5b5",
-        pt: "83px",
+        pt: "40px",
       }}
     >
-      <Container maxWidth="xl">
+      <Container sx={{ maxWidth: { xs: "1200px", lg: "1300px" } }}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, lg: 5 }}>
             <Stack spacing={2}>
@@ -38,13 +28,13 @@ export default function Footer() {
                 component="img"
                 src={footerLogo}
                 alt="EduPulse GPT logo"
-                sx={{ width: 273, height: 60 }}
+                sx={{ width: { xs: 180, sm: 220, lg: 240 }, height: "auto" }}
               />
 
               <Typography
                 sx={{
                   width: "80%",
-                  fontSize: "19px",
+                  fontSize: { xs: "14px", sm: "16px", lg: "18px" },
                   fontWeight: 400,
                   color: "#FFF",
                 }}
@@ -59,70 +49,23 @@ export default function Footer() {
                 your own risk. The developer is not liable for any consequences
                 arising from your use of the app.
               </Typography>
-              {/* <Stack direction="row" spacing={1}>
-                {[
-                  { icon: <img src={facebook} alt="facebook" />, href: "#" },
-                  { icon: <img src={instagram} alt="instagram" />, href: "#" },
-                  { icon: <img src={google} alt="google" />, href: "#" },
-                  { icon: <img src={twitter} alt="twitter" />, href: "#" },
-                  { icon: <img src={linkedin} alt="linkedin" />, href: "#" },
-                ].map(({ icon, href }, idx) => (
-                  <IconButton
-                    key={idx}
-                    href={href}
-                    target="_blank"
-                    sx={{
-                      p: 0.75,
-                      color: "#d0d0d0",
-                      "&:hover": {
-                        color: "#fff",
-                        bgcolor: "rgba(255,255,255,0.08)",
-                      },
-                    }}
-                  >
-                    {icon}
-                  </IconButton>
-                ))}
-              </Stack> */}
             </Stack>
-          </Grid>
-
-          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
-            <Section
-              heading="Company"
-              links={[
-                { label: "About us", route: "about" },
-                { label: "Services", route: "services" },
-              ]}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
-            <Section
-              heading="Platform"
-              links={[
-                // { label: "Wait list", route: "wait" },
-                { label: "Solutions", route: "edu" },
-              ]}
-            />
           </Grid>
 
           <Grid size={{ xs: 12, md: 4, lg: 3 }}>
             <Typography
-              sx={{ color: "#FFF", fontSize: "21px", fontWeight: 600, mb: 2 }}
+              sx={{
+                color: "#FFF",
+                fontSize: { xs: "18px", sm: "23px", lg: "27px" },
+                fontWeight: 600,
+                mb: 1,
+              }}
             >
               Contact
             </Typography>
 
             <Stack spacing={1.5}>
-              {/* <ContactRow
-                icon={<img src={phone} alt="linkedin" />}
-                text="+123 456 7890"
-              /> */}
-              <ContactRow
-                icon={<img src={email} alt="linkedin" />}
-                text="info@edupulsegpt.com"
-              />
+              <ContactRow text="info@edupulsegpt.com" />
             </Stack>
           </Grid>
         </Grid>
@@ -139,28 +82,13 @@ export default function Footer() {
           <Typography
             sx={{
               color: "#EBEBEB",
-              fontSize: "18px",
+              fontSize: { xs: "14px", sm: "16px", lg: "18px" },
               fontWeight: 400,
               textAlign: "center",
             }}
           >
             © 2025 EduPulse GPT. All rights reserved.
           </Typography>
-
-          {/* <Stack direction="row" flexWrap="wrap" spacing={3}>
-            {["Privacy Policy", "Terms of Use", "Legal", "Site Map"].map(
-              (label) => (
-                <Link
-                  key={label}
-                  href="#"
-                  underline="none"
-                  sx={{ color: "#EBEBEB", fontSize: "18px", fontWeight: 400 }}
-                >
-                  {label}
-                </Link>
-              )
-            )}
-          </Stack> */}
         </Stack>
       </Container>
     </Box>
@@ -191,7 +119,13 @@ function ContactRow({ icon, text }) {
   return (
     <Stack direction="row" spacing={1.5} alignItems="center">
       {icon}
-      <Typography sx={{ color: "#EBEBEB", fontSize: "21px", fontWeight: 400 }}>
+      <Typography
+        sx={{
+          color: "#EBEBEB",
+          fontSize: { xs: "14px", sm: "16px", lg: "18px" },
+          fontWeight: 400,
+        }}
+      >
         {text}
       </Typography>
     </Stack>

@@ -18,7 +18,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "'Gilroy', sans-serif",
+    fontFamily: "'Poppins'",
     gradientText: {
       background: "linear-gradient(180deg, #4D76FF 0%, #1A4FFF 100%)",
       WebkitBackgroundClip: "text",

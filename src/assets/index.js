@@ -45,12 +45,26 @@ import service6 from "./images/service6.png";
 import about from "./images/about.png";
 import modalBg from "./images/modal-bg-image.png";
 import tutorialThumbnail from "./images/tutorial-thumbnail.png";
+import bg from "./images/bg.png";
+import savesTeachersHours from "./images/01.png";
+import boostParentalEngagement from "./images/02.png";
+import buildYourSchoolReputation from "./images/03.png";
 
 import bannerVideo from "./video/bannerVideo.mp4";
 import tutorialVideo from "./video/tutorial.mp4";
-
+import pressRelease from "./images/press-release.png";
+import socialMediaPosts from "./images/social-media-posts.png";
+import EngagingNewsletters from "./images/engaging-newsletters.png";
+import testimonialImg1 from "./images/testimonial-img-1.png";
+import testimonialImg2 from "./images/testimonial-img-2.png";
+import menu from "./images/menu.png";
 
 export {
+  testimonialImg1,
+  testimonialImg2,
+  pressRelease,
+  socialMediaPosts,
+  EngagingNewsletters,
   logo,
   dashed,
   ai,
@@ -99,4 +113,9 @@ export {
   tutorialThumbnail,
   service5,
   service6,
+  bg,
+  savesTeachersHours,
+  boostParentalEngagement,
+  buildYourSchoolReputation,
+  menu,
 };
