@@ -220,7 +220,7 @@ const EventForm = ({
                     >
                       {type === "select" &&
                         (allSchools?.data || [])
-                          ?.filter((opt) => opt?.is_paid)
+                          ?.filter((opt) => opt?.is_paid || opt?.is_trial)
                           ?.map((opt) => (
                             <MenuItem key={opt?.email} value={opt?.email}>
                               {opt?.name}

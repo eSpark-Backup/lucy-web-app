@@ -26,6 +26,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules"; // v10+ modules
 import "swiper/css";
 import "swiper/css/pagination";
+import {
+  useCancelTrialMutation,
+  useStartTrialMutation,
+} from "../services/trial";
 
 dayjs.extend(localizedFormat);
 dayjs.extend(utc);
@@ -36,6 +40,9 @@ export default function RecipeReviewCard({
   handleOpenDeleteModal = () => {},
 }) {
   const [cancelSubscription, { isLoading }] = useCancelSubscriptionMutation();
+  const [startTrial, { isLoading: trialLoading }] = useStartTrialMutation();
+  const [cancelTrial, { isLoading: cancelTrialLoading }] =
+    useCancelTrialMutation();
   const navigate = useNavigate();
 
   /* ---------------- Subscription Logic ---------------- */
@@ -43,8 +50,8 @@ export default function RecipeReviewCard({
   const endDate = school?.subscription_end;
   const subscriptionStatus = school?.organization?.subscription_status;
 
-  const isValidDate = endDate && dayjs(endDate).isValid();
-  const isExpired = isValidDate && dayjs(endDate).isBefore(dayjs());
+  const isValidDate = endDate && dayjs(endDate)?.isValid();
+  const isExpired = isValidDate && dayjs(endDate)?.isBefore(dayjs());
 
   let statusText = "Active";
   let statusColor = "#4caf50";
@@ -104,6 +111,24 @@ export default function RecipeReviewCard({
     } catch (err) {
       toast.error(err?.data?.message || "Cancel failed!");
       console.error(err);
+    }
+  };
+
+  const handleStartTrial = async () => {
+    try {
+      await startTrial(school?.id).unwrap();
+      toast.success("Free trial started");
+    } catch (error) {
+      toast.error(error?.data?.message || "Failed to start trial");
+    }
+  };
+
+  const handleCancelTrial = async () => {
+    try {
+      await cancelTrial(school?.id).unwrap();
+      toast.success("Trial cancelled");
+    } catch (error) {
+      toast.error(error?.data?.message || "Failed to cancel trial");
     }
   };
 
@@ -207,6 +232,19 @@ export default function RecipeReviewCard({
       )}
       {/* ---------------- Subscription Section ---------------- */}
       <Stack spacing={1} p={2} pb={0}>
+        <Typography
+          variant="h5"
+          letterSpacing={0.2}
+          sx={{
+            color: "#202224",
+            opacity: 0.9,
+            fontWeight: 500,
+            fontFamily: "Poppins",
+          }}
+        >
+          {"Subscription Status"}
+        </Typography>
+        <Divider />
         <Stack direction="row" alignItems="center" spacing={0.8}>
           <StatusIcon fontSize="medium" sx={{ color: statusColor }} />
           <Typography
@@ -236,7 +274,7 @@ export default function RecipeReviewCard({
           <Stack py={1}>
             <Button
               color="primary"
-              loading={isLoading}
+              loading={cancelTrialLoading}
               disabled={school?.email === "lucyhood79@gmail.com"}
               onClick={handleCancelPayment}
               sx={{
@@ -256,13 +294,124 @@ export default function RecipeReviewCard({
                 },
               }}
             >
-              {isLoading ? "" : "Cancel Subscription"}
+              {cancelTrialLoading ? "" : "Cancel Subscription"}
             </Button>
           </Stack>
         )}
 
         <Divider />
+        {subscriptionStatus === null &&
+          !school?.is_paid &&
+          school?.trial_started_at === null &&
+          school?.trial_ends_at === null && (
+            <Stack py={1}>
+              <Button
+                color="primary"
+                loading={trialLoading}
+                disabled={school?.email === "lucyhood79@gmail.com"}
+                onClick={handleStartTrial}
+                sx={{
+                  p: 2.3,
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  letterSpacing: 0.8,
+                  color: "#fff",
+                  borderRadius: "8px",
+                  backgroundColor: "#4880FF",
+                  "&:hover": {
+                    backgroundColor: "#3a6edc",
+                  },
+                  "&.Mui-disabled": {
+                    color: "#fff",
+                    backgroundColor: "#999",
+                  },
+                }}
+              >
+                {trialLoading ? "" : "Start Free Trial"}
+              </Button>
+            </Stack>
+          )}
       </Stack>
+
+      {/* ---------------- Trial Section ---------------- */}
+      {school?.is_trial && school?.trial_started_at !== null && school?.trial_ends_at !== null && (
+        <Stack spacing={1} py={1} px={2} pt={2}>
+          <Typography
+            variant="h5"
+            letterSpacing={0.2}
+            sx={{
+              color: "#202224",
+              opacity: 0.9,
+              fontWeight: 500,
+              fontFamily: "Poppins",
+            }}
+          >
+            {"Trial Status"}
+          </Typography>
+          <Divider />
+          <Typography
+            fontWeight={500}
+            sx={{ fontSize: "13px", color: "#808183", letterSpacing: 0.5 }}
+          >
+            {"trial started : "}
+            <Typography
+              component="span"
+              fontWeight={600}
+              sx={{ fontSize: "14px", color: "#202224", opacity: "85%" }}
+            >
+              {school?.trial_started_at
+                ? dayjs(school?.trial_started_at).format("MMMM DD, YYYY")
+                : "--"}
+            </Typography>
+          </Typography>
+          <Divider />
+          <Typography
+            fontWeight={500}
+            sx={{ fontSize: "13px", color: "#808183", letterSpacing: 0.5 }}
+          >
+            {"trial ends : "}
+            <Typography
+              component="span"
+              fontWeight={600}
+              sx={{ fontSize: "14px", color: "#202224", opacity: "85%" }}
+            >
+              {school?.trial_ends_at
+                ? dayjs(school?.trial_ends_at).format("MMMM DD, YYYY")
+                : "--"}
+            </Typography>
+          </Typography>
+          <Divider />
+          {school?.trial_started_at !== null &&
+            school?.trial_ends_at !== null && (
+              <Stack py={1}>
+                <Button
+                  color="primary"
+                  loading={cancelTrialLoading}
+                  disabled={school?.email === "lucyhood79@gmail.com"}
+                  onClick={handleCancelTrial}
+                  sx={{
+                    p: 2.3,
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    letterSpacing: 0.8,
+                    color: "#fff",
+                    borderRadius: "8px",
+                    backgroundColor: "#4880FF",
+                    "&:hover": {
+                      backgroundColor: "#3a6edc",
+                    },
+                    "&.Mui-disabled": {
+                      color: "#fff",
+                      backgroundColor: "#999",
+                    },
+                  }}
+                >
+                  {cancelTrialLoading ? "" : "Cancel Trial"}
+                </Button>
+              </Stack>
+            )}
+        </Stack>
+      )}
 
       {/* ---------------- Description ---------------- */}
       <CardContent>

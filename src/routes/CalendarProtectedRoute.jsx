@@ -7,10 +7,10 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const CalendarProtectedRoute = ({ children }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state?.auth);
 
   const isSchoolRole = user?.role === "school";
@@ -20,11 +20,15 @@ const CalendarProtectedRoute = ({ children }) => {
 
   const { data: allSchools, isLoading: schoolsLoading } = useGetAllSchoolsQuery(
     undefined,
-    { skip: isSchoolRole }
+    { skip: isSchoolRole },
   );
 
   const isCalendarVisible =
     allSchools?.data?.some((school) => school?.is_paid) || false;
+
+  const isTrial = allSchools?.data?.length
+    ? allSchools.data.some((school) => school?.is_trial)
+    : undefined;
 
   if (schoolsLoading) return <LinearProgress />;
 
@@ -34,34 +38,36 @@ const CalendarProtectedRoute = ({ children }) => {
 
   // ---- School role ----
   if (isSchoolRole) {
-    if (isTrustForSchool && !isPaid) {
+    if (isTrustForSchool && !isPaid && !isTrial) {
       title = "Pay to unlock Calendar";
       description =
-        "Please contact your trust to complete the payment first. Once the payment is made, the Calendar will be unlocked and available on the Calendar page.";
+        "Please contact your trust to complete the payment or start a 24-hour free trial. Once activated, the Calendar will be unlocked and available on the Calendar page.";
     } else if (isTrustForSchool && isPaid) {
+      return children;
+    } else {
       return children;
     }
   }
 
   // ---- Trust role ----
   if (!isSchoolRole && isTrust) {
-    if (isCalendarVisible) {
+    if (isCalendarVisible || isTrial !== undefined || isTrial !== null) {
       return children;
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Open the Schools to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
+      "Open Schools to add a school and complete the payment or start a 24-hour free trial to unlock the Calendar.";
     showOverviewButton = true;
   }
 
   // ---- Non-trust role ----
   if (!isSchoolRole && !isTrust) {
-    if (isCalendarVisible) {
+    if (isCalendarVisible || isTrial !== undefined || isTrial !== null) {
       return children;
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Open the Schools to add a school and complete payment. Once done, the Calendar will be unlocked and available.";
+      "Open Schools to add a school and complete the payment or start a 24-hour free trial to unlock the Calendar.";
     showOverviewButton = true;
   }
 
