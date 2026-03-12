@@ -51,7 +51,7 @@ const CalendarProtectedRoute = ({ children }) => {
 
   // ---- Trust role ----
   if (!isSchoolRole && isTrust) {
-    if (isCalendarVisible || isTrial !== undefined || isTrial !== null) {
+    if (isCalendarVisible || isTrial) {
       return children;
     }
     title = "Add school & pay to unlock Calendar";
@@ -62,7 +62,7 @@ const CalendarProtectedRoute = ({ children }) => {
 
   // ---- Non-trust role ----
   if (!isSchoolRole && !isTrust) {
-    if (isCalendarVisible || isTrial !== undefined || isTrial !== null) {
+    if (isCalendarVisible || isTrial) {
       return children;
     }
     title = "Add school & pay to unlock Calendar";

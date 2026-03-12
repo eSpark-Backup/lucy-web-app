@@ -69,7 +69,7 @@ const EventForm = ({
   const cols = isXs ? 2 : 3;
 
   const defaultSchoolEmail =
-    allSchools?.data?.find((opt) => opt?.is_paid)?.email || "";
+    allSchools?.data?.find((opt) => opt?.is_paid || opt?.is_trial)?.email || "";
   const [selectedSchoolEmail, setSelectedSchoolEmail] =
     useState(defaultSchoolEmail);
 
