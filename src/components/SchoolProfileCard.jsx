@@ -138,6 +138,7 @@ export default function RecipeReviewCard({
     <Card
       sx={{
         width: "100%",
+        height: "100%",
         maxWidth: { xs: "100%", sm: 325 },
         backgroundColor: "rgba(255, 255, 255, 0.48)",
         boxShadow: "5px 5px 45px 0px rgba(0, 0, 0, 0.05)",
@@ -334,84 +335,86 @@ export default function RecipeReviewCard({
       </Stack>
 
       {/* ---------------- Trial Section ---------------- */}
-      {school?.is_trial && school?.trial_started_at !== null && school?.trial_ends_at !== null && (
-        <Stack spacing={1} py={1} px={2} pt={2}>
-          <Typography
-            variant="h5"
-            letterSpacing={0.2}
-            sx={{
-              color: "#202224",
-              opacity: 0.9,
-              fontWeight: 500,
-              fontFamily: "Poppins",
-            }}
-          >
-            {"Trial Status"}
-          </Typography>
-          <Divider />
-          <Typography
-            fontWeight={500}
-            sx={{ fontSize: "13px", color: "#808183", letterSpacing: 0.5 }}
-          >
-            {"trial started : "}
+      {school?.is_trial &&
+        school?.trial_started_at !== null &&
+        school?.trial_ends_at !== null && (
+          <Stack spacing={1} py={1} px={2} pt={2}>
             <Typography
-              component="span"
-              fontWeight={600}
-              sx={{ fontSize: "14px", color: "#202224", opacity: "85%" }}
+              variant="h5"
+              letterSpacing={0.2}
+              sx={{
+                color: "#202224",
+                opacity: 0.9,
+                fontWeight: 500,
+                fontFamily: "Poppins",
+              }}
             >
-              {school?.trial_started_at
-                ? dayjs(school?.trial_started_at).format("MMMM DD, YYYY")
-                : "--"}
+              {"Trial Status"}
             </Typography>
-          </Typography>
-          <Divider />
-          <Typography
-            fontWeight={500}
-            sx={{ fontSize: "13px", color: "#808183", letterSpacing: 0.5 }}
-          >
-            {"trial ends : "}
+            <Divider />
             <Typography
-              component="span"
-              fontWeight={600}
-              sx={{ fontSize: "14px", color: "#202224", opacity: "85%" }}
+              fontWeight={500}
+              sx={{ fontSize: "13px", color: "#808183", letterSpacing: 0.5 }}
             >
-              {school?.trial_ends_at
-                ? dayjs(school?.trial_ends_at).format("MMMM DD, YYYY")
-                : "--"}
+              {"trial started : "}
+              <Typography
+                component="span"
+                fontWeight={600}
+                sx={{ fontSize: "14px", color: "#202224", opacity: "85%" }}
+              >
+                {school?.trial_started_at
+                  ? dayjs(school?.trial_started_at).format("MMMM DD, YYYY")
+                  : "--"}
+              </Typography>
             </Typography>
-          </Typography>
-          <Divider />
-          {school?.trial_started_at !== null &&
-            school?.trial_ends_at !== null && (
-              <Stack py={1}>
-                <Button
-                  color="primary"
-                  loading={cancelTrialLoading}
-                  disabled={school?.email === "lucyhood79@gmail.com"}
-                  onClick={handleCancelTrial}
-                  sx={{
-                    p: 2.3,
-                    fontSize: "14px",
-                    fontWeight: 500,
-                    letterSpacing: 0.8,
-                    color: "#fff",
-                    borderRadius: "8px",
-                    backgroundColor: "#4880FF",
-                    "&:hover": {
-                      backgroundColor: "#3a6edc",
-                    },
-                    "&.Mui-disabled": {
+            <Divider />
+            <Typography
+              fontWeight={500}
+              sx={{ fontSize: "13px", color: "#808183", letterSpacing: 0.5 }}
+            >
+              {"trial ends : "}
+              <Typography
+                component="span"
+                fontWeight={600}
+                sx={{ fontSize: "14px", color: "#202224", opacity: "85%" }}
+              >
+                {school?.trial_ends_at
+                  ? dayjs(school?.trial_ends_at).format("MMMM DD, YYYY")
+                  : "--"}
+              </Typography>
+            </Typography>
+            <Divider />
+            {school?.trial_started_at !== null &&
+              school?.trial_ends_at !== null && (
+                <Stack py={1}>
+                  <Button
+                    color="primary"
+                    loading={cancelTrialLoading}
+                    disabled={school?.email === "lucyhood79@gmail.com"}
+                    onClick={handleCancelTrial}
+                    sx={{
+                      p: 2.3,
+                      fontSize: "14px",
+                      fontWeight: 500,
+                      letterSpacing: 0.8,
                       color: "#fff",
-                      backgroundColor: "#999",
-                    },
-                  }}
-                >
-                  {cancelTrialLoading ? "" : "Cancel Trial"}
-                </Button>
-              </Stack>
-            )}
-        </Stack>
-      )}
+                      borderRadius: "8px",
+                      backgroundColor: "#4880FF",
+                      "&:hover": {
+                        backgroundColor: "#3a6edc",
+                      },
+                      "&.Mui-disabled": {
+                        color: "#fff",
+                        backgroundColor: "#999",
+                      },
+                    }}
+                  >
+                    {cancelTrialLoading ? "" : "Cancel Trial"}
+                  </Button>
+                </Stack>
+              )}
+          </Stack>
+        )}
 
       {/* ---------------- Description ---------------- */}
       <CardContent>

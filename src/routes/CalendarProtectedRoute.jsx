@@ -30,6 +30,17 @@ const CalendarProtectedRoute = ({ children }) => {
     ? allSchools.data.some((school) => school?.is_trial)
     : undefined;
 
+  const hasTrialStarted = allSchools?.data?.some(
+    (school) => school?.trial_started_at,
+  );
+
+  const isTrialForSchool =
+    user?.school?.is_trial !== undefined ? user?.school?.is_trial : undefined;
+  const isTrialStartedForSchool =
+    user?.school?.trial_started_at !== undefined
+      ? user?.school?.trial_started_at
+      : undefined;
+
   if (schoolsLoading) return <LinearProgress />;
 
   let title = "";
@@ -38,10 +49,12 @@ const CalendarProtectedRoute = ({ children }) => {
 
   // ---- School role ----
   if (isSchoolRole) {
-    if (isTrustForSchool && !isPaid && !isTrial) {
+    if (isTrustForSchool && !isPaid && !isTrialForSchool) {
       title = "Pay to unlock Calendar";
       description =
-        "Please contact your trust to complete the payment or start a 24-hour free trial. Once activated, the Calendar will be unlocked and available on the Calendar page.";
+        isTrialForSchool === false && isTrialStartedForSchool
+          ? "Please contact your trust to complete the payment first. Once the payment is made, the Calendar will be unlocked and available on the Calendar page."
+          : "Please contact your trust to complete the payment or start a 24-hour free trial. Once activated, the Calendar will be unlocked and available on the Calendar page.";
     } else if (isTrustForSchool && isPaid) {
       return children;
     } else {
@@ -56,7 +69,9 @@ const CalendarProtectedRoute = ({ children }) => {
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Open Schools to add a school and complete the payment or start a 24-hour free trial to unlock the Calendar.";
+      isTrial === false && hasTrialStarted
+        ? "Open the Schools to add a school and complete payment. Once done, the Calendar will be unlocked and available."
+        : "Open Schools to add a school and complete the payment or start a 24-hour free trial to unlock the Calendar.";
     showOverviewButton = true;
   }
 
@@ -67,7 +82,9 @@ const CalendarProtectedRoute = ({ children }) => {
     }
     title = "Add school & pay to unlock Calendar";
     description =
-      "Open Schools to add a school and complete the payment or start a 24-hour free trial to unlock the Calendar.";
+      isTrial === false && hasTrialStarted
+        ? "Open the Schools to add a school and complete payment. Once done, the Calendar will be unlocked and available."
+        : "Open Schools to add a school and complete the payment or start a 24-hour free trial to unlock the Calendar.";
     showOverviewButton = true;
   }
 
