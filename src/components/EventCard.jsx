@@ -42,11 +42,12 @@ const EventCard = ({ title, duration, id, is_public = false }) => {
             color: "#fff",
             borderRadius: "4px",
             position: "absolute",
+            letterSpacing: 0.5,
             left: 0,
             top: 0,
           }}
         >
-          PUBLIC
+          Awareness Event
         </Box>
       )}
       <Box sx={titleAndButtonBoxStyle}>

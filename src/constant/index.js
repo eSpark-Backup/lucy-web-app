@@ -953,7 +953,7 @@ export const DASHBOARD_DATA = {
 export const CALENDAR_DATA = {
   CREATEDEVENTS_DATA: {
     addEventButtonText: "+ Add New Event",
-    createEventText: "Events",
+    createEventText: "Awareness Events",
     eventsLink: "/dashboard/calendar/events/",
     noEventsText: "No Events Available",
   },

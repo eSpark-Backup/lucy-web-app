@@ -72,7 +72,7 @@ export default function CreatedEvents({ events = [] }) {
                 display: "inline-block",
               }}
             >
-              Public Events
+              Awareness Weeks / Days
             </Typography>
 
             {publicEvents?.map((event) => (
