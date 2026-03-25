@@ -10,7 +10,6 @@ import About from "../components/dashboard/About";
 import NotFound from "../components/NotFound";
 import Profile from "../components/dashboard/Profile";
 import CreateContent from "../components/dashboard/CreateContent";
-import EventList from "../components/dashboard/EventList";
 import EventContents from "../components/dashboard/EventContents";
 import { Navigate } from "react-router-dom";
 import ResetPassword from "../components/auth/ResetPassword";
@@ -25,7 +24,6 @@ import CheckoutResult from "../components/dashboard/CheckoutResult";
 import CalendarProtectedRoute from "./CalendarProtectedRoute";
 import SchoolProtectedRoute from "./SchoolProtectedRoute";
 import TermsAndConditions from "../components/auth/TermsAndConditions";
-import SchoolEventList from "../components/dashboard/SchoolEventList";
 
 const routes = [
   {
@@ -99,22 +97,6 @@ const routes = [
         element: (
           <CalendarProtectedRoute>
             <CreateEvent />
-          </CalendarProtectedRoute>
-        ),
-      },
-      {
-        path: "/dashboard/calendar/event-list",
-        element: (
-          <CalendarProtectedRoute>
-            <EventList />
-          </CalendarProtectedRoute>
-        ),
-      },
-      {
-        path: "/dashboard/calendar/event-list/:id",
-        element: (
-          <CalendarProtectedRoute>
-            <SchoolEventList />
           </CalendarProtectedRoute>
         ),
       },

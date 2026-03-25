@@ -26,12 +26,20 @@ const EventCalendar = ({ events }) => {
   const calendarRef = useRef(null);
   const popperRef = useRef(null);
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
   const [popupType, setPopupType] = useState(null);
   const [popupAnchor, setPopupAnchor] = useState(null);
   const [timeZone, setTimeZone] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [activeId, setActiveId] = useState("");
+  const STORAGE_KEY = "calendarDate";
+
+  const [selectedDate, setSelectedDate] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? dayjs(saved) : dayjs();
+    }
+    return dayjs();
+  });
 
   const calendarWrapperRef = useRef(null);
 
@@ -91,6 +99,7 @@ const EventCalendar = ({ events }) => {
       ref={calendarWrapperRef}
       sx={{
         width: "100%",
+        height: "fit-content",
         overflowX: "auto",
         "& .fc .fc-scrollgrid": {
           border: "1px solid rgba(63, 63, 63, 0.1)",
@@ -107,10 +116,10 @@ const EventCalendar = ({ events }) => {
         "@media(max-width: 1439px)": {
           "& .fc .fc-scrollgrid": {
             mt: 1,
-            minWidth: "850px",
+            minWidth: "650px",
           },
           "& .fc-view-harness": {
-            minWidth: "850px",
+            minWidth: "650px",
           },
           "& .fc-header-toolbar": {
             minWidth: "500px",
@@ -124,7 +133,7 @@ const EventCalendar = ({ events }) => {
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
+        initialView={"dayGridMonth"}
         initialDate={selectedDate.toDate()}
         height="100%"
         contentHeight="auto"
@@ -134,13 +143,26 @@ const EventCalendar = ({ events }) => {
         editable={false}
         events={events}
         firstDay={1}
-        dayMaxEvents={3}
-        slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
-        eventTimeFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
+        dayMaxEvents={false}
+        slotLabelFormat={{
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }}
+        eventTimeFormat={{
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }}
         headerToolbar={{
           start: "today prev,next",
           center: "title",
           end: "",
+        }}
+        datesSet={(arg) => {
+          const currentStart = arg.view.currentStart;
+          setSelectedDate(dayjs(currentStart));
+          localStorage.setItem("calendarDate", currentStart);
         }}
         eventContent={(arg) => {
           const { school_name } = arg.event.extendedProps;
@@ -156,7 +178,11 @@ const EventCalendar = ({ events }) => {
               <span style={{ color: "#6C63FF" }}>{arg.event.title}</span>
               {school_name && (
                 <span
-                  style={{ color: "black", fontStyle: "italic", opacity: 0.8 }}
+                  style={{
+                    color: "black",
+                    fontStyle: "italic",
+                    opacity: 0.8,
+                  }}
                 >
                   {school_name}
                 </span>
@@ -218,6 +244,7 @@ const EventCalendar = ({ events }) => {
           },
         }}
       />
+      <ModalCard openModal={openModal} setOpenModal={setOpenModal} />
       <PopperCard
         ref={popperRef}
         type={popupType}
@@ -225,7 +252,6 @@ const EventCalendar = ({ events }) => {
         onClose={() => setPopupAnchor(null)}
         eventId={activeId}
       />
-      <ModalCard openModal={openModal} setOpenModal={setOpenModal} />
     </Box>
   );
 };

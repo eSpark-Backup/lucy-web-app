@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Box, CircularProgress, Paper, Stack } from "@mui/material";
-import CreatedEvents from "./calendar/CreatedEvents";
 import EventCalandar from "./calendar/EventCalandar";
 import FormHeader from "../forms/FormHeader";
 import { useGetMyEventsQuery } from "../../services/event";
@@ -126,15 +125,6 @@ function Calendar() {
       ) : (
         <>
           <Box className="calendar-grid" sx={mainBoxStyle}>
-            {/* Created Events Section */}
-            {((is_trust_school === true && role === "school") ||
-              (is_trust === false && role === "user")) && (
-              <Box flex={{ xs: "0 0 auto" }}>
-                <CreatedEvents events={calendarEvents} />
-              </Box>
-            )}
-
-            {/* Calendar Section */}
             <Box flex={1} width="100%">
               <Paper sx={paperStyle}>
                 <EventCalandar events={calendarEvents} />

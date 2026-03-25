@@ -17,6 +17,7 @@ const slice = createSlice({
       localStorage.removeItem("email-verify");
       localStorage.removeItem("terms");
       localStorage.removeItem("edupluse_user");
+      localStorage.removeItem("calendarDate");
     },
     setRedirectToLogin: (state, action) => {
       state.redirectToLogin = action.payload;
@@ -28,7 +29,7 @@ const slice = createSlice({
       (state, { payload }) => {
         state.user = payload;
         localStorage.setItem("edupluse_user", JSON.stringify(payload));
-      }
+      },
     );
     builder.addMatcher(
       authApi.endpoints.updateUser.matchFulfilled,
@@ -45,7 +46,7 @@ const slice = createSlice({
         };
 
         localStorage.setItem("edupluse_user", JSON.stringify(state.user));
-      }
+      },
     );
   },
 });

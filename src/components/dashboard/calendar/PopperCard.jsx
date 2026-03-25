@@ -27,7 +27,7 @@ const PopperCard = forwardRef(function PopperCard(
     >
       <Paper
         sx={{
-          width: 260,
+          width: 220,
           borderRadius: 3,
           p: 2,
           boxShadow: 6,

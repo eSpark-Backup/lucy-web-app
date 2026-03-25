@@ -118,7 +118,6 @@ const SchoolProfileForm = ({
   const { user } = useSelector((state) => state?.auth);
   const { fields } = SCHOOL_INFORMATION_FORM || {};
   const { EventFormStyles } = componentStyles || {};
-  const { schoolId } = useParams();
 
   const {
     paperStyle,
@@ -605,35 +604,6 @@ const SchoolProfileForm = ({
           )}
 
           <Grid size={12} pt={2.5}>
-            {isPreview && (
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                gap={2}
-              >
-                <Button
-                  onClick={() =>
-                    navigate(`/dashboard/calendar/event-list/${schoolId}`)
-                  }
-                  variant="contained"
-                  sx={{
-                    ...buttonStyle,
-                    marginLeft: "0px",
-                    maxWidth: {
-                      xs: "100%",
-                      sm: "152px",
-                      md: "182px",
-                      lg: "191px",
-                    },
-                  }}
-                >
-                  <Typography variant="h5" sx={buttonTypoStyle}>
-                    See Event
-                  </Typography>
-                </Button>
-              </Stack>
-            )}
             {isEdit && (
               <Stack
                 direction="row"

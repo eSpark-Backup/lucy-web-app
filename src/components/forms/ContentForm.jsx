@@ -197,6 +197,10 @@ const ContentForm = ({
     }
   }, [aiContent]);
 
+  const isAddDisabled = formik?.values?.text_content?.some(
+    (item) => !item.text || item.text.trim() === "",
+  );
+
   if (eventLoading || recipientsLoading) {
     return <LinearProgress />;
   }
@@ -431,7 +435,9 @@ const ContentForm = ({
             sx={buttonStyle}
             variant="contained"
             loading={isLoading || editLoading || aiLoading}
-            disabled={formik?.values?.content_types?.length === 0}
+            disabled={
+              isAddDisabled || formik?.values?.content_types?.length === 0
+            }
           >
             <Typography variant="h6" sx={buttonTypoStyle}>
               {contentId ? "Save" : "Add"}
