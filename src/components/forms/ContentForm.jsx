@@ -103,12 +103,23 @@ const ContentForm = ({
       setEventName(eventData?.name);
     }
   }, [eventData, isSuccess]);
+
+  useEffect(() => {
+    if (eventData?.description) {
+      formik.setFieldValue("description", eventData?.description);
+    }
+  }, [eventData]);
+
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const cols = isXs ? 2 : 3;
 
   const formik = useFormik({
-    initialValues: data,
+    initialValues: {
+      ...data,
+      description: eventData?.description || "",
+    },
+    enableReinitialize: true,
     validationSchema: contentFormSchema,
     onSubmit: (values, { resetForm }) => {
       const selectedContentType = values?.content_types;

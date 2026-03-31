@@ -32,8 +32,7 @@ const CreateContent = () => {
       const myData = {
         content_types: data?.content_types,
         text_content: mappedContent,
-        description: "",
-        // image: data?.attachment,
+        description: data?.event?.description || "",
         post_method: "Email",
         recipients: myRecipeints,
       };
