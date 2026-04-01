@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { footerLogo } from "../assets";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -87,7 +87,7 @@ export default function Footer() {
               textAlign: "center",
             }}
           >
-            © 2025 EduPulse GPT. All rights reserved.
+            © {new Date()?.getFullYear()} EduPulse GPT. All rights reserved.
           </Typography>
         </Stack>
       </Container>
@@ -119,15 +119,20 @@ function ContactRow({ icon, text }) {
   return (
     <Stack direction="row" spacing={1.5} alignItems="center">
       {icon}
-      <Typography
-        sx={{
-          color: "#EBEBEB",
-          fontSize: { xs: "14px", sm: "16px", lg: "18px" },
-          fontWeight: 400,
-        }}
+      <Link
+        to="mailto:info@edupulsegpt.com"
+        style={{ textDecoration: "none", color: "inherit" }}
       >
-        {text}
-      </Typography>
+        <Typography
+          sx={{
+            color: "#EBEBEB",
+            fontSize: { xs: "14px", sm: "16px", lg: "18px" },
+            fontWeight: 400,
+          }}
+        >
+          {text}
+        </Typography>
+      </Link>
     </Stack>
   );
 }
