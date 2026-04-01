@@ -21,7 +21,7 @@ export default function MenuAppBar() {
     { label: "Pricing", section: "pricing" },
     { label: "Login", path: "https://app.edupulsegpt.com/auth/login" },
   ];
-  
+
   const toggleDrawer = () => setOpen(!open);
 
   const lineStyle = {
@@ -121,6 +121,8 @@ export default function MenuAppBar() {
                 <Button
                   variant="contained"
                   disableElevation
+                  disableRipple
+                  href="mailto:info@edupulsegpt.com"
                   sx={{
                     backgroundColor: "#2a4483",
                     color: "#fff",

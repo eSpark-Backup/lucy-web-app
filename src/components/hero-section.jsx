@@ -47,7 +47,7 @@ const HeroSection = () => {
       sx={{
         width: "100%",
         height: "100%",
-        minHeight: { xs: "auto", md: '400px', lg: "500px" },
+        minHeight: { xs: "auto", md: "400px", lg: "500px" },
         backgroundImage: `url(${bg})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -126,7 +126,9 @@ const HeroSection = () => {
             <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="contained"
+                disableRipple
                 disableElevation
+                href="mailto:info@edupulsegpt.com"
                 sx={{
                   width: "fit-content",
                   backgroundColor: "#2a4483",
@@ -143,8 +145,10 @@ const HeroSection = () => {
             </motion.div>
             <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
               <Button
+                disableRipple
                 variant="contained"
                 disableElevation
+                href="https://app.edupulsegpt.com/auth/login"
                 sx={{
                   width: "fit-content",
                   backgroundColor: "#fff",
