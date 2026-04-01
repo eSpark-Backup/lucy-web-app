@@ -3,14 +3,14 @@ import { testimonialImg1 } from "../assets";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
     id: 1,
     img: testimonialImg1,
     para1:
-      "“I can sit down for a couple of hours once a month and block in a whole load of things… and then I just know it’s there and it’s done. I haven’t got to think about it again.”",
+      "I can sit down for a couple of hours once a month and block in a whole load of things… and then I just know it’s there and it’s done. I haven’t got to think about it again.",
     name: "Ali Gillings",
     school: "Blundeston Church of England Primary School",
   },
