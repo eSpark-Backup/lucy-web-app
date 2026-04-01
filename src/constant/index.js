@@ -533,7 +533,8 @@ export const GOTLOST = {
 
 export const ACCOUNT_FOR_SCHOOL = {
   title: "Create an Account For School",
-  description: "Create a account to continue",
+  description: `✨ Sign up today and explore all features for free with your
+            24-hour trial!`,
   fields: [
     {
       isRow: true,
@@ -599,7 +600,8 @@ export const ACCOUNT_FOR_SCHOOL = {
 
 export const ACCOUNT_FOR_TRUST = {
   title: "Create an Account For Trust",
-  description: "Create a account to continue",
+  description: `✨ Sign up today and explore all features for free with your
+            24-hour trial!`,
   fields: [
     {
       isRow: true,

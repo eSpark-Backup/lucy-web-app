@@ -35,7 +35,6 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
     authInputStyle,
     authTitleStyle,
     authLableStyle,
-    authDescriptionStyle,
     authButtonStyle,
     authButtonTypoStyle,
     authHaveAnAccountTextStyle,
@@ -125,7 +124,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
             localStorage.setItem("token", token);
             localStorage.setItem(
               "email-verify",
-              email_verified ? "true" : "false"
+              email_verified ? "true" : "false",
             );
             localStorage.setItem("terms", String(user?.termsAccepted));
           }
@@ -141,7 +140,7 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
               obj_for_organization,
               resetForm,
               email,
-              is_trust
+              is_trust,
             );
           }
         })
@@ -161,7 +160,15 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
         <Typography variant="h2" sx={authTitleStyle}>
           {title}
         </Typography>
-        <Typography variant="h5" sx={authDescriptionStyle}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "#202224",
+            fontWeight: 500,
+            textAlign: "center",
+            maxWidth: 400,
+          }}
+        >
           {description}
         </Typography>
       </Stack>
@@ -234,8 +241,8 @@ const Account = ({ is_trust = false, data, styles, schema }) => {
                         ? "text"
                         : "password"
                       : showPassword
-                      ? "text"
-                      : "password"
+                        ? "text"
+                        : "password"
                     : type
                 }
                 InputProps={
