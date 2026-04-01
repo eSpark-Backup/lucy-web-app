@@ -242,6 +242,8 @@ export default function MenuAppBar() {
             <Button
               variant="contained"
               disableElevation
+              disableRipple
+              href="mailto:info@edupulsegpt.com"
               sx={{
                 mt: 2,
                 backgroundColor: "#2a4483",
