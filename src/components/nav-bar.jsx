@@ -3,8 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import { logo, menu } from "../assets";
+import { logo } from "../assets";
 import { Button, Container, Drawer } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
@@ -20,8 +19,9 @@ export default function MenuAppBar() {
     { label: "How it Works", section: "howItWorks" },
     { label: "Testimonials", section: "testimonials" },
     { label: "Pricing", section: "pricing" },
-    { label: "Login", path: "/auth/login" },
+    { label: "Login", path: "https://app.edupulsegpt.com/auth/login" },
   ];
+  
   const toggleDrawer = () => setOpen(!open);
 
   const lineStyle = {
