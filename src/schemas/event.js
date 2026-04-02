@@ -54,7 +54,5 @@ export const eventValidationSchema = (isSchoolRole, is_public) =>
       .min(1, "Please upload at least one image")
       .required("At least one image is required"),
 
-    description: Yup.string()
-      .required("Description is required")
-      .max(300, "Maximum 300 characters allowed"),
+    description: Yup.string().required("Description is required"),
   });
