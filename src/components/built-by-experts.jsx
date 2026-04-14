@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import { testimonialImg2 } from "../assets";
+import { lucy } from "../assets";
 import { motion } from "framer-motion";
 
 const fadeUp = {
@@ -20,7 +20,7 @@ const BuiltByExperts = () => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e4f0ff",
-        px: { xs: 2.5,md:4},
+        px: { xs: 2.5, md: 4 },
         py: { xs: 3.5, md: 5 },
       }}
     >
@@ -80,7 +80,7 @@ const BuiltByExperts = () => {
             transition={{ duration: 1, delay: 0.5 }}
           >
             <Avatar
-              src={testimonialImg2 || "/"}
+              src={lucy || "/"}
               alt={"Lucy"}
               sx={{
                 mx: "auto",
@@ -88,7 +88,7 @@ const BuiltByExperts = () => {
                 height: { xs: "95px", lg: "132px" },
                 border: "4px solid #2a4483",
                 color: "#2a4483",
-                mb: {xs: 1, lg:2},
+                mb: { xs: 1, lg: 2 },
               }}
             />
           </motion.div>
@@ -131,7 +131,7 @@ const BuiltByExperts = () => {
             Every empty seat in your school means lost money and funding.
             EduPulse GPT is your very own school marketing department. It is a
             game-changing, inexpensive AI-based marketing app. This
-            subscription-based app could cost your school as little as just £10*
+            subscription-based app could cost your school as little as just £15*
             per month. It means busy, cash-strapped schools will be visible in
             their community. Parents have more choices than ever, and if you’re
             not actively promoting your school, you’re missing out. But we know
