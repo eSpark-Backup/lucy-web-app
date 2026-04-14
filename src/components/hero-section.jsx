@@ -9,15 +9,15 @@ import { motion } from "framer-motion";
 
 const items = [
   {
-    text: `Optimize Teachers Productivity`,
+    text: `Saves Staff Hours`,
     icon: savesTeachersHours,
   },
   {
-    text: `Boost parental Engagement`,
+    text: `Boost Parental Engagement`,
     icon: boostParentalEngagement,
   },
   {
-    text: `Build your school’s reputation`,
+    text: `Build Your School’s Reputation`,
     icon: buildYourSchoolReputation,
   },
 ];
@@ -74,8 +74,8 @@ const HeroSection = () => {
         >
           <Typography
             sx={{
-              fontSize: { xs: "24px", md: "30px", lg: "44px" },
-              maxWidth: { xs: "525px", md: "725px", lg: "925px" },
+              fontSize: { xs: "24px", md: "30px", lg: "42px" },
+              maxWidth: { xs: "525px", md: "825px", lg: "1100px" },
               color: "#2a4483",
               fontWeight: 800,
               wordBreak: "break-word",
@@ -83,8 +83,8 @@ const HeroSection = () => {
             }}
           >
             <strong>
-              AI Content Creation Tool for Schools That Saves Staff Hours — Just
-              £15 per Month
+              AI marketing for schools that saves staff time and gets you seen
+              locally for just £15 per month
             </strong>
           </Typography>
         </motion.div>

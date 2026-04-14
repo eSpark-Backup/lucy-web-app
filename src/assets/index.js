@@ -56,12 +56,12 @@ import pressRelease from "./images/press-release.png";
 import socialMediaPosts from "./images/social-media-posts.png";
 import EngagingNewsletters from "./images/engaging-newsletters.png";
 import testimonialImg1 from "./images/testimonial-img-1.png";
-import testimonialImg2 from "./images/testimonial-img-2.png";
+import lucy from "./images/lucy.svg";
 import menu from "./images/menu.png";
 
 export {
   testimonialImg1,
-  testimonialImg2,
+  lucy,
   pressRelease,
   socialMediaPosts,
   EngagingNewsletters,

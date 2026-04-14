@@ -44,7 +44,7 @@ const FlexiblePlans = () => {
           mb: 4,
         }}
       >
-        Flexible Plans for Every School
+        £15 Per Month - Cancel Anytime
       </Typography>
 
       <motion.div
@@ -90,7 +90,7 @@ const FlexiblePlans = () => {
                 fontSize: { xs: "19px", md: "22px", lg: "24px" },
               }}
             >
-              Standard Plan
+              Simple Plan
             </Typography>
           </Box>
           <motion.div variants={floatVariants}>
